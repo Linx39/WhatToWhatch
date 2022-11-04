@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SmallMovieCard from '../small-movie-card/small-movie-card';
+import Logo from '../logo/logo';
+import UserBlock from '../user-block/user-block';
+import Copyright from '../copyright/copyright';
+
+import {LogoProperty} from '../../const';
 
 const Main = (props) => {
   const {cardsCount, movieCard} = props;
@@ -15,7 +20,7 @@ const Main = (props) => {
     </React.Fragment>;
   };
 
-  return <React.Fragment> (
+  return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
         <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
@@ -24,19 +29,8 @@ const Main = (props) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header movie-card__head">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
-        </div>
+        {<Logo isLink = {false}/>}
+        {<UserBlock />}
       </header>
 
       <div className="movie-card__wrap">
@@ -120,20 +114,10 @@ const Main = (props) => {
       </section>
 
       <footer className="page-footer">
-        <div className="logo">
-          <a className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
+        {<Logo place = {LogoProperty.Place.FOOTER} isLink = {false}/>}
+        {<Copyright />}
       </footer>
     </div>
-    );
   </React.Fragment>;
 };
 
