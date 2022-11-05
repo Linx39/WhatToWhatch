@@ -6,7 +6,7 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Copyright from '../copyright/copyright';
 
-import {LogoProperty} from '../../const';
+import {LogoPosition} from '../../const';
 
 const Main = (props) => {
   const {cardsCount, movieCard} = props;
@@ -114,7 +114,7 @@ const Main = (props) => {
       </section>
 
       <footer className="page-footer">
-        {<Logo place = {LogoProperty.Place.FOOTER} isLink = {false}/>}
+        {<Logo place = {LogoPosition.FOOTER} isLink = {false}/>}
         {<Copyright />}
       </footer>
     </div>

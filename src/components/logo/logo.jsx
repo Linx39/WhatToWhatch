@@ -2,16 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import {Patch, LogoProperty} from '../../const';
+import {Patch, LogoPosition} from '../../const';
 
-const Logo = (props) => {
-  const {place = LogoProperty.Place.HEADER, isLink = true} = props;
-
-  let logoClassName = `logo__link`;
-
-  if (place === LogoProperty.Place.FOOTER) {
-    logoClassName = `logo__link logo__link--light`;
-  }
+const Logo = ({place = LogoPosition.HEADER, isLink = true}) => {
+  const logoLinkClassName = place === LogoPosition.FOOTER
+    ? `logo__link logo__link--light`
+    : `logo__link`;
 
   const SpanFragment = () => {
     return <React.Fragment>
@@ -21,27 +17,23 @@ const Logo = (props) => {
     </React.Fragment>;
   };
 
-  const LinkFragment = () => {
-    if (isLink) {
-      return <React.Fragment>
-        <Link to={Patch.MAIN} className={logoClassName}>
+  if (isLink) {
+    return (
+      <div className="logo">
+        <Link to={Patch.MAIN} className={logoLinkClassName}>
           <SpanFragment />
         </Link>
-      </React.Fragment>;
-    }
+      </div>
+    );
+  }
 
-    return <React.Fragment>
-      <a className="logo__link">
+  return (
+    <div className="logo">
+      <a className={logoLinkClassName}>
         <SpanFragment />
       </a>
-    </React.Fragment>;
-  };
-
-  return <React.Fragment>
-    <div className="logo">
-      <LinkFragment />
     </div>
-  </React.Fragment>;
+  );
 };
 
 Logo.propTypes = {

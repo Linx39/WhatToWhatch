@@ -3,7 +3,7 @@ import React from 'react';
 import Logo from '../logo/logo';
 import Copyright from '../copyright/copyright';
 
-import {LogoProperty} from '../../const';
+import {LogoPosition} from '../../const';
 
 const SignIn = () => {
   return <React.Fragment>
@@ -33,7 +33,7 @@ const SignIn = () => {
       </div>
 
       <footer className="page-footer">
-        {<Logo place = {LogoProperty.Place.FOOTER} />}
+        {<Logo place = {LogoPosition.FOOTER} />}
         {<Copyright />}
       </footer>
     </div>

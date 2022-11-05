@@ -2,11 +2,10 @@ const Patch = {
   MAIN: `/`,
 };
 
-const LogoProperty = {
-  Place: {
-    HEADER: `HEADER`,
-    FOOTER: `FOOTER`,
-  },
+const LogoPosition = {
+  HEADER: `HEADER`,
+  FOOTER: `FOOTER`,
+
 };
 
-export {Patch, LogoProperty};
+export {Patch, LogoPosition};

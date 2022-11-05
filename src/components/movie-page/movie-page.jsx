@@ -5,7 +5,7 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Copyright from '../copyright/copyright';
 
-import {LogoProperty} from '../../const';
+import {LogoPosition} from '../../const';
 
 const MoviePage = () => {
   return <React.Fragment>
@@ -136,7 +136,7 @@ const MoviePage = () => {
       </section>
 
       <footer className="page-footer">
-        {<Logo place = {LogoProperty.Place.FOOTER} />}
+        {<Logo place = {LogoPosition.FOOTER} />}
         {<Copyright />}
       </footer>
     </div>
