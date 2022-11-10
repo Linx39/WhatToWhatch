@@ -4,12 +4,17 @@ import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 
-const AddReview = () => {
+import {MOVIE_CARD} from '../const-props-type';
+
+const AddReview = (props) => {
+  const {movieCard} = props;
+  const {name, posterImage} = movieCard;
+
   return <React.Fragment>
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={posterImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -20,7 +25,7 @@ const AddReview = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to="movie-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</Link>
+                <Link to="movie-page.html" className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -32,7 +37,7 @@ const AddReview = () => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
         </div>
       </div>
 
@@ -84,6 +89,10 @@ const AddReview = () => {
 
     </section>
   </React.Fragment>;
+};
+
+AddReview.propTypes = {
+  movieCard: MOVIE_CARD,
 };
 
 export default AddReview;

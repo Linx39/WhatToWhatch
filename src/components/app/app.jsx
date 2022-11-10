@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
 import Main from '../main/main';
@@ -10,31 +9,32 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 
+import {CARDS_COUNT, MOVIE_CARDS} from '../const-props-type';
 import {Patch} from '../../const';
 
 const App = (props) => {
-  const {cardsCount, movieCard} = props;
+  const {cardsCount, movieCards} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={Patch.MAIN}>
-          <Main cardsCount={cardsCount} movieCard={movieCard} />
+          <Main cardsCount={cardsCount} movieCards={movieCards} />
         </Route>
         <Route exact path="/login">
           <SignIn />
         </Route>
         <Route exact path="/mylist">
-          <MyList />
+          <MyList cardsCount={cardsCount} movieCards={movieCards} />
         </Route>
-        <Route exact path="/moviepage/:id">
-          <MoviePage />
+        <Route exact path="/films/:id">
+          <MoviePage movieCard={movieCards[0]}/>
         </Route>
-        <Route exact path="/moviepage/:id/review">
-          <AddReview />
+        <Route exact path="/films/:id/review">
+          <AddReview movieCard={movieCards[3]} />
         </Route>
         <Route exact path="/player/:id">
-          <Player />
+          <Player movieCard={movieCards[1]} />
         </Route>
         <Route>
           <NotFoundPage />
@@ -45,11 +45,8 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  cardsCount: PropTypes.number.isRequired,
-  movieCard: PropTypes.shape({
-    title: PropTypes.string,
-    genre: PropTypes.string,
-    year: PropTypes.number,
-  }).isRequired,
+  cardsCount: CARDS_COUNT,
+  movieCards: MOVIE_CARDS,
 };
+
 export default App;

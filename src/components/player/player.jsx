@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Player = () => {
+import {MOVIE_CARD} from '../const-props-type';
+
+const Player = (props) => {
+  const {movieCard} = props;
+  const {runTime} = movieCard;
+
   return <React.Fragment>
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
@@ -13,7 +18,7 @@ const Player = () => {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{runTime}</div>
         </div>
 
         <div className="player__controls-row">
@@ -35,6 +40,10 @@ const Player = () => {
       </div>
     </div>
   </React.Fragment>;
+};
+
+Player.propTypes = {
+  movieCard: MOVIE_CARD,
 };
 
 export default Player;

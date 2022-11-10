@@ -1,29 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import SmallMovieCard from '../small-movie-card/small-movie-card';
+import MoviesList from '../movies-list/movies-list';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Copyright from '../copyright/copyright';
 
+import {CARDS_COUNT, MOVIE_CARDS} from '../const-props-type';
 import {LogoPosition} from '../../const';
 
 const Main = (props) => {
-  const {cardsCount, movieCard} = props;
-  const {title, genre, year} = movieCard;
-
-  const smallMovieCards = new Array(cardsCount).fill(null);
-
-  const MovieCards = () => {
-    return <React.Fragment>
-      {smallMovieCards.map((card, i) => <SmallMovieCard key={i}/>)}
-    </React.Fragment>;
-  };
+  const {cardsCount, movieCards} = props;
+  const {name, previewImage, posterImage, genre, released} = movieCards[2];
 
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+        <img src={previewImage} alt={name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -36,14 +28,14 @@ const Main = (props) => {
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+            <img src={posterImage} alt={posterImage} width="218" height="327" />
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{title}</h2>
+            <h2 className="movie-card__title">{name}</h2>
             <p className="movie-card__meta">
               <span className="movie-card__genre">{genre}</span>
-              <span className="movie-card__year">{year}</span>
+              <span className="movie-card__year">{released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -102,11 +94,7 @@ const Main = (props) => {
           </li>
         </ul>
 
-        <div className="catalog__movies-list">
-
-          {<MovieCards />}
-
-        </div>
+        {<MoviesList cardsCount={cardsCount} movieCards={movieCards}/>}
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
@@ -122,12 +110,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  cardsCount: PropTypes.number.isRequired,
-  movieCard: PropTypes.shape({
-    title: PropTypes.string,
-    genre: PropTypes.string,
-    year: PropTypes.number,
-  }).isRequired,
+  cardsCount: CARDS_COUNT,
+  movieCards: MOVIE_CARDS,
 };
 
 export default Main;
