@@ -4,17 +4,22 @@ import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 
-import {MOVIE_CARD} from '../const-props-type';
+import {MOVIES} from '../const-props-type';
+import {findMovie} from '../component';
+import {Patch} from '../../const';
 
 const AddReview = (props) => {
-  const {movieCard} = props;
-  const {name, posterImage} = movieCard;
+  const {movies} = props;
+
+  const movie = findMovie(movies);
+
+  const {id, name, posterImage, backgroundImage} = movie;
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={posterImage} alt={name} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -25,7 +30,7 @@ const AddReview = (props) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to="movie-page.html" className="breadcrumbs__link">{name}</Link>
+                <Link to={`${Patch.FILMS}${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -37,7 +42,7 @@ const AddReview = (props) => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={posterImage} alt={{name} + ` poster`} width="218" height="327" />
         </div>
       </div>
 
@@ -92,7 +97,7 @@ const AddReview = (props) => {
 };
 
 AddReview.propTypes = {
-  movieCard: MOVIE_CARD,
+  movies: MOVIES,
 };
 
 export default AddReview;

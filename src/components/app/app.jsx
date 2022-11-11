@@ -9,32 +9,38 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-import {CARDS_COUNT, MOVIE_CARDS} from '../const-props-type';
+import {MOVIES} from '../const-props-type';
 import {Patch} from '../../const';
 
+const COUNT = {
+  MAIN: 8,
+  MOVIE_PAGE: 4,
+  MY_LIST: 5,
+};
+
 const App = (props) => {
-  const {cardsCount, movieCards} = props;
+  const {movies} = props;
 
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={Patch.MAIN}>
-          <Main cardsCount={cardsCount} movieCards={movieCards} />
+        <Route path={Patch.MAIN} exact>
+          <Main movies={movies} count={COUNT.MAIN} />
         </Route>
-        <Route exact path="/login">
+        <Route path={Patch.LOGIN} exact>
           <SignIn />
         </Route>
-        <Route exact path="/mylist">
-          <MyList cardsCount={cardsCount} movieCards={movieCards} />
+        <Route path={Patch.MY_LIST} exact>
+          <MyList movies={movies} count={COUNT.MY_LIST} />
         </Route>
-        <Route exact path="/films/:id">
-          <MoviePage movieCard={movieCards[0]}/>
+        <Route path="/films/:id" exact>
+          <MoviePage movies={movies} count={COUNT.MOVIE_PAGE} />
         </Route>
-        <Route exact path="/films/:id/review">
-          <AddReview movieCard={movieCards[3]} />
+        <Route path="/films/:id/review" exact>
+          <AddReview movies={movies} />
         </Route>
-        <Route exact path="/player/:id">
-          <Player movieCard={movieCards[1]} />
+        <Route path="/player/:id" exact>
+          <Player movies={movies} />
         </Route>
         <Route>
           <NotFoundPage />
@@ -45,8 +51,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  cardsCount: CARDS_COUNT,
-  movieCards: MOVIE_CARDS,
+  movies: MOVIES,
 };
 
 export default App;

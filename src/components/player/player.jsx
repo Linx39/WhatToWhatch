@@ -1,10 +1,14 @@
 import React from 'react';
 
-import {MOVIE_CARD} from '../const-props-type';
+import {MOVIES} from '../const-props-type';
+import {findMovie} from '../component';
 
 const Player = (props) => {
-  const {movieCard} = props;
-  const {runTime} = movieCard;
+  const {movies} = props;
+
+  const movie = findMovie(movies);
+
+  const {runTime} = movie;
 
   return <React.Fragment>
     <div className="player">
@@ -43,7 +47,7 @@ const Player = (props) => {
 };
 
 Player.propTypes = {
-  movieCard: MOVIE_CARD,
+  movies: MOVIES,
 };
 
 export default Player;

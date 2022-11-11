@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-const CARDS_COUNT = PropTypes.number.isRequired;
+const COUNT = PropTypes.number.isRequired;
 
-const MOVIE_CARD = PropTypes.shape({
+const MOVIE = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   posterImage: PropTypes.string.isRequired,
@@ -22,6 +22,6 @@ const MOVIE_CARD = PropTypes.shape({
   isFavorite: PropTypes.bool.isRequired,
 }).isRequired;
 
-const MOVIE_CARDS = PropTypes.arrayOf(MOVIE_CARD).isRequired;
+const MOVIES = PropTypes.arrayOf(MOVIE).isRequired;
 
-export {CARDS_COUNT, MOVIE_CARD, MOVIE_CARDS};
+export {COUNT, MOVIE, MOVIES};

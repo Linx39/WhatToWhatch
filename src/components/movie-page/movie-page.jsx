@@ -1,15 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import MoviesList from '../movies-list/movies-list';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Copyright from '../copyright/copyright';
 
-import {MOVIE_CARD} from '../const-props-type';
-import {LogoPosition} from '../../const';
+import {MOVIES, COUNT} from '../const-props-type';
+import {findMovie} from '../component';
+import {LogoPosition, Patch} from '../../const';
 
 const MoviePage = (props) => {
-  const {movieCard} = props;
+  const {movies, count} = props;
+
+  const movie = findMovie(movies);
+
   const {
     id,
     name,
@@ -28,13 +33,13 @@ const MoviePage = (props) => {
     genre,
     released,
     isFavorite
-  } = movieCard;
+  } = movie;
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
       <div className="movie-card__hero">
         <div className="movie-card__bg">
-          <img src={previewImage} alt={name} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -65,7 +70,7 @@ const MoviePage = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <Link to="add-review.html" className="btn movie-card__button">Add review</Link>
+              <Link to={`${Patch.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link>
             </div>
           </div>
         </div>
@@ -74,7 +79,7 @@ const MoviePage = (props) => {
       <div className="movie-card__wrap movie-card__translate-top">
         <div className="movie-card__info">
           <div className="movie-card__poster movie-card__poster--big">
-            <img src={posterImage} alt={name} width="218" height="327" />
+            <img src={posterImage} alt={{name} + ` poster`} width="218" height="327" />
           </div>
 
           <div className="movie-card__desc">
@@ -119,41 +124,7 @@ const MoviePage = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-            </h3>
-          </article>
-
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Bohemian Rhapsody</a>
-            </h3>
-          </article>
-
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Macbeth</a>
-            </h3>
-          </article>
-
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Aviator</a>
-            </h3>
-          </article>
+          {<MoviesList movies={movies} count={count} />}
         </div>
       </section>
 
@@ -166,7 +137,8 @@ const MoviePage = (props) => {
 };
 
 MoviePage.propTypes = {
-  movieCard: MOVIE_CARD,
+  movies: MOVIES,
+  count: COUNT,
 };
 
 export default MoviePage;

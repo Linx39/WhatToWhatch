@@ -1,22 +1,46 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 
 import MovieCard from '../movie-card/movie-card';
 
-import {CARDS_COUNT, MOVIE_CARDS} from '../const-props-type';
+import {MOVIES, COUNT} from '../const-props-type';
 
 const MoviesList = (props) => {
-  const {movieCards} = props;
+  const {movies, count} = props;
+
+  const [activeCard, setActiveCard] = useState(null);
+
+  // const handleMouseEnter = useCallback((card) => {
+  //   setActiveCard(card);
+  // }, []);
+
+  // const handleMouseLeave = useCallback(() => {
+  //   setActiveCard(null);
+  // }, []);
+
+  const handleMouseEnter = (card) => setActiveCard(card);
+
+  const handleMouseLeave = () => setActiveCard(null);
+
+  // console.log(activeCard);
 
   return (
-    <div className="catalog__movies-list">
-      {movieCards.map((movieCard) => <MovieCard movieCard={movieCard} key={movieCard.id}/>)}
-    </div>
+    <>
+      {movies.slice(0, count).map((movie) => {
+        return (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}/>
+        );
+      })}
+    </>
   );
 };
 
 MoviesList.propTypes = {
-  cardsCount: CARDS_COUNT,
-  movieCards: MOVIE_CARDS,
+  movies: MOVIES,
+  count: COUNT,
 };
 
 export default MoviesList;

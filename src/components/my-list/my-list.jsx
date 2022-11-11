@@ -5,11 +5,11 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Copyright from '../copyright/copyright';
 
-import {CARDS_COUNT, MOVIE_CARDS} from '../const-props-type';
+import {MOVIES, COUNT} from '../const-props-type';
 import {LogoPosition} from '../../const';
 
 const MyList = (props) => {
-  const {cardsCount, movieCards} = props;
+  const {movies, count} = props;
 
 
   return <React.Fragment>
@@ -22,7 +22,7 @@ const MyList = (props) => {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        {<MoviesList cardsCount={cardsCount} movieCards={movieCards}/>}
+        {<MoviesList movies={movies} count={count} />}
       </section>
 
       <footer className="page-footer">
@@ -34,8 +34,8 @@ const MyList = (props) => {
 };
 
 MyList.propTypes = {
-  cardsCount: CARDS_COUNT,
-  movieCards: MOVIE_CARDS,
+  movies: MOVIES,
+  count: COUNT,
 };
 
 export default MyList;

@@ -5,17 +5,17 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Copyright from '../copyright/copyright';
 
-import {CARDS_COUNT, MOVIE_CARDS} from '../const-props-type';
+import {MOVIES, COUNT} from '../const-props-type';
 import {LogoPosition} from '../../const';
 
 const Main = (props) => {
-  const {cardsCount, movieCards} = props;
-  const {name, previewImage, posterImage, genre, released} = movieCards[2];
+  const {movies, count} = props;
+  const {name, posterImage, backgroundImage, genre, released} = movies[3];
 
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={previewImage} alt={name} />
+        <img src={backgroundImage} alt={name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -28,7 +28,7 @@ const Main = (props) => {
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src={posterImage} alt={posterImage} width="218" height="327" />
+            <img src={posterImage} alt={{name} + ` poster`} width="218" height="327" />
           </div>
 
           <div className="movie-card__desc">
@@ -94,7 +94,9 @@ const Main = (props) => {
           </li>
         </ul>
 
-        {<MoviesList cardsCount={cardsCount} movieCards={movieCards}/>}
+        <div className="catalog__movies-list">
+          {<MoviesList movies={movies} count={count} />}
+        </div>
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
@@ -110,8 +112,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  cardsCount: CARDS_COUNT,
-  movieCards: MOVIE_CARDS,
+  movies: MOVIES,
+  count: COUNT,
 };
 
 export default Main;
