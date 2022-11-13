@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import {MOVIE} from '../const-props-type';
+import {FILM} from '../props-types';
 import {Patch} from '../../const';
 
-const MovieCard = (props) => {
-  const {movie, onMouseEnter, onMouseLeave} = props;
-  const {id, name, previewImage} = movie;
+const FilmCard = (props) => {
+  const {film, onMouseEnter, onMouseLeave} = props;
+  const {id, name, previewImage} = film;
 
   const handleMouseEnter = () => {
-    onMouseEnter(movie);
+    onMouseEnter(film);
   };
 
   const handleMouseLeave = () => {
@@ -33,18 +33,11 @@ const MovieCard = (props) => {
   );
 };
 
-
-// MovieCard.defaultProps = {
-//   movieCard: {},
-//   onMouseEnter: () => undefined,
-//   onMouseLeave: () => undefined,
-// };
-
-MovieCard.propTypes = {
-  movie: MOVIE,
+FilmCard.propTypes = {
+  film: FILM,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
 };
 
 
-export default MovieCard;
+export default FilmCard;

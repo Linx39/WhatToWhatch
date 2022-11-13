@@ -1,16 +1,16 @@
 import React from 'react';
 
-import MoviesList from '../movies-list/movies-list';
-import Logo from '../logo/logo';
-import UserBlock from '../user-block/user-block';
-import Copyright from '../copyright/copyright';
+import FilmsList from '../films-list/films-list';
+import Logo from '../components-mini/logo/logo';
+import UserBlock from '../components-mini/user-block/user-block';
+import Copyright from '../components-mini/copyright/copyright';
 
-import {MOVIES, COUNT} from '../const-props-type';
+import {FILMS, COUNT} from '../props-types';
 import {LogoPosition} from '../../const';
 
 const Main = (props) => {
-  const {movies, count} = props;
-  const {name, posterImage, backgroundImage, genre, released} = movies[3];
+  const {films, count} = props;
+  const {name, posterImage, backgroundImage, genre, released} = films[3];
 
   return <React.Fragment>
     <section className="movie-card">
@@ -95,7 +95,7 @@ const Main = (props) => {
         </ul>
 
         <div className="catalog__movies-list">
-          {<MoviesList movies={movies} count={count} />}
+          {<FilmsList films={films} count={count} />}
         </div>
 
         <div className="catalog__more">
@@ -112,7 +112,7 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  movies: MOVIES,
+  films: FILMS,
   count: COUNT,
 };
 

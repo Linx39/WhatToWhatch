@@ -1,19 +1,25 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
-import MoviesList from '../movies-list/movies-list';
-import Logo from '../logo/logo';
-import UserBlock from '../user-block/user-block';
-import Copyright from '../copyright/copyright';
+import FilmsList from '../films-list/films-list';
+import Logo from '../components-mini/logo/logo';
+import UserBlock from '../components-mini/user-block/user-block';
+import Copyright from '../components-mini/copyright/copyright';
 
-import {MOVIES, COUNT} from '../const-props-type';
-import {findMovie} from '../component';
+import {FILMS, COUNT} from '../props-types';
+import {findFilm} from '../component-utils';
 import {LogoPosition, Patch} from '../../const';
 
-const MoviePage = (props) => {
-  const {movies, count} = props;
+const Film = (props) => {
+  const {films, count} = props;
 
-  const movie = findMovie(movies);
+  const film = findFilm(films);
+
+  if (!film) {
+    return (
+      <Redirect to={Patch.MAIN} />
+    );
+  }
 
   const {
     id,
@@ -33,7 +39,7 @@ const MoviePage = (props) => {
     genre,
     released,
     isFavorite
-  } = movie;
+  } = film;
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -124,7 +130,7 @@ const MoviePage = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          {<MoviesList movies={movies} count={count} />}
+          {<FilmsList films={films} count={count} />}
         </div>
       </section>
 
@@ -136,9 +142,9 @@ const MoviePage = (props) => {
   </React.Fragment>;
 };
 
-MoviePage.propTypes = {
-  movies: MOVIES,
+Film.propTypes = {
+  films: FILMS,
   count: COUNT,
 };
 
-export default MoviePage;
+export default Film;

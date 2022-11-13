@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const COUNT = PropTypes.number.isRequired;
 
-const MOVIE = PropTypes.shape({
+const FILM = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   posterImage: PropTypes.string.isRequired,
@@ -22,6 +22,6 @@ const MOVIE = PropTypes.shape({
   isFavorite: PropTypes.bool.isRequired,
 }).isRequired;
 
-const MOVIES = PropTypes.arrayOf(MOVIE).isRequired;
+const FILMS = PropTypes.arrayOf(FILM).isRequired;
 
-export {COUNT, MOVIE, MOVIES};
+export {COUNT, FILM, FILMS};

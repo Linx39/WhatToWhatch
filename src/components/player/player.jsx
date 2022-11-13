@@ -1,14 +1,23 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 
-import {MOVIES} from '../const-props-type';
-import {findMovie} from '../component';
+import {FILMS} from '../props-types';
+
+import {findFilm} from '../component-utils';
+import {Patch} from '../../const';
 
 const Player = (props) => {
-  const {movies} = props;
+  const {films} = props;
 
-  const movie = findMovie(movies);
+  const film = findFilm(films);
 
-  const {runTime} = movie;
+  if (!film) {
+    return (
+      <Redirect to={Patch.MAIN} />
+    );
+  }
+
+  const {runTime} = film;
 
   return <React.Fragment>
     <div className="player">
@@ -47,7 +56,7 @@ const Player = (props) => {
 };
 
 Player.propTypes = {
-  movies: MOVIES,
+  films: FILMS,
 };
 
 export default Player;

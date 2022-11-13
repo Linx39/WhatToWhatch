@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import {Patch, LogoPosition} from '../../const';
+import {Patch, LogoPosition} from '../../../const';
 
 const Logo = ({place = LogoPosition.HEADER, isLink = true}) => {
   const logoLinkClassName = place === LogoPosition.FOOTER

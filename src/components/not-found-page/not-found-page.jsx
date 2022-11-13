@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import Logo from '../logo/logo';
-import UserBlock from '../user-block/user-block';
-import Copyright from '../copyright/copyright';
+import Logo from '../components-mini/logo/logo';
+import UserBlock from '../components-mini/user-block/user-block';
+import Copyright from '../components-mini/copyright/copyright';
 
 import {Patch, LogoPosition} from '../../const';
 
