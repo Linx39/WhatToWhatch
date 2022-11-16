@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Logo from '../components-mini/logo/logo';
-import Copyright from '../components-mini/copyright/copyright';
+import Logo from '../common-components/logo/logo';
+import Copyright from '../common-components/copyright/copyright';
 
 import {LogoPosition} from '../../const';
 

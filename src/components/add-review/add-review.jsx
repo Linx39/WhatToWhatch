@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
 
-import Logo from '../components-mini/logo/logo';
-import UserBlock from '../components-mini/user-block/user-block';
+import Logo from '../common-components/logo/logo';
+import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form';
 
-import {FILMS} from '../props-types';
+import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
 
@@ -60,7 +60,7 @@ const AddReview = (props) => {
 };
 
 AddReview.propTypes = {
-  films: FILMS,
+  films: filmsProp,
 };
 
 export default AddReview;

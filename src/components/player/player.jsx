@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-import {FILMS} from '../props-types';
+import {filmsProp} from '../props-types';
 
 import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
@@ -56,7 +56,7 @@ const Player = (props) => {
 };
 
 Player.propTypes = {
-  films: FILMS,
+  films: filmsProp,
 };
 
 export default Player;

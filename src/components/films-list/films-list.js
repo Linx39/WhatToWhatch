@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import FilmCard from '../film-card/film-card';
 
-import {FILMS, COUNT} from '../props-types';
+import {filmsProp, countProp} from '../props-types';
 
 const FilmsList = (props) => {
   const {films, count} = props;
@@ -30,8 +30,8 @@ const FilmsList = (props) => {
 };
 
 FilmsList.propTypes = {
-  films: FILMS,
-  count: COUNT,
+  films: filmsProp,
+  count: countProp,
 };
 
 export default FilmsList;

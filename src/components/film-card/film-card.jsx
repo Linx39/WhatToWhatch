@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import {FILM} from '../props-types';
+import {filmProp} from '../props-types';
 import {Patch} from '../../const';
 
 const FilmCard = (props) => {
@@ -34,7 +34,7 @@ const FilmCard = (props) => {
 };
 
 FilmCard.propTypes = {
-  film: FILM,
+  film: filmProp,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
 };

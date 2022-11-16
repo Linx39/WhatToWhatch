@@ -1,11 +1,11 @@
 import React from 'react';
 
 import FilmsList from '../films-list/films-list';
-import Logo from '../components-mini/logo/logo';
-import UserBlock from '../components-mini/user-block/user-block';
-import Copyright from '../components-mini/copyright/copyright';
+import Logo from '../common-components/logo/logo';
+import UserBlock from '../common-components/user-block/user-block';
+import Copyright from '../common-components/copyright/copyright';
 
-import {FILMS, COUNT} from '../props-types';
+import {filmsProp, countProp} from '../props-types';
 import {LogoPosition} from '../../const';
 
 const Main = (props) => {
@@ -112,8 +112,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  films: FILMS,
-  count: COUNT,
+  films: filmsProp,
+  count: countProp,
 };
 
 export default Main;

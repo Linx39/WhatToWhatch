@@ -9,7 +9,7 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-import {FILMS} from '../props-types';
+import {filmsProp} from '../props-types';
 import {Patch} from '../../const';
 
 const COUNT = {
@@ -51,7 +51,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  films: FILMS,
+  films: filmsProp,
 };
 
 export default App;
