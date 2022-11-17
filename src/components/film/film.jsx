@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, Redirect, useHistory} from 'react-router-dom';
 
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
@@ -12,6 +12,14 @@ import {LogoPosition, Patch} from '../../const';
 
 const Film = (props) => {
   const {films, count} = props;
+
+  const history = useHistory();
+
+  const handleButtonClick = () => {
+    return (
+      history.push(`${Patch.PLAYER}${film.id}`)
+    );
+  };
 
   const film = findFilm(films);
 
@@ -64,7 +72,7 @@ const Film = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
+              <button className="btn btn--play movie-card__button" type="button" onClick={handleButtonClick}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>

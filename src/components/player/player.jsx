@@ -1,13 +1,22 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
+
+import VideoPlayer from '../video-player/video-player';
 
 import {filmsProp} from '../props-types';
-
 import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
 
 const Player = (props) => {
   const {films} = props;
+
+  const history = useHistory();
+
+  const handleButtonClick = () => {
+    return (
+      history.push(`${Patch.FILMS}${film.id}`)
+    );
+  };
 
   const film = findFilm(films);
 
@@ -17,13 +26,18 @@ const Player = (props) => {
     );
   }
 
-  const {runTime} = film;
+  const {posterImage, videoLink, runTime} = film;
 
   return <React.Fragment>
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <VideoPlayer
+        src={videoLink}
+        poster={posterImage}
+        isPlaying={true}
+        isMute={false}
+      />
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={handleButtonClick}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">

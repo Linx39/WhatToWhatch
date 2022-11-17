@@ -19,7 +19,7 @@ const COUNT = {
 };
 
 const App = (props) => {
-  const {films: films} = props;
+  const {films} = props;
 
   return (
     <BrowserRouter>

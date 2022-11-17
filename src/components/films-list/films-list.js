@@ -12,8 +12,6 @@ const FilmsList = (props) => {
   const handleMouseEnter = (card) => setActiveCard(card);
   const handleMouseLeave = () => setActiveCard(null);
 
-  // console.log(activeCard);
-
   return (
     <>
       {films.slice(0, count).map((film) => {
@@ -22,7 +20,9 @@ const FilmsList = (props) => {
             key={film.id}
             film={film}
             onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}/>
+            onMouseLeave={handleMouseLeave}
+            isPreview={(activeCard && film.id === activeCard.id) || false}
+          />
         );
       })}
     </>
