@@ -8,8 +8,7 @@ const FilmsList = (props) => {
   const {films, count} = props;
 
   const [activeCard, setActiveCard] = useState(null);
-
-  const handleMouseEnter = (card) => setActiveCard(card);
+  const handleMouseEnter = (film) => setActiveCard(film);
   const handleMouseLeave = () => setActiveCard(null);
 
   return (
@@ -21,7 +20,7 @@ const FilmsList = (props) => {
             film={film}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            isPreview={(activeCard && film.id === activeCard.id) || false}
+            isPreviewMode={(activeCard && film.id === activeCard.id) || false}
           />
         );
       })}

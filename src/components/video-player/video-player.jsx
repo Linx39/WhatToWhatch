@@ -11,22 +11,19 @@ const VideoPlayer = ({src, poster, isPlaying, isMute}) => {
 
     return () => {
       videoRef.current.oncanplaythrough = null;
-      videoRef.current.onplay = null; // зачем???
-      videoRef.current.onpause = null;
+      // videoRef.current.onplay = null; // зачем???
+      // videoRef.current.onpause = null;
       videoRef.current = null;
     };
   }, [src]);
 
   useEffect(() => {
-    const playVideoRef = () => videoRef.current.play();
-
     if (!isLoading && isPlaying) {
-      setTimeout(playVideoRef, 0);
+      videoRef.current.play();
     } else {
       videoRef.current.pause();
     }
 
-    return () => clearTimeout(videoRef);
   }, [!isLoading && isPlaying]);
 
   useEffect(() => {

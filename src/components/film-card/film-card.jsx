@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const CardImage = (props) => {
 
   return <>
     <div className="small-movie-card__image">
-      <img src={previewImage} alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175"/>
+      <img src={previewImage} alt={name} width="280" height="175"/>
     </div>
     <h3 className="small-movie-card__title">
       <Link to={`${Patch.FILMS}${id}`} className="small-movie-card__link">{name}</Link>
@@ -35,18 +35,11 @@ const CardVideo = (props) => {
   />;
 };
 
-const Card = (props) => {
-  const {film, isPreview} = props;
-
-  if (isPreview) {
-    return <CardVideo film={film} />;
-  }
-
-  return <CardImage film={film} />;
-};
-
 const FilmCard = (props) => {
-  const {film, onMouseEnter, onMouseLeave, isPreview} = props;
+  const {film, onMouseEnter, onMouseLeave, isPreviewMode} = props;
+
+  // const handleMouseEnter = () => onMouseEnter(film);
+  const [isNeedClearTimeout, setIsNeedClearTimeout] = useState(false);
 
   let timer = null;
 
@@ -54,18 +47,26 @@ const FilmCard = (props) => {
     timer = setTimeout(() => onMouseEnter(film), TIME_OUT);
   };
 
-  const handleMouseLeave = () => {
-    clearTimeout(timer);
-    onMouseLeave();
-  };
+  const handleMouseLeave = () => onMouseLeave();
+
+  useEffect(() => {
+    setIsNeedClearTimeout(true);
+
+    return () => {
+      setIsNeedClearTimeout(false);
+      clearTimeout(timer);
+    };
+  });
 
   return (
     <article className="small-movie-card catalog__movies-card"
-
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
 
-      <Card film={film} isPreview={isPreview}/>
+      {isPreviewMode
+        ? <CardVideo film={film} />
+        : <CardImage film={film} />
+      }
     </article>
   );
 };
@@ -74,7 +75,7 @@ FilmCard.propTypes = {
   film: filmProp,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
-  isPreview: PropTypes.bool.isRequired,
+  isPreviewMode: PropTypes.bool.isRequired,
 };
 
 CardImage.propTypes = {
@@ -83,11 +84,6 @@ CardImage.propTypes = {
 
 CardVideo.propTypes = {
   film: filmProp,
-};
-
-Card.propTypes = {
-  film: filmProp,
-  isPreview: PropTypes.bool.isRequired,
 };
 
 export default FilmCard;
