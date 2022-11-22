@@ -24,4 +24,17 @@ const filmProp = PropTypes.shape({
 
 const filmsProp = PropTypes.arrayOf(filmProp).isRequired;
 
-export {countProp, filmProp, filmsProp};
+const commentProp = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
+  }),
+  rating: PropTypes.number.isRequired,
+  comment: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired
+});
+
+const commentsProp = PropTypes.arrayOf(commentProp).isRequired;
+
+export {countProp, filmProp, filmsProp, commentProp, commentsProp};

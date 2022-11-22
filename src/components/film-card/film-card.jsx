@@ -18,7 +18,7 @@ const CardImage = (props) => {
       <img src={previewImage} alt={name} width="280" height="175"/>
     </div>
     <h3 className="small-movie-card__title">
-      <Link to={`${Patch.FILMS}${id}`} className="small-movie-card__link">{name}</Link>
+      <Link to={`${Patch.FILMS}/${id}`} className="small-movie-card__link">{name}</Link>
     </h3>
   </>;
 };
@@ -38,11 +38,11 @@ const CardVideo = (props) => {
 const FilmCard = (props) => {
   const {film, onMouseEnter, onMouseLeave, isPreviewMode} = props;
 
-  // const handleMouseEnter = () => onMouseEnter(film);
   const [isNeedClearTimeout, setIsNeedClearTimeout] = useState(false);
 
-  let timer = null;
+  // const handleMouseEnter = () => onMouseEnter(film);
 
+  let timer = null;
   const handleMouseEnter = () => {
     timer = setTimeout(() => onMouseEnter(film), TIME_OUT);
   };

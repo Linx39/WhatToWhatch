@@ -12,7 +12,7 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import {filmsProp} from '../props-types';
 import {Patch} from '../../const';
 
-const COUNT = {
+const Count = {
   MAIN: 8,
   FILM: 4,
   MY_LIST: 5,
@@ -25,21 +25,21 @@ const App = (props) => {
     <BrowserRouter>
       <Switch>
         <Route path={Patch.MAIN} exact>
-          <Main films={films} count={COUNT.MAIN} />
+          <Main films={films} count={Count.MAIN} />
         </Route>
         <Route path={Patch.LOGIN} exact>
           <SignIn />
         </Route>
         <Route path={Patch.MY_LIST} exact>
-          <MyList films={films} count={COUNT.MY_LIST} />
+          <MyList films={films} count={Count.MY_LIST} />
         </Route>
-        <Route path="/films/:id" exact>
-          <Film films={films} count={COUNT.FILM} />
+        <Route path={`${Patch.FILMS}/:id`} exact>
+          <Film films={films} count={Count.FILM} />
         </Route>
-        <Route path="/films/:id/review" exact>
+        <Route path={`${Patch.FILMS}/:id/review`} exact>
           <AddReview films={films} />
         </Route>
-        <Route path="/player/:id" exact>
+        <Route path={`${Patch.PLAYER}/:id`} exact>
           <Player films={films} />
         </Route>
         <Route>

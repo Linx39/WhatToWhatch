@@ -2,8 +2,8 @@ const Patch = {
   MAIN: `/`,
   LOGIN: `/login`,
   MY_LIST: `/mylist`,
-  FILMS: `/films/:`,
-  PLAYER: `/player/:`,
+  FILMS: `/films`,
+  PLAYER: `/player`,
 };
 
 const LogoPosition = {
@@ -12,4 +12,10 @@ const LogoPosition = {
 
 };
 
-export {Patch, LogoPosition};
+const NavItem = {
+  OVERVIEW: `OVERVIEW`,
+  DETAILS: `DETAILS`,
+  REVIEWS: `REVIEWS`,
+};
+
+export {Patch, LogoPosition, NavItem};

@@ -8,6 +8,7 @@ const FilmsList = (props) => {
   const {films, count} = props;
 
   const [activeCard, setActiveCard] = useState(null);
+
   const handleMouseEnter = (film) => setActiveCard(film);
   const handleMouseLeave = () => setActiveCard(null);
 

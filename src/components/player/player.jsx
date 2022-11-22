@@ -14,7 +14,7 @@ const Player = (props) => {
 
   const handleButtonClick = () => {
     return (
-      history.push(`${Patch.FILMS}${film.id}`)
+      history.push(`${Patch.FILMS}/${film.id}`)
     );
   };
 

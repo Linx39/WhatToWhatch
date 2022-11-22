@@ -37,7 +37,7 @@ const AddReview = (props) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`${Patch.FILMS}${id}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={`${Patch.FILMS}/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

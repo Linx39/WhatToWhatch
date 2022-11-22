@@ -33,7 +33,7 @@ export default [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
     runTime: 102,
-    genre: `Comedy`,
+    genre: `Drama`,
     released: 2013,
     isFavorite: false
   },
@@ -52,7 +52,7 @@ export default [
     director: `3Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
     runTime: 103,
-    genre: `Comedy`,
+    genre: `Triller`,
     released: 2014,
     isFavorite: false
   },
@@ -71,7 +71,7 @@ export default [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
     runTime: 104,
-    genre: `Comedy`,
+    genre: `Serial`,
     released: 2015,
     isFavorite: false
   },
@@ -90,7 +90,7 @@ export default [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
     runTime: 105,
-    genre: `Comedy`,
+    genre: `Serial`,
     released: 2016,
     isFavorite: false
   },
@@ -128,7 +128,7 @@ export default [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
     runTime: 107,
-    genre: `Comedy`,
+    genre: `Drama`,
     released: 2018,
     isFavorite: false
   },
@@ -147,7 +147,7 @@ export default [
     director: `Wes Andreson`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
     runTime: 108,
-    genre: `Comedy`,
+    genre: `Drama`,
     released: 2019,
     isFavorite: false
   },

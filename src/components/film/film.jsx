@@ -1,28 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, Redirect, useHistory} from 'react-router-dom';
 
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
+import NavList from './nav-list';
+import Overview from './overview';
+import Details from './details';
+import Reviews from './reviews';
 
 import {filmsProp, countProp} from '../props-types';
 import {findFilm} from '../component-utils';
-import {LogoPosition, Patch} from '../../const';
+import {LogoPosition, Patch, NavItem} from '../../const';
 
 const Film = (props) => {
   const {films, count} = props;
 
-  const history = useHistory();
-
-  const handleButtonClick = () => {
-    return (
-      history.push(`${Patch.PLAYER}${film.id}`)
-    );
-  };
-
   const film = findFilm(films);
-
   if (!film) {
     return (
       <Redirect to={Patch.MAIN} />
@@ -33,21 +28,36 @@ const Film = (props) => {
     id,
     name,
     posterImage,
-    previewImage,
     backgroundImage,
-    backgroundColor,
-    videoLink,
-    previewVideoLink,
-    description,
-    rating,
-    scoresCount,
-    director,
-    starring,
-    runTime,
     genre,
     released,
-    isFavorite
   } = film;
+
+  const history = useHistory();
+  const handlePlayButtonClick = () => {
+    return (
+      history.push(`${Patch.PLAYER}/${film.id}`)
+    );
+  };
+
+  const [activeNavItem, setActiveNavItem] = useState(NavItem.OVERVIEW);
+
+  const handleNavItemClick = (item) => setActiveNavItem(item);
+
+  const renderActiveTab = (navItem) => {
+    switch (navItem) {
+      case NavItem.OVERVIEW:
+        return <Overview film={film} />;
+      case NavItem.DETAILS:
+        return <Details film={film} />;
+      case NavItem.REVIEWS:
+        return <Reviews film={film} />;
+      default:
+        throw new Error(`Unknown switch case expression: '${navItem}'!`);
+    }
+  };
+
+  const filmLikeThis = films.filter((item) => item.genre === genre && item !== film);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -59,7 +69,7 @@ const Film = (props) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header movie-card__head">
-          {<Logo/>}
+          {<Logo />}
           {<UserBlock />}
         </header>
 
@@ -72,7 +82,7 @@ const Film = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button" onClick={handleButtonClick}>
+              <button className="btn btn--play movie-card__button" type="button" onClick={handlePlayButtonClick}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
@@ -84,7 +94,7 @@ const Film = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <Link to={`${Patch.FILMS}${id}/review`} className="btn movie-card__button">Add review</Link>
+              <Link to={`${Patch.FILMS}/${id}/review`} className="btn movie-card__button">Add review</Link>
             </div>
           </div>
         </div>
@@ -97,37 +107,12 @@ const Film = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <nav className="movie-nav movie-card__nav">
-              <ul className="movie-nav__list">
-                <li className="movie-nav__item movie-nav__item--active">
-                  <Link to="#" className="movie-nav__link">Overview</Link>
-                </li>
-                <li className="movie-nav__item">
-                  <Link to="#" className="movie-nav__link">Details</Link>
-                </li>
-                <li className="movie-nav__item">
-                  <Link to="#" className="movie-nav__link">Reviews</Link>
-                </li>
-              </ul>
-            </nav>
+            <NavList
+              activeNavItem={activeNavItem}
+              onClick={handleNavItemClick}
+            />
 
-            <div className="movie-rating">
-              <div className="movie-rating__score">{rating}</div>
-              <p className="movie-rating__meta">
-                <span className="movie-rating__level">Very good</span>
-                <span className="movie-rating__count">{scoresCount} ratings</span>
-              </p>
-            </div>
-
-            <div className="movie-card__text">
-              <p>{description}</p>
-
-              <p>{description}</p>
-
-              <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-              <p className="movie-card__starring"><strong>Starring: {starring.map((star) => star).join(`, `)}</strong></p>
-            </div>
+            {renderActiveTab(activeNavItem)}
           </div>
         </div>
       </div>
@@ -138,7 +123,7 @@ const Film = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          {<FilmsList films={films} count={count} />}
+          {<FilmsList films={filmLikeThis} count={count} />}
         </div>
       </section>
 
