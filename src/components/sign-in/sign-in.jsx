@@ -9,7 +9,7 @@ const SignIn = () => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        {<Logo />}
+        <Logo />
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -33,8 +33,8 @@ const SignIn = () => {
       </div>
 
       <footer className="page-footer">
-        {<Logo place = {LogoPosition.FOOTER} />}
-        {<Copyright />}
+        <Logo place = {LogoPosition.FOOTER} />
+        <Copyright />
       </footer>
     </div>
   </React.Fragment>;

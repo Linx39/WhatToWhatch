@@ -15,19 +15,19 @@ const MyList = (props) => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        {<Logo />}
+        <Logo />
         <h1 className="page-title user-page__title">My list</h1>
-        {<UserBlock />}
+        <UserBlock />
       </header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        {<FilmsList films={films} count={count} />}
+        <FilmsList films={films} count={count} />
       </section>
 
       <footer className="page-footer">
-        {<Logo place = {LogoPosition.FOOTER} />}
-        {<Copyright />}
+        <Logo place = {LogoPosition.FOOTER} />
+        <Copyright />
       </footer>
     </div>
   </React.Fragment>;

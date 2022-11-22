@@ -38,7 +38,7 @@ const CardVideo = (props) => {
 const FilmCard = (props) => {
   const {film, onMouseEnter, onMouseLeave, isPreviewMode} = props;
 
-  const [isNeedClearTimeout, setIsNeedClearTimeout] = useState(false);
+  // const [isNeedClearTimeout, setIsNeedClearTimeout] = useState(false);
 
   // const handleMouseEnter = () => onMouseEnter(film);
 
@@ -50,10 +50,10 @@ const FilmCard = (props) => {
   const handleMouseLeave = () => onMouseLeave();
 
   useEffect(() => {
-    setIsNeedClearTimeout(true);
+    // setIsNeedClearTimeout(true);
 
     return () => {
-      setIsNeedClearTimeout(false);
+      // setIsNeedClearTimeout(false);
       clearTimeout(timer);
     };
   });

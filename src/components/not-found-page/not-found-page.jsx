@@ -13,8 +13,8 @@ const NotFoundPage = () => {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header">
-        {<Logo />}
-        {<UserBlock />}
+        <Logo />
+        <UserBlock />
       </header>
     </section>
 
@@ -25,8 +25,8 @@ const NotFoundPage = () => {
 
     <div className="page-content">
       <footer className="page-footer">
-        {<Logo place = {LogoPosition.FOOTER} />}
-        {<Copyright />}
+        <Logo place = {LogoPosition.FOOTER} />
+        <Copyright />
       </footer>
     </div>
   </React.Fragment>;

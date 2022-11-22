@@ -21,8 +21,8 @@ const Main = (props) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header movie-card__head">
-        {<Logo isLink = {false}/>}
-        {<UserBlock />}
+        <Logo isLink = {false}/>
+        <UserBlock />
       </header>
 
       <div className="movie-card__wrap">
@@ -95,7 +95,7 @@ const Main = (props) => {
         </ul>
 
         <div className="catalog__movies-list">
-          {<FilmsList films={films} count={count} />}
+          <FilmsList films={films} count={count} />
         </div>
 
         <div className="catalog__more">
@@ -104,8 +104,8 @@ const Main = (props) => {
       </section>
 
       <footer className="page-footer">
-        {<Logo place = {LogoPosition.FOOTER} isLink = {false}/>}
-        {<Copyright />}
+        <Logo place = {LogoPosition.FOOTER} isLink = {false}/>
+        <Copyright />
       </footer>
     </div>
   </React.Fragment>;

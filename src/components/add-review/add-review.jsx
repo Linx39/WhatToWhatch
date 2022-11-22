@@ -32,7 +32,7 @@ const AddReview = (props) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          {<Logo />}
+          <Logo />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
@@ -45,7 +45,7 @@ const AddReview = (props) => {
             </ul>
           </nav>
 
-          {<UserBlock />}
+          <UserBlock />
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
@@ -54,7 +54,6 @@ const AddReview = (props) => {
       </div>
 
       <AddReviewForm />
-
     </section>
   );
 };

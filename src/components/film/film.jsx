@@ -44,7 +44,7 @@ const Film = (props) => {
 
   const handleNavItemClick = (item) => setActiveNavItem(item);
 
-  const renderActiveTab = (navItem) => {
+  const getActiveComponent = (navItem) => {
     switch (navItem) {
       case NavItem.OVERVIEW:
         return <Overview film={film} />;
@@ -69,8 +69,8 @@ const Film = (props) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header movie-card__head">
-          {<Logo />}
-          {<UserBlock />}
+          <Logo />
+          <UserBlock />
         </header>
 
         <div className="movie-card__wrap">
@@ -112,7 +112,7 @@ const Film = (props) => {
               onClick={handleNavItemClick}
             />
 
-            {renderActiveTab(activeNavItem)}
+            {getActiveComponent(activeNavItem)}
           </div>
         </div>
       </div>
@@ -123,13 +123,13 @@ const Film = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          {<FilmsList films={filmLikeThis} count={count} />}
+          <FilmsList films={filmLikeThis} count={count} />
         </div>
       </section>
 
       <footer className="page-footer">
-        {<Logo place = {LogoPosition.FOOTER} />}
-        {<Copyright />}
+        <Logo place = {LogoPosition.FOOTER} />
+        <Copyright />
       </footer>
     </div>
   </React.Fragment>;
