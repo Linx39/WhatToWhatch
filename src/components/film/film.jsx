@@ -10,12 +10,12 @@ import Overview from './overview';
 import Details from './details';
 import Reviews from './reviews';
 
-import {filmsProp, countProp} from '../props-types';
+import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
-import {LogoPosition, Patch, NavItem} from '../../const';
+import {CountFilms, LogoPosition, Patch, NavItem} from '../../const';
 
 const Film = (props) => {
-  const {films, count} = props;
+  const {films} = props;
 
   const film = findFilm(films);
   if (!film) {
@@ -123,7 +123,7 @@ const Film = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          <FilmsList films={filmsLikeThis} count={count} />
+          <FilmsList films={filmsLikeThis} count={CountFilms.FILMS} />
         </div>
       </section>
 
@@ -137,7 +137,6 @@ const Film = (props) => {
 
 Film.propTypes = {
   films: filmsProp,
-  count: countProp,
 };
 
 export default Film;

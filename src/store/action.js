@@ -1,13 +1,15 @@
 export const ActionType = {
   CHANGE_GENRE: `wtw/changeGenre`,
-  GET_FILMS_BY_GENRE: `wtw/getFilmsByGenre`,
+  GET_FILTERED_FILMS: `wtw/getFilteredFilms`,
 };
 
 export const ActionCreator = {
-  changeGenre: () => ({
+  changeGenre: (genre) => ({
     type: ActionType.CHANGE_GENRE,
+    payload: genre,
   }),
-  getFilmsByGenre: () => ({
-    type: ActionType.GET_FILMS_BY_GENRE,
+  getFilteredFilms: (genre) => ({
+    type: ActionType.GET_FILTERED_FILMS,
+    payload: genre,
   }),
 };

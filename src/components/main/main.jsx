@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
+import {ActionCreator} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list';
 
-import {filmsProp, countProp} from '../props-types';
-import {LogoPosition} from '../../const';
-
-const GENRE = `All genres`;
+import {filmsProp} from '../props-types';
+import {CountFilms, LogoPosition, GENRE} from '../../const';
 
 const getUniqueGenres = (films) => {
   const uniqueGenres = [GENRE];
@@ -23,27 +24,11 @@ const getUniqueGenres = (films) => {
   return uniqueGenres;
 };
 
-const getFilmsFilteredByGenre = (films, genre) => {
-  if (genre === GENRE) {
-    return films;
-  }
-
-  return films.filter((film) => film.genre === genre);
-};
-
 const Main = (props) => {
-  const {films, count} = props;
+  const {films, activeGenre, filteredFilms, onGenreItemClick} = props;
   const {name, posterImage, backgroundImage, genre, released} = films[3];
 
   const genres = getUniqueGenres(films);
-
-  const [activeGenreItem, setActiveGenreItem] = useState(genres[0]);
-  const [filmsFilteredByGenre, setFilmsFilteredByGenre] = useState(films);
-
-  const handleGenreItemClick = (item) => {
-    setActiveGenreItem(item);
-    setFilmsFilteredByGenre(getFilmsFilteredByGenre(films, item));
-  };
 
   return <React.Fragment>
     <section className="movie-card">
@@ -96,12 +81,12 @@ const Main = (props) => {
 
         <GenresList
           genres={genres}
-          activeGenreItem={activeGenreItem}
-          onClick={handleGenreItemClick}
+          activeGenre={activeGenre}
+          onClick={onGenreItemClick}
         />
 
         <div className="catalog__movies-list">
-          <FilmsList films={filmsFilteredByGenre} count={count} />
+          <FilmsList films={filteredFilms} count={CountFilms.MAIN} />
         </div>
 
         <div className="catalog__more">
@@ -119,7 +104,23 @@ const Main = (props) => {
 
 Main.propTypes = {
   films: filmsProp,
-  count: countProp,
+  activeGenre: PropTypes.string.isRequired,
+  filteredFilms: filmsProp,
+  onGenreItemClick: PropTypes.func.isRequired,
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  activeGenre: state.activeGenre,
+  filteredFilms: state.filteredFilms,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGenreItemClick(genre) {
+    dispatch(ActionCreator.changeGenre(genre));
+    dispatch(ActionCreator.getFilteredFilms(genre));
+  },
+});
+
+export {Main};
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
+

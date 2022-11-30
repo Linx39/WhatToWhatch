@@ -1,8 +1,19 @@
-import {ActionType} from "./action";
+import {ActionType} from './action';
+
+import filmsMock from '../mocks/films';
+import {GENRE} from '../const';
 
 const initialState = {
-  genre: ``,
-  films: [],
+  activeGenre: GENRE,
+  filteredFilms: filmsMock,
+};
+
+const filterFilms = (films, genre) => {
+  if (genre === GENRE) {
+    return films;
+  }
+
+  return films.filter((film) => film.genre === genre);
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,17 +21,17 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_GENRE:
       return {
         ...state,
-        genre: state.genre,
+        activeGenre: action.payload,
       };
 
-    case ActionType.GET_FILMS_BY_GENRE:
+    case ActionType.GET_FILTERED_FILMS:
       return {
         ...state,
-        films: state.films,
+        filteredFilms: filterFilms(filmsMock, action.payload),
       };
 
-    // default:
-    //   throw new Error(`Unknown switch case expression: '${action.type}'!`);
+    default:
+      return state;
   }
 };
 

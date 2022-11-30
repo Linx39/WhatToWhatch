@@ -6,6 +6,12 @@ const Patch = {
   PLAYER: `/player`,
 };
 
+const CountFilms = {
+  MAIN: 8,
+  FILMS: 4,
+  MY_LIST: 5,
+};
+
 const LogoPosition = {
   HEADER: `HEADER`,
   FOOTER: `FOOTER`,
@@ -18,4 +24,6 @@ const NavItem = {
   REVIEWS: `REVIEWS`,
 };
 
-export {Patch, LogoPosition, NavItem};
+const GENRE = `All genres`;
+
+export {Patch, CountFilms, LogoPosition, NavItem, GENRE};
