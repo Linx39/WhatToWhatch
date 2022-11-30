@@ -57,7 +57,7 @@ const Film = (props) => {
     }
   };
 
-  const filmLikeThis = films.filter((item) => item.genre === genre && item !== film);
+  const filmsLikeThis = films.filter((item) => item.genre === genre && item !== film);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -123,7 +123,7 @@ const Film = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          <FilmsList films={filmLikeThis} count={count} />
+          <FilmsList films={filmsLikeThis} count={count} />
         </div>
       </section>
 

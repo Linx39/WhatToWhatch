@@ -1,32 +1,23 @@
 import React from 'react';
-
-import {filmsProp} from '../props-types';
-
-const GENRE = `All genres`;
-
-const getUniqueGenres = (films) => {
-  const uniqueGenres = [GENRE];
-
-  films.forEach((film) => {
-    const ff = uniqueGenres.find((genre) => genre === film.genre);
-    if (!ff) {
-      uniqueGenres.push(film.genre);
-    }
-  });
-
-  return uniqueGenres;
-};
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 const GenresList = (props) => {
-  const {films} = props;
+  const {genres, activeGenreItem, onClick} = props;
 
-  const genres = getUniqueGenres(films);
-  // catalog__genres-item--active
+  const handleMouseClick = (evt) => onClick(evt.target.innerHTML);
+
   return (
     <ul className="catalog__genres-list">
       {genres.map((genre, index) => (
-        <li key={`genre-${index}`} className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">{genre}</a>
+        <li key={`genre-${index}`}
+          className={`catalog__genres-item ${activeGenreItem === genre ? `catalog__genres-item--active` : ``}`}>
+          <Link to="#"
+            className="catalog__genres-link"
+            onClick={handleMouseClick}
+          >
+            {genre}
+          </Link>
         </li>
       ))}
     </ul>
@@ -34,7 +25,9 @@ const GenresList = (props) => {
 };
 
 GenresList.propTypes = {
-  films: filmsProp,
+  genres: PropTypes.array,
+  activeGenreItem: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default GenresList;

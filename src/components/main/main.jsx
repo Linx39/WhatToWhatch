@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
@@ -9,9 +9,41 @@ import GenresList from './genres-list';
 import {filmsProp, countProp} from '../props-types';
 import {LogoPosition} from '../../const';
 
+const GENRE = `All genres`;
+
+const getUniqueGenres = (films) => {
+  const uniqueGenres = [GENRE];
+
+  films.forEach((film) => {
+    if (!uniqueGenres.find((genre) => genre === film.genre)) {
+      uniqueGenres.push(film.genre);
+    }
+  });
+
+  return uniqueGenres;
+};
+
+const getFilmsFilteredByGenre = (films, genre) => {
+  if (genre === GENRE) {
+    return films;
+  }
+
+  return films.filter((film) => film.genre === genre);
+};
+
 const Main = (props) => {
   const {films, count} = props;
   const {name, posterImage, backgroundImage, genre, released} = films[3];
+
+  const genres = getUniqueGenres(films);
+
+  const [activeGenreItem, setActiveGenreItem] = useState(genres[0]);
+  const [filmsFilteredByGenre, setFilmsFilteredByGenre] = useState(films);
+
+  const handleGenreItemClick = (item) => {
+    setActiveGenreItem(item);
+    setFilmsFilteredByGenre(getFilmsFilteredByGenre(films, item));
+  };
 
   return <React.Fragment>
     <section className="movie-card">
@@ -62,10 +94,14 @@ const Main = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenresList films={films} />
+        <GenresList
+          genres={genres}
+          activeGenreItem={activeGenreItem}
+          onClick={handleGenreItemClick}
+        />
 
         <div className="catalog__movies-list">
-          <FilmsList films={films} count={count} />
+          <FilmsList films={filmsFilteredByGenre} count={count} />
         </div>
 
         <div className="catalog__more">
