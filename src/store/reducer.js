@@ -1,19 +1,31 @@
 import {ActionType} from './action';
 
-import filmsMock from '../mocks/films';
-import {GENRE} from '../const';
+import films from '../mocks/films';
+import {FilmsCount, GENRE_DEFAULT} from '../const';
 
 const initialState = {
-  activeGenre: GENRE,
-  filteredFilms: filmsMock,
+  activeGenre: GENRE_DEFAULT,
+  filteredFilms: films,
+  filmsCount: FilmsCount.MAIN,
+  films,
 };
 
-const filterFilms = (films, genre) => {
-  if (genre === GENRE) {
-    return films;
+const filterFilms = (items, genre) => {
+  if (genre === GENRE_DEFAULT) {
+    return items;
   }
 
-  return films.filter((film) => film.genre === genre);
+  return items.filter((item) => item.genre === genre);
+};
+
+const getNewCount = (prevCount) => {
+  const newCount = prevCount + FilmsCount.MAIN;
+
+  if (newCount > films.length) {
+    return films.length;
+  }
+
+  return newCount;
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,7 +39,18 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_FILTERED_FILMS:
       return {
         ...state,
-        filteredFilms: filterFilms(filmsMock, action.payload),
+        filteredFilms: filterFilms(films, action.payload),
+      };
+
+    case ActionType.GET_FILMS_COUNT:
+      return {
+        ...state,
+        filmsCount: getNewCount(state.filmsCount),
+      };
+
+    case ActionType.RESET_ON_DEFAULT:
+      return {
+        ...initialState,
       };
 
     default:

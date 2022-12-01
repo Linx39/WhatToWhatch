@@ -6,7 +6,7 @@ const Patch = {
   PLAYER: `/player`,
 };
 
-const CountFilms = {
+const FilmsCount = {
   MAIN: 8,
   FILMS: 4,
   MY_LIST: 5,
@@ -19,11 +19,11 @@ const LogoPosition = {
 };
 
 const NavItem = {
-  OVERVIEW: `OVERVIEW`,
-  DETAILS: `DETAILS`,
-  REVIEWS: `REVIEWS`,
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`,
 };
 
-const GENRE = `All genres`;
+const GENRE_DEFAULT = `All genres`;
 
-export {Patch, CountFilms, LogoPosition, NavItem, GENRE};
+export {Patch, FilmsCount, LogoPosition, NavItem, GENRE_DEFAULT};

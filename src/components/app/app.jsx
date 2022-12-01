@@ -19,19 +19,19 @@ const App = (props) => {
     <BrowserRouter>
       <Switch>
         <Route path={Patch.MAIN} exact>
-          <Main films={films} />
+          <Main />
         </Route>
         <Route path={Patch.LOGIN} exact>
           <SignIn />
         </Route>
         <Route path={Patch.MY_LIST} exact>
-          <MyList films={films} />
+          <MyList />
         </Route>
         <Route path={`${Patch.FILMS}/:id`} exact>
-          <Film films={films} />
+          <Film />
         </Route>
         <Route path={`${Patch.FILMS}/:id/review`} exact>
-          <AddReview films={films} />
+          <AddReview />
         </Route>
         <Route path={`${Patch.PLAYER}/:id`} exact>
           <Player films={films} />

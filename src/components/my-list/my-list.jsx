@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
@@ -6,7 +7,7 @@ import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 
 import {filmsProp} from '../props-types';
-import {CountFilms, LogoPosition} from '../../const';
+import {FilmsCount, LogoPosition} from '../../const';
 
 const MyList = (props) => {
   const {films} = props;
@@ -23,7 +24,7 @@ const MyList = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__movies-list">
-          <FilmsList films={films} count={CountFilms.MY_LIST} />
+          <FilmsList films={films} count={FilmsCount.MY_LIST} />
         </div>
       </section>
 
@@ -39,4 +40,9 @@ MyList.propTypes = {
   films: filmsProp,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export {MyList};
+export default connect(mapStateToProps)(MyList);

@@ -8,27 +8,14 @@ import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list';
+import ShowMore from './show-more';
 
-import {filmsProp} from '../props-types';
-import {CountFilms, LogoPosition, GENRE} from '../../const';
-
-const getUniqueGenres = (films) => {
-  const uniqueGenres = [GENRE];
-
-  films.forEach((film) => {
-    if (!uniqueGenres.find((genre) => genre === film.genre)) {
-      uniqueGenres.push(film.genre);
-    }
-  });
-
-  return uniqueGenres;
-};
+import {filmsProp, countProp} from '../props-types';
+import {LogoPosition} from '../../const';
 
 const Main = (props) => {
-  const {films, activeGenre, filteredFilms, onGenreItemClick} = props;
+  const {films, count, onShowMoreClick, activeGenre, filteredFilms, onGenreItemClick} = props;
   const {name, posterImage, backgroundImage, genre, released} = films[3];
-
-  const genres = getUniqueGenres(films);
 
   return <React.Fragment>
     <section className="movie-card">
@@ -39,7 +26,7 @@ const Main = (props) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header movie-card__head">
-        <Logo isLink = {false}/>
+        <Logo isLink = {false} />
         <UserBlock />
       </header>
 
@@ -80,22 +67,21 @@ const Main = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <GenresList
-          genres={genres}
+          films={films}
           activeGenre={activeGenre}
           onClick={onGenreItemClick}
         />
 
         <div className="catalog__movies-list">
-          <FilmsList films={filteredFilms} count={CountFilms.MAIN} />
+          <FilmsList films={filteredFilms} count={count} />
         </div>
 
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
+        {(count < filteredFilms.length) && <ShowMore onClick={onShowMoreClick} />}
+
       </section>
 
       <footer className="page-footer">
-        <Logo place = {LogoPosition.FOOTER} isLink = {false}/>
+        <Logo place = {LogoPosition.FOOTER} isLink = {false} />
         <Copyright />
       </footer>
     </div>
@@ -104,17 +90,24 @@ const Main = (props) => {
 
 Main.propTypes = {
   films: filmsProp,
+  count: countProp,
   activeGenre: PropTypes.string.isRequired,
   filteredFilms: filmsProp,
+  onShowMoreClick: PropTypes.func.isRequired,
   onGenreItemClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  films: state.films,
+  count: state.filmsCount,
   activeGenre: state.activeGenre,
   filteredFilms: state.filteredFilms,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  onShowMoreClick() {
+    dispatch(ActionCreator.getFilmsCount());
+  },
   onGenreItemClick(genre) {
     dispatch(ActionCreator.changeGenre(genre));
     dispatch(ActionCreator.getFilteredFilms(genre));
@@ -123,4 +116,3 @@ const mapDispatchToProps = (dispatch) => ({
 
 export {Main};
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
-

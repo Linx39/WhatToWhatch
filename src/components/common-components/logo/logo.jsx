@@ -1,13 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import {connect} from 'react-redux';
 
+import {ActionCreator} from '../../../store/action';
 import {Patch, LogoPosition} from '../../../const';
 
-const Logo = ({place = LogoPosition.HEADER, isLink = true}) => {
-  const logoLinkClassName = place === LogoPosition.FOOTER
-    ? `logo__link logo__link--light`
-    : `logo__link`;
+const Logo = ({place = LogoPosition.HEADER, isLink = true, resetOnDefault}) => {
+  const history = useHistory();
+
+  const handleLogoClick = () => {
+    resetOnDefault();
+    history.push(Patch.MAIN);
+  };
+
+  let logoLinkClassName = `logo__link`;
+  if (place === LogoPosition.FOOTER) {
+    logoLinkClassName += ` logo__link--light`;
+  }
 
   const SpanFragment = () => {
     return <React.Fragment>
@@ -20,7 +30,10 @@ const Logo = ({place = LogoPosition.HEADER, isLink = true}) => {
   if (isLink) {
     return (
       <div className="logo">
-        <Link to={Patch.MAIN} className={logoLinkClassName}>
+        <Link to="#"
+          className={logoLinkClassName}
+          onClick={handleLogoClick}
+        >
           <SpanFragment />
         </Link>
       </div>
@@ -39,6 +52,14 @@ const Logo = ({place = LogoPosition.HEADER, isLink = true}) => {
 Logo.propTypes = {
   place: PropTypes.string,
   isLink: PropTypes.bool,
+  resetOnDefault: PropTypes.func.isRequired,
 };
 
-export default Logo;
+const mapDispatchToProps = (dispatch) => ({
+  resetOnDefault() {
+    dispatch(ActionCreator.resetOnDefault());
+  },
+});
+
+export {Logo};
+export default connect(null, mapDispatchToProps)(Logo);

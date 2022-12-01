@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Link, Redirect, useHistory} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
@@ -12,7 +13,7 @@ import Reviews from './reviews';
 
 import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
-import {CountFilms, LogoPosition, Patch, NavItem} from '../../const';
+import {FilmsCount, LogoPosition, Patch, NavItem} from '../../const';
 
 const Film = (props) => {
   const {films} = props;
@@ -123,7 +124,7 @@ const Film = (props) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          <FilmsList films={filmsLikeThis} count={CountFilms.FILMS} />
+          <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} />
         </div>
       </section>
 
@@ -139,4 +140,9 @@ Film.propTypes = {
   films: filmsProp,
 };
 
-export default Film;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export {Film};
+export default connect(mapStateToProps)(Film);

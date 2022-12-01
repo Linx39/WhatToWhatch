@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -62,4 +63,9 @@ AddReview.propTypes = {
   films: filmsProp,
 };
 
-export default AddReview;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export {AddReview};
+export default connect(mapStateToProps)(AddReview);

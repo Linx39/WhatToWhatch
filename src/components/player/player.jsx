@@ -1,8 +1,8 @@
 import React from 'react';
 import {Redirect, useHistory} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import VideoPlayer from '../video-player/video-player';
-
 import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
@@ -73,4 +73,9 @@ Player.propTypes = {
   films: filmsProp,
 };
 
-export default Player;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export {Player};
+export default connect(mapStateToProps)(Player);
