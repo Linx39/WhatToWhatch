@@ -9,12 +9,9 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-import {filmsProp} from '../props-types';
 import {Patch} from '../../const';
 
-const App = (props) => {
-  const {films} = props;
-
+const App = () => {
   return (
     <BrowserRouter>
       <Switch>
@@ -34,7 +31,7 @@ const App = (props) => {
           <AddReview />
         </Route>
         <Route path={`${Patch.PLAYER}/:id`} exact>
-          <Player films={films} />
+          <Player />
         </Route>
         <Route>
           <NotFoundPage />
@@ -42,10 +39,6 @@ const App = (props) => {
       </Switch>
     </BrowserRouter>
   );
-};
-
-App.propTypes = {
-  films: filmsProp,
 };
 
 export default App;

@@ -1,18 +1,24 @@
 import {ActionCreator} from "./action";
-import {AuthorizationStatus} from "../const";
+import {adaptToClient} from "./adapter";
+import {AuthorizationStatus, Url} from "../const";
 
-export const fetchQuestionList = () => (dispatch, _getState, api) => (
-  api.get(`/films`)
-    .then(({data}) => dispatch(ActionCreator.loadFilms(data)))
+const fetchFilms = () => (dispatch, _getState, api) => (
+  api.get(Url.FILMS)
+    .then(({data}) => {
+      const films = data.map((item) => adaptToClient(item));
+      dispatch(ActionCreator.loadFilms(films));
+    })
 );
 
-export const checkAuth = () => (dispatch, _getState, api) => (
+const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
-export const login = ({login: email, password}) => (dispatch, _getState, api) => (
+const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
 );
+
+export {fetchFilms, checkAuth, login};

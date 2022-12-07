@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -9,13 +9,28 @@ import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list';
 import ShowMore from './show-more';
-
+import Loading from '../loading/loading';
+import {fetchFilms} from "../../store/api-actions";
 import {filmsProp, countProp} from '../props-types';
 import {LogoPosition} from '../../const';
 
 const Main = (props) => {
-  const {films, count, onShowMoreClick, activeGenre, filteredFilms, onGenreItemClick} = props;
+  const {films, count, onShowMoreClick, activeGenre, filteredFilms, onGenreItemClick, isDataLoaded, onLoadData} = props;
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
+
   const {name, posterImage, backgroundImage, genre, released} = films[3];
+
 
   return <React.Fragment>
     <section className="movie-card">
@@ -74,6 +89,10 @@ const Main = (props) => {
 
         <div className="catalog__movies-list">
           <FilmsList films={filteredFilms} count={count} />
+          {/* {isDataLoaded
+            ? <FilmsList films={filteredFilms} count={count} />
+            : <Loading />
+          } */}
         </div>
 
         {(count < filteredFilms.length) && <ShowMore onClick={onShowMoreClick} />}
@@ -95,6 +114,8 @@ Main.propTypes = {
   filteredFilms: filmsProp,
   onShowMoreClick: PropTypes.func.isRequired,
   onGenreItemClick: PropTypes.func.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -102,6 +123,7 @@ const mapStateToProps = (state) => ({
   count: state.filmsCount,
   activeGenre: state.activeGenre,
   filteredFilms: state.filteredFilms,
+  isDataLoaded: state.isDataLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -111,6 +133,9 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreItemClick(genre) {
     dispatch(ActionCreator.changeGenre(genre));
     dispatch(ActionCreator.getFilteredFilms(genre));
+  },
+  onLoadData() {
+    dispatch(fetchFilms());
   },
 });
 

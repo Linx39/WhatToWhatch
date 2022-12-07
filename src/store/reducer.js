@@ -1,25 +1,24 @@
 import {ActionType} from './action';
-
-import films from '../mocks/films';
 import {FilmsCount, GENRE_DEFAULT, AuthorizationStatus} from '../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
-  filteredFilms: films,
+  filteredFilms: [],
   filmsCount: FilmsCount.MAIN,
   films: [],
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false,
 };
 
-const filterFilms = (items, genre) => {
+const filterFilms = (films, genre) => {
   if (genre === GENRE_DEFAULT) {
-    return items;
+    return films;
   }
 
-  return items.filter((item) => item.genre === genre);
+  return films.filter((film) => film.genre === genre);
 };
 
-const getNewCount = (prevCount) => {
+const getNewCount = (films, prevCount) => {
   const newCount = prevCount + FilmsCount.MAIN;
 
   if (newCount > films.length) {
@@ -40,24 +39,29 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_FILTERED_FILMS:
       return {
         ...state,
-        filteredFilms: filterFilms(films, action.payload),
+        filteredFilms: filterFilms(state.films, action.payload),
       };
 
     case ActionType.GET_FILMS_COUNT:
       return {
         ...state,
-        filmsCount: getNewCount(state.filmsCount),
+        filmsCount: getNewCount(state.films, state.filmsCount),
       };
 
     case ActionType.RESET_ON_DEFAULT:
       return {
-        ...initialState,
+        ...state,
+        activeGenre: GENRE_DEFAULT,
+        filteredFilms: state.films,
+        filmsCount: FilmsCount.MAIN,
       };
 
     case ActionType.LOAD_FILMS:
       return {
         ...state,
         films: action.payload,
+        isDataLoaded: true,
+        filteredFilms: action.payload,
       };
 
     case ActionType.REQUIRED_AUTHORIZATION:

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const LoadingScreen = () => {
+const Loading = () => {
   return (
     <p>Loading ...</p>
   );
 };
 
-export default LoadingScreen;
+export default Loading;
