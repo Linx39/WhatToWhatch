@@ -1,13 +1,14 @@
 import {ActionType} from './action';
 
 import films from '../mocks/films';
-import {FilmsCount, GENRE_DEFAULT} from '../const';
+import {FilmsCount, GENRE_DEFAULT, AuthorizationStatus} from '../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
   filteredFilms: films,
   filmsCount: FilmsCount.MAIN,
-  films,
+  films: [],
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
 };
 
 const filterFilms = (items, genre) => {
@@ -51,6 +52,18 @@ const reducer = (state = initialState, action) => {
     case ActionType.RESET_ON_DEFAULT:
       return {
         ...initialState,
+      };
+
+    case ActionType.LOAD_FILMS:
+      return {
+        ...state,
+        films: action.payload,
+      };
+
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
       };
 
     default:

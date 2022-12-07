@@ -26,4 +26,9 @@ const NavItem = {
 
 const GENRE_DEFAULT = `All genres`;
 
-export {Patch, FilmsCount, LogoPosition, NavItem, GENRE_DEFAULT};
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
+export {Patch, FilmsCount, LogoPosition, NavItem, GENRE_DEFAULT, AuthorizationStatus};

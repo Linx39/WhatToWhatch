@@ -3,6 +3,8 @@ export const ActionType = {
   GET_FILTERED_FILMS: `wtw/getFilteredFilms`,
   GET_FILMS_COUNT: `wtw/getFilmsCount`,
   RESET_ON_DEFAULT: `wtw/resetOnDefault`,
+  LOAD_FILMS: `data/loadFilms`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
 };
 
 export const ActionCreator = {
@@ -20,4 +22,12 @@ export const ActionCreator = {
   resetOnDefault: () => ({
     type: ActionType.RESET_ON_DEFAULT,
   }),
+  loadFilms: (films) => ({
+    type: ActionType.LOAD_FILMS,
+    payload: films
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  })
 };
