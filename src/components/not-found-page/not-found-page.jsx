@@ -5,7 +5,7 @@ import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 
-import {Patch, LogoPosition} from '../../const';
+import {Patch} from '../../const';
 
 const NotFoundPage = () => {
   return <React.Fragment>
@@ -25,7 +25,7 @@ const NotFoundPage = () => {
 
     <div className="page-content">
       <footer className="page-footer">
-        <Logo place = {LogoPosition.FOOTER} />
+        <Logo isAddClass={true} />
         <Copyright />
       </footer>
     </div>

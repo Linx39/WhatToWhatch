@@ -1,10 +1,10 @@
 export const ActionType = {
-  CHANGE_GENRE: `wtw/changeGenre`,
-  GET_FILTERED_FILMS: `wtw/getFilteredFilms`,
-  GET_FILMS_COUNT: `wtw/getFilmsCount`,
-  RESET_ON_DEFAULT: `wtw/resetOnDefault`,
+  CHANGE_GENRE: `films/changeGenre`,
+  GET_FILTERED_FILMS: `films/getFilteredFilms`,
+  GET_FILMS_COUNT: `films/getFilmsCount`,
+  RESET_ON_DEFAULT: `films/resetOnDefault`,
   LOAD_FILMS: `data/loadFilms`,
-  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
 };
 
 export const ActionCreator = {
@@ -27,7 +27,7 @@ export const ActionCreator = {
     payload: films
   }),
   requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
+    type: ActionType.REQUIRE_AUTHORIZATION,
     payload: status,
   })
 };

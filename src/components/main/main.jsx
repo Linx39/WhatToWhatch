@@ -9,10 +9,9 @@ import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list';
 import ShowMore from './show-more';
-import Loading from '../loading/loading';
+import Loading from './loading';
 import {fetchFilms} from "../../store/api-actions";
 import {filmsProp, countProp} from '../props-types';
-import {LogoPosition} from '../../const';
 
 const Main = (props) => {
   const {films, count, onShowMoreClick, activeGenre, filteredFilms, onGenreItemClick, isDataLoaded, onLoadData} = props;
@@ -100,7 +99,7 @@ const Main = (props) => {
       </section>
 
       <footer className="page-footer">
-        <Logo place = {LogoPosition.FOOTER} isLink = {false} />
+        <Logo isAddClass={true} isLink = {false} />
         <Copyright />
       </footer>
     </div>

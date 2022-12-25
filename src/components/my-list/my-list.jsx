@@ -7,7 +7,7 @@ import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 
 import {filmsProp} from '../props-types';
-import {FilmsCount, LogoPosition} from '../../const';
+import {FilmsCount} from '../../const';
 
 const MyList = (props) => {
   const {films} = props;
@@ -29,7 +29,7 @@ const MyList = (props) => {
       </section>
 
       <footer className="page-footer">
-        <Logo place = {LogoPosition.FOOTER} />
+        <Logo isAddClass={true} />
         <Copyright />
       </footer>
     </div>

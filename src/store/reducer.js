@@ -64,7 +64,7 @@ const reducer = (state = initialState, action) => {
         filteredFilms: action.payload,
       };
 
-    case ActionType.REQUIRED_AUTHORIZATION:
+    case ActionType.REQUIRE_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,

@@ -12,12 +12,6 @@ const FilmsCount = {
   MY_LIST: 5,
 };
 
-const LogoPosition = {
-  HEADER: `HEADER`,
-  FOOTER: `FOOTER`,
-
-};
-
 const NavItem = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
@@ -31,8 +25,9 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
-const Url = {
+const AdditionalUrl = {
   FILMS: `/films`,
+  LOGIN: `/login`,
 };
 
-export {Patch, FilmsCount, LogoPosition, NavItem, GENRE_DEFAULT, AuthorizationStatus, Url};
+export {Patch, FilmsCount, NavItem, GENRE_DEFAULT, AuthorizationStatus, AdditionalUrl};

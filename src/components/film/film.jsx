@@ -13,7 +13,7 @@ import Reviews from './reviews';
 
 import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
-import {FilmsCount, LogoPosition, Patch, NavItem} from '../../const';
+import {FilmsCount, Patch, NavItem} from '../../const';
 
 const Film = (props) => {
   const {films} = props;
@@ -129,7 +129,7 @@ const Film = (props) => {
       </section>
 
       <footer className="page-footer">
-        <Logo place = {LogoPosition.FOOTER} />
+        <Logo isAddClass={true} />
         <Copyright />
       </footer>
     </div>

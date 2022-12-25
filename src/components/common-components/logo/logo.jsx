@@ -4,9 +4,9 @@ import {Link, useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {ActionCreator} from '../../../store/action';
-import {Patch, LogoPosition} from '../../../const';
+import {Patch} from '../../../const';
 
-const Logo = ({place = LogoPosition.HEADER, isLink = true, resetOnDefault}) => {
+const Logo = ({isAddClass = false, isLink = true, resetOnDefault}) => {
   const history = useHistory();
 
   const handleLogoClick = () => {
@@ -15,7 +15,7 @@ const Logo = ({place = LogoPosition.HEADER, isLink = true, resetOnDefault}) => {
   };
 
   let logoLinkClassName = `logo__link`;
-  if (place === LogoPosition.FOOTER) {
+  if (isAddClass) {
     logoLinkClassName += ` logo__link--light`;
   }
 
@@ -50,7 +50,7 @@ const Logo = ({place = LogoPosition.HEADER, isLink = true, resetOnDefault}) => {
 };
 
 Logo.propTypes = {
-  place: PropTypes.string,
+  isAddClass: PropTypes.bool,
   isLink: PropTypes.bool,
   resetOnDefault: PropTypes.func.isRequired,
 };
