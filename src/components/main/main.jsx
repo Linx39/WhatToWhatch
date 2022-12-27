@@ -6,15 +6,17 @@ import {ActionCreator} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
+import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list';
 import ShowMore from './show-more';
 import Loading from './loading';
 import {fetchFilms} from "../../store/api-actions";
 import {filmsProp, countProp} from '../props-types';
+import {AuthorizationStatus} from '../../const';
 
 const Main = (props) => {
-  const {films, count, onShowMoreClick, activeGenre, filteredFilms, onGenreItemClick, isDataLoaded, onLoadData} = props;
+  const {films, count, onShowMoreClick, activeGenre, filteredFilms, onGenreItemClick, isDataLoaded, onLoadData, authorizationStatus} = props;
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -41,7 +43,11 @@ const Main = (props) => {
 
       <header className="page-header movie-card__head">
         <Logo isLink = {false} />
-        <UserBlock />
+        {authorizationStatus === AuthorizationStatus.AUTH
+          ? <UserBlock />
+          : <UserBlockNoSign />
+        }
+
       </header>
 
       <div className="movie-card__wrap">
@@ -115,6 +121,7 @@ Main.propTypes = {
   onGenreItemClick: PropTypes.func.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -123,6 +130,7 @@ const mapStateToProps = (state) => ({
   activeGenre: state.activeGenre,
   filteredFilms: state.filteredFilms,
   isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,15 +1,18 @@
 import React, {useRef} from 'react';
+import {useHistory} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
 
-
 import Logo from '../common-components/logo/logo';
 import Copyright from '../common-components/copyright/copyright';
+import {Patch} from '../../const';
 
 const SignIn = ({onSubmit}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
+
+  const history = useHistory();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -59,7 +62,10 @@ const SignIn = ({onSubmit}) => {
             </div>
           </div>
           <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit">
+            <button
+              onClick={() => history.push(Patch.MAIN)}
+              className="sign-in__btn"
+              type="submit">
               Sign in
             </button>
           </div>
