@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-const ShowMore = (props) => {
-  const {onClick} = props;
-
+const ShowMore = ({onClick}) => {
   const handleMouseClick = onClick;
 
   return (

@@ -1,13 +1,18 @@
 import {ActionType} from './action';
-import {FilmsCount, GENRE_DEFAULT, AuthorizationStatus} from '../const';
+import {FilmsCount, GENRE_DEFAULT, AuthorizationStatus, NavItem} from '../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
   filteredFilms: [],
   filmsCount: FilmsCount.MAIN,
-  films: [],
+  activeNavItem: NavItem.OVERVIEW,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isDataLoaded: false,
+  films: [],
+  isFilmsLoaded: false,
+  filmById: {},
+  isFilmsByIdLoaded: false,
+  comments: [],
+  isCommentsLoaded: false,
 };
 
 const filterFilms = (films, genre) => {
@@ -48,26 +53,51 @@ const reducer = (state = initialState, action) => {
         filmsCount: getNewCount(state.films, state.filmsCount),
       };
 
+    case ActionType.CHANGE_ACTIVE_NAV_ITEM:
+      return {
+        ...state,
+        activeNavItem: action.payload,
+      };
+
     case ActionType.RESET_ON_DEFAULT:
       return {
         ...state,
         activeGenre: GENRE_DEFAULT,
         filteredFilms: state.films,
         filmsCount: FilmsCount.MAIN,
-      };
-
-    case ActionType.LOAD_FILMS:
-      return {
-        ...state,
-        films: action.payload,
-        isDataLoaded: true,
-        filteredFilms: action.payload,
+        activeNavItem: NavItem.OVERVIEW,
+        filmById: {},
+        isFilmsByIdLoaded: false,
+        comments: [],
+        isCommentsLoaded: false,
       };
 
     case ActionType.REQUIRE_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+
+    case ActionType.LOAD_FILMS:
+      return {
+        ...state,
+        films: action.payload,
+        isFilmsLoaded: true,
+        filteredFilms: action.payload,
+      };
+
+    case ActionType.LOAD_FILM:
+      return {
+        ...state,
+        filmById: action.payload,
+        isFilmsByIdLoaded: true,
+      };
+
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload,
+        isCommentsLoaded: true,
       };
 
     default:

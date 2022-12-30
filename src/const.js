@@ -27,7 +27,9 @@ const AuthorizationStatus = {
 
 const AdditionalUrl = {
   FILMS: `/films`,
+  COMMENTS: `/comments`,
   LOGIN: `/login`,
+  LOGOUT: `logout`,
 };
 
 export {Patch, FilmsCount, NavItem, GENRE_DEFAULT, AuthorizationStatus, AdditionalUrl};

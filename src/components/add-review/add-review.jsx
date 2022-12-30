@@ -1,19 +1,19 @@
 import React from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {Link, Redirect, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
-import AddReviewForm from './add-revew-form';
+import AddReviewForm from './add-revew-form/add-revew-form';
 
 import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
 
-const AddReview = (props) => {
-  const {films} = props;
-
+const AddReview = ({films, goMain, goMyList}) => {
   const film = findFilm(films);
+  const filmId = Number(useParams().id);
 
   if (!film) {
     return (
@@ -33,7 +33,7 @@ const AddReview = (props) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <Logo />
+          <Logo onLogoClick={goMain} />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
@@ -46,7 +46,7 @@ const AddReview = (props) => {
             </ul>
           </nav>
 
-          <UserBlock />
+          <UserBlock onAvatarClick={goMyList} />
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
@@ -54,13 +54,15 @@ const AddReview = (props) => {
         </div>
       </div>
 
-      <AddReviewForm />
+      <AddReviewForm id={filmId}/>
     </section>
   );
 };
 
 AddReview.propTypes = {
   films: filmsProp,
+  goMain: PropTypes.func.isRequired,
+  goMyList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

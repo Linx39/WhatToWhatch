@@ -1,10 +1,8 @@
 import React from "react";
 
-import {filmProp} from "../props-types";
+import {filmProp} from "../../props-types";
 
-const Overview = (props) => {
-  const {film} = props;
-
+const Overview = ({film}) => {
   const {
     description,
     rating,

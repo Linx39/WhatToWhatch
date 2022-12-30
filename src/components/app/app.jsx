@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router} from 'react-router-dom';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
@@ -8,36 +8,80 @@ import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
-
+import PrivateRoute from '../private-router/private-router';
+import browserHistory from "../../browser-history";
 import {Patch} from '../../const';
 
 const App = () => {
+  const goMyList = (history) => history.push(Patch.MY_LIST);
+  const goMain = (history) => history.push(Patch.MAIN);
+
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
-        <Route path={Patch.MAIN} exact>
-          <Main />
-        </Route>
-        <Route path={Patch.LOGIN} exact>
-          <SignIn />
-        </Route>
-        <Route path={Patch.MY_LIST} exact>
-          <MyList />
-        </Route>
-        <Route path={`${Patch.FILMS}/:id`} exact>
-          <Film />
-        </Route>
-        <Route path={`${Patch.FILMS}/:id/review`} exact>
-          <AddReview />
-        </Route>
+        <Route exact
+          path={Patch.MAIN}
+          render={({history}) => (
+            <Main
+              goMyList={() => goMyList(history)}
+            />
+          )}
+        />
+
+        <Route exact
+          path={Patch.LOGIN}
+          render={({history}) => (
+            <SignIn
+              goMain={() => goMain(history)}
+            />
+          )}
+        />
+
+        <PrivateRoute exact
+          path={Patch.MY_LIST}
+          render={({history}) => (
+            <MyList
+              goMain={() => goMain(history)}
+            />
+          )}
+        >
+        </PrivateRoute>
+
+        <Route exact
+          path={`${Patch.FILMS}/:id`}
+          render={({history}) => (
+            <Film
+              goMain={() => goMain(history)}
+              goMyList={() => goMyList(history)}
+            />
+          )}
+        />
+
+        <PrivateRoute exact
+          path={`${Patch.FILMS}/:id/review`}
+          render={({history}) => (
+            <AddReview
+              goMain={() => goMain(history)}
+              goMyList={() => goMyList(history)}
+            />
+          )}
+        >
+        </PrivateRoute>
+
         <Route path={`${Patch.PLAYER}/:id`} exact>
           <Player />
         </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
+
+        <Route
+          render={({history}) => (
+            <NotFoundPage
+              goMain={() => goMain(history)}
+              goMyList={() => goMyList(history)}
+            />
+          )}
+        />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 };
 

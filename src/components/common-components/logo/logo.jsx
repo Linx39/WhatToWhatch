@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {ActionCreator} from '../../../store/action';
-import {Patch} from '../../../const';
 
-const Logo = ({isAddClass = false, isLink = true, resetOnDefault}) => {
-  const history = useHistory();
-
+const Logo = ({isAddClass = false, isLink = true, resetOnDefault, onLogoClick}) => {
   const handleLogoClick = () => {
     resetOnDefault();
-    history.push(Patch.MAIN);
+    onLogoClick();
   };
 
   let logoLinkClassName = `logo__link`;
@@ -52,7 +49,8 @@ const Logo = ({isAddClass = false, isLink = true, resetOnDefault}) => {
 Logo.propTypes = {
   isAddClass: PropTypes.bool,
   isLink: PropTypes.bool,
-  resetOnDefault: PropTypes.func.isRequired,
+  resetOnDefault: PropTypes.func,
+  onLogoClick: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({

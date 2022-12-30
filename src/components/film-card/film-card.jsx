@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 import VideoPlayer from '../video-player/video-player';
 
@@ -9,13 +9,17 @@ import {Patch} from '../../const';
 
 const TIME_OUT = 1000;
 
-const CardImage = (props) => {
-  const {film} = props;
+const CardImage = ({film}) => {
   const {id, name, previewImage} = film;
 
   return <>
     <div className="small-movie-card__image">
-      <img src={previewImage} alt={name} width="280" height="175"/>
+      <img
+        // onClick={<Redirect to={`${Patch.FILMS}/${id}`} />}
+        src={previewImage}
+        alt={name}
+        width="280" height="175"
+      />
     </div>
     <h3 className="small-movie-card__title">
       <Link to={`${Patch.FILMS}/${id}`} className="small-movie-card__link">{name}</Link>
@@ -23,8 +27,7 @@ const CardImage = (props) => {
   </>;
 };
 
-const CardVideo = (props) => {
-  const {film} = props;
+const CardVideo = ({film}) => {
   const {previewVideoLink, posterImage} = film;
 
   return <VideoPlayer

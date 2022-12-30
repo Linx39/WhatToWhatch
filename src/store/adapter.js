@@ -1,4 +1,4 @@
-const adaptToClient = (film) => {
+const adaptFilmToClient = (film) => {
   const adaptedProperties = {
     posterImage: film.poster_image,
     previewImage: film.preview_image,
@@ -76,4 +76,4 @@ const adaptToServer = (film) => {
   return adaptedFilm;
 };
 
-export {adaptToClient, adaptToServer};
+export {adaptFilmToClient, adaptToServer};

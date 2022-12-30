@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 
-import {NavItem} from "../../const";
+import {NavItem} from "../../../const";
 
-const NavList = (props) => {
-  const {activeNavItem, onClick} = props;
-
+const NavList = ({activeNavItem, onClick}) => {
   const handleMouseClick = (evt) => onClick(evt.target.textContent);
 
   return (

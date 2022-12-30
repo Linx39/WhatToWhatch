@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import {filmsProp} from '../props-types';
-import {GENRE_DEFAULT} from '../../const';
+import {filmsProp} from '../../props-types';
+import {GENRE_DEFAULT} from '../../../const';
 
 const getUniqueGenres = (films) => { // сделать чеоез редусер
   const uniqueGenres = [GENRE_DEFAULT];
@@ -17,9 +17,7 @@ const getUniqueGenres = (films) => { // сделать чеоез редусер
   return uniqueGenres;
 };
 
-const GenresList = (props) => {
-  const {films, activeGenre, onClick} = props;
-
+const GenresList = ({films, activeGenre, onClick}) => {
   const genres = getUniqueGenres(films);
 
   const handleMouseClick = (evt) => onClick(evt.target.textContent);

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {fetchComment} from '../../../store/api-actions';
+
 const RATING_COUNT = 10;
 const STAR = `star`;
 
-const Star = (props) => {
-  const {rating, onChange} = props;
-
+const Star = ({rating, onChange}) => {
   return (
     <>
       <input onChange={onChange} className="rating__input" id={`star-${rating}`} type="radio" name="rating" value={rating} />
@@ -15,9 +15,7 @@ const Star = (props) => {
   );
 };
 
-const Stars = (props) => {
-  const {onChange} = props;
-
+const Stars = ({onChange}) => {
   return new Array(RATING_COUNT).fill(null).map((item, i) => {
     return (
       <Star
@@ -29,7 +27,7 @@ const Stars = (props) => {
   });
 };
 
-const AddReviewForm = () => {
+const AddReviewForm = ({id}) => {
   const [userForm, setUserForm] = React.useState({
     rating: 0,
     comment: ``
@@ -37,13 +35,14 @@ const AddReviewForm = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // console.log (`Вау!`);
+    console.log (`Вау!`);
+    fetchComment(id, userForm);
   };
 
   const handleFieldChange = (evt) => {
     const {name, value} = evt.target;
     setUserForm({...userForm, [name]: value});
-    console.log (userForm);
+    // console.log (userForm);
   };
 
   return (
@@ -65,6 +64,10 @@ const AddReviewForm = () => {
       </form>
     </div>
   );
+};
+
+AddReviewForm.propTypes = {
+  id: PropTypes.number.isRequired,
 };
 
 Star.propTypes = {

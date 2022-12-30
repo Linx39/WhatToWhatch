@@ -1,27 +1,59 @@
-import React, {useState} from 'react';
-import {Link, Redirect, useHistory} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
+import {Link, Redirect, useHistory, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
+import {ActionCreator} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
+import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
-import NavList from './nav-list';
-import Overview from './overview';
-import Details from './details';
-import Reviews from './reviews';
-
-import {filmsProp} from '../props-types';
-import {findFilm} from '../component-utils';
-import {FilmsCount, Patch, NavItem} from '../../const';
+import NavList from './nav-list/nav-list';
+import Overview from './overview/overview';
+import Details from './details/details';
+import Reviews from './reviews/reviews';
+import Loading from './loading/loading';
+import {fetchFilm, fetchComments} from '../../store/api-actions';
+import {filmProp, filmsProp, commentsProp} from '../props-types';
+import {FilmsCount, Patch, NavItem, AuthorizationStatus} from '../../const';
 
 const Film = (props) => {
-  const {films} = props;
+  const {
+    films,
+    film,
+    comments,
+    activeNavItem,
+    onNavItemClick,
+    isFilmsByIdLoaded,
+    onLoadFilmById,
+    isCommentsLoaded,
+    onLoadComments,
+    authorizationStatus,
+    goMain,
+    goMyList} = props;
 
-  const film = findFilm(films);
-  if (!film) {
+  const filmId = Number(useParams().id);
+
+  useEffect(() => {
+    if (!isFilmsByIdLoaded) {
+      onLoadFilmById(filmId);
+    }
+
+    if (!isCommentsLoaded) {
+      onLoadComments(filmId);
+    }
+
+    // if (!film) {
+    //   return (
+    //     <Redirect to={Patch.MAIN} />
+    //   );
+    // }
+  }, [filmId, isFilmsByIdLoaded, isCommentsLoaded]);
+
+  if (!isFilmsByIdLoaded || !isCommentsLoaded) {
     return (
-      <Redirect to={Patch.MAIN} />
+      <Loading />
     );
   }
 
@@ -41,10 +73,6 @@ const Film = (props) => {
     );
   };
 
-  const [activeNavItem, setActiveNavItem] = useState(NavItem.OVERVIEW);
-
-  const handleNavItemClick = (item) => setActiveNavItem(item);
-
   const getActiveComponent = (navItem) => {
     switch (navItem) {
       case NavItem.OVERVIEW:
@@ -52,13 +80,13 @@ const Film = (props) => {
       case NavItem.DETAILS:
         return <Details film={film} />;
       case NavItem.REVIEWS:
-        return <Reviews film={film} />;
+        return <Reviews filmComments={comments} />;
       default:
         throw new Error(`Unknown switch case expression: '${navItem}'!`);
     }
   };
 
-  const filmsLikeThis = films.filter((item) => item.genre === genre && item !== film);
+  const filmsLikeThis = films.filter((item) => item.genre === genre && item.id !== id);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -70,8 +98,12 @@ const Film = (props) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header movie-card__head">
-          <Logo />
-          <UserBlock />
+          <Logo onLogoClick={goMain} />
+
+          {authorizationStatus === AuthorizationStatus.AUTH
+            ? <UserBlock onAvatarClick={goMyList}/>
+            : <UserBlockNoSign />
+          }
         </header>
 
         <div className="movie-card__wrap">
@@ -95,7 +127,9 @@ const Film = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <Link to={`${Patch.FILMS}/${id}/review`} className="btn movie-card__button">Add review</Link>
+              {authorizationStatus === AuthorizationStatus.AUTH
+                &&
+              <Link to={`${Patch.FILMS}/${id}/review`} className="btn movie-card__button">Add review</Link>}
             </div>
           </div>
         </div>
@@ -110,7 +144,7 @@ const Film = (props) => {
           <div className="movie-card__desc">
             <NavList
               activeNavItem={activeNavItem}
-              onClick={handleNavItemClick}
+              onClick={onNavItemClick}
             />
 
             {getActiveComponent(activeNavItem)}
@@ -129,7 +163,11 @@ const Film = (props) => {
       </section>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} />
+        <Logo
+          onLogoClick={goMain}
+          isAddClass={true}
+        />
+
         <Copyright />
       </footer>
     </div>
@@ -138,11 +176,40 @@ const Film = (props) => {
 
 Film.propTypes = {
   films: filmsProp,
+  film: filmProp,
+  comments: commentsProp,
+  activeNavItem: PropTypes.string.isRequired,
+  onNavItemClick: PropTypes.func.isRequired,
+  isFilmsByIdLoaded: PropTypes.bool.isRequired,
+  onLoadFilmById: PropTypes.func.isRequired,
+  isCommentsLoaded: PropTypes.bool.isRequired,
+  onLoadComments: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  goMain: PropTypes.func.isRequired,
+  goMyList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
+  film: state.filmById,
+  comments: state.comments,
+  activeNavItem: state.activeNavItem,
+  isFilmsByIdLoaded: state.isFilmsByIdLoaded,
+  isCommentsLoaded: state.isCommentsLoaded,
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onNavItemClick(item) {
+    dispatch(ActionCreator.changeActiveNavItem(item));
+  },
+  onLoadFilmById(filmId) {
+    dispatch(fetchFilm(filmId));
+  },
+  onLoadComments(filmId) {
+    dispatch(fetchComments(filmId));
+  },
 });
 
 export {Film};
-export default connect(mapStateToProps)(Film);
+export default connect(mapStateToProps, mapDispatchToProps)(Film);

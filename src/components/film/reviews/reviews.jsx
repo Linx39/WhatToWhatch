@@ -1,11 +1,8 @@
 import React from "react";
 
-import comments from "../../mocks/comments";
+import {commentProp, commentsProp} from "../../props-types";
 
-import {filmProp, commentProp, commentsProp} from "../props-types";
-
-const Review = (props) => {
-  const {filmComment} = props;
+const Review = ({filmComment}) => {
   const {user, rating, comment, date} = filmComment;
   const {name} = user;
 
@@ -25,9 +22,7 @@ const Review = (props) => {
   );
 };
 
-const ReviewsCol = (props) => {
-  const {filmComments} = props;
-
+const ReviewsCol = ({filmComments}) => {
   return (
     <div className="movie-card__reviews-col">
       {filmComments.map((filmComment) => {
@@ -42,10 +37,7 @@ const ReviewsCol = (props) => {
   );
 };
 
-const Reviews = (props) => {
-  const {film} = props;
-  const filmComments = comments.filter((comment) => comment.user.id === film.id);
-
+const Reviews = ({filmComments}) => {
   const length = filmComments.length;
   const halfLength = Math.ceil(length / 2);
 
@@ -59,7 +51,7 @@ const Reviews = (props) => {
 };
 
 Reviews.propTypes = {
-  film: filmProp,
+  filmComments: commentsProp,
 };
 
 Review.propTypes = {

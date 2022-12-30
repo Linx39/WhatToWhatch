@@ -1,20 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux'
 
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
+import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
 
-import {Patch} from '../../const';
+import {Patch, AuthorizationStatus} from '../../const';
 
-const NotFoundPage = () => {
+const NotFoundPage = ({authorizationStatus, goMain, goMyList}) => {
   return <React.Fragment>
     <section className="movie-card">
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header">
-        <Logo />
-        <UserBlock />
+        <Logo onLogoClick={goMain} />
+
+        {authorizationStatus === AuthorizationStatus.AUTH
+          ? <UserBlock onAvatarClick={goMyList}/>
+          : <UserBlockNoSign />
+        }
       </header>
     </section>
 
@@ -25,11 +32,23 @@ const NotFoundPage = () => {
 
     <div className="page-content">
       <footer className="page-footer">
-        <Logo isAddClass={true} />
+        <Logo onLogoClick={goMain} isAddClass={true} />
+
         <Copyright />
       </footer>
     </div>
   </React.Fragment>;
 };
 
-export default NotFoundPage;
+NotFoundPage.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+  goMain: PropTypes.func.isRequired,
+  goMyList: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+});
+
+export {NotFoundPage};
+export default connect(mapStateToProps)(NotFoundPage);

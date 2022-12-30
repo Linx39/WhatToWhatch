@@ -7,9 +7,7 @@ import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
 
-const Player = (props) => {
-  const {films} = props;
-
+const Player = ({films}) => {
   const history = useHistory();
 
   const handleButtonClick = () => {

@@ -4,9 +4,7 @@ import FilmCard from '../film-card/film-card';
 
 import {filmsProp, countProp} from '../props-types';
 
-const FilmsList = (props) => {
-  const {films, count} = props;
-
+const FilmsList = ({films, count}) => {
   const [activeCard, setActiveCard] = useState(null);
 
   const handleMouseEnter = (film) => setActiveCard(film);

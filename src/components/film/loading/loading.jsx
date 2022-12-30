@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Logo from '../common-components/logo/logo';
-import Copyright from '../common-components/copyright/copyright';
+import Logo from '../../common-components/logo/logo';
+import Copyright from '../../common-components/copyright/copyright';
 
 const Loading = () => {
   return <React.Fragment>

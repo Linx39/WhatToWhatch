@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
@@ -9,14 +10,14 @@ import Copyright from '../common-components/copyright/copyright';
 import {filmsProp} from '../props-types';
 import {FilmsCount} from '../../const';
 
-const MyList = (props) => {
-  const {films} = props;
-
+const MyList = ({films, goMain}) => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <Logo onLogoClick={goMain} />
+
         <h1 className="page-title user-page__title">My list</h1>
+
         <UserBlock />
       </header>
 
@@ -29,7 +30,11 @@ const MyList = (props) => {
       </section>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} />
+        <Logo
+          onLogoClick={goMain}
+          isAddClass={true}
+        />
+
         <Copyright />
       </footer>
     </div>
@@ -38,6 +43,7 @@ const MyList = (props) => {
 
 MyList.propTypes = {
   films: filmsProp,
+  goMain: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

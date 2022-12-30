@@ -1,10 +1,8 @@
 import React from "react";
 
-import {filmProp} from "../props-types";
+import {filmProp} from "../../props-types";
 
-const Details = (props) => {
-  const {film} = props;
-
+const Details = ({film}) => {
   const {
     director,
     starring,
