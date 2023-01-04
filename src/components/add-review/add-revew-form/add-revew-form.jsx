@@ -33,16 +33,19 @@ const AddReviewForm = ({id}) => {
     comment: ``
   });
 
+  const handleRatingChange = (evt) => {
+    setUserForm({...userForm, rating: evt.target.value});
+  };
+
+  const handleCommentChange = (evt) => {
+    setUserForm({...userForm, comment: evt.target.value});
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     console.log (`Вау!`);
-    fetchComment(id, userForm);
-  };
-
-  const handleFieldChange = (evt) => {
-    const {name, value} = evt.target;
-    setUserForm({...userForm, [name]: value});
-    // console.log (userForm);
+    fetchComment(id, userForm.rating, userForm.comment);
+    // .then(() => setUserForm({...userForm, rating: 0, comment: ``}));
   };
 
   return (
@@ -50,12 +53,12 @@ const AddReviewForm = ({id}) => {
       <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
-            <Stars onChange={handleFieldChange} />
+            <Stars onChange={handleRatingChange} />
           </div>
         </div>
 
         <div className="add-review__text">
-          <textarea onChange={handleFieldChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+          <textarea onChange={handleCommentChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>

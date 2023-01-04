@@ -26,10 +26,11 @@ const fetchComments = (id) => (dispatch, _getState, api) => (
     })
 );
 
-const fetchComment = (id, {filmComment: rating, comment}) => (dispatch, _getState, api) => (
+const fetchComment = (id, rating, comment) => (dispatch, _getState, api) => (
   api.post(`${AdditionalUrl.COMMENTS}/${id}`, {rating, comment})
     .then(({data}) => {
-      dispatch(ActionCreator.postComment(data));
+      console.log(data);
+      dispatch(ActionCreator.loadComments(data));
     })
 );
 

@@ -8,7 +8,7 @@ export const ActionType = {
   LOAD_FILMS: `data/loadFilms`,
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
-  POST_COMMENT: `data/postComment`,
+  // POST_COMMENT: `data/postComment`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
 };
 
@@ -43,10 +43,10 @@ export const ActionCreator = {
     type: ActionType.LOAD_COMMENTS,
     payload: comments
   }),
-  postComment: (comment) => ({
-    type: ActionType.POST_COMMENT,
-    payload: comment
-  }),
+  // postComment: (comment) => ({
+  //   type: ActionType.POST_COMMENT,
+  //   payload: comment
+  // }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRE_AUTHORIZATION,
     payload: status,
