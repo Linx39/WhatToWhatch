@@ -100,6 +100,12 @@ const reducer = (state = initialState, action) => {
         isCommentsLoaded: true,
       };
 
+    // case ActionType.POST_COMMENT:
+    //   return {
+    //     ...state,
+    //     isCommentsLoaded: false,
+    //   };
+
     default:
       return state;
   }

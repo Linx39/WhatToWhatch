@@ -7,11 +7,12 @@ import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
 
+import {fetchComment} from '../../store/api-actions';
 import {filmsProp} from '../props-types';
 import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
 
-const AddReview = ({films, goMain, goMyList}) => {
+const AddReview = ({films, goMain, goMyList, onPostComment}) => {
   const film = findFilm(films);
   const filmId = Number(useParams().id);
 
@@ -54,7 +55,7 @@ const AddReview = ({films, goMain, goMyList}) => {
         </div>
       </div>
 
-      <AddReviewForm id={filmId}/>
+      <AddReviewForm id={filmId} onSubmit={onPostComment} />
     </section>
   );
 };
@@ -63,11 +64,18 @@ AddReview.propTypes = {
   films: filmsProp,
   goMain: PropTypes.func.isRequired,
   goMyList: PropTypes.func.isRequired,
+  onPostComment: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  onPostComment(filmId, userForm) {
+    dispatch(fetchComment(filmId, userForm));
+  },
+});
+
 export {AddReview};
-export default connect(mapStateToProps)(AddReview);
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

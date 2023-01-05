@@ -43,9 +43,8 @@ export const ActionCreator = {
     type: ActionType.LOAD_COMMENTS,
     payload: comments
   }),
-  // postComment: (comment) => ({
+  // postComment: () => ({
   //   type: ActionType.POST_COMMENT,
-  //   payload: comment
   // }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRE_AUTHORIZATION,

@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
-import {fetchComment} from '../../../store/api-actions';
-
 const RATING_COUNT = 10;
-const STAR = `star`;
 
 const Star = ({rating, onChange}) => {
   return (
     <>
-      <input onChange={onChange} className="rating__input" id={`star-${rating}`} type="radio" name="rating" value={rating} />
+      <input
+        value={rating}
+        onChange={onChange}
+        className="rating__input"
+        id={`star-${rating}`}
+        type="radio"
+        name="rating"
+      />
       <label className="rating__label" htmlFor={`star-${rating}`}>{`Rating ${rating}`}</label>
     </>
   );
@@ -19,7 +23,7 @@ const Stars = ({onChange}) => {
   return new Array(RATING_COUNT).fill(null).map((item, i) => {
     return (
       <Star
-        key={`${STAR}${i}`}
+        key={`star${i}`}
         rating={i + 1}
         onChange={onChange}
       />
@@ -27,9 +31,9 @@ const Stars = ({onChange}) => {
   });
 };
 
-const AddReviewForm = ({id}) => {
-  const [userForm, setUserForm] = React.useState({
-    rating: 0,
+const AddReviewForm = ({id, onSubmit}) => {
+  const [userForm, setUserForm] = useState({
+    rating: RATING_COUNT,
     comment: ``
   });
 
@@ -43,9 +47,9 @@ const AddReviewForm = ({id}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log (`Вау!`);
-    fetchComment(id, userForm.rating, userForm.comment);
-    // .then(() => setUserForm({...userForm, rating: 0, comment: ``}));
+    onSubmit(id, userForm);
+    setUserForm({rating: RATING_COUNT, comment: ``});
+      // .then(() => setUserForm({...userForm, rating: RATING_COUNT, comment: ``}));
   };
 
   return (
@@ -53,12 +57,21 @@ const AddReviewForm = ({id}) => {
       <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
-            <Stars onChange={handleRatingChange} />
+            <Stars
+              onChange={handleRatingChange}
+            />
           </div>
         </div>
 
         <div className="add-review__text">
-          <textarea onChange={handleCommentChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+          <textarea
+            onChange={handleCommentChange}
+            value={userForm.comment}
+            className="add-review__textarea"
+            name="review-text"
+            id="review-text"
+            placeholder="Review text">
+          </textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>
@@ -71,6 +84,7 @@ const AddReviewForm = ({id}) => {
 
 AddReviewForm.propTypes = {
   id: PropTypes.number.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 Star.propTypes = {
