@@ -49,7 +49,7 @@ const AddReviewForm = ({id, onSubmit}) => {
     evt.preventDefault();
     onSubmit(id, userForm);
     setUserForm({rating: RATING_COUNT, comment: ``});
-      // .then(() => setUserForm({...userForm, rating: RATING_COUNT, comment: ``}));
+      // .then(() => setUserForm({rating: RATING_COUNT, comment: ``}));
   };
 
   return (

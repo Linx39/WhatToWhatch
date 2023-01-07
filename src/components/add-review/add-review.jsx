@@ -6,14 +6,11 @@ import {connect} from 'react-redux';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
-
 import {fetchComment} from '../../store/api-actions';
-import {filmsProp} from '../props-types';
-import {findFilm} from '../component-utils';
+import {filmProp} from '../props-types';
 import {Patch} from '../../const';
 
-const AddReview = ({films, goMain, goMyList, onPostComment}) => {
-  const film = findFilm(films);
+const AddReview = ({film, onPostComment, goMain, goMyList, goFilm}) => {
   const filmId = Number(useParams().id);
 
   if (!film) {
@@ -23,6 +20,8 @@ const AddReview = ({films, goMain, goMyList, onPostComment}) => {
   }
 
   const {id, name, posterImage, backgroundImage} = film;
+
+  const handleFilmNameClick = () => goFilm(id);
 
   return (
     <section className="movie-card movie-card--full">
@@ -39,7 +38,7 @@ const AddReview = ({films, goMain, goMyList, onPostComment}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`${Patch.FILMS}/${id}`} className="breadcrumbs__link">{name}</Link>
+                <Link to="#" onClick={handleFilmNameClick} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -61,14 +60,15 @@ const AddReview = ({films, goMain, goMyList, onPostComment}) => {
 };
 
 AddReview.propTypes = {
-  films: filmsProp,
+  film: filmProp,
+  onPostComment: PropTypes.func.isRequired,
   goMain: PropTypes.func.isRequired,
   goMyList: PropTypes.func.isRequired,
-  onPostComment: PropTypes.func.isRequired,
+  goFilm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
+  film: state.filmById,
 });
 
 const mapDispatchToProps = (dispatch) => ({

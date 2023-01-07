@@ -9,20 +9,21 @@ import {Patch} from '../../const';
 
 const TIME_OUT = 1000;
 
-const CardImage = ({film}) => {
+const CardImage = ({film, onClick}) => {
   const {id, name, previewImage} = film;
+
+  const handleFilmCardClick = () => onClick(id);
 
   return <>
     <div className="small-movie-card__image">
       <img
-        // onClick={<Redirect to={`${Patch.FILMS}/${id}`} />}
-        src={previewImage}
-        alt={name}
-        width="280" height="175"
+        onClick={handleFilmCardClick}
+        src={previewImage} alt={name} width="280" height="175"
       />
     </div>
     <h3 className="small-movie-card__title">
-      <Link to={`${Patch.FILMS}/${id}`} className="small-movie-card__link">{name}</Link>
+      {/* <Link to={`${Patch.FILMS}/${id}`} className="small-movie-card__link">{name}</Link> */}
+      <Link to="#" onClick={handleFilmCardClick} className="small-movie-card__link">{name}</Link>
     </h3>
   </>;
 };
@@ -39,7 +40,7 @@ const CardVideo = ({film}) => {
 };
 
 const FilmCard = (props) => {
-  const {film, onMouseEnter, onMouseLeave, isPreviewMode} = props;
+  const {film, onMouseEnter, onMouseLeave, isPreviewMode, goFilm} = props;
 
   const [isNeedClearTimeout, setIsNeedClearTimeout] = useState(false);
 
@@ -68,10 +69,18 @@ const FilmCard = (props) => {
 
       {isPreviewMode
         ? <CardVideo film={film} />
-        : <CardImage film={film} />
+        : <CardImage film={film} onClick={goFilm}/>
       }
     </article>
   );
+};
+
+FilmCard.defaultProps = {
+  goFilm: () => {},
+};
+
+CardImage.defaultProps = {
+  onClick: () => {},
 };
 
 FilmCard.propTypes = {
@@ -79,10 +88,12 @@ FilmCard.propTypes = {
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   isPreviewMode: PropTypes.bool.isRequired,
+  goFilm: PropTypes.func.isRequired,
 };
 
 CardImage.propTypes = {
   film: filmProp,
+  onClick: PropTypes.func.isRequired,
 };
 
 CardVideo.propTypes = {

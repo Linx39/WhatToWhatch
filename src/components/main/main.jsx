@@ -27,6 +27,7 @@ const Main = (props) => {
     onLoadData,
     authorizationStatus,
     goMyList,
+    goFilm,
   } = props;
 
   useEffect(() => {
@@ -105,7 +106,7 @@ const Main = (props) => {
         />
 
         <div className='catalog__movies-list'>
-          <FilmsList films={filteredFilms} count={count} />
+          <FilmsList films={filteredFilms} count={count} goFilm={goFilm} />
         </div>
 
         {(count < filteredFilms.length) && <ShowMore onClick={onShowMoreClick} />}
@@ -131,6 +132,7 @@ Main.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   goMyList: PropTypes.func.isRequired,
+  goFilm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

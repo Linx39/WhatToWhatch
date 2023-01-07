@@ -16,6 +16,7 @@ const fetchFilm = (id) => (dispatch, _getState, api) => (
       const film = adaptFilmToClient(data);
       dispatch(ActionCreator.loadFilm(film));
     })
+    .catch(() => {})
 );
 
 const fetchComments = (id) => (dispatch, _getState, api) => (
@@ -24,6 +25,7 @@ const fetchComments = (id) => (dispatch, _getState, api) => (
       // const comments = data.map((item) => adaptCommentsToClient(item));
       dispatch(ActionCreator.loadComments(data));
     })
+    .catch(() => {})
 );
 
 const fetchComment = (id, {rating, comment}) => (dispatch, _getState, api) => (
@@ -31,6 +33,7 @@ const fetchComment = (id, {rating, comment}) => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(ActionCreator.loadComments(data));
     })
+    .catch(() => {})
 );
 
 const checkAuth = () => (dispatch, _getState, api) => (

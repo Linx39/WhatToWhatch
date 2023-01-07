@@ -15,6 +15,10 @@ import {Patch} from '../../const';
 const App = () => {
   const goMyList = (history) => history.push(Patch.MY_LIST);
   const goMain = (history) => history.push(Patch.MAIN);
+  const goFilm = (id, history) => history.push(`${Patch.FILMS}/${id}`);
+  const goReview = (id, history) => history.push(`${Patch.FILMS}/${id}/review`);
+  const goPlayer = (id, history) => history.push(`${Patch.PLAYER}/${id}`);
+  // const goNoFoundPage = (history) => history.push(`${Patch.PLAYER}/${id}`);
 
   return (
     <Router history={browserHistory}>
@@ -24,6 +28,7 @@ const App = () => {
           render={({history}) => (
             <Main
               goMyList={() => goMyList(history)}
+              goFilm={(id) => goFilm(id, history)}
             />
           )}
         />
@@ -53,6 +58,8 @@ const App = () => {
             <Film
               goMain={() => goMain(history)}
               goMyList={() => goMyList(history)}
+              goPlayer={(id) => goPlayer(id, history)}
+              goReview={(id) => goReview(id, history)}
             />
           )}
         />
@@ -63,6 +70,7 @@ const App = () => {
             <AddReview
               goMain={() => goMain(history)}
               goMyList={() => goMyList(history)}
+              goFilm={(id) => goFilm(id, history)}
             />
           )}
         >

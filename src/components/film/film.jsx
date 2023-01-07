@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Link, Redirect, useHistory, useParams} from 'react-router-dom';
+import {Link, Redirect, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {ActionCreator} from '../../store/action';
@@ -31,7 +31,10 @@ const Film = (props) => {
     onLoadComments,
     authorizationStatus,
     goMain,
-    goMyList} = props;
+    goMyList,
+    goPlayer,
+    goReview,
+  } = props;
 
   const filmId = Number(useParams().id);
 
@@ -43,12 +46,6 @@ const Film = (props) => {
     if (!isCommentsLoaded) {
       onLoadComments(filmId);
     }
-
-    // if (!film) {
-    //   return (
-    //     <Redirect to={Patch.MAIN} />
-    //   );
-    // }
   }, [filmId, isFilmsByIdLoaded, isCommentsLoaded]);
 
   if (!isFilmsByIdLoaded || !isCommentsLoaded) {
@@ -56,6 +53,12 @@ const Film = (props) => {
       <Loading />
     );
   }
+
+  // if (!film) {
+  //   return (
+  //     <Redirect to={Patch.MAIN} />
+  //   );
+  // }
 
   const {
     id,
@@ -66,12 +69,8 @@ const Film = (props) => {
     released,
   } = film;
 
-  const history = useHistory();
-  const handlePlayButtonClick = () => {
-    return (
-      history.push(`${Patch.PLAYER}/${film.id}`)
-    );
-  };
+  const handlePlayButtonClick = () => goPlayer(id);
+  const handleAddReviewClick = () => goReview(id);
 
   const getActiveComponent = (navItem) => {
     switch (navItem) {
@@ -129,7 +128,7 @@ const Film = (props) => {
               </button>
               {authorizationStatus === AuthorizationStatus.AUTH
                 &&
-              <Link to={`${Patch.FILMS}/${id}/review`} className="btn movie-card__button">Add review</Link>}
+              <Link to="#" onClick={handleAddReviewClick} className="btn movie-card__button">Add review</Link>}
             </div>
           </div>
         </div>
@@ -187,6 +186,8 @@ Film.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   goMain: PropTypes.func.isRequired,
   goMyList: PropTypes.func.isRequired,
+  goPlayer: PropTypes.func.isRequired,
+  goReview: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
