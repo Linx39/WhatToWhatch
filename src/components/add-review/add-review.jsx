@@ -10,7 +10,7 @@ import {fetchComment} from '../../store/api-actions';
 import {filmProp} from '../props-types';
 import {Patch} from '../../const';
 
-const AddReview = ({film, onPostComment, goMain, goMyList, goFilm}) => {
+const AddReview = ({film, onSubmit, goMain, goMyList, goFilm}) => {
   const filmId = Number(useParams().id);
 
   if (!film) {
@@ -54,26 +54,26 @@ const AddReview = ({film, onPostComment, goMain, goMyList, goFilm}) => {
         </div>
       </div>
 
-      <AddReviewForm id={filmId} onSubmit={onPostComment} />
+      <AddReviewForm id={filmId} onSubmit={onSubmit} />
     </section>
   );
 };
 
 AddReview.propTypes = {
   film: filmProp,
-  onPostComment: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   goMain: PropTypes.func.isRequired,
   goMyList: PropTypes.func.isRequired,
   goFilm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  film: state.filmById,
+  film: state.film,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onPostComment(filmId, userForm) {
-    dispatch(fetchComment(filmId, userForm));
+  onSubmit(id, userForm) {
+    dispatch(fetchComment(id, userForm));
   },
 });
 

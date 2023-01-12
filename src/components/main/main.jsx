@@ -21,7 +21,7 @@ const Main = (props) => {
     count,
     onShowMoreClick,
     activeGenre,
-    filteredFilms,
+    activeFilmsList,
     onGenreItemClick,
     isFilmsLoaded,
     onLoadData,
@@ -106,10 +106,10 @@ const Main = (props) => {
         />
 
         <div className='catalog__movies-list'>
-          <FilmsList films={filteredFilms} count={count} goFilm={goFilm} />
+          <FilmsList films={activeFilmsList} count={count} goFilm={goFilm} />
         </div>
 
-        {(count < filteredFilms.length) && <ShowMore onClick={onShowMoreClick} />}
+        {(count < activeFilmsList.length) && <ShowMore onClick={onShowMoreClick} />}
 
       </section>
 
@@ -125,7 +125,7 @@ Main.propTypes = {
   films: filmsProp,
   count: countProp,
   activeGenre: PropTypes.string.isRequired,
-  filteredFilms: filmsProp,
+  activeFilmsList: filmsProp,
   onShowMoreClick: PropTypes.func.isRequired,
   onGenreItemClick: PropTypes.func.isRequired,
   isFilmsLoaded: PropTypes.bool.isRequired,
@@ -137,20 +137,20 @@ Main.propTypes = {
 
 const mapStateToProps = (state) => ({
   films: state.films,
-  count: state.filmsCount,
+  count: state.activeFilmsListCount,
   activeGenre: state.activeGenre,
-  filteredFilms: state.filteredFilms,
+  activeFilmsList: state.activeFilmsList,
   isFilmsLoaded: state.isFilmsLoaded,
   authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
-    dispatch(ActionCreator.getFilmsCount());
+    dispatch(ActionCreator.getActiveFilmsListCount());
   },
   onGenreItemClick(genre) {
     dispatch(ActionCreator.changeGenre(genre));
-    dispatch(ActionCreator.getFilteredFilms(genre));
+    dispatch(ActionCreator.getActiveFilmsList(genre));
   },
   onLoadData() {
     dispatch(fetchFilms());

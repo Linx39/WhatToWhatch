@@ -16,7 +16,7 @@ const fetchFilm = (id) => (dispatch, _getState, api) => (
       const film = adaptFilmToClient(data);
       dispatch(ActionCreator.loadFilm(film));
     })
-    .catch(() => {})
+    .catch(() => dispatch(ActionCreator.redirectToRoute(Patch.MAIN)))
 );
 
 const fetchComments = (id) => (dispatch, _getState, api) => (
@@ -30,9 +30,7 @@ const fetchComments = (id) => (dispatch, _getState, api) => (
 
 const fetchComment = (id, {rating, comment}) => (dispatch, _getState, api) => (
   api.post(`${AdditionalUrl.COMMENTS}/${id}`, {rating, comment})
-    .then(({data}) => {
-      dispatch(ActionCreator.loadComments(data));
-    })
+    .then(({data}) => dispatch(ActionCreator.loadComments(data)))
     .catch(() => {})
 );
 

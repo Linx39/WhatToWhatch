@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Link, Redirect, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {ActionCreator} from '../../store/action';
@@ -16,7 +16,7 @@ import Reviews from './reviews/reviews';
 import Loading from './loading/loading';
 import {fetchFilm, fetchComments} from '../../store/api-actions';
 import {filmProp, filmsProp, commentsProp} from '../props-types';
-import {FilmsCount, Patch, NavItem, AuthorizationStatus} from '../../const';
+import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
 const Film = (props) => {
   const {
@@ -25,8 +25,8 @@ const Film = (props) => {
     comments,
     activeNavItem,
     onNavItemClick,
-    isFilmsByIdLoaded,
-    onLoadFilmById,
+    isFilmLoaded,
+    onLoadFilm,
     isCommentsLoaded,
     onLoadComments,
     authorizationStatus,
@@ -39,26 +39,20 @@ const Film = (props) => {
   const filmId = Number(useParams().id);
 
   useEffect(() => {
-    if (!isFilmsByIdLoaded) {
-      onLoadFilmById(filmId);
+    if (!isFilmLoaded) {
+      onLoadFilm(filmId);
     }
 
     if (!isCommentsLoaded) {
       onLoadComments(filmId);
     }
-  }, [filmId, isFilmsByIdLoaded, isCommentsLoaded]);
+  }, [filmId, isFilmLoaded && isCommentsLoaded]);
 
-  if (!isFilmsByIdLoaded || !isCommentsLoaded) {
+  if (!isFilmLoaded || !isCommentsLoaded) {
     return (
       <Loading />
     );
   }
-
-  // if (!film) {
-  //   return (
-  //     <Redirect to={Patch.MAIN} />
-  //   );
-  // }
 
   const {
     id,
@@ -79,7 +73,7 @@ const Film = (props) => {
       case NavItem.DETAILS:
         return <Details film={film} />;
       case NavItem.REVIEWS:
-        return <Reviews filmComments={comments} />;
+        return <Reviews comments={comments} />;
       default:
         throw new Error(`Unknown switch case expression: '${navItem}'!`);
     }
@@ -179,8 +173,8 @@ Film.propTypes = {
   comments: commentsProp,
   activeNavItem: PropTypes.string.isRequired,
   onNavItemClick: PropTypes.func.isRequired,
-  isFilmsByIdLoaded: PropTypes.bool.isRequired,
-  onLoadFilmById: PropTypes.func.isRequired,
+  isFilmLoaded: PropTypes.bool.isRequired,
+  onLoadFilm: PropTypes.func.isRequired,
   isCommentsLoaded: PropTypes.bool.isRequired,
   onLoadComments: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
@@ -192,10 +186,10 @@ Film.propTypes = {
 
 const mapStateToProps = (state) => ({
   films: state.films,
-  film: state.filmById,
+  film: state.film,
   comments: state.comments,
   activeNavItem: state.activeNavItem,
-  isFilmsByIdLoaded: state.isFilmsByIdLoaded,
+  isFilmLoaded: state.isFilmLoaded,
   isCommentsLoaded: state.isCommentsLoaded,
   authorizationStatus: state.authorizationStatus,
 });
@@ -204,11 +198,11 @@ const mapDispatchToProps = (dispatch) => ({
   onNavItemClick(item) {
     dispatch(ActionCreator.changeActiveNavItem(item));
   },
-  onLoadFilmById(filmId) {
-    dispatch(fetchFilm(filmId));
+  onLoadFilm(id) {
+    dispatch(fetchFilm(id));
   },
-  onLoadComments(filmId) {
-    dispatch(fetchComments(filmId));
+  onLoadComments(id) {
+    dispatch(fetchComments(id));
   },
 });
 

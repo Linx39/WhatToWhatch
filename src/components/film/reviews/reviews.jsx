@@ -22,14 +22,14 @@ const Review = ({filmComment}) => {
   );
 };
 
-const ReviewsCol = ({filmComments}) => {
+const ReviewsCol = ({comments}) => {
   return (
     <div className="movie-card__reviews-col">
-      {filmComments.map((filmComment) => {
+      {comments.map((comment) => {
         return (
           <Review
-            key={filmComment.id}
-            filmComment={filmComment}
+            key={comment.id}
+            filmComment={comment}
           />
         );
       })}
@@ -37,21 +37,21 @@ const ReviewsCol = ({filmComments}) => {
   );
 };
 
-const Reviews = ({filmComments}) => {
-  const length = filmComments.length;
+const Reviews = ({comments}) => {
+  const length = comments.length;
   const halfLength = Math.ceil(length / 2);
 
   return (
     <div className="movie-card__reviews movie-card__row">
-      <ReviewsCol filmComments={filmComments.slice(0, halfLength)} />
-      <ReviewsCol filmComments={filmComments.slice(halfLength, length)} />
+      <ReviewsCol comments={comments.slice(0, halfLength)} />
+      <ReviewsCol comments={comments.slice(halfLength, length)} />
     </div>
   );
 
 };
 
 Reviews.propTypes = {
-  filmComments: commentsProp,
+  comments: commentsProp,
 };
 
 Review.propTypes = {
@@ -59,7 +59,7 @@ Review.propTypes = {
 };
 
 ReviewsCol.propTypes = {
-  filmComments: commentsProp,
+  comments: commentsProp,
 };
 
 export default Reviews;

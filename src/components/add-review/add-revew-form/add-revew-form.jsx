@@ -3,30 +3,26 @@ import PropTypes from 'prop-types';
 
 const RATING_COUNT = 10;
 
-const Star = ({rating, onChange}) => {
-  return (
-    <>
-      <input
-        value={rating}
-        onChange={onChange}
-        className="rating__input"
-        id={`star-${rating}`}
-        type="radio"
-        name="rating"
-      />
-      <label className="rating__label" htmlFor={`star-${rating}`}>{`Rating ${rating}`}</label>
-    </>
-  );
-};
-
-const Stars = ({onChange}) => {
+const Stars = ({onChange, ratingValue}) => {
   return new Array(RATING_COUNT).fill(null).map((item, i) => {
+    const value = i + 1;
     return (
-      <Star
-        key={`star${i}`}
-        rating={i + 1}
-        onChange={onChange}
-      />
+      <React.Fragment key={`star${value}`}>
+        <input
+          value={value}
+          onChange={onChange}
+          checked={value === ratingValue}
+          className="rating__input"
+          id={`star-${value}`}
+          type="radio"
+          name="rating"
+        />
+        <label
+          className="rating__label"
+          htmlFor={`star-${value}`}>
+          {`Rating ${value}`}
+        </label>
+      </React.Fragment>
     );
   });
 };
@@ -49,7 +45,6 @@ const AddReviewForm = ({id, onSubmit}) => {
     evt.preventDefault();
     onSubmit(id, userForm);
     setUserForm({rating: RATING_COUNT, comment: ``});
-      // .then(() => setUserForm({rating: RATING_COUNT, comment: ``}));
   };
 
   return (
@@ -58,6 +53,7 @@ const AddReviewForm = ({id, onSubmit}) => {
         <div className="rating">
           <div className="rating__stars">
             <Stars
+              ratingValue={Number(userForm.rating)}
               onChange={handleRatingChange}
             />
           </div>
@@ -65,8 +61,8 @@ const AddReviewForm = ({id, onSubmit}) => {
 
         <div className="add-review__text">
           <textarea
-            onChange={handleCommentChange}
             value={userForm.comment}
+            onChange={handleCommentChange}
             className="add-review__textarea"
             name="review-text"
             id="review-text"
@@ -87,8 +83,8 @@ AddReviewForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-Star.propTypes = {
-  rating: PropTypes.number.isRequired,
+Stars.propTypes = {
+  ratingValue: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

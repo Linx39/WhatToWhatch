@@ -3,14 +3,14 @@ import {FilmsCount, GENRE_DEFAULT, AuthorizationStatus, NavItem} from '../const'
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
-  filteredFilms: [],
-  filmsCount: FilmsCount.MAIN,
+  activeFilmsList: [],
+  activeFilmsListCount: FilmsCount.MAIN,
   activeNavItem: NavItem.OVERVIEW,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   films: [],
   isFilmsLoaded: false,
-  filmById: {},
-  isFilmsByIdLoaded: false,
+  film: {},
+  isFilmLoaded: false,
   comments: [],
   isCommentsLoaded: false,
 };
@@ -26,11 +26,13 @@ const filterFilms = (films, genre) => {
 const getNewCount = (films, prevCount) => {
   const newCount = prevCount + FilmsCount.MAIN;
 
-  if (newCount > films.length) {
-    return films.length;
-  }
+  const count = newCount > films.length ? films.length : newCount;
 
-  return newCount;
+  // if (newCount > films.length) {
+  //   return films.length;
+  // }
+
+  return count;
 };
 
 const reducer = (state = initialState, action) => {
@@ -41,16 +43,16 @@ const reducer = (state = initialState, action) => {
         activeGenre: action.payload,
       };
 
-    case ActionType.GET_FILTERED_FILMS:
+    case ActionType.GET_ACTIVE_FILMS_LIST:
       return {
         ...state,
-        filteredFilms: filterFilms(state.films, action.payload),
+        activeFilmsList: filterFilms(state.films, action.payload),
       };
 
-    case ActionType.GET_FILMS_COUNT:
+    case ActionType.GET_ACTIVE_FILMS_LIST_COUNT:
       return {
         ...state,
-        filmsCount: getNewCount(state.films, state.filmsCount),
+        activeFilmsListCount: getNewCount(state.films, state.activeFilmsListCount),
       };
 
     case ActionType.CHANGE_ACTIVE_NAV_ITEM:
@@ -63,11 +65,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeGenre: GENRE_DEFAULT,
-        filteredFilms: state.films,
-        filmsCount: FilmsCount.MAIN,
+        activeFilmsList: state.films,
+        activeFilmsListCount: FilmsCount.MAIN,
         activeNavItem: NavItem.OVERVIEW,
-        filmById: {},
-        isFilmsByIdLoaded: false,
+        film: {},
+        isFilmLoaded: false,
         comments: [],
         isCommentsLoaded: false,
       };
@@ -83,14 +85,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         films: action.payload,
         isFilmsLoaded: true,
-        filteredFilms: action.payload,
+        activeFilmsList: action.payload,
       };
 
     case ActionType.LOAD_FILM:
       return {
         ...state,
-        filmById: action.payload,
-        isFilmsByIdLoaded: true,
+        film: action.payload,
+        isFilmLoaded: true,
       };
 
     case ActionType.LOAD_COMMENTS:

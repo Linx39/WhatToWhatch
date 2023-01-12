@@ -1,10 +1,10 @@
 export const ActionType = {
-  CHANGE_GENRE: `films/changeGenre`,
-  GET_FILTERED_FILMS: `films/getFilteredFilms`,
-  GET_FILMS_COUNT: `films/getFilmsCount`,
-  CHANGE_ACTIVE_NAV_ITEM: `films/changeActiveNavItem`,
-  RESET_ON_DEFAULT: `films/resetOnDefault`,
+  CHANGE_GENRE: `filmsList/changeGenre`,
+  GET_ACTIVE_FILMS_LIST: `filmsList/getActiveFilmsList`,
+  GET_ACTIVE_FILMS_LIST_COUNT: `filmsList/getActiveFilmsListCount`,
+  RESET_ON_DEFAULT: `filmsList/resetOnDefault`,
   REDIRECT_TO_ROUTE: `films/redirectToRoute`,
+  CHANGE_ACTIVE_NAV_ITEM: `film/changeActiveNavItem`,
   LOAD_FILMS: `data/loadFilms`,
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
@@ -17,12 +17,12 @@ export const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: genre,
   }),
-  getFilteredFilms: (genre) => ({
-    type: ActionType.GET_FILTERED_FILMS,
+  getActiveFilmsList: (genre) => ({
+    type: ActionType.GET_ACTIVE_FILMS_LIST,
     payload: genre,
   }),
-  getFilmsCount: () => ({
-    type: ActionType.GET_FILMS_COUNT,
+  getActiveFilmsListCount: () => ({
+    type: ActionType.GET_ACTIVE_FILMS_LIST_COUNT,
   }),
   changeActiveNavItem: (item) => ({
     type: ActionType.CHANGE_ACTIVE_NAV_ITEM,
