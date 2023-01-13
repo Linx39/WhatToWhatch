@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {ActionCreator} from '../../../store/action';
+import {resetOnDefault} from '../../../store/action';
 
-const Logo = ({isAddClass = false, isLink = true, resetOnDefault, onLogoClick}) => {
+const Logo = ({isAddClass = false, isLink = true, onResetOnDefault, onLogoClick}) => {
   const handleLogoClick = () => {
-    resetOnDefault();
+    onResetOnDefault();
     onLogoClick();
   };
 
@@ -49,13 +49,13 @@ const Logo = ({isAddClass = false, isLink = true, resetOnDefault, onLogoClick}) 
 Logo.propTypes = {
   isAddClass: PropTypes.bool,
   isLink: PropTypes.bool,
-  resetOnDefault: PropTypes.func,
+  onResetOnDefault: PropTypes.func,
   onLogoClick: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  resetOnDefault() {
-    dispatch(ActionCreator.resetOnDefault());
+  onResetOnDefault() {
+    dispatch(resetOnDefault());
   },
 });
 

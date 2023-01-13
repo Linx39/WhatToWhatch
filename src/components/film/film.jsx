@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {ActionCreator} from '../../store/action';
+import {changeActiveNavItem} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -196,7 +196,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onNavItemClick(item) {
-    dispatch(ActionCreator.changeActiveNavItem(item));
+    dispatch(changeActiveNavItem(item));
   },
   onLoadFilm(id) {
     dispatch(fetchFilm(id));

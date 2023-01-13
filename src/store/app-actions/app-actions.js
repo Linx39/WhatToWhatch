@@ -1,18 +1,11 @@
 import {ActionType} from './action';
-import {FilmsCount, GENRE_DEFAULT, AuthorizationStatus, NavItem} from '../const';
+import {FilmsCount, GENRE_DEFAULT, NavItem} from '../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
   activeFilmsList: [],
   activeFilmsListCount: FilmsCount.MAIN,
   activeNavItem: NavItem.OVERVIEW,
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
-  films: [],
-  isFilmsLoaded: false,
-  film: {},
-  isFilmLoaded: false,
-  comments: [],
-  isCommentsLoaded: false,
 };
 
 const filterFilms = (films, genre) => {
@@ -35,7 +28,7 @@ const getNewCount = (films, prevCount) => {
   return count;
 };
 
-const reducer = (state = initialState, action) => {
+const appAction = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_GENRE:
       return {
@@ -68,49 +61,15 @@ const reducer = (state = initialState, action) => {
         activeFilmsList: state.films,
         activeFilmsListCount: FilmsCount.MAIN,
         activeNavItem: NavItem.OVERVIEW,
-        film: {},
-        isFilmLoaded: false,
-        comments: [],
-        isCommentsLoaded: false,
+        // film: {},
+        // isFilmLoaded: false,
+        // comments: [],
+        // isCommentsLoaded: false,
       };
-
-    case ActionType.REQUIRE_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-
-    case ActionType.LOAD_FILMS:
-      return {
-        ...state,
-        films: action.payload,
-        isFilmsLoaded: true,
-        activeFilmsList: action.payload,
-      };
-
-    case ActionType.LOAD_FILM:
-      return {
-        ...state,
-        film: action.payload,
-        isFilmLoaded: true,
-      };
-
-    case ActionType.LOAD_COMMENTS:
-      return {
-        ...state,
-        comments: action.payload,
-        isCommentsLoaded: true,
-      };
-
-      // case ActionType.POST_COMMENT:
-      //   return {
-      //     ...state,
-      //     isCommentsLoaded: false,
-      //   };
 
     default:
       return state;
   }
 };
 
-export {reducer};
+export {appAction};

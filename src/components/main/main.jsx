@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {ActionCreator} from '../../store/action';
+import {getActiveFilmsListCount, changeGenre, getActiveFilmsList} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -146,11 +146,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick() {
-    dispatch(ActionCreator.getActiveFilmsListCount());
+    dispatch(getActiveFilmsListCount());
   },
   onGenreItemClick(genre) {
-    dispatch(ActionCreator.changeGenre(genre));
-    dispatch(ActionCreator.getActiveFilmsList(genre));
+    dispatch(changeGenre(genre));
+    dispatch(getActiveFilmsList(genre));
   },
   onLoadData() {
     dispatch(fetchFilms());
