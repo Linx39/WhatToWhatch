@@ -1,31 +1,11 @@
-import {ActionType} from './action';
-import {FilmsCount, GENRE_DEFAULT, NavItem} from '../const';
+import {ActionType} from '../action';
+import {FilmsCount, GENRE_DEFAULT, NavItem} from '../../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
   activeFilmsList: [],
   activeFilmsListCount: FilmsCount.MAIN,
   activeNavItem: NavItem.OVERVIEW,
-};
-
-const filterFilms = (films, genre) => {
-  if (genre === GENRE_DEFAULT) {
-    return films;
-  }
-
-  return films.filter((film) => film.genre === genre);
-};
-
-const getNewCount = (films, prevCount) => {
-  const newCount = prevCount + FilmsCount.MAIN;
-
-  const count = newCount > films.length ? films.length : newCount;
-
-  // if (newCount > films.length) {
-  //   return films.length;
-  // }
-
-  return count;
 };
 
 const appAction = (state = initialState, action) => {
@@ -36,16 +16,16 @@ const appAction = (state = initialState, action) => {
         activeGenre: action.payload,
       };
 
-    case ActionType.GET_ACTIVE_FILMS_LIST:
+    case ActionType.CHANGE_ACTIVE_FILMS_LIST:
       return {
         ...state,
-        activeFilmsList: filterFilms(state.films, action.payload),
+        activeFilmsList: action.payload,
       };
 
-    case ActionType.GET_ACTIVE_FILMS_LIST_COUNT:
+    case ActionType.CHANGE_ACTIVE_FILMS_LIST_COUNT:
       return {
         ...state,
-        activeFilmsListCount: getNewCount(state.films, state.activeFilmsListCount),
+        activeFilmsListCount: action.payload,
       };
 
     case ActionType.CHANGE_ACTIVE_NAV_ITEM:
@@ -58,7 +38,7 @@ const appAction = (state = initialState, action) => {
       return {
         ...state,
         activeGenre: GENRE_DEFAULT,
-        activeFilmsList: state.films,
+        activeFilmsList: [],
         activeFilmsListCount: FilmsCount.MAIN,
         activeNavItem: NavItem.OVERVIEW,
         // film: {},

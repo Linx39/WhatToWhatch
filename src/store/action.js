@@ -1,7 +1,7 @@
-const ActionType = {
+export const ActionType = {
   CHANGE_GENRE: `filmsList/changeGenre`,
-  GET_ACTIVE_FILMS_LIST: `filmsList/getActiveFilmsList`,
-  GET_ACTIVE_FILMS_LIST_COUNT: `filmsList/getActiveFilmsListCount`,
+  CHANGE_ACTIVE_FILMS_LIST: `filmsList/changeActiveFilmsList`,
+  CHANGE_ACTIVE_FILMS_LIST_COUNT: `filmsList/changeActiveFilmsListCount`,
   RESET_ON_DEFAULT: `filmsList/resetOnDefault`,
   REDIRECT_TO_ROUTE: `films/redirectToRoute`,
   CHANGE_ACTIVE_NAV_ITEM: `film/changeActiveNavItem`,
@@ -12,40 +12,41 @@ const ActionType = {
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
 };
 
-const changeGenre = (genre) => ({
+export const changeGenre = (genre) => ({
   type: ActionType.CHANGE_GENRE,
   payload: genre,
 });
 
-const getActiveFilmsList = (genre) => ({
-  type: ActionType.GET_ACTIVE_FILMS_LIST,
-  payload: genre,
+export const changeActiveFilmsList = (films) => ({
+  type: ActionType.CHANGE_ACTIVE_FILMS_LIST,
+  payload: films,
 });
 
-const getActiveFilmsListCount = () => ({
-  type: ActionType.GET_ACTIVE_FILMS_LIST_COUNT,
+export const changeActiveFilmsListCount = (count) => ({
+  type: ActionType.CHANGE_ACTIVE_FILMS_LIST_COUNT,
+  payload: count,
 });
 
-const changeActiveNavItem = (item) => ({
+export const changeActiveNavItem = (item) => ({
   type: ActionType.CHANGE_ACTIVE_NAV_ITEM,
   payload: item,
 });
 
-const resetOnDefault = () => ({
+export const resetOnDefault = () => ({
   type: ActionType.RESET_ON_DEFAULT,
 });
 
-const loadFilms = (films) => ({
+export const loadFilms = (films) => ({
   type: ActionType.LOAD_FILMS,
   payload: films
 });
 
-const loadFilm = (film) => ({
+export const loadFilm = (film) => ({
   type: ActionType.LOAD_FILM,
   payload: film
 });
 
-const loadComments = (comments) => ({
+export const loadComments = (comments) => ({
   type: ActionType.LOAD_COMMENTS,
   payload: comments
 });
@@ -54,26 +55,12 @@ const loadComments = (comments) => ({
 //   type: ActionType.POST_COMMENT,
 // });
 
-const requireAuthorization = (status) => ({
+export const requireAuthorization = (status) => ({
   type: ActionType.REQUIRE_AUTHORIZATION,
   payload: status,
 });
 
-const redirectToRoute = (url) => ({
+export const redirectToRoute = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url,
 });
-
-export {
-  ActionType,
-  changeGenre,
-  getActiveFilmsList,
-  getActiveFilmsListCount,
-  changeActiveNavItem,
-  resetOnDefault,
-  loadFilms,
-  loadFilm,
-  loadComments,
-  requireAuthorization,
-  redirectToRoute,
-};

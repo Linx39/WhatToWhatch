@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {getActiveFilmsListCount, changeGenre, getActiveFilmsList} from '../../store/action';
+import {changeActiveFilmsListCount, changeGenre, changeActiveFilmsList} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -12,8 +12,26 @@ import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
 import Loading from './loading/loading';
 import {fetchFilms} from '../../store/api-actions';
+import {getActiveGenre, getActiveFilmsList, getActiveFilmsListCount} from '../../store/app-actions/selectors';
+import {getFilms, getFilmsLoadedStatus} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 import {filmsProp, countProp} from '../props-types';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, FilmsCount, GENRE_DEFAULT} from '../../const';
+
+const getNewCount = (maxCount, prevCount) => {
+  const newCount = prevCount + FilmsCount.MAIN;
+  const count = newCount > maxCount ? maxCount : newCount;
+
+  return count;
+};
+
+const filterFilms = (genre) => {
+  if (genre === GENRE_DEFAULT) {
+    return films;
+  }
+
+  return films.filter((film) => film.genre === genre);
+};
 
 const Main = (props) => {
   const {
@@ -43,7 +61,6 @@ const Main = (props) => {
   }
 
   const {name, posterImage, backgroundImage, genre, released} = films[3];
-
 
   return <React.Fragment>
     <section className='movie-card'>
@@ -136,21 +153,23 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
-  count: state.activeFilmsListCount,
-  activeGenre: state.activeGenre,
-  activeFilmsList: state.activeFilmsList,
-  isFilmsLoaded: state.isFilmsLoaded,
-  authorizationStatus: state.authorizationStatus,
+  films: getFilms(state),
+  isFilmsLoaded: getFilmsLoadedStatus(state),
+  count: getActiveFilmsListCount(state),
+  activeGenre: getActiveGenre(state),
+  activeFilmsList: getActiveFilmsList(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onShowMoreClick() {
-    dispatch(getActiveFilmsListCount());
+  onShowMoreClick(films, count) {
+    const newCount = getNewCount(films.length, count);
+    dispatch(changeActiveFilmsListCount(newCount));
   },
   onGenreItemClick(genre) {
     dispatch(changeGenre(genre));
-    dispatch(getActiveFilmsList(genre));
+    const filmsList = filterFilms(genre);
+    dispatch(changeActiveFilmsList(filmsList));
   },
   onLoadData() {
     dispatch(fetchFilms());

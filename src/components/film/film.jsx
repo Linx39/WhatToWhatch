@@ -15,6 +15,9 @@ import Details from './details/details';
 import Reviews from './reviews/reviews';
 import Loading from './loading/loading';
 import {fetchFilm, fetchComments} from '../../store/api-actions';
+import {getActiveNavItem} from '../../store/app-actions/selectors';
+import {getComments, getCommentsLoadedStatus, getFilm, getFilmLoadedStatus, getFilms} from '../../store/app-data/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 import {filmProp, filmsProp, commentsProp} from '../props-types';
 import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
@@ -185,13 +188,13 @@ Film.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
-  film: state.film,
-  comments: state.comments,
-  activeNavItem: state.activeNavItem,
-  isFilmLoaded: state.isFilmLoaded,
-  isCommentsLoaded: state.isCommentsLoaded,
-  authorizationStatus: state.authorizationStatus,
+  films: getFilms(state),
+  film: getFilm(state),
+  isFilmLoaded: getFilmLoadedStatus(state),
+  comments: getComments(state),
+  isCommentsLoaded: getCommentsLoadedStatus(state),
+  activeNavItem: getActiveNavItem(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

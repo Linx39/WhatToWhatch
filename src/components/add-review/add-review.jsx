@@ -7,6 +7,7 @@ import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
 import {fetchComment} from '../../store/api-actions';
+import {getFilm} from '../../store/app-data/selectors';
 import {filmProp} from '../props-types';
 import {Patch} from '../../const';
 
@@ -68,7 +69,7 @@ AddReview.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  film: state.film,
+  film: getFilm(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
