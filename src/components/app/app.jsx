@@ -76,9 +76,14 @@ const App = () => {
         >
         </PrivateRoute>
 
-        <Route path={`${Patch.PLAYER}/:id`} exact>
-          <Player />
-        </Route>
+        <Route exact
+          path={`${Patch.PLAYER}/:id`}
+          render={({history}) => (
+            <Player
+              goFilm={(id) => goFilm(id, history)}
+            />
+          )}
+        />
 
         <Route
           render={({history}) => (

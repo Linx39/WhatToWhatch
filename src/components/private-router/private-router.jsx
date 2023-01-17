@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectorsудалить';
 import {AuthorizationStatus, Patch} from '../../const';
 
 

@@ -1,66 +1,84 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_GENRE: `filmsList/changeGenre`,
-  CHANGE_ACTIVE_FILMS_LIST: `filmsList/changeActiveFilmsList`,
-  CHANGE_ACTIVE_FILMS_LIST_COUNT: `filmsList/changeActiveFilmsListCount`,
+  GET_FILMS_LIST: `filmsList/getFilmsList`,
+  CHANGE_FILMS_COUNT: `filmsList/changeFilmsCount`,
   RESET_ON_DEFAULT: `filmsList/resetOnDefault`,
+  CHANGE_ACTIVE_NAV_ITEM: `filmsList/changeActiveNavItem`,
   REDIRECT_TO_ROUTE: `films/redirectToRoute`,
-  CHANGE_ACTIVE_NAV_ITEM: `film/changeActiveNavItem`,
   LOAD_FILMS: `data/loadFilms`,
   LOAD_FILM: `data/loadFilm`,
+  LOAD__PROMO_FILM: `data/loadPromoFilm`,
+  LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
   LOAD_COMMENTS: `data/loadComments`,
-  // POST_COMMENT: `data/postComment`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
 };
 
-export const changeGenre = (genre) => ({
-  type: ActionType.CHANGE_GENRE,
-  payload: genre,
+export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {
+  return {
+    payload: genre,
+  };
 });
 
-export const changeActiveFilmsList = (films) => ({
-  type: ActionType.CHANGE_ACTIVE_FILMS_LIST,
-  payload: films,
+export const getFilmsList = createAction(ActionType.GET_FILMS_LIST, (films) => {
+  return {
+    payload: films,
+  };
 });
 
-export const changeActiveFilmsListCount = (count) => ({
-  type: ActionType.CHANGE_ACTIVE_FILMS_LIST_COUNT,
-  payload: count,
+export const changeFilmsCount = createAction(ActionType.CHANGE_FILMS_COUNT, (count) => {
+  return {
+    payload: count,
+  };
 });
 
-export const changeActiveNavItem = (item) => ({
-  type: ActionType.CHANGE_ACTIVE_NAV_ITEM,
-  payload: item,
+export const changeActiveNavItem = createAction(ActionType.CHANGE_ACTIVE_NAV_ITEM, (item) => {
+  return {
+    payload: item,
+  };
 });
 
-export const resetOnDefault = () => ({
-  type: ActionType.RESET_ON_DEFAULT,
+export const resetOnDefault = createAction(ActionType.RESET_ON_DEFAULT);
+
+export const loadFilms = createAction(ActionType.LOAD_FILMS, (films) => {
+  return {
+    payload: films,
+  };
 });
 
-export const loadFilms = (films) => ({
-  type: ActionType.LOAD_FILMS,
-  payload: films
+export const loadFilm = createAction(ActionType.LOAD_FILM, (film) => {
+  return {
+    payload: film,
+  };
 });
 
-export const loadFilm = (film) => ({
-  type: ActionType.LOAD_FILM,
-  payload: film
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => {
+  return {
+    payload: comments,
+  };
 });
 
-export const loadComments = (comments) => ({
-  type: ActionType.LOAD_COMMENTS,
-  payload: comments
+export const loadPromoFilm = createAction(ActionType.LOAD__PROMO_FILM, (film) => {
+  return {
+    payload: film,
+  };
 });
 
-// postComment: () => ({
-//   type: ActionType.POST_COMMENT,
-// });
-
-export const requireAuthorization = (status) => ({
-  type: ActionType.REQUIRE_AUTHORIZATION,
-  payload: status,
+export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (films) => {
+  return {
+    payload: films,
+  };
 });
 
-export const redirectToRoute = (url) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
-  payload: url,
+export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATION, (status) => {
+  return {
+    payload: status,
+  };
+});
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => {
+  return {
+    payload: url,
+  };
 });

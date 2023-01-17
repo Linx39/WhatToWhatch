@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link, useParams} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {changeActiveNavItem} from '../../store/action';
 import FilmsList from '../films-list/films-list';
@@ -15,29 +15,26 @@ import Details from './details/details';
 import Reviews from './reviews/reviews';
 import Loading from './loading/loading';
 import {fetchFilm, fetchComments} from '../../store/api-actions';
-import {getActiveNavItem} from '../../store/app-actions/selectors';
-import {getComments, getCommentsLoadedStatus, getFilm, getFilmLoadedStatus, getFilms} from '../../store/app-data/selectors';
-import {getAuthorizationStatus} from '../../store/user/selectors';
-import {filmProp, filmsProp, commentsProp} from '../props-types';
 import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
-const Film = (props) => {
-  const {
-    films,
-    film,
-    comments,
-    activeNavItem,
-    onNavItemClick,
-    isFilmLoaded,
-    onLoadFilm,
-    isCommentsLoaded,
-    onLoadComments,
-    authorizationStatus,
-    goMain,
-    goMyList,
-    goPlayer,
-    goReview,
-  } = props;
+const Film = ({goMain, goMyList, goPlayer, goReview}) => {
+  const {films, film, isFilmLoaded, comments, isCommentsLoaded} = useSelector((state) => state.DATA);
+  const {activeNavItem} = useSelector((state) => state.ACTIONS);
+  const {authorizationStatus} = useSelector((state) => state.USER);
+
+  const dispatch = useDispatch();
+
+  const onNavItemClick = (item) =>{
+    dispatch(changeActiveNavItem(item));
+  };
+
+  const onLoadFilm = (id) => {
+    dispatch(fetchFilm(id));
+  };
+
+  const onLoadComments = (id) => {
+    dispatch(fetchComments(id));
+  };
 
   const filmId = Number(useParams().id);
 
@@ -111,7 +108,7 @@ const Film = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button" onClick={handlePlayButtonClick}>
+              <button onClick={handlePlayButtonClick} className="btn btn--play movie-card__button" type="button">
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
@@ -171,43 +168,10 @@ const Film = (props) => {
 };
 
 Film.propTypes = {
-  films: filmsProp,
-  film: filmProp,
-  comments: commentsProp,
-  activeNavItem: PropTypes.string.isRequired,
-  onNavItemClick: PropTypes.func.isRequired,
-  isFilmLoaded: PropTypes.bool.isRequired,
-  onLoadFilm: PropTypes.func.isRequired,
-  isCommentsLoaded: PropTypes.bool.isRequired,
-  onLoadComments: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
   goMain: PropTypes.func.isRequired,
   goMyList: PropTypes.func.isRequired,
   goPlayer: PropTypes.func.isRequired,
   goReview: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: getFilms(state),
-  film: getFilm(state),
-  isFilmLoaded: getFilmLoadedStatus(state),
-  comments: getComments(state),
-  isCommentsLoaded: getCommentsLoadedStatus(state),
-  activeNavItem: getActiveNavItem(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onNavItemClick(item) {
-    dispatch(changeActiveNavItem(item));
-  },
-  onLoadFilm(id) {
-    dispatch(fetchFilm(id));
-  },
-  onLoadComments(id) {
-    dispatch(fetchComments(id));
-  },
-});
-
-export {Film};
-export default connect(mapStateToProps, mapDispatchToProps)(Film);
+export default Film;

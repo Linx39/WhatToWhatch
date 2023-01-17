@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, Redirect, useParams} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
-import {fetchComment} from '../../store/api-actions';
-import {getFilm} from '../../store/app-data/selectors';
-import {filmProp} from '../props-types';
+import {fetchAddComment} from '../../store/api-actions';
 import {Patch} from '../../const';
 
-const AddReview = ({film, onSubmit, goMain, goMyList, goFilm}) => {
+const AddReview = ({goMain, goMyList, goFilm}) => {
+  const {film} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (id, userForm) => {
+    dispatch(fetchAddComment(id, userForm));
+  };
+
   const filmId = Number(useParams().id);
 
   if (!film) {
@@ -61,22 +67,9 @@ const AddReview = ({film, onSubmit, goMain, goMyList, goFilm}) => {
 };
 
 AddReview.propTypes = {
-  film: filmProp,
-  onSubmit: PropTypes.func.isRequired,
   goMain: PropTypes.func.isRequired,
   goMyList: PropTypes.func.isRequired,
   goFilm: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  film: getFilm(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, userForm) {
-    dispatch(fetchComment(id, userForm));
-  },
-});
-
-export {AddReview};
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default AddReview;

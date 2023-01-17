@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
-import {changeActiveFilmsListCount, changeGenre, changeActiveFilmsList} from '../../store/action';
+import {changeFilmsCount, changeGenre, getFilmsList} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -11,21 +11,17 @@ import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
 import Loading from './loading/loading';
-import {fetchFilms} from '../../store/api-actions';
-import {getActiveGenre, getActiveFilmsList, getActiveFilmsListCount} from '../../store/app-actions/selectors';
-import {getFilms, getFilmsLoadedStatus} from '../../store/app-data/selectors';
-import {getAuthorizationStatus} from '../../store/user/selectors';
-import {filmsProp, countProp} from '../props-types';
+import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
 import {AuthorizationStatus, FilmsCount, GENRE_DEFAULT} from '../../const';
 
-const getNewCount = (maxCount, prevCount) => {
-  const newCount = prevCount + FilmsCount.MAIN;
-  const count = newCount > maxCount ? maxCount : newCount;
+const getNewCount = (prevCount, maxCount) => {
+  const nextCount = prevCount + FilmsCount.MAIN;
+  const newCount = nextCount > maxCount ? maxCount : nextCount;
 
-  return count;
+  return newCount;
 };
 
-const filterFilms = (genre) => {
+const filterFilmsByGenre = (genre, films) => {
   if (genre === GENRE_DEFAULT) {
     return films;
   }
@@ -33,34 +29,68 @@ const filterFilms = (genre) => {
   return films.filter((film) => film.genre === genre);
 };
 
-const Main = (props) => {
-  const {
-    films,
-    count,
-    onShowMoreClick,
-    activeGenre,
-    activeFilmsList,
-    onGenreItemClick,
-    isFilmsLoaded,
-    onLoadData,
-    authorizationStatus,
-    goMyList,
-    goFilm,
-  } = props;
+const Main = ({goMyList, goFilm}) => {
+  const {count, activeGenre, filmsList} = useSelector((state) => state.ACTIONS);
+  const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
+  const {authorizationStatus} = useSelector((state) => state.USER);
+
+  const dispatch = useDispatch();
+
+  const onLoadFilms = () => {
+    dispatch(fetchFilms());
+  };
+
+  const onLoadPromoFilm = () => {
+    dispatch(fetchPromoFilm());
+  };
+
+  const onShowMoreClick = (newCount) => {
+    dispatch(changeFilmsCount(newCount));
+  };
+
+  const onGenreItemClick = (genre) => {
+    dispatch(changeGenre(genre));
+  };
+
+  const onChangeFilmsList = (list) => {
+    dispatch(getFilmsList(list));
+  };
 
   useEffect(() => {
     if (!isFilmsLoaded) {
-      onLoadData();
+      onLoadFilms();
+    }
+
+    if (isFilmsLoaded) {
+      onChangeFilmsList(films);
     }
   }, [isFilmsLoaded]);
 
-  if (!isFilmsLoaded) {
+  useEffect(() => {
+    if (!isPromoFilmLoaded) {
+      onLoadPromoFilm();
+    }
+  }, [isPromoFilmLoaded]);
+
+  if (!isFilmsLoaded && !isPromoFilmLoaded) {
     return (
       <Loading />
     );
   }
 
-  const {name, posterImage, backgroundImage, genre, released} = films[3];
+  const {name, posterImage, backgroundImage, genre, released} = promoFilm;
+
+  const handleGenreItemClick = (genreItem) => {
+    onGenreItemClick(genreItem);
+    const list = filterFilmsByGenre(genreItem, films);
+    onChangeFilmsList(list);
+  };
+
+  const handleShowMoreClick = () => {
+    const newCount = getNewCount(count, films.length);
+    onShowMoreClick(newCount);
+
+  };
 
   return <React.Fragment>
     <section className='movie-card'>
@@ -119,14 +149,14 @@ const Main = (props) => {
         <GenresList
           films={films}
           activeGenre={activeGenre}
-          onClick={onGenreItemClick}
+          onClick={handleGenreItemClick}
         />
 
         <div className='catalog__movies-list'>
-          <FilmsList films={activeFilmsList} count={count} goFilm={goFilm} />
+          <FilmsList films={filmsList} count={count} goFilm={goFilm} />
         </div>
 
-        {(count < activeFilmsList.length) && <ShowMore onClick={onShowMoreClick} />}
+        {(count < filmsList.length) && <ShowMore onClick={handleShowMoreClick} />}
 
       </section>
 
@@ -139,42 +169,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  films: filmsProp,
-  count: countProp,
-  activeGenre: PropTypes.string.isRequired,
-  activeFilmsList: filmsProp,
-  onShowMoreClick: PropTypes.func.isRequired,
-  onGenreItemClick: PropTypes.func.isRequired,
-  isFilmsLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
   goMyList: PropTypes.func.isRequired,
   goFilm: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: getFilms(state),
-  isFilmsLoaded: getFilmsLoadedStatus(state),
-  count: getActiveFilmsListCount(state),
-  activeGenre: getActiveGenre(state),
-  activeFilmsList: getActiveFilmsList(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onShowMoreClick(films, count) {
-    const newCount = getNewCount(films.length, count);
-    dispatch(changeActiveFilmsListCount(newCount));
-  },
-  onGenreItemClick(genre) {
-    dispatch(changeGenre(genre));
-    const filmsList = filterFilms(genre);
-    dispatch(changeActiveFilmsList(filmsList));
-  },
-  onLoadData() {
-    dispatch(fetchFilms());
-  },
-});
-
-export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

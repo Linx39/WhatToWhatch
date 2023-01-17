@@ -1,55 +1,34 @@
-import {ActionType} from '../action';
+import {createReducer} from '@reduxjs/toolkit';
+
+import {changeGenre, getFilmsList, changeFilmsCount, changeActiveNavItem, resetOnDefault} from '../action';
 import {FilmsCount, GENRE_DEFAULT, NavItem} from '../../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
-  activeFilmsList: [],
-  activeFilmsListCount: FilmsCount.MAIN,
+  count: FilmsCount.MAIN,
+  filmsList: [],
   activeNavItem: NavItem.OVERVIEW,
 };
 
-const appAction = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.CHANGE_GENRE:
-      return {
-        ...state,
-        activeGenre: action.payload,
-      };
-
-    case ActionType.CHANGE_ACTIVE_FILMS_LIST:
-      return {
-        ...state,
-        activeFilmsList: action.payload,
-      };
-
-    case ActionType.CHANGE_ACTIVE_FILMS_LIST_COUNT:
-      return {
-        ...state,
-        activeFilmsListCount: action.payload,
-      };
-
-    case ActionType.CHANGE_ACTIVE_NAV_ITEM:
-      return {
-        ...state,
-        activeNavItem: action.payload,
-      };
-
-    case ActionType.RESET_ON_DEFAULT:
-      return {
-        ...state,
-        activeGenre: GENRE_DEFAULT,
-        activeFilmsList: [],
-        activeFilmsListCount: FilmsCount.MAIN,
-        activeNavItem: NavItem.OVERVIEW,
-        // film: {},
-        // isFilmLoaded: false,
-        // comments: [],
-        // isCommentsLoaded: false,
-      };
-
-    default:
-      return state;
-  }
-};
+const appAction = createReducer(initialState, (builder) => {
+  builder.addCase(changeGenre, (state, action) => {
+    state.activeGenre = action.payload;
+  });
+  builder.addCase(changeFilmsCount, (state, action) => {
+    state.count = action.payload;
+  });
+  builder.addCase(getFilmsList, (state, action) => {
+    state.filmsList = action.payload;
+  });
+  builder.addCase(changeActiveNavItem, (state, action) => {
+    state.activeNavItem = action.payload;
+  });
+  builder.addCase(resetOnDefault, (state) => {
+    state.activeGenre = GENRE_DEFAULT;
+    state.count = FilmsCount.MAIN;
+    state.filmsList = [];
+    state.activeNavItem = NavItem.OVERVIEW;
+  });
+});
 
 export {appAction};

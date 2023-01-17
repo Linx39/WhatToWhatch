@@ -1,12 +1,20 @@
 import React, {useRef} from 'react';
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {login} from "../../store/api-actions";
+import {useSelector, useDispatch} from 'react-redux';
 
+import {login} from "../../store/api-actions";
 import Logo from '../common-components/logo/logo';
 import Copyright from '../common-components/copyright/copyright';
 
-const SignIn = ({onSubmit, goMain}) => {
+const SignIn = ({goMain}) => {
+  // const {authorizationStatus} = useSelector((state) => state.USER);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (authData) => {
+    dispatch(login(authData));
+  };
+
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -78,16 +86,7 @@ const SignIn = ({onSubmit, goMain}) => {
 };
 
 SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   goMain: PropTypes.func,
 };
 
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  }
-});
-
-export {SignIn};
-export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;

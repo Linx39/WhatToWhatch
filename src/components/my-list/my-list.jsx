@@ -1,15 +1,36 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
-import {filmsProp} from '../props-types';
+import {fetchFavoriteFilms} from '../../store/api-actions';
+import Loading from './loading/loading';
 import {FilmsCount} from '../../const';
 
-const MyList = ({films, goMain}) => {
+const MyList = ({goMain}) => {
+  const {films, favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
+
+  const onFavoriteLoadFilms = () => {
+    dispatch(fetchFavoriteFilms());
+  };
+
+  useEffect(() => {
+    if (!isFavoriteFilmsLoaded) {
+      onFavoriteLoadFilms();
+    }
+  }, [isFavoriteFilmsLoaded]);
+
+  if (!isFavoriteFilmsLoaded) {
+    return (
+      <Loading />
+    );
+  }
+
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -24,7 +45,7 @@ const MyList = ({films, goMain}) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__movies-list">
-          <FilmsList films={films} count={FilmsCount.MY_LIST} />
+          <FilmsList films={favoriteFilms} count={favoriteFilms.length} />
         </div>
       </section>
 
@@ -41,13 +62,7 @@ const MyList = ({films, goMain}) => {
 };
 
 MyList.propTypes = {
-  films: filmsProp,
   goMain: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films,
-});
-
-export {MyList};
-export default connect(mapStateToProps)(MyList);
+export default MyList;

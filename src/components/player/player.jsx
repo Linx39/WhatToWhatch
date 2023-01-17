@@ -1,22 +1,15 @@
 import React from 'react';
-import {Redirect, useHistory} from 'react-router-dom';
-import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {Redirect, useParams} from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
 
 import VideoPlayer from '../video-player/video-player';
-import {filmsProp} from '../props-types';
-import {findFilm} from '../component-utils';
 import {Patch} from '../../const';
 
-const Player = ({films}) => {
-  const history = useHistory();
+const Player = ({goFilm}) => {
+  const {film} = useSelector((state) => state.DATA);
 
-  const handleButtonClick = () => {
-    return (
-      history.push(`${Patch.FILMS}/${film.id}`)
-    );
-  };
-
-  const film = findFilm(films);
+  const filmId = Number(useParams().id);
 
   if (!film) {
     return (
@@ -24,7 +17,9 @@ const Player = ({films}) => {
     );
   }
 
-  const {posterImage, videoLink, runTime} = film;
+  const {id, posterImage, videoLink, runTime} = film;
+
+  const handleButtonExitClick = () => goFilm(id);
 
   return <React.Fragment>
     <div className="player">
@@ -35,7 +30,7 @@ const Player = ({films}) => {
         isMute={false}
       />
 
-      <button type="button" className="player__exit" onClick={handleButtonClick}>Exit</button>
+      <button type="button" className="player__exit" onClick={handleButtonExitClick}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -68,12 +63,7 @@ const Player = ({films}) => {
 };
 
 Player.propTypes = {
-  films: filmsProp,
+  goFilm: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  films: state.films,
-});
-
-export {Player};
-export default connect(mapStateToProps)(Player);
+export default Player;
