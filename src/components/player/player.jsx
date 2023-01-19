@@ -38,13 +38,19 @@ const Player = ({goFilm}) => {
 
   const handleButtonExitClick = () => goFilm(id);
 
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const handleButtonPlayClick = () => setIsPlaying(!isPlaying);
+  // const handleVideoPlayer = () =>
+
   return <React.Fragment>
     <div className="player">
       <VideoPlayer
+        // onPlayClick={handleButtonPlayClick}
         src={videoLink}
         poster={posterImage}
-        isPlaying={true}
-        isMute={false}
+        isPlaying={isPlaying}
+        isMuted={false}
       />
 
       <button type="button" className="player__exit" onClick={handleButtonExitClick}>Exit</button>
@@ -59,7 +65,7 @@ const Player = ({goFilm}) => {
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
+          <button onClick={handleButtonPlayClick} type="button" className="player__play">
             <svg viewBox="0 0 19 19" width="19" height="19">
               <use xlinkHref="#play-s"></use>
             </svg>
