@@ -29,6 +29,7 @@ const App = () => {
             <Main
               goMyList={() => goMyList(history)}
               goFilm={(id) => goFilm(id, history)}
+              goPlayer={(id) => goPlayer(id, history)}
             />
           )}
         />
@@ -47,6 +48,7 @@ const App = () => {
           render={({history}) => (
             <MyList
               goMain={() => goMain(history)}
+              goFilm={(id) => goFilm(id, history)}
             />
           )}
         >
@@ -60,6 +62,7 @@ const App = () => {
               goMyList={() => goMyList(history)}
               goPlayer={(id) => goPlayer(id, history)}
               goReview={(id) => goReview(id, history)}
+              goFilm={(id) => goFilm(id, history)}
             />
           )}
         />

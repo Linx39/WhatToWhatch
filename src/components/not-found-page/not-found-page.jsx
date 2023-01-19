@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {connect} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux';
 
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -10,7 +10,9 @@ import Copyright from '../common-components/copyright/copyright';
 
 import {Patch, AuthorizationStatus} from '../../const';
 
-const NotFoundPage = ({authorizationStatus, goMain, goMyList}) => {
+const NotFoundPage = ({goMain, goMyList}) => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+
   return <React.Fragment>
     <section className="movie-card">
       <h1 className="visually-hidden">WTW</h1>
@@ -41,14 +43,8 @@ const NotFoundPage = ({authorizationStatus, goMain, goMyList}) => {
 };
 
 NotFoundPage.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
   goMain: PropTypes.func.isRequired,
   goMyList: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
-
-export {NotFoundPage};
-export default connect(mapStateToProps)(NotFoundPage);
+export default NotFoundPage;

@@ -47,6 +47,12 @@ export const loadFilms = createAction(ActionType.LOAD_FILMS, (films) => {
   };
 });
 
+export const loadPromoFilm = createAction(ActionType.LOAD__PROMO_FILM, (film) => {
+  return {
+    payload: film,
+  };
+});
+
 export const loadFilm = createAction(ActionType.LOAD_FILM, (film) => {
   return {
     payload: film,
@@ -56,12 +62,6 @@ export const loadFilm = createAction(ActionType.LOAD_FILM, (film) => {
 export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => {
   return {
     payload: comments,
-  };
-});
-
-export const loadPromoFilm = createAction(ActionType.LOAD__PROMO_FILM, (film) => {
-  return {
-    payload: film,
   };
 });
 

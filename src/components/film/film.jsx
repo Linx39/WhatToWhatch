@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Link, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {changeActiveNavItem} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -13,14 +12,18 @@ import NavList from './nav-list/nav-list';
 import Overview from './overview/overview';
 import Details from './details/details';
 import Reviews from './reviews/reviews';
-import Loading from './loading/loading';
-import {fetchFilm, fetchComments} from '../../store/api-actions';
+import Loading from '../common-components/loading/loading';
+import {fetchFilm, fetchComments, fetchAddFavoriteFilm} from '../../store/api-actions';
+import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
-const Film = ({goMain, goMyList, goPlayer, goReview}) => {
-  const {films, film, isFilmLoaded, comments, isCommentsLoaded} = useSelector((state) => state.DATA);
+const Film = ({goMain, goMyList, goPlayer, goReview, goFilm}) => {
+  const {films, film, comments} = useSelector((state) => state.DATA);
   const {activeNavItem} = useSelector((state) => state.ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
+
+  const [isFilmLoaded, setIsFilmLoaded] = useState(false);
+  const [isCommentsLoaded, setIsCommentsLoaded] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -29,11 +32,17 @@ const Film = ({goMain, goMyList, goPlayer, goReview}) => {
   };
 
   const onLoadFilm = (id) => {
-    dispatch(fetchFilm(id));
+    dispatch(fetchFilm(id))
+      .then(() => setIsFilmLoaded(true));
   };
 
   const onLoadComments = (id) => {
-    dispatch(fetchComments(id));
+    dispatch(fetchComments(id))
+      .then(() => setIsCommentsLoaded(true));
+  };
+
+  const onAddFavoriteFilm = (id, status) => {
+    dispatch(fetchAddFavoriteFilm(id, status, false));
   };
 
   const filmId = Number(useParams().id);
@@ -61,10 +70,12 @@ const Film = ({goMain, goMyList, goPlayer, goReview}) => {
     backgroundImage,
     genre,
     released,
+    isFavorite,
   } = film;
 
   const handlePlayButtonClick = () => goPlayer(id);
   const handleAddReviewClick = () => goReview(id);
+  const handleAddFavoriteFilm = () => onAddFavoriteFilm(id, Number(!isFavorite));
 
   const getActiveComponent = (navItem) => {
     switch (navItem) {
@@ -114,9 +125,12 @@ const Film = ({goMain, goMyList, goPlayer, goReview}) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button">
+              <button onClick={handleAddFavoriteFilm} className="btn btn--list movie-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
+                  {isFavorite
+                    ? <use xlinkHref="#in-list"></use>
+                    : <use xlinkHref="#add"></use>
+                  }
                 </svg>
                 <span>My list</span>
               </button>
@@ -151,7 +165,7 @@ const Film = ({goMain, goMyList, goPlayer, goReview}) => {
         <h2 className="catalog__title">More like this</h2>
 
         <div className="catalog__movies-list">
-          <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} />
+          <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} goFilm={goFilm} />
         </div>
       </section>
 
@@ -172,6 +186,7 @@ Film.propTypes = {
   goMyList: PropTypes.func.isRequired,
   goPlayer: PropTypes.func.isRequired,
   goReview: PropTypes.func.isRequired,
+  goFilm: PropTypes.func.isRequired,
 };
 
 export default Film;

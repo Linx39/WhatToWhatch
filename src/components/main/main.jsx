@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {changeFilmsCount, changeGenre, getFilmsList} from '../../store/action';
 import FilmsList from '../films-list/films-list';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
@@ -10,8 +9,9 @@ import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-
 import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
-import Loading from './loading/loading';
-import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
+import Loading from '../common-components/loading/loading';
+import {changeFilmsCount, changeGenre, getFilmsList} from '../../store/action';
+import {fetchFilms, fetchPromoFilm, fetchAddFavoriteFilm} from '../../store/api-actions';
 import {AuthorizationStatus, FilmsCount, GENRE_DEFAULT} from '../../const';
 
 const getNewCount = (prevCount, maxCount) => {
@@ -29,10 +29,12 @@ const filterFilmsByGenre = (genre, films) => {
   return films.filter((film) => film.genre === genre);
 };
 
-const Main = ({goMyList, goFilm}) => {
+const Main = ({goMyList, goFilm, goPlayer}) => {
   const {count, activeGenre, filmsList} = useSelector((state) => state.ACTIONS);
-  const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
+  const {films, isFilmsLoaded, promoFilm} = useSelector((state) => state.DATA);
   const {authorizationStatus} = useSelector((state) => state.USER);
+
+  const [isPromoFilmLoaded, setIsPromoFilmLoaded] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -41,7 +43,8 @@ const Main = ({goMyList, goFilm}) => {
   };
 
   const onLoadPromoFilm = () => {
-    dispatch(fetchPromoFilm());
+    dispatch(fetchPromoFilm())
+      .then(() => setIsPromoFilmLoaded(true));
   };
 
   const onShowMoreClick = (newCount) => {
@@ -54,6 +57,10 @@ const Main = ({goMyList, goFilm}) => {
 
   const onChangeFilmsList = (list) => {
     dispatch(getFilmsList(list));
+  };
+
+  const onAddFavoriteFilm = (id, status) => {
+    dispatch(fetchAddFavoriteFilm(id, status, true));
   };
 
   useEffect(() => {
@@ -78,7 +85,11 @@ const Main = ({goMyList, goFilm}) => {
     );
   }
 
-  const {name, posterImage, backgroundImage, genre, released} = promoFilm;
+  const {id, name, posterImage, backgroundImage, genre, released, isFavorite} = promoFilm;
+
+  const handlePlayButtonClick = () => goPlayer(id);
+
+  const handleAddFavoriteFilm = () => onAddFavoriteFilm(id, Number(!isFavorite));
 
   const handleGenreItemClick = (genreItem) => {
     onGenreItemClick(genreItem);
@@ -124,15 +135,18 @@ const Main = ({goMyList, goFilm}) => {
             </p>
 
             <div className='movie-card__buttons'>
-              <button className='btn btn--play movie-card__button' type='button'>
+              <button onClick={handlePlayButtonClick} className='btn btn--play movie-card__button' type='button'>
                 <svg viewBox='0 0 19 19' width='19' height='19'>
                   <use xlinkHref='#play-s'></use>
                 </svg>
                 <span>Play</span>
               </button>
-              <button className='btn btn--list movie-card__button' type='button'>
+              <button onClick={handleAddFavoriteFilm} className='btn btn--list movie-card__button' type='button'>
                 <svg viewBox='0 0 19 20' width='19' height='20'>
-                  <use xlinkHref='#add'></use>
+                  {isFavorite
+                    ? <use xlinkHref="#in-list"></use>
+                    : <use xlinkHref="#add"></use>
+                  }
                 </svg>
                 <span>My list</span>
               </button>
@@ -171,6 +185,7 @@ const Main = ({goMyList, goFilm}) => {
 Main.propTypes = {
   goMyList: PropTypes.func.isRequired,
   goFilm: PropTypes.func.isRequired,
+  goPlayer: PropTypes.func.isRequired,
 };
 
 export default Main;

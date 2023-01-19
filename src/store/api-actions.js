@@ -10,15 +10,6 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
     })
 );
 
-export const fetchFilm = (id) => (dispatch, _getState, api) => (
-  api.get(`${AdditionalUrl.FILMS}/${id}`)
-    .then(({data}) => {
-      const film = adaptFilmToClient(data);
-      dispatch(loadFilm(film));
-    })
-    .catch(() => dispatch(redirectToRoute(Patch.MAIN)))
-);
-
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
   api.get(`${AdditionalUrl.FILMS}/promo`)
     .then(({data}) => {
@@ -26,6 +17,15 @@ export const fetchPromoFilm = () => (dispatch, _getState, api) => (
       dispatch(loadPromoFilm(film));
     })
     .catch(() => {})
+);
+
+export const fetchFilm = (id) => (dispatch, _getState, api) => (
+  api.get(`${AdditionalUrl.FILMS}/${id}`)
+    .then(({data}) => {
+      const film = adaptFilmToClient(data);
+      dispatch(loadFilm(film));
+    })
+    .catch(() => dispatch(redirectToRoute(Patch.MAIN)))
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (
@@ -51,9 +51,17 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
     })
 );
 
-export const fetchAddFavoriteFilm = (id, status) => (dispatch, _getState, api) => (
+export const fetchAddFavoriteFilm = (id, status, isPromo) => (dispatch, _getState, api) => (
   api.post(`${AdditionalUrl.FAVORITE}/${id}/${status}`)
-    .then(({data}) => dispatch(addFavoriteFilm(data)))
+    .then(({data}) => {
+      const film = adaptFilmToClient(data);
+      if (isPromo) {
+        dispatch(loadPromoFilm(film));
+      }
+      if (!isPromo) {
+        dispatch(loadFilm(film));
+      }
+    })
     .catch(() => {})
 );
 

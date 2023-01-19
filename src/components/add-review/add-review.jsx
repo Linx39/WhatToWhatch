@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link, Redirect, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
@@ -6,13 +6,21 @@ import {useSelector, useDispatch} from 'react-redux';
 import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
-import {fetchAddComment} from '../../store/api-actions';
+import Loading from '../common-components/loading/loading';
+import {fetchFilm, fetchAddComment} from '../../store/api-actions';
 import {Patch} from '../../const';
 
 const AddReview = ({goMain, goMyList, goFilm}) => {
   const {film} = useSelector((state) => state.DATA);
 
+  const [isFilmLoaded, setIsFilmLoaded] = useState(false);
+
   const dispatch = useDispatch();
+
+  const onLoadFilm = (id) => {
+    dispatch(fetchFilm(id))
+      .then(() => setIsFilmLoaded(true));
+  };
 
   const onSubmit = (id, userForm) => {
     dispatch(fetchAddComment(id, userForm));
@@ -20,9 +28,15 @@ const AddReview = ({goMain, goMyList, goFilm}) => {
 
   const filmId = Number(useParams().id);
 
-  if (!film) {
+  useEffect(() => {
+    if (!isFilmLoaded) {
+      onLoadFilm(filmId);
+    }
+  }, [filmId, isFilmLoaded]);
+
+  if (!isFilmLoaded) {
     return (
-      <Redirect to={Patch.MAIN} />
+      <Loading />
     );
   }
 

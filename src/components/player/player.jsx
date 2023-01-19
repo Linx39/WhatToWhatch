@@ -1,19 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Redirect, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import VideoPlayer from '../video-player/video-player';
+import Loading from '../common-components/loading/loading';
+import {fetchFilm} from '../../store/api-actions';
 import {Patch} from '../../const';
 
 const Player = ({goFilm}) => {
   const {film} = useSelector((state) => state.DATA);
 
+  const [isFilmLoaded, setIsFilmLoaded] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const onLoadFilm = (id) => {
+    dispatch(fetchFilm(id))
+      .then(() => setIsFilmLoaded(true));
+  };
+
   const filmId = Number(useParams().id);
 
-  if (!film) {
+  useEffect(() => {
+    if (!isFilmLoaded) {
+      onLoadFilm(filmId);
+    }
+  }, [filmId, isFilmLoaded]);
+
+  if (!isFilmLoaded) {
     return (
-      <Redirect to={Patch.MAIN} />
+      <Loading />
     );
   }
 
