@@ -25,26 +25,9 @@ const VideoPlayer = ({src, poster, isPlaying, isMuted}) => {
       videoRef.current.play();
       return;
     }
+
     videoRef.current.pause();
   }, [isPlaying]);
-
-  // useEffect(() => {
-  //   if (!isLoading && isPlaying) {
-  //     videoRef.current.play();
-  //   } else {
-  //     videoRef.current.pause();
-  //   }
-
-  // }, [!isLoading && isPlaying]);
-
-  // useEffect(() => {
-  //   if (isMute) {
-  //     videoRef.current.muted = true;
-  //     return;
-  //   }
-
-  //   videoRef.current.muted = false;
-  // }, [isMute]);
 
   return (
     <video
@@ -52,7 +35,6 @@ const VideoPlayer = ({src, poster, isPlaying, isMuted}) => {
       src={src}
       poster={poster}
       ref={videoRef}
-      // autoPlay={isAutoPlay}
       muted={isMuted}
     >
     </video>

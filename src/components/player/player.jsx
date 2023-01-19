@@ -12,6 +12,7 @@ const Player = ({goFilm}) => {
   const {film} = useSelector((state) => state.DATA);
 
   const [isFilmLoaded, setIsFilmLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -34,19 +35,15 @@ const Player = ({goFilm}) => {
     );
   }
 
-  const {id, posterImage, videoLink, runTime} = film;
+  const {id, name, posterImage, videoLink, runTime} = film;
 
   const handleButtonExitClick = () => goFilm(id);
 
-  const [isPlaying, setIsPlaying] = useState(true);
-
   const handleButtonPlayClick = () => setIsPlaying(!isPlaying);
-  // const handleVideoPlayer = () =>
 
   return <React.Fragment>
     <div className="player">
       <VideoPlayer
-        // onPlayClick={handleButtonPlayClick}
         src={videoLink}
         poster={posterImage}
         isPlaying={isPlaying}
@@ -66,12 +63,24 @@ const Player = ({goFilm}) => {
 
         <div className="player__controls-row">
           <button onClick={handleButtonPlayClick} type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
+            {!isPlaying &&
+              <>
+                <svg viewBox="0 0 19 19" width="19" height="19">
+                  <use xlinkHref="#play-s"></use>
+                </svg>
+                <span>Play</span>
+              </>
+            }
+            {isPlaying &&
+              <>
+                <svg viewBox="0 0 19 19" width="19" height="19">
+                  <use xlinkHref="#pause"></use>
+                </svg>
+                <span>Pause</span>
+              </>
+            }
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
