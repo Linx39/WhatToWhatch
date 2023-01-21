@@ -11,8 +11,11 @@ import {Patch} from '../../const';
 const Player = ({goFilm}) => {
   const {film} = useSelector((state) => state.DATA);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [isFilmLoaded, setIsFilmLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [lastTime, setLastTime] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -35,11 +38,19 @@ const Player = ({goFilm}) => {
     );
   }
 
-  const {id, name, posterImage, videoLink, runTime} = film;
+  const {id, name, posterImage, videoLink} = film;
 
   const handleButtonExitClick = () => goFilm(id);
 
+  const handleChangeIsLoading = (isLoad) => {
+    setIsLoading(isLoad);
+    console.log (isLoading);
+  };
+
   const handleButtonPlayClick = () => setIsPlaying(!isPlaying);
+  const handleButtonFullScreenClick = () => setIsFullScreen(!isFullScreen);
+
+  const handleChangeLastTime = (time) => setLastTime(time);
 
   return <React.Fragment>
     <div className="player">
@@ -47,7 +58,10 @@ const Player = ({goFilm}) => {
         src={videoLink}
         poster={posterImage}
         isPlaying={isPlaying}
+        isFullScreen={isFullScreen}
         isMuted={false}
+        onChangeIsLoading ={handleChangeIsLoading}
+        onChangeLastTime={handleChangeLastTime}
       />
 
       <button type="button" className="player__exit" onClick={handleButtonExitClick}>Exit</button>
@@ -58,7 +72,7 @@ const Player = ({goFilm}) => {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{runTime}</div>
+          <div className="player__time-value">{lastTime}</div>
         </div>
 
         <div className="player__controls-row">
@@ -82,7 +96,7 @@ const Player = ({goFilm}) => {
           </button>
           <div className="player__name">{name}</div>
 
-          <button type="button" className="player__full-screen">
+          <button onClick={handleButtonFullScreenClick} type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>

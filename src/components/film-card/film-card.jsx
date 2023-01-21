@@ -35,6 +35,7 @@ const CardVideo = ({film}) => {
     src={previewVideoLink}
     poster={posterImage}
     isPlaying={true}
+    isFullScreen={false}
     isMuted={true}
   />;
 };

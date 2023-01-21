@@ -1,16 +1,13 @@
 import React, {useState, useRef, useEffect} from "react";
 import PropTypes from 'prop-types';
 
-const VideoPlayer = ({src, poster, isPlaying, isMuted}) => {
-  const [isLoading, setIsLoading] = useState(true);
-  // const [isPlaying, setIsPlaying] = useState(isAutoPlay);
+const VideoPlayer = ({src, poster, isPlaying, isFullScreen, isMuted, onChangeIsLoading, onChangeLastTime}) => {
+  // const [isLoading, setIsLoading] = useState(true);
 
   const videoRef = useRef();
 
   useEffect(() => {
-    videoRef.current.oncanplaythrough = () => setIsLoading(false);
-    // videoRef.current.onplay = () => onPlayClick(true);
-    // videoRef.current.onpause = () => onPlayClick(false);
+    videoRef.current.oncanplaythrough = () => onChangeIsLoading(false);
 
     return () => {
       videoRef.current.oncanplaythrough = null;
@@ -29,6 +26,25 @@ const VideoPlayer = ({src, poster, isPlaying, isMuted}) => {
     videoRef.current.pause();
   }, [isPlaying]);
 
+  useEffect(() => {
+    if (isFullScreen && !document.fullscreenElement) {
+      videoRef.current.requestFullscreen();
+      return;
+    }
+
+    if (!isFullScreen && document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  }, [isFullScreen]);
+
+  useEffect(() => {
+    videoRef.current.ontimeupdate = () => onChangeLastTime(videoRef.current.currentTime);
+
+    return () => {
+      videoRef.current.ontimeupdate = null;
+    };
+  });
+
   return (
     <video
       className="player__video"
@@ -45,7 +61,10 @@ VideoPlayer.propTypes = {
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  isFullScreen: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool.isRequired,
+  onChangeIsLoading: PropTypes.func,
+  onChangeLastTime: PropTypes.func,
 };
 
 export default VideoPlayer;
