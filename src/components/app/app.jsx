@@ -13,11 +13,13 @@ import browserHistory from "../../browser-history";
 import {Patch} from '../../const';
 
 const App = () => {
-  const goMyList = (history) => history.push(Patch.MY_LIST);
   const goMain = (history) => history.push(Patch.MAIN);
+  const goMyList = (history) => history.push(Patch.MY_LIST);
+  const goSignIn = (history) => history.push(Patch.LOGIN);
   const goFilm = (id, history) => history.push(`${Patch.FILMS}/${id}`);
   const goReview = (id, history) => history.push(`${Patch.FILMS}/${id}/review`);
   const goPlayer = (id, history) => history.push(`${Patch.PLAYER}/${id}`);
+  const goBack = (history) => history.goBack();
   // const goNoFoundPage = (history) => history.push(`${Patch.PLAYER}/${id}`);
 
   return (
@@ -27,9 +29,8 @@ const App = () => {
           path={Patch.MAIN}
           render={({history}) => (
             <Main
-              goMyList={() => goMyList(history)}
-              goFilm={(id) => goFilm(id, history)}
               goPlayer={(id) => goPlayer(id, history)}
+              goSignIn={() => goSignIn(history)}
             />
           )}
         />
@@ -63,6 +64,7 @@ const App = () => {
               goPlayer={(id) => goPlayer(id, history)}
               goReview={(id) => goReview(id, history)}
               goFilm={(id) => goFilm(id, history)}
+              goSignIn={() => goSignIn(history)}
             />
           )}
         />
@@ -83,7 +85,7 @@ const App = () => {
           path={`${Patch.PLAYER}/:id`}
           render={({history}) => (
             <Player
-              goFilm={(id) => goFilm(id, history)}
+              goBack={() => goBack(history)}
             />
           )}
         />

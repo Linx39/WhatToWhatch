@@ -17,7 +17,7 @@ import {fetchFilm, fetchComments, fetchAddFavoriteFilm} from '../../store/api-ac
 import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
-const Film = ({goMain, goMyList, goPlayer, goReview, goFilm}) => {
+const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
   const {films, film, comments} = useSelector((state) => state.DATA);
   const {activeNavItem} = useSelector((state) => state.ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
@@ -75,7 +75,14 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm}) => {
 
   const handlePlayButtonClick = () => goPlayer(id);
   const handleAddReviewClick = () => goReview(id);
-  const handleAddFavoriteFilm = () => onAddFavoriteFilm(id, Number(!isFavorite));
+  const handleAddFavoriteFilm = () => {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      goSignIn();
+      return;
+    }
+
+    onAddFavoriteFilm(id, Number(!isFavorite));
+  };
 
   const getActiveComponent = (navItem) => {
     switch (navItem) {
@@ -187,6 +194,7 @@ Film.propTypes = {
   goPlayer: PropTypes.func.isRequired,
   goReview: PropTypes.func.isRequired,
   goFilm: PropTypes.func.isRequired,
+  goSignIn: PropTypes.func.isRequired,
 };
 
 export default Film;

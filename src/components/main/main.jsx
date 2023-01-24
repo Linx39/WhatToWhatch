@@ -10,9 +10,9 @@ import Copyright from '../common-components/copyright/copyright';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
 import Loading from '../common-components/loading/loading';
-import {changeFilmsCount, changeGenre, getFilmsList} from '../../store/action';
+import {changeFilmsCount, changeGenre, getFilmsList, redirectToRoute} from '../../store/action';
 import {fetchFilms, fetchPromoFilm, fetchAddFavoriteFilm} from '../../store/api-actions';
-import {AuthorizationStatus, FilmsCount, GENRE_DEFAULT} from '../../const';
+import {AuthorizationStatus, FilmsCount, GENRE_DEFAULT, Patch} from '../../const';
 
 const getNewCount = (prevCount, maxCount) => {
   const nextCount = prevCount + FilmsCount.MAIN;
@@ -29,7 +29,7 @@ const filterFilmsByGenre = (genre, films) => {
   return films.filter((film) => film.genre === genre);
 };
 
-const Main = ({goMyList, goFilm, goPlayer}) => {
+const Main = ({goPlayer, goSignIn}) => {
   const {count, activeGenre, filmsList} = useSelector((state) => state.ACTIONS);
   const {films, isFilmsLoaded, promoFilm} = useSelector((state) => state.DATA);
   const {authorizationStatus} = useSelector((state) => state.USER);
@@ -63,6 +63,14 @@ const Main = ({goMyList, goFilm, goPlayer}) => {
     dispatch(fetchAddFavoriteFilm(id, status, true));
   };
 
+  const onAvatarClick = () => {
+    dispatch(redirectToRoute(Patch.MY_LIST));
+  };
+
+  const onPlayButtonClick = (id) => {
+    dispatch(redirectToRoute(`${Patch.PLAYER}/${id}`));
+  };
+
   useEffect(() => {
     if (!isFilmsLoaded) {
       onLoadFilms();
@@ -87,9 +95,16 @@ const Main = ({goMyList, goFilm, goPlayer}) => {
 
   const {id, name, posterImage, backgroundImage, genre, released, isFavorite} = promoFilm;
 
-  const handlePlayButtonClick = () => goPlayer(id);
+  // const handlePlayButtonClick = () => goPlayer(id);
 
-  const handleAddFavoriteFilm = () => onAddFavoriteFilm(id, Number(!isFavorite));
+  const handleAddFavoriteFilm = () => {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      goSignIn();
+      return;
+    }
+
+    onAddFavoriteFilm(id, Number(!isFavorite));
+  };
 
   const handleGenreItemClick = (genreItem) => {
     onGenreItemClick(genreItem);
@@ -115,7 +130,7 @@ const Main = ({goMyList, goFilm, goPlayer}) => {
         <Logo isLink = {false} />
 
         {authorizationStatus === AuthorizationStatus.AUTH
-          ? <UserBlock onAvatarClick={goMyList}/>
+          ? <UserBlock onAvatarClick={onAvatarClick}/>
           : <UserBlockNoSign />
         }
 
@@ -135,7 +150,7 @@ const Main = ({goMyList, goFilm, goPlayer}) => {
             </p>
 
             <div className='movie-card__buttons'>
-              <button onClick={handlePlayButtonClick} className='btn btn--play movie-card__button' type='button'>
+              <button onClick={onPlayButtonClick} className='btn btn--play movie-card__button' type='button'>
                 <svg viewBox='0 0 19 19' width='19' height='19'>
                   <use xlinkHref='#play-s'></use>
                 </svg>
@@ -167,7 +182,7 @@ const Main = ({goMyList, goFilm, goPlayer}) => {
         />
 
         <div className='catalog__movies-list'>
-          <FilmsList films={filmsList} count={count} goFilm={goFilm} />
+          <FilmsList films={filmsList} count={count} />
         </div>
 
         {(count < filmsList.length) && <ShowMore onClick={handleShowMoreClick} />}
@@ -183,9 +198,8 @@ const Main = ({goMyList, goFilm, goPlayer}) => {
 };
 
 Main.propTypes = {
-  goMyList: PropTypes.func.isRequired,
-  goFilm: PropTypes.func.isRequired,
   goPlayer: PropTypes.func.isRequired,
+  goSignIn: PropTypes.func.isRequired,
 };
 
 export default Main;

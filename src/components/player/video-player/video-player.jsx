@@ -1,13 +1,23 @@
 import React, {useState, useRef, useEffect} from "react";
 import PropTypes from 'prop-types';
 
-const VideoPlayer = ({src, poster, isPlaying, isFullScreen, isMuted, onChangeIsLoading, onChangeLastTime}) => {
-  // const [isLoading, setIsLoading] = useState(true);
+const VideoPlayer = (props) => {
+  const {
+    src,
+    poster,
+    isVideoLoaded,
+    isPlaying,
+    isFullScreen,
+    isMuted,
+    onChangeIsLoaded,
+    onGetDuration,
+    onChangeCurrentTime,
+  } = props;
 
   const videoRef = useRef();
 
   useEffect(() => {
-    videoRef.current.oncanplaythrough = () => onChangeIsLoading(false);
+    videoRef.current.oncanplaythrough = () => onChangeIsLoaded(true);
 
     return () => {
       videoRef.current.oncanplaythrough = null;
@@ -16,6 +26,19 @@ const VideoPlayer = ({src, poster, isPlaying, isFullScreen, isMuted, onChangeIsL
       videoRef.current = null;
     };
   }, [src]);
+
+  useEffect(() => {
+    const duration = videoRef.current.duration;
+
+    onGetDuration(duration);
+
+    videoRef.current.ontimeupdate = () => onChangeCurrentTime(videoRef.current.currentTime);
+
+    // return () => {
+    //   videoRef.current.ontimeupdate = null;
+    // };
+  }, [isVideoLoaded]);
+
 
   useEffect(() => {
     if (isPlaying) {
@@ -37,14 +60,6 @@ const VideoPlayer = ({src, poster, isPlaying, isFullScreen, isMuted, onChangeIsL
     }
   }, [isFullScreen]);
 
-  useEffect(() => {
-    videoRef.current.ontimeupdate = () => onChangeLastTime(videoRef.current.currentTime);
-
-    return () => {
-      videoRef.current.ontimeupdate = null;
-    };
-  });
-
   return (
     <video
       className="player__video"
@@ -57,14 +72,24 @@ const VideoPlayer = ({src, poster, isPlaying, isFullScreen, isMuted, onChangeIsL
   );
 };
 
+// VideoPlayer.defaultProps = {
+//   onChangeIsLoading: () => {},
+// };
+
+// VideoPlayer.defaultProps = {
+//   onChangeLastTime: () => {},
+// };
+
 VideoPlayer.propTypes = {
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
+  isVideoLoaded: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isFullScreen: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool.isRequired,
-  onChangeIsLoading: PropTypes.func,
-  onChangeLastTime: PropTypes.func,
+  onChangeIsLoaded: PropTypes.func,
+  onGetDuration: PropTypes.func,
+  onChangeCurrentTime: PropTypes.func,
 };
 
 export default VideoPlayer;

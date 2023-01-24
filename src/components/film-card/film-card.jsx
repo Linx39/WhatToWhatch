@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
 
-import VideoPlayer from '../video-player/video-player';
-
+import VideoPlayer from './video-player/video-player';
+import {redirectToRoute} from '../../store/action';
 import {filmProp} from '../props-types';
 import {Patch} from '../../const';
 
@@ -22,7 +23,6 @@ const CardImage = ({film, onClick}) => {
       />
     </div>
     <h3 className="small-movie-card__title">
-      {/* <Link to={`${Patch.FILMS}/${id}`} className="small-movie-card__link">{name}</Link> */}
       <Link to="#" onClick={handleFilmCardClick} className="small-movie-card__link">{name}</Link>
     </h3>
   </>;
@@ -31,21 +31,32 @@ const CardImage = ({film, onClick}) => {
 const CardVideo = ({film}) => {
   const {previewVideoLink, posterImage} = film;
 
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+
+  const handleChangeIsVideoLoaded = (isLoaded) => {
+    setIsVideoLoaded(isLoaded);
+  };
+
   return <VideoPlayer
     src={previewVideoLink}
     poster={posterImage}
+    isVideoLoaded={isVideoLoaded}
+    onChangeIsLoaded ={handleChangeIsVideoLoaded}
     isPlaying={true}
-    isFullScreen={false}
     isMuted={true}
   />;
 };
 
 const FilmCard = (props) => {
-  const {film, onMouseEnter, onMouseLeave, isPreviewMode, goFilm} = props;
+  const {film, onMouseEnter, onMouseLeave, isPreviewMode} = props;
+
+  const dispatch = useDispatch();
+
+  const onCardClick = (id) => {
+    dispatch(redirectToRoute(`${Patch.FILMS}/${id}`));
+  };
 
   const [isNeedClearTimeout, setIsNeedClearTimeout] = useState(false);
-
-  // const handleMouseEnter = () => onMouseEnter(film);
 
   let timer = null;
   const handleMouseEnter = () => {
@@ -70,26 +81,21 @@ const FilmCard = (props) => {
 
       {isPreviewMode
         ? <CardVideo film={film} />
-        : <CardImage film={film} onClick={goFilm}/>
+        : <CardImage film={film} onClick={onCardClick}/>
       }
     </article>
   );
 };
 
-FilmCard.defaultProps = {
-  goFilm: () => {},
-};
-
-CardImage.defaultProps = {
-  onClick: () => {},
-};
+// CardImage.defaultProps = {
+//   onClick: () => {},
+// };
 
 FilmCard.propTypes = {
   film: filmProp,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   isPreviewMode: PropTypes.bool.isRequired,
-  goFilm: PropTypes.func.isRequired,
 };
 
 CardImage.propTypes = {

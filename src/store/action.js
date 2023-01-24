@@ -6,13 +6,13 @@ export const ActionType = {
   CHANGE_FILMS_COUNT: `filmsList/changeFilmsCount`,
   RESET_ON_DEFAULT: `filmsList/resetOnDefault`,
   CHANGE_ACTIVE_NAV_ITEM: `filmsList/changeActiveNavItem`,
-  REDIRECT_TO_ROUTE: `films/redirectToRoute`,
   LOAD_FILMS: `data/loadFilms`,
   LOAD_FILM: `data/loadFilm`,
   LOAD__PROMO_FILM: `data/loadPromoFilm`,
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
   LOAD_COMMENTS: `data/loadComments`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
+  REDIRECT_TO_ROUTE: `app/redirectToRoute`,
 };
 
 export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {
