@@ -10,7 +10,7 @@ const FilmsList = ({films, count}) => {
   const handleMouseLeave = () => setActiveCard(null);
 
   return (
-    <>
+    <div className='catalog__movies-list'>
       {films.slice(0, count).map((film) => {
         return (
           <FilmCard
@@ -22,7 +22,7 @@ const FilmsList = ({films, count}) => {
           />
         );
       })}
-    </>
+    </div>
   );
 };
 

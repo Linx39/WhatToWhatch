@@ -1,7 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {useDispatch} from 'react-redux';
 
-const UserBlock = ({onAvatarClick}) => {
+import {redirectToRoute} from '../../../store/action';
+import {Patch} from '../../../const';
+
+const UserBlock = () => {
+  const dispatch = useDispatch();
+
+  const onAvatarClick = () => {
+    dispatch(redirectToRoute(Patch.MY_LIST));
+  };
 
   return (
     <div className="user-block">
@@ -12,10 +20,6 @@ const UserBlock = ({onAvatarClick}) => {
       </div>
     </div>
   );
-};
-
-UserBlock.propTypes = {
-  onAvatarClick: PropTypes.func,
 };
 
 export default UserBlock;

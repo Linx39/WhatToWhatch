@@ -1,25 +1,42 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from 'react-redux';
 
-const ShowMore = ({onClick}) => {
-  const handleMouseClick = onClick;
+import {changeFilmsCount} from '../../../store/action';
+import {FilmsCount} from '../../../const';
+
+const getNewCount = (prevCount, maxCount) => {
+  const nextCount = prevCount + FilmsCount.MAIN;
+  const newCount = nextCount > maxCount ? maxCount : nextCount;
+
+  return newCount;
+};
+
+const ShowMore = () => {
+  const {count, filmsList} = useSelector((state) => state.ACTIONS);
+  const {films} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
+
+  const onShowMoreClick = (newCount) => {
+    dispatch(changeFilmsCount(newCount));
+  };
+
+  const handleShowMoreClick = () => {
+    const newCount = getNewCount(count, films.length);
+    onShowMoreClick(newCount);
+  };
 
   return (
     <div className="catalog__more">
       <button
         className="catalog__button"
         type="button"
-        onClick={handleMouseClick}
+        onClick={handleShowMoreClick}
       >
         Show more
       </button>
     </div>
   );
-};
-
-
-ShowMore.propTypes = {
-  onClick: PropTypes.func.isRequired,
 };
 
 export default ShowMore;

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
@@ -7,31 +6,18 @@ import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
+import Loading from '../common-components/loading/loading';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
-import Loading from '../common-components/loading/loading';
-import {changeFilmsCount, changeGenre, getFilmsList, redirectToRoute} from '../../store/action';
-import {fetchFilms, fetchPromoFilm, fetchAddFavoriteFilm} from '../../store/api-actions';
-import {AuthorizationStatus, FilmsCount, GENRE_DEFAULT, Patch} from '../../const';
+import PlayButton from '../common-components/play-button/play-button';
+import {getFilmsList} from '../../store/action';
+import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
+import {AuthorizationStatus} from '../../const';
+import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
 
-const getNewCount = (prevCount, maxCount) => {
-  const nextCount = prevCount + FilmsCount.MAIN;
-  const newCount = nextCount > maxCount ? maxCount : nextCount;
-
-  return newCount;
-};
-
-const filterFilmsByGenre = (genre, films) => {
-  if (genre === GENRE_DEFAULT) {
-    return films;
-  }
-
-  return films.filter((film) => film.genre === genre);
-};
-
-const Main = ({goPlayer, goSignIn}) => {
-  const {count, activeGenre, filmsList} = useSelector((state) => state.ACTIONS);
+const Main = () => {
   const {films, isFilmsLoaded, promoFilm} = useSelector((state) => state.DATA);
+  const {count, filmsList} = useSelector((state) => state.ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
 
   const [isPromoFilmLoaded, setIsPromoFilmLoaded] = useState(false);
@@ -47,28 +33,8 @@ const Main = ({goPlayer, goSignIn}) => {
       .then(() => setIsPromoFilmLoaded(true));
   };
 
-  const onShowMoreClick = (newCount) => {
-    dispatch(changeFilmsCount(newCount));
-  };
-
-  const onGenreItemClick = (genre) => {
-    dispatch(changeGenre(genre));
-  };
-
   const onChangeFilmsList = (list) => {
     dispatch(getFilmsList(list));
-  };
-
-  const onAddFavoriteFilm = (id, status) => {
-    dispatch(fetchAddFavoriteFilm(id, status, true));
-  };
-
-  const onAvatarClick = () => {
-    dispatch(redirectToRoute(Patch.MY_LIST));
-  };
-
-  const onPlayButtonClick = (id) => {
-    dispatch(redirectToRoute(`${Patch.PLAYER}/${id}`));
   };
 
   useEffect(() => {
@@ -93,30 +59,7 @@ const Main = ({goPlayer, goSignIn}) => {
     );
   }
 
-  const {id, name, posterImage, backgroundImage, genre, released, isFavorite} = promoFilm;
-
-  // const handlePlayButtonClick = () => goPlayer(id);
-
-  const handleAddFavoriteFilm = () => {
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      goSignIn();
-      return;
-    }
-
-    onAddFavoriteFilm(id, Number(!isFavorite));
-  };
-
-  const handleGenreItemClick = (genreItem) => {
-    onGenreItemClick(genreItem);
-    const list = filterFilmsByGenre(genreItem, films);
-    onChangeFilmsList(list);
-  };
-
-  const handleShowMoreClick = () => {
-    const newCount = getNewCount(count, films.length);
-    onShowMoreClick(newCount);
-
-  };
+  const {name, posterImage, backgroundImage, genre, released} = promoFilm;
 
   return <React.Fragment>
     <section className='movie-card'>
@@ -130,10 +73,9 @@ const Main = ({goPlayer, goSignIn}) => {
         <Logo isLink = {false} />
 
         {authorizationStatus === AuthorizationStatus.AUTH
-          ? <UserBlock onAvatarClick={onAvatarClick}/>
+          ? <UserBlock />
           : <UserBlockNoSign />
         }
-
       </header>
 
       <div className='movie-card__wrap'>
@@ -150,21 +92,9 @@ const Main = ({goPlayer, goSignIn}) => {
             </p>
 
             <div className='movie-card__buttons'>
-              <button onClick={onPlayButtonClick} className='btn btn--play movie-card__button' type='button'>
-                <svg viewBox='0 0 19 19' width='19' height='19'>
-                  <use xlinkHref='#play-s'></use>
-                </svg>
-                <span>Play</span>
-              </button>
-              <button onClick={handleAddFavoriteFilm} className='btn btn--list movie-card__button' type='button'>
-                <svg viewBox='0 0 19 20' width='19' height='20'>
-                  {isFavorite
-                    ? <use xlinkHref="#in-list"></use>
-                    : <use xlinkHref="#add"></use>
-                  }
-                </svg>
-                <span>My list</span>
-              </button>
+              <PlayButton film={promoFilm}/>
+
+              <AddFavoriteButton film={promoFilm} />
             </div>
           </div>
         </div>
@@ -175,31 +105,20 @@ const Main = ({goPlayer, goSignIn}) => {
       <section className='catalog'>
         <h2 className='catalog__title visually-hidden'>Catalog</h2>
 
-        <GenresList
-          films={films}
-          activeGenre={activeGenre}
-          onClick={handleGenreItemClick}
-        />
+        <GenresList />
 
-        <div className='catalog__movies-list'>
-          <FilmsList films={filmsList} count={count} />
-        </div>
+        <FilmsList films={filmsList} count={count} />
 
-        {(count < filmsList.length) && <ShowMore onClick={handleShowMoreClick} />}
-
+        {(count < filmsList.length) && <ShowMore />}
       </section>
 
       <footer className='page-footer'>
         <Logo isAddClass={true} isLink = {false} />
+
         <Copyright />
       </footer>
     </div>
   </React.Fragment>;
-};
-
-Main.propTypes = {
-  goPlayer: PropTypes.func.isRequired,
-  goSignIn: PropTypes.func.isRequired,
 };
 
 export default Main;

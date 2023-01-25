@@ -27,12 +27,7 @@ const App = () => {
       <Switch>
         <Route exact
           path={Patch.MAIN}
-          render={({history}) => (
-            <Main
-              goPlayer={(id) => goPlayer(id, history)}
-              goSignIn={() => goSignIn(history)}
-            />
-          )}
+          render={() => <Main />}
         />
 
         <Route exact

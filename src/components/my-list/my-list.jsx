@@ -46,9 +46,8 @@ const MyList = ({goMain, goFilm}) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__movies-list">
-          <FilmsList films={favoriteFilms} count={favoriteFilms.length} goFilm={goFilm} />
-        </div>
+        <FilmsList films={favoriteFilms} count={favoriteFilms.length} goFilm={goFilm} />
+
       </section>
 
       <footer className="page-footer">

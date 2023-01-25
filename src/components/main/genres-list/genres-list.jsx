@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {filmsProp} from '../../props-types';
+import {changeGenre, getFilmsList} from '../../../store/action';
 import {GENRE_DEFAULT} from '../../../const';
 
 const getUniqueGenres = (films) => { // сделать чеоез редусер
@@ -17,10 +17,36 @@ const getUniqueGenres = (films) => { // сделать чеоез редусер
   return uniqueGenres;
 };
 
-const GenresList = ({films, activeGenre, onClick}) => {
+const filterFilmsByGenre = (genre, films) => {
+  if (genre === GENRE_DEFAULT) {
+    return films;
+  }
+
+  return films.filter((film) => film.genre === genre);
+};
+
+const GenresList = () => {
+  const {activeGenre} = useSelector((state) => state.ACTIONS);
+  const {films} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
+
+  const onGenreItemClick = (genre) => {
+    dispatch(changeGenre(genre));
+  };
+
+  const onChangeFilmsList = (list) => {
+    dispatch(getFilmsList(list));
+  };
+
   const genres = getUniqueGenres(films);
 
-  const handleMouseClick = (evt) => onClick(evt.target.textContent);
+  const handleGenreItemClick = (evt) => {
+    const genreItem = evt.target.textContent;
+    onGenreItemClick(evt.target.textContent);
+    const list = filterFilmsByGenre(genreItem, films);
+    onChangeFilmsList(list);
+  };
 
   return (
     <ul className="catalog__genres-list">
@@ -29,7 +55,7 @@ const GenresList = ({films, activeGenre, onClick}) => {
           className={`catalog__genres-item ${activeGenre === genre ? `catalog__genres-item--active` : ``}`}>
           <Link to="#"
             className="catalog__genres-link"
-            onClick={handleMouseClick}
+            onClick={handleGenreItemClick}
           >
             {genre}
           </Link>
@@ -37,12 +63,6 @@ const GenresList = ({films, activeGenre, onClick}) => {
       ))}
     </ul>
   );
-};
-
-GenresList.propTypes = {
-  films: filmsProp,
-  activeGenre: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default GenresList;

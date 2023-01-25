@@ -132,6 +132,7 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
                 </svg>
                 <span>Play</span>
               </button>
+
               <button onClick={handleAddFavoriteFilm} className="btn btn--list movie-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   {isFavorite
@@ -171,9 +172,7 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <div className="catalog__movies-list">
-          <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} goFilm={goFilm} />
-        </div>
+        <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} goFilm={goFilm} />
       </section>
 
       <footer className="page-footer">
