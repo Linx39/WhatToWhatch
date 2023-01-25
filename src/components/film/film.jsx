@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
-import {Link, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
@@ -12,24 +11,22 @@ import NavList from './nav-list/nav-list';
 import Overview from './overview/overview';
 import Details from './details/details';
 import Reviews from './reviews/reviews';
+import AddReviewButton from './add-review-button/add-review-button';
 import Loading from '../common-components/loading/loading';
-import {fetchFilm, fetchComments, fetchAddFavoriteFilm} from '../../store/api-actions';
+import PlayButton from '../common-components/play-button/play-button';
+import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
+import {fetchFilm, fetchComments} from '../../store/api-actions';
 import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
-const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
+const Film = () => {
   const {films, film, comments} = useSelector((state) => state.DATA);
   const {activeNavItem} = useSelector((state) => state.ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
+  const dispatch = useDispatch();
 
   const [isFilmLoaded, setIsFilmLoaded] = useState(false);
   const [isCommentsLoaded, setIsCommentsLoaded] = useState(false);
-
-  const dispatch = useDispatch();
-
-  const onNavItemClick = (item) =>{
-    dispatch(changeActiveNavItem(item));
-  };
 
   const onLoadFilm = (id) => {
     dispatch(fetchFilm(id))
@@ -41,8 +38,8 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
       .then(() => setIsCommentsLoaded(true));
   };
 
-  const onAddFavoriteFilm = (id, status) => {
-    dispatch(fetchAddFavoriteFilm(id, status, false));
+  const onNavItemClick = (item) =>{
+    dispatch(changeActiveNavItem(item));
   };
 
   const filmId = Number(useParams().id);
@@ -63,26 +60,7 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
     );
   }
 
-  const {
-    id,
-    name,
-    posterImage,
-    backgroundImage,
-    genre,
-    released,
-    isFavorite,
-  } = film;
-
-  const handlePlayButtonClick = () => goPlayer(id);
-  const handleAddReviewClick = () => goReview(id);
-  const handleAddFavoriteFilm = () => {
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      goSignIn();
-      return;
-    }
-
-    onAddFavoriteFilm(id, Number(!isFavorite));
-  };
+  const {id, name, posterImage, backgroundImage, genre, released} = film;
 
   const getActiveComponent = (navItem) => {
     switch (navItem) {
@@ -109,10 +87,10 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header movie-card__head">
-          <Logo onLogoClick={goMain} />
+          <Logo />
 
           {authorizationStatus === AuthorizationStatus.AUTH
-            ? <UserBlock onAvatarClick={goMyList}/>
+            ? <UserBlock />
             : <UserBlockNoSign />
           }
         </header>
@@ -126,25 +104,14 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button onClick={handlePlayButtonClick} className="btn btn--play movie-card__button" type="button">
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </button>
+              <PlayButton film={film}/>
 
-              <button onClick={handleAddFavoriteFilm} className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  {isFavorite
-                    ? <use xlinkHref="#in-list"></use>
-                    : <use xlinkHref="#add"></use>
-                  }
-                </svg>
-                <span>My list</span>
-              </button>
+              <AddFavoriteButton film={film} isPromo={false} />
+
               {authorizationStatus === AuthorizationStatus.AUTH
                 &&
-              <Link to="#" onClick={handleAddReviewClick} className="btn movie-card__button">Add review</Link>}
+                <AddReviewButton film={film}/>
+              }
             </div>
           </div>
         </div>
@@ -172,28 +139,16 @@ const Film = ({goMain, goMyList, goPlayer, goReview, goFilm, goSignIn}) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} goFilm={goFilm} />
+        <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} />
       </section>
 
       <footer className="page-footer">
-        <Logo
-          onLogoClick={goMain}
-          isAddClass={true}
-        />
+        <Logo isAddClass={true} />
 
         <Copyright />
       </footer>
     </div>
   </React.Fragment>;
-};
-
-Film.propTypes = {
-  goMain: PropTypes.func.isRequired,
-  goMyList: PropTypes.func.isRequired,
-  goPlayer: PropTypes.func.isRequired,
-  goReview: PropTypes.func.isRequired,
-  goFilm: PropTypes.func.isRequired,
-  goSignIn: PropTypes.func.isRequired,
 };
 
 export default Film;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
@@ -10,18 +10,15 @@ import Loading from '../common-components/loading/loading';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
 import PlayButton from '../common-components/play-button/play-button';
+import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
 import {getFilmsList} from '../../store/action';
 import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../const';
-import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
 
 const Main = () => {
-  const {films, isFilmsLoaded, promoFilm} = useSelector((state) => state.DATA);
+  const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
   const {count, filmsList} = useSelector((state) => state.ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
-
-  const [isPromoFilmLoaded, setIsPromoFilmLoaded] = useState(false);
-
   const dispatch = useDispatch();
 
   const onLoadFilms = () => {
@@ -29,8 +26,7 @@ const Main = () => {
   };
 
   const onLoadPromoFilm = () => {
-    dispatch(fetchPromoFilm())
-      .then(() => setIsPromoFilmLoaded(true));
+    dispatch(fetchPromoFilm());
   };
 
   const onChangeFilmsList = (list) => {
@@ -53,7 +49,7 @@ const Main = () => {
     }
   }, [isPromoFilmLoaded]);
 
-  if (!isFilmsLoaded && !isPromoFilmLoaded) {
+  if (!isFilmsLoaded || !isPromoFilmLoaded) {
     return (
       <Loading />
     );
@@ -94,7 +90,7 @@ const Main = () => {
             <div className='movie-card__buttons'>
               <PlayButton film={promoFilm}/>
 
-              <AddFavoriteButton film={promoFilm} />
+              <AddFavoriteButton film={promoFilm} isPromo={true} />
             </div>
           </div>
         </div>

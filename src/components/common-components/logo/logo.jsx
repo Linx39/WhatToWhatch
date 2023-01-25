@@ -1,11 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
-import {resetOnDefault} from '../../../store/action';
+import {resetOnDefault, redirectToRoute} from '../../../store/action';
+import {Patch} from '../../../const';
 
-const Logo = ({isAddClass = false, isLink = true, onResetOnDefault, onLogoClick}) => {
+const Logo = ({isAddClass = false, isLink = true}) => {
+  const dispatch = useDispatch();
+
+  const onLogoClick = () => {
+    dispatch(redirectToRoute(Patch.MAIN));
+  };
+
+  const onResetOnDefault = () => {
+    dispatch(resetOnDefault());
+  };
+
   const handleLogoClick = () => {
     onResetOnDefault();
     onLogoClick();
@@ -49,15 +60,6 @@ const Logo = ({isAddClass = false, isLink = true, onResetOnDefault, onLogoClick}
 Logo.propTypes = {
   isAddClass: PropTypes.bool,
   isLink: PropTypes.bool,
-  onResetOnDefault: PropTypes.func,
-  onLogoClick: PropTypes.func,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onResetOnDefault() {
-    dispatch(resetOnDefault());
-  },
-});
-
-export {Logo};
-export default connect(null, mapDispatchToProps)(Logo);
+export default Logo;

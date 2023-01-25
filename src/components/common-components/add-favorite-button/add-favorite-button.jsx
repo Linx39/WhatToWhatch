@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {fetchAddFavoriteFilm} from '../../../store/api-actions';
@@ -6,7 +7,7 @@ import {redirectToRoute} from '../../../store/action';
 import {AuthorizationStatus, Patch} from '../../../const';
 import {filmProp} from '../../props-types';
 
-const AddFavoriteButton = ({film}) => {
+const AddFavoriteButton = ({film, isPromo}) => {
   const {id, isFavorite} = film;
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const AddFavoriteButton = ({film}) => {
   };
 
   const onAddFavoriteFilm = (filmId, status) => {
-    dispatch(fetchAddFavoriteFilm(filmId, status, true));
+    dispatch(fetchAddFavoriteFilm(filmId, status, isPromo));
   };
 
   const handleAddFavoriteFilm = () => {
@@ -43,6 +44,7 @@ const AddFavoriteButton = ({film}) => {
 
 AddFavoriteButton.propTypes = {
   film: filmProp,
+  isPromo: PropTypes.bool,
 };
 
 export default AddFavoriteButton;

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
@@ -9,12 +8,11 @@ import Copyright from '../common-components/copyright/copyright';
 import {fetchFavoriteFilms} from '../../store/api-actions';
 import Loading from '../common-components/loading/loading';
 
-const MyList = ({goMain, goFilm}) => {
+const MyList = () => {
   const {favoriteFilms} = useSelector((state) => state.DATA);
+  const dispatch = useDispatch();
 
   const [isFavoriteFilmsLoaded, setIsFavoriteFilmsLoaded] = useState(false);
-
-  const dispatch = useDispatch();
 
   const onFavoriteLoadFilms = () => {
     dispatch(fetchFavoriteFilms())
@@ -36,7 +34,7 @@ const MyList = ({goMain, goFilm}) => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo onLogoClick={goMain} />
+        <Logo />
 
         <h1 className="page-title user-page__title">My list</h1>
 
@@ -46,25 +44,17 @@ const MyList = ({goMain, goFilm}) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList films={favoriteFilms} count={favoriteFilms.length} goFilm={goFilm} />
+        <FilmsList films={favoriteFilms} count={favoriteFilms.length} />
 
       </section>
 
       <footer className="page-footer">
-        <Logo
-          onLogoClick={goMain}
-          isAddClass={true}
-        />
+        <Logo isAddClass={true} />
 
         <Copyright />
       </footer>
     </div>
   </React.Fragment>;
-};
-
-MyList.propTypes = {
-  goMain: PropTypes.func.isRequired,
-  goFilm: PropTypes.func.isRequired,
 };
 
 export default MyList;

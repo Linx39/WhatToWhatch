@@ -6,9 +6,8 @@ import {login} from "../../store/api-actions";
 import Logo from '../common-components/logo/logo';
 import Copyright from '../common-components/copyright/copyright';
 
-const SignIn = ({goMain}) => {
+const SignIn = () => {
   // const {authorizationStatus} = useSelector((state) => state.USER);
-
   const dispatch = useDispatch();
 
   const onSubmit = (authData) => {
@@ -30,7 +29,7 @@ const SignIn = ({goMain}) => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo onLogoClick={goMain} />
+        <Logo />
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -76,9 +75,8 @@ const SignIn = ({goMain}) => {
       </div>
 
       <footer className="page-footer">
-        <Logo
-          onLogoClick={goMain}
-          isAddClass={true} />
+        <Logo isAddClass={true} />
+
         <Copyright />
       </footer>
     </div>

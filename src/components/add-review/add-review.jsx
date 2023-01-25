@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {Link, Redirect, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import Logo from '../common-components/logo/logo';
@@ -8,14 +7,14 @@ import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
 import Loading from '../common-components/loading/loading';
 import {fetchFilm, fetchAddComment} from '../../store/api-actions';
+import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
 
-const AddReview = ({goMain, goMyList, goFilm}) => {
+const AddReview = () => {
   const {film} = useSelector((state) => state.DATA);
+  const dispatch = useDispatch();
 
   const [isFilmLoaded, setIsFilmLoaded] = useState(false);
-
-  const dispatch = useDispatch();
 
   const onLoadFilm = (id) => {
     dispatch(fetchFilm(id))
@@ -24,6 +23,10 @@ const AddReview = ({goMain, goMyList, goFilm}) => {
 
   const onSubmit = (id, userForm) => {
     dispatch(fetchAddComment(id, userForm));
+  };
+
+  const onFilmNameClick = (filmId) => {
+    dispatch(redirectToRoute(`${Patch.FILMS}/${filmId}`));
   };
 
   const filmId = Number(useParams().id);
@@ -42,7 +45,7 @@ const AddReview = ({goMain, goMyList, goFilm}) => {
 
   const {id, name, posterImage, backgroundImage} = film;
 
-  const handleFilmNameClick = () => goFilm(id);
+  const handleFilmNameClick = () => onFilmNameClick(id);
 
   return (
     <section className="movie-card movie-card--full">
@@ -54,7 +57,7 @@ const AddReview = ({goMain, goMyList, goFilm}) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <Logo onLogoClick={goMain} />
+          <Logo />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
@@ -67,7 +70,7 @@ const AddReview = ({goMain, goMyList, goFilm}) => {
             </ul>
           </nav>
 
-          <UserBlock onAvatarClick={goMyList} />
+          <UserBlock />
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
@@ -78,12 +81,6 @@ const AddReview = ({goMain, goMyList, goFilm}) => {
       <AddReviewForm id={filmId} onSubmit={onSubmit} />
     </section>
   );
-};
-
-AddReview.propTypes = {
-  goMain: PropTypes.func.isRequired,
-  goMyList: PropTypes.func.isRequired,
-  goFilm: PropTypes.func.isRequired,
 };
 
 export default AddReview;

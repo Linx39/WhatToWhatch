@@ -6,6 +6,7 @@ const initialState = {
   films: [],
   isFilmsLoaded: false,
   promoFilm: {},
+  isPromoFilmLoaded: false,
   film: {},
   comments: [],
   favoriteFilms: [],
@@ -18,6 +19,7 @@ const appData = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadPromoFilm, (state, action) => {
     state.promoFilm = action.payload;
+    state.isPromoFilmLoaded = true;
   });
   builder.addCase(loadFilm, (state, action) => {
     state.film = action.payload;
