@@ -66,7 +66,7 @@ const Main = () => {
       <h1 className='visually-hidden'>WTW</h1>
 
       <header className='page-header movie-card__head'>
-        <Logo isLink = {false} />
+        <Logo isAddClass={false} isClickable={false} />
 
         {authorizationStatus === AuthorizationStatus.AUTH
           ? <UserBlock />
@@ -109,7 +109,7 @@ const Main = () => {
       </section>
 
       <footer className='page-footer'>
-        <Logo isAddClass={true} isLink = {false} />
+        <Logo isAddClass={true} isClickable={false} />
 
         <Copyright />
       </footer>

@@ -87,7 +87,7 @@ const Film = () => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header movie-card__head">
-          <Logo />
+          <Logo isAddClass={false} isClickable={true} />
 
           {authorizationStatus === AuthorizationStatus.AUTH
             ? <UserBlock />
@@ -143,7 +143,7 @@ const Film = () => {
       </section>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} />
+        <Logo isAddClass={true} isClickable={true} />
 
         <Copyright />
       </footer>

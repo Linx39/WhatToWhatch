@@ -1,5 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 
+import browserHistory from '../browser-history';
+
 export const ActionType = {
   CHANGE_GENRE: `filmsList/changeGenre`,
   GET_FILMS_LIST: `filmsList/getFilmsList`,
@@ -12,7 +14,9 @@ export const ActionType = {
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
   LOAD_COMMENTS: `data/loadComments`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
+  LOAD_USER_DATA: `user/loadUserData`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  REDIRECT_TO_BACK: `app/redirectToBack`,
 };
 
 export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {
@@ -77,8 +81,20 @@ export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATIO
   };
 });
 
+export const loadUserData = createAction(ActionType.LOAD_USER_DATA, (data) => {
+  return {
+    payload: data,
+  };
+});
+
 export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => {
   return {
     payload: url,
+  };
+});
+
+export const redirectToBack = createAction(ActionType.REDIRECT_TO_BACK, () => {
+  return {
+    payload: browserHistory.goBack(),
   };
 });

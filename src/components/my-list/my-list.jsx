@@ -34,7 +34,7 @@ const MyList = () => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <Logo isAddClass={false} isClickable={true} />
 
         <h1 className="page-title user-page__title">My list</h1>
 
@@ -49,7 +49,7 @@ const MyList = () => {
       </section>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} />
+        <Logo isAddClass={true} isClickable={true} />
 
         <Copyright />
       </footer>

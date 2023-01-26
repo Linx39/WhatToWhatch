@@ -1,15 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {Redirect, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import VideoPlayer from './video-player/video-player';
 import Loading from '../common-components/loading/loading';
 import {fetchFilm} from '../../store/api-actions';
+import {redirectToBack} from '../../store/action';
 import {formatTime} from '../component-utils';
-import {Patch} from '../../const';
 
-const Player = ({goBack}) => {
+const Player = () => {
   const {film} = useSelector((state) => state.DATA);
 
   const [isFilmLoaded, setIsFilmLoaded] = useState(false);
@@ -27,6 +26,10 @@ const Player = ({goBack}) => {
       .then(() => setIsFilmLoaded(true));
   };
 
+  const onRedirectToBack = () => {
+    dispatch(redirectToBack);
+  };
+
   const filmId = Number(useParams().id);
 
   useEffect(() => {
@@ -41,11 +44,12 @@ const Player = ({goBack}) => {
     );
   }
 
-  const {id, name, posterImage, videoLink} = film;
+  const {name, posterImage, videoLink} = film;
 
   const handleButtonExitClick = () => {
     // setIsPlaying(false);
-    goBack();
+    // goBack();
+    onRedirectToBack();
   };
 
   const handleChangeIsVideoLoaded = (isLoaded) => {
@@ -143,10 +147,6 @@ const Player = ({goBack}) => {
       </div>
     </div>
   </React.Fragment>;
-};
-
-Player.propTypes = {
-  goBack: PropTypes.func.isRequired,
 };
 
 export default Player;

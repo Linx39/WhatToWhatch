@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {resetOnDefault, redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 
-const Logo = ({isAddClass, isClickable}) => {
+const Logo = ({isAddClass = false, isLink = true}) => {
   const dispatch = useDispatch();
 
   const onLogoClick = () => {
@@ -35,37 +35,31 @@ const Logo = ({isAddClass, isClickable}) => {
     </React.Fragment>;
   };
 
-  // const LinkFragment = () => {
-  //   return (
-  //     <Link to="#"
-  //       className={logoLinkClassName}
-  //     >
-  //       <span className="logo__letter logo__letter--1">W</span>
-  //       <span className="logo__letter logo__letter--2">T</span>
-  //       <span className="logo__letter logo__letter--3">W</span>
-  //     </Link>
-  //   );
-  // };
+  if (isLink) {
+    return (
+      <div className="logo">
+        <Link to="#"
+          className={logoLinkClassName}
+          onClick={handleLogoClick}
+        >
+          <SpanFragment />
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="logo">
-      {isClickable
-        ?
-        <Link to="#" className={logoLinkClassName} onClick={handleLogoClick}>
-          <SpanFragment />
-        </Link>
-        :
-        <Link to="" className={logoLinkClassName}>
-          <SpanFragment />
-        </Link>
-      }
+      <a className={logoLinkClassName}>
+        <SpanFragment />
+      </a>
     </div>
   );
 };
 
 Logo.propTypes = {
   isAddClass: PropTypes.bool,
-  isClickable: PropTypes.bool,
+  isLink: PropTypes.bool,
 };
 
 export default Logo;

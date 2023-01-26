@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
+
+import {fetchAddComment} from '../../../store/api-actions';
 
 const RATING_COUNT = 10;
 
@@ -27,7 +30,13 @@ const Stars = ({onChange, ratingValue}) => {
   });
 };
 
-const AddReviewForm = ({id, onSubmit}) => {
+const AddReviewForm = ({id}) => {
+  const dispatch = useDispatch();
+
+  const onSubmit = (userForm) => {
+    dispatch(fetchAddComment(id, userForm));
+  };
+
   const [userForm, setUserForm] = useState({
     rating: RATING_COUNT,
     comment: ``
@@ -43,7 +52,7 @@ const AddReviewForm = ({id, onSubmit}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit(id, userForm);
+    onSubmit(userForm);
     setUserForm({rating: RATING_COUNT, comment: ``});
   };
 
@@ -80,7 +89,6 @@ const AddReviewForm = ({id, onSubmit}) => {
 
 AddReviewForm.propTypes = {
   id: PropTypes.number.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
 Stars.propTypes = {

@@ -1,5 +1,15 @@
-import {loadFilms, loadFilm, loadPromoFilm, loadComments, loadFavoriteFilms, requireAuthorization, redirectToRoute} from './action';
-import {adaptFilmToClient} from './adapter';
+import {
+  loadFilms,
+  loadFilm,
+  loadPromoFilm,
+  loadComments,
+  loadFavoriteFilms,
+  requireAuthorization,
+  loadUserData,
+  redirectToRoute,
+  redirectToBack
+} from './action';
+import {adaptFilmToClient, adaptUserToClient} from './adapter';
 import {AuthorizationStatus, AdditionalUrl, Patch} from '../const';
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
@@ -67,17 +77,26 @@ export const fetchAddFavoriteFilm = (id, status, isPromo) => (dispatch, _getStat
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGIN)
+    .then(({data}) => {
+      const user = adaptUserToClient(data);
+      dispatch(loadUserData(user));
+    })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(AdditionalUrl.LOGIN, {email, password})
+    .then(({data}) => {
+      const user = adaptUserToClient(data);
+      dispatch(loadUserData(user));
+    })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(Patch.MAIN)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGOUT)
+    .then(() => dispatch(loadUserData({})))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );

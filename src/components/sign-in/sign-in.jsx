@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {login} from "../../store/api-actions";
 import Logo from '../common-components/logo/logo';
 import Copyright from '../common-components/copyright/copyright';
+// import {redirectToBack} from '../../store/action';
 
 const SignIn = () => {
   // const {authorizationStatus} = useSelector((state) => state.USER);
@@ -13,6 +14,11 @@ const SignIn = () => {
   const onSubmit = (authData) => {
     dispatch(login(authData));
   };
+
+  // const onRedirectToBack = () => {
+  //   dispatch(redirectToBack);
+  // };
+
 
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -24,12 +30,14 @@ const SignIn = () => {
       login: loginRef.current.value,
       password: passwordRef.current.value,
     });
+
+    // onRedirectToBack();
   };
 
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <Logo isAddClass={false} isClickable={true} />
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -75,7 +83,7 @@ const SignIn = () => {
       </div>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} />
+        <Logo isAddClass={true} isClickable={true} />
 
         <Copyright />
       </footer>

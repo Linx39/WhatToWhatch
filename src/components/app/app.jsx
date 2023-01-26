@@ -13,7 +13,7 @@ import browserHistory from "../../browser-history";
 import {Patch} from '../../const';
 
 const App = () => {
-  const goBack = (history) => history.goBack();
+  // const goBack = (history) => history.goBack();
 
   return (
     <Router history={browserHistory}>
@@ -40,13 +40,9 @@ const App = () => {
           render={() => <AddReview />}>
         </PrivateRoute>
 
-        <Route exact path={`${Patch.PLAYER}/:id`}
-          render={({history}) => (
-            <Player
-              goBack={() => goBack(history)}
-            />
-          )}
-        />
+        <Route exact path={`${Patch.PLAYER}/:id`}>
+          <Player />
+        </Route>
 
         <Route>
           <NotFoundPage />

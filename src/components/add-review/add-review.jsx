@@ -6,7 +6,7 @@ import Logo from '../common-components/logo/logo';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
 import Loading from '../common-components/loading/loading';
-import {fetchFilm, fetchAddComment} from '../../store/api-actions';
+import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
 
@@ -19,10 +19,6 @@ const AddReview = () => {
   const onLoadFilm = (id) => {
     dispatch(fetchFilm(id))
       .then(() => setIsFilmLoaded(true));
-  };
-
-  const onSubmit = (id, userForm) => {
-    dispatch(fetchAddComment(id, userForm));
   };
 
   const onFilmNameClick = (filmId) => {
@@ -57,7 +53,7 @@ const AddReview = () => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <Logo />
+          <Logo isAddClass={false} isLink={true} />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
@@ -78,7 +74,7 @@ const AddReview = () => {
         </div>
       </div>
 
-      <AddReviewForm id={filmId} onSubmit={onSubmit} />
+      <AddReviewForm id={filmId} />
     </section>
   );
 };

@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom';
 import {changeGenre, getFilmsList} from '../../../store/action';
 import {GENRE_DEFAULT} from '../../../const';
 
+const GENRE_COUNT = 10;
+
 const getUniqueGenres = (films) => { // сделать чеоез редусер
   const uniqueGenres = [GENRE_DEFAULT];
 
@@ -39,12 +41,13 @@ const GenresList = () => {
     dispatch(getFilmsList(list));
   };
 
-  const genres = getUniqueGenres(films);
+  const genres = getUniqueGenres(films).slice(0, GENRE_COUNT);
 
   const handleGenreItemClick = (evt) => {
     const genreItem = evt.target.textContent;
-    onGenreItemClick(evt.target.textContent);
     const list = filterFilmsByGenre(genreItem, films);
+
+    onGenreItemClick(evt.target.textContent);
     onChangeFilmsList(list);
   };
 
