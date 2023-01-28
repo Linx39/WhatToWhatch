@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-const countProp = PropTypes.number.isRequired;
+export const countProp = PropTypes.number.isRequired;
 
-const filmProp = PropTypes.shape({
+export const filmProp = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   posterImage: PropTypes.string.isRequired,
@@ -22,9 +22,9 @@ const filmProp = PropTypes.shape({
   isFavorite: PropTypes.bool.isRequired,
 }).isRequired;
 
-const filmsProp = PropTypes.arrayOf(filmProp).isRequired;
+export const filmsProp = PropTypes.arrayOf(filmProp).isRequired;
 
-const commentProp = PropTypes.shape({
+export const commentProp = PropTypes.shape({
   id: PropTypes.number.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -35,6 +35,4 @@ const commentProp = PropTypes.shape({
   date: PropTypes.string.isRequired
 });
 
-const commentsProp = PropTypes.arrayOf(commentProp).isRequired;
-
-export {countProp, filmProp, filmsProp, commentProp, commentsProp};
+export const commentsProp = PropTypes.arrayOf(commentProp).isRequired;

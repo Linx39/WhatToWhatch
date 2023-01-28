@@ -28,7 +28,7 @@ const filterFilmsByGenre = (genre, films) => {
 };
 
 const GenresList = () => {
-  const {activeGenre} = useSelector((state) => state.ACTIONS);
+  const {activeGenre} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const {films} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();

@@ -15,18 +15,28 @@ import AddReviewButton from './add-review-button/add-review-button';
 import Loading from '../common-components/loading/loading';
 import PlayButton from '../common-components/play-button/play-button';
 import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
-import {fetchFilm, fetchComments} from '../../store/api-actions';
+import {fetchFilms, fetchFilm, fetchComments} from '../../store/api-actions';
 import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
 const Film = () => {
-  const {films, film, comments} = useSelector((state) => state.DATA);
-  const {activeNavItem} = useSelector((state) => state.ACTIONS);
+  const {films, isFilmsLoaded, film, comments} = useSelector((state) => state.DATA);
+  const {activeNavItem} = useSelector((state) => state.FILM_INFO_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
 
+  // const getFilmsLikeThis = () => {
+  //   const filmsLikeThis = films.slice().filter((item) => item.genre === genre && item.id !== id);
+  //   return filmsLikeThis;
+  // };
+
+
   const [isFilmLoaded, setIsFilmLoaded] = useState(false);
   const [isCommentsLoaded, setIsCommentsLoaded] = useState(false);
+
+  const onLoadFilms = () => {
+    dispatch(fetchFilms());
+  };
 
   const onLoadFilm = (id) => {
     dispatch(fetchFilm(id))
@@ -45,6 +55,19 @@ const Film = () => {
   const filmId = Number(useParams().id);
 
   useEffect(() => {
+    if (!isFilmsLoaded) {
+      onLoadFilms();
+    }
+
+    setIsFilmLoaded(false);
+    setIsCommentsLoaded(false);
+  }, [filmId, isFilmsLoaded]);
+
+  useEffect(() => {
+    // if (!isFilmsLoaded) {
+    //   onLoadFilms();
+    // }
+
     if (!isFilmLoaded) {
       onLoadFilm(filmId);
     }
@@ -52,9 +75,9 @@ const Film = () => {
     if (!isCommentsLoaded) {
       onLoadComments(filmId);
     }
-  }, [filmId, isFilmLoaded && isCommentsLoaded]);
+  }, [isFilmLoaded && isCommentsLoaded]);
 
-  if (!isFilmLoaded || !isCommentsLoaded) {
+  if (!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) {
     return (
       <Loading />
     );
@@ -75,7 +98,7 @@ const Film = () => {
     }
   };
 
-  const filmsLikeThis = films.filter((item) => item.genre === genre && item.id !== id);
+  const filmsLikeThis = films.slice().filter((item) => item.genre === genre && item.id !== id);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -139,7 +162,7 @@ const Film = () => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS} />
+        <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS_LIKE_THIS} />
       </section>
 
       <footer className="page-footer">

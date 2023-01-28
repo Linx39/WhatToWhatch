@@ -6,7 +6,7 @@ import VideoPlayer from './video-player/video-player';
 import Loading from '../common-components/loading/loading';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToBack} from '../../store/action';
-import {formatTime} from '../component-utils';
+import {formatTimeInHMS} from '../component-utils';
 
 const Player = () => {
   const {film} = useSelector((state) => state.DATA);
@@ -73,8 +73,8 @@ const Player = () => {
     return progressValue;
   };
 
-  const getElapsedTimeTemplate = (time) => {
-    const {hours, minutes, seconds} = formatTime(time);
+  const getFormatedTimeTemplate = (time) => {
+    const {hours, minutes, seconds} = formatTimeInHMS(time);
 
     const h = hours !== 0 ? `${hours}:` : ``;
     const m = minutes.lenght === 1 ? `0${minutes}:` : `${minutes}:`;
@@ -107,7 +107,7 @@ const Player = () => {
           </div>
           {
             currentTime &&
-            <div className="player__time-value">{getElapsedTimeTemplate(durationVideo - currentTime)}</div>
+            <div className="player__time-value">{getFormatedTimeTemplate(durationVideo - currentTime)}</div>
           }
 
         </div>

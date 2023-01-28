@@ -1,16 +1,15 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {changeGenre, getFilmsList, changeFilmsCount, changeActiveNavItem, resetOnDefault} from '../action';
-import {FilmsCount, GENRE_DEFAULT, NavItem} from '../../const';
+import {changeGenre, getFilmsList, changeFilmsCount, resetOnDefaultFilmsList} from '../action';
+import {FilmsCount, GENRE_DEFAULT} from '../../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
   count: FilmsCount.MAIN,
   filmsList: [],
-  activeNavItem: NavItem.OVERVIEW,
 };
 
-const appAction = createReducer(initialState, (builder) => {
+const filmsListAction = createReducer(initialState, (builder) => {
   builder.addCase(changeGenre, (state, action) => {
     state.activeGenre = action.payload;
   });
@@ -20,15 +19,11 @@ const appAction = createReducer(initialState, (builder) => {
   builder.addCase(getFilmsList, (state, action) => {
     state.filmsList = action.payload;
   });
-  builder.addCase(changeActiveNavItem, (state, action) => {
-    state.activeNavItem = action.payload;
-  });
-  builder.addCase(resetOnDefault, (state) => {
+  builder.addCase(resetOnDefaultFilmsList, (state) => {
     state.activeGenre = GENRE_DEFAULT;
     state.count = FilmsCount.MAIN;
     state.filmsList = [];
-    state.activeNavItem = NavItem.OVERVIEW;
   });
 });
 
-export {appAction};
+export {filmsListAction};

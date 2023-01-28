@@ -16,11 +16,8 @@ const UserBlock = () => {
 
   return (
     <div className="user-block">
-      <div className="user-block__avatar">
-        <img
-          onClick={onAvatarClick}
-          src={avatarUrl} alt="User avatar" width="63" height="63"
-        />
+      <div onClick={onAvatarClick} className="user-block__avatar">
+        <img src={avatarUrl} alt="User avatar" width="63" height="63"/>
       </div>
     </div>
   );

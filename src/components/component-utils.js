@@ -9,10 +9,17 @@ const SECONDS_IN_MINUTE = 60;
 //   return films.find((card) => card.id === filmId);
 // };
 
-export const formatTime = (time) => {
+export const formatTimeInHMS = (time) => {
   const hours = Math.floor(time / SECONDS_IN_HOUR);
   const minutes = Math.floor((time - hours * SECONDS_IN_HOUR) / MINUTES_IN_HOUR);
   const seconds = Math.round(time - hours * SECONDS_IN_HOUR - minutes * SECONDS_IN_MINUTE);
 
   return {hours, minutes, seconds};
+};
+
+export const formatTimeInHM = (time) => {
+  const hours = Math.floor(time / MINUTES_IN_HOUR);
+  const minutes = Math.round(time - hours * MINUTES_IN_HOUR);
+
+  return {hours, minutes};
 };

@@ -12,7 +12,7 @@ const getNewCount = (prevCount, maxCount) => {
 };
 
 const ShowMore = () => {
-  const {count, filmsList} = useSelector((state) => state.ACTIONS);
+  const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const {films} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();

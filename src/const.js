@@ -8,8 +8,8 @@ const Patch = {
 
 const FilmsCount = {
   MAIN: 8,
-  FILMS: 4,
-  MY_LIST: 5,
+  FILMS_LIKE_THIS: 4,
+  // MY_LIST: 5,
 };
 
 const NavItem = {

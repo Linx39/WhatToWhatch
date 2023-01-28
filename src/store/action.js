@@ -6,13 +6,14 @@ export const ActionType = {
   CHANGE_GENRE: `filmsList/changeGenre`,
   GET_FILMS_LIST: `filmsList/getFilmsList`,
   CHANGE_FILMS_COUNT: `filmsList/changeFilmsCount`,
-  RESET_ON_DEFAULT: `filmsList/resetOnDefault`,
-  CHANGE_ACTIVE_NAV_ITEM: `filmsList/changeActiveNavItem`,
+  RESET_ON_DEFAULT_FILMS_LIST: `filmsList/resetOnDefaultFilmsList`,
+  CHANGE_ACTIVE_NAV_ITEM: `filmInfo/changeActiveNavItem`,
+  RESET_ON_DEFAULT_FILM_INFO: `filmInfo/resetOnDefaultFilmInfo`,
   LOAD_FILMS: `data/loadFilms`,
-  LOAD_FILM: `data/loadFilm`,
   LOAD__PROMO_FILM: `data/loadPromoFilm`,
-  LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
+  LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
+  LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
   LOAD_USER_DATA: `user/loadUserData`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
@@ -37,13 +38,15 @@ export const changeFilmsCount = createAction(ActionType.CHANGE_FILMS_COUNT, (cou
   };
 });
 
+export const resetOnDefaultFilmsList = createAction(ActionType.RESET_ON_DEFAULT_FILMS_LIST);
+
 export const changeActiveNavItem = createAction(ActionType.CHANGE_ACTIVE_NAV_ITEM, (item) => {
   return {
     payload: item,
   };
 });
 
-export const resetOnDefault = createAction(ActionType.RESET_ON_DEFAULT);
+export const resetOnDefaultFilmInfo = createAction(ActionType.RESET_ON_DEFAULT_FILM_INFO);
 
 export const loadFilms = createAction(ActionType.LOAD_FILMS, (films) => {
   return {

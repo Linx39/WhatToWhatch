@@ -1,6 +1,16 @@
 import React from "react";
 
 import {filmProp} from "../../props-types";
+import {formatTimeInHM} from "../../component-utils";
+
+const getFormatedTimeTemplate = (time) => {
+  const {hours, minutes} = formatTimeInHM(time);
+
+  const h = hours !== 0 ? `${hours}:` : ``;
+  const m = minutes.lenght === 1 ? `0${minutes}:` : `${minutes}`;
+
+  return `${h}${m}`;
+};
 
 const Details = ({film}) => {
   const {
@@ -29,7 +39,7 @@ const Details = ({film}) => {
       <div className="movie-card__text-col">
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Run Time</strong>
-          <span className="movie-card__details-value">{runTime}</span>
+          <span className="movie-card__details-value">{getFormatedTimeTemplate(runTime)}</span>
         </p>
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Genre</strong>

@@ -1,50 +1,49 @@
 import React from "react";
 
-import {commentProp, commentsProp} from "../../props-types";
+import Review from "../review/review";
+import {commentsProp} from "../../props-types";
 
-const Review = ({filmComment}) => {
-  const {user, rating, comment, date} = filmComment;
-  const {name} = user;
+const COLUMNS_COUNT = 2;
 
-  return (
-    <div className="review">
-      <blockquote className="review__quote">
-        <p className="review__text">{comment}</p>
-
-        <footer className="review__details">
-          <cite className="review__author">{name}</cite>
-          <time className="review__date" dateTime="{date}">{date}</time>
-        </footer>
-      </blockquote>
-
-      <div className="review__rating">{rating}</div>
-    </div>
-  );
-};
-
-const ReviewsCol = ({comments}) => {
-  return (
-    <div className="movie-card__reviews-col">
-      {comments.map((comment) => {
-        return (
-          <Review
-            key={comment.id}
-            filmComment={comment}
-          />
-        );
-      })}
-    </div>
-  );
-};
+// const ReviewsCol = ({comments}) => {
+//   return (
+//     <div className="movie-card__reviews-col">
+//       {comments.map((comment) => {
+//         return (
+//           <Review
+//             key={comment.id}
+//             filmComment={comment}
+//           />
+//         );
+//       })}
+//     </div>
+//   );
+// };
 
 const Reviews = ({comments}) => {
   const length = comments.length;
-  const halfLength = Math.ceil(length / 2);
+  const commentsCount = Math.ceil(length / COLUMNS_COUNT);
 
   return (
     <div className="movie-card__reviews movie-card__row">
-      <ReviewsCol comments={comments.slice(0, halfLength)} />
-      <ReviewsCol comments={comments.slice(halfLength, length)} />
+      {new Array(COLUMNS_COUNT).fill(null).map((value, index) => {
+        const filmComments = comments.slice(commentsCount * index, commentsCount * (index + 1));
+        return (
+          <div key={`col-${index}`} className="movie-card__reviews-col">
+            {filmComments.map((comment) => {
+              return (
+                <Review
+                  key={comment.id}
+                  filmComment={comment}
+                />
+              );
+            })}
+          </div>
+        );
+      })
+      }
+      {/* <ReviewsCol comments={comments.slice(0, commentsInColumnsCount)} />
+      <ReviewsCol comments={comments.slice(commentsInColumnsCount, length)} /> */}
     </div>
   );
 
@@ -54,12 +53,8 @@ Reviews.propTypes = {
   comments: commentsProp,
 };
 
-Review.propTypes = {
-  filmComment: commentProp,
-};
-
-ReviewsCol.propTypes = {
-  comments: commentsProp,
-};
+// ReviewsCol.propTypes = {
+//   comments: commentsProp,
+// };
 
 export default Reviews;

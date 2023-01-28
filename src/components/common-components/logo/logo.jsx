@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
-import {resetOnDefault, redirectToRoute} from '../../../store/action';
+import {resetOnDefaultFilmsList, redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 
 const Logo = ({isAddClass, isClickable}) => {
@@ -14,7 +14,7 @@ const Logo = ({isAddClass, isClickable}) => {
   };
 
   const onResetOnDefault = () => {
-    dispatch(resetOnDefault());
+    dispatch(resetOnDefaultFilmsList());
   };
 
   const handleLogoClick = () => {

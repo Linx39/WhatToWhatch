@@ -17,7 +17,7 @@ import {AuthorizationStatus} from '../../const';
 
 const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
-  const {count, filmsList} = useSelector((state) => state.ACTIONS);
+  const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
 
