@@ -6,7 +6,7 @@ import VideoPlayer from './video-player/video-player';
 import Loading from '../common-components/loading/loading';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToBack} from '../../store/action';
-import {formatTimeInHMS} from '../component-utils';
+import {getTimeInHoursMinutesSeconds} from '../component-utils';
 
 const Player = () => {
   const {film} = useSelector((state) => state.DATA);
@@ -74,7 +74,7 @@ const Player = () => {
   };
 
   const getFormatedTimeTemplate = (time) => {
-    const {hours, minutes, seconds} = formatTimeInHMS(time);
+    const {hours, minutes, seconds} = getTimeInHoursMinutesSeconds(time);
 
     const h = hours !== 0 ? `${hours}:` : ``;
     const m = minutes.lenght === 1 ? `0${minutes}:` : `${minutes}:`;

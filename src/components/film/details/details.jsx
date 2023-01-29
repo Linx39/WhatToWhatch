@@ -1,10 +1,10 @@
 import React from "react";
 
 import {filmProp} from "../../props-types";
-import {formatTimeInHM} from "../../component-utils";
+import {getTimeInHoursMinutes} from "../../component-utils";
 
 const getFormatedTimeTemplate = (time) => {
-  const {hours, minutes} = formatTimeInHM(time);
+  const {hours, minutes} = getTimeInHoursMinutes(time);
 
   const h = hours !== 0 ? `${hours}:` : ``;
   const m = minutes.lenght === 1 ? `0${minutes}:` : `${minutes}`;

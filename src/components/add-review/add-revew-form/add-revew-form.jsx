@@ -4,30 +4,36 @@ import PropTypes from 'prop-types';
 
 import {fetchAddComment} from '../../../store/api-actions';
 
-const RATING_COUNT = 10;
+const RATING_MAX = 10;
 
-const Stars = ({onChange, ratingValue}) => {
-  return new Array(RATING_COUNT).fill(null).map((item, i) => {
-    const value = i + 1;
-    return (
-      <React.Fragment key={`star${value}`}>
-        <input
-          value={value}
-          onChange={onChange}
-          checked={value === ratingValue}
-          className="rating__input"
-          id={`star-${value}`}
-          type="radio"
-          name="rating"
-        />
-        <label
-          className="rating__label"
-          htmlFor={`star-${value}`}>
-          {`Rating ${value}`}
-        </label>
-      </React.Fragment>
-    );
-  });
+const Stars = ({ratingValue, onChange}) => {
+  return (
+    <div className="rating__stars">
+      {new Array(RATING_MAX).fill(null).map((item, index) => {
+        const value = index + 1;
+        const id = `star-${value}`;
+
+        return (
+          <React.Fragment key={id}>
+            <input
+              value={value}
+              onChange={onChange}
+              checked={value === ratingValue}
+              className="rating__input"
+              id={id}
+              type="radio"
+              name="rating"
+            />
+            <label
+              className="rating__label"
+              htmlFor={id}>
+              {`Rating ${value}`}
+            </label>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
 };
 
 const AddReviewForm = ({id}) => {
@@ -38,7 +44,7 @@ const AddReviewForm = ({id}) => {
   };
 
   const [userForm, setUserForm] = useState({
-    rating: RATING_COUNT,
+    rating: 0,
     comment: ``
   });
 
@@ -53,19 +59,19 @@ const AddReviewForm = ({id}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onSubmit(userForm);
-    setUserForm({rating: RATING_COUNT, comment: ``});
+    setUserForm({rating: 0, comment: ``});
   };
 
   return (
     <div className="add-review">
       <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
-          <div className="rating__stars">
+          {/* <div className="rating__stars"> */}
             <Stars
               ratingValue={Number(userForm.rating)}
               onChange={handleRatingChange}
             />
-          </div>
+          {/* </div> */}
         </div>
 
         <div className="add-review__text">
