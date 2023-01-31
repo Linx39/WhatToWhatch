@@ -1,4 +1,4 @@
-const Patch = {
+export const Patch = {
   MAIN: `/`,
   LOGIN: `/login`,
   MY_LIST: `/mylist`,
@@ -6,26 +6,26 @@ const Patch = {
   PLAYER: `/player`,
 };
 
-const FilmsCount = {
+export const FilmsCount = {
   MAIN: 8,
   FILMS_LIKE_THIS: 4,
   // MY_LIST: 5,
 };
 
-const NavItem = {
+export const NavItem = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
   REVIEWS: `Reviews`,
 };
 
-const GENRE_DEFAULT = `All genres`;
+export const GENRE_DEFAULT = `All genres`;
 
-const AuthorizationStatus = {
+export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
 };
 
-const AdditionalUrl = {
+export const AdditionalUrl = {
   FILMS: `/films`,
   COMMENTS: `/comments`,
   LOGIN: `/login`,
@@ -33,4 +33,9 @@ const AdditionalUrl = {
   FAVORITE: `/favorite`,
 };
 
-export {Patch, FilmsCount, NavItem, GENRE_DEFAULT, AuthorizationStatus, AdditionalUrl};
+export const RATING_MAX = 10;
+
+export const ReviewTextLength = {
+  MIN: 10, // не забыть исправить на 50
+  MAX: 400
+};

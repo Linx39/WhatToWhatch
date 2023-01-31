@@ -10,20 +10,30 @@ import Loading from '../common-components/loading/loading';
 
 const MyList = () => {
   const {favoriteFilms} = useSelector((state) => state.DATA);
+
   const dispatch = useDispatch();
 
   const [isFavoriteFilmsLoaded, setIsFavoriteFilmsLoaded] = useState(false);
 
-  const onFavoriteLoadFilms = () => {
-    dispatch(fetchFavoriteFilms())
-      .then(() => setIsFavoriteFilmsLoaded(true));
-  };
+  const onLoadFavoriteFilms = () => dispatch(fetchFavoriteFilms());
 
   useEffect(() => {
     if (!isFavoriteFilmsLoaded) {
-      onFavoriteLoadFilms();
+      onLoadFavoriteFilms();
+      setIsFavoriteFilmsLoaded(true);
     }
   }, [isFavoriteFilmsLoaded]);
+
+  // const onLoadFavoriteFilms = () => {
+  //   dispatch(fetchFavoriteFilms())
+  //   .then(() => setIsFavoriteFilmsLoaded(true));
+  // };
+
+  // useEffect(() => {
+  //   if (!isFavoriteFilmsLoaded) {
+  //     onLoadFavoriteFilms();
+  //   }
+  // }, [isFavoriteFilmsLoaded]);
 
   if (!isFavoriteFilmsLoaded) {
     return (

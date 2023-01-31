@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {NavItem} from "../../../const";
 
 const NavList = ({activeNavItem, onClick}) => {
-  const handleMouseClick = (evt) => onClick(evt.target.textContent);
+  const handleNavItemClick = (evt) => onClick(evt.target.textContent);
 
   return (
     <nav className="movie-nav movie-card__nav">
@@ -16,7 +16,7 @@ const NavList = ({activeNavItem, onClick}) => {
               className={`movie-nav__item ${navItem === activeNavItem ? `movie-nav__item--active` : ``}`}>
               <Link to="#"
                 className="movie-nav__link"
-                onClick={handleMouseClick}
+                onClick={handleNavItemClick}
               >
                 {navItem}
               </Link>

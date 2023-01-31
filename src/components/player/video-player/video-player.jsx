@@ -72,14 +72,6 @@ const VideoPlayer = (props) => {
   );
 };
 
-// VideoPlayer.defaultProps = {
-//   onChangeIsLoading: () => {},
-// };
-
-// VideoPlayer.defaultProps = {
-//   onChangeLastTime: () => {},
-// };
-
 VideoPlayer.propTypes = {
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,

@@ -4,7 +4,7 @@ import VideoPlayer from '../video-player/video-player';
 import {filmProp} from '../../props-types';
 
 const CardVideo = ({film}) => {
-  const {previewVideoLink, posterImage} = film;
+  const {previewVideoLink, previewImage} = film;
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
@@ -17,7 +17,7 @@ const CardVideo = ({film}) => {
       <div className="small-movie-card__image">
         <VideoPlayer
           src={previewVideoLink}
-          poster={posterImage}
+          poster={previewImage}
           isVideoLoaded={isVideoLoaded}
           onChangeIsLoaded ={handleChangeIsVideoLoaded}
           isPlaying={true}

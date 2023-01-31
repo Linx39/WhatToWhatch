@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {loadFilms, loadPromoFilm, loadFilm, loadComments, loadFavoriteFilms} from '../action';
+import {loadFilms, loadPromoFilm, loadFilm, loadComments, loadFavoriteFilms, resetLoadedFilm} from '../action';
 
 const initialState = {
   films: [],
@@ -8,8 +8,11 @@ const initialState = {
   promoFilm: {},
   isPromoFilmLoaded: false,
   film: {},
+  isFilmLoaded: false,
   comments: [],
+  isCommentsLoaded: false,
   favoriteFilms: [],
+  isFavoriteFilmsLoaded: false,
 };
 
 const appData = createReducer(initialState, (builder) => {
@@ -23,12 +26,21 @@ const appData = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadFilm, (state, action) => {
     state.film = action.payload;
+    state.isFilmLoaded = true;
   });
   builder.addCase(loadComments, (state, action) => {
     state.comments = action.payload;
+    state.isCommentsLoaded = true;
   });
   builder.addCase(loadFavoriteFilms, (state, action) => {
     state.favoriteFilms = action.payload;
+    state.isFavoriteFilmsLoaded = true;
+  });
+  builder.addCase(resetLoadedFilm, (state) => {
+    state.film = {};
+    state.isFilmLoaded = false;
+    state.comments = [];
+    state.isCommentsLoaded = false;
   });
 });
 

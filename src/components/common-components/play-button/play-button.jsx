@@ -6,14 +6,12 @@ import {Patch} from '../../../const';
 import {filmProp} from '../../props-types';
 
 const PlayButton = ({film}) => {
-  const {id} = film;
   const dispatch = useDispatch();
+  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  const onPlayButtonClick = (filmId) => {
-    dispatch(redirectToRoute(`${Patch.PLAYER}/${filmId}`));
-  };
+  const {id} = film;
 
-  const handlePlayButtonClick = () => onPlayButtonClick(id);
+  const handlePlayButtonClick = () => onRedirectToRoute(`${Patch.PLAYER}/${id}`);
 
   return (
     <button onClick={handlePlayButtonClick} className='btn btn--play movie-card__button' type='button'>

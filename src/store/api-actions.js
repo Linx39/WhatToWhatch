@@ -7,7 +7,6 @@ import {
   requireAuthorization,
   loadUserData,
   redirectToRoute,
-  redirectToBack
 } from './action';
 import {adaptFilmToClient, adaptUserToClient} from './adapter';
 import {AuthorizationStatus, AdditionalUrl, Patch} from '../const';

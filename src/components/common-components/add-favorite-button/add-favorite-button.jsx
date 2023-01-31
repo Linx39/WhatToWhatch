@@ -8,21 +8,17 @@ import {AuthorizationStatus, Patch} from '../../../const';
 import {filmProp} from '../../props-types';
 
 const AddFavoriteButton = ({film, isPromo}) => {
-  const {id, isFavorite} = film;
   const {authorizationStatus} = useSelector((state) => state.USER);
+
   const dispatch = useDispatch();
+  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
+  const onAddFavoriteFilm = (id, status) => dispatch(fetchAddFavoriteFilm(id, status, isPromo));
 
-  const redirectToSign = () => {
-    dispatch(redirectToRoute(Patch.LOGIN));
-  };
-
-  const onAddFavoriteFilm = (filmId, status) => {
-    dispatch(fetchAddFavoriteFilm(filmId, status, isPromo));
-  };
+  const {id, isFavorite} = film;
 
   const handleAddFavoriteFilm = () => {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      redirectToSign();
+      onRedirectToRoute(Patch.LOGIN);
       return;
     }
 

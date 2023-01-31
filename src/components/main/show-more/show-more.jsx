@@ -16,14 +16,11 @@ const ShowMore = () => {
   const {films} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
-
-  const onShowMoreClick = (newCount) => {
-    dispatch(changeFilmsCount(newCount));
-  };
+  const onChangeFilmsCount = (newCount) => dispatch(changeFilmsCount(newCount));
 
   const handleShowMoreClick = () => {
     const newCount = getNewCount(count, films.length);
-    onShowMoreClick(newCount);
+    onChangeFilmsCount(newCount);
   };
 
   return (

@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 
 import {appData} from './app-data/app-data';
 import {filmsListAction} from './films-list-actions/films-list-actions';
-import {filmInfoAction} from './film-actions/film-actions';
+import {filmInfoAction} from './film-info-actions/film-info-actions';
 import {userData} from './user-data/user-data';
 
 export const ReducerName = {

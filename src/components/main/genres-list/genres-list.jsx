@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {changeGenre, getFilmsList} from '../../../store/action';
+import {changeGenre, changeFilmsList} from '../../../store/action';
 import {GENRE_DEFAULT} from '../../../const';
 
 const GENRE_COUNT = 10;
@@ -32,22 +32,16 @@ const GenresList = () => {
   const {films} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
+  const onChangeGenre = (genre) => dispatch(changeGenre(genre));
+  const onChangeFilmsList = (list) => dispatch(changeFilmsList(list));
 
-  const onGenreItemClick = (genre) => {
-    dispatch(changeGenre(genre));
-  };
-
-  const onChangeFilmsList = (list) => {
-    dispatch(getFilmsList(list));
-  };
-
-  const genres = getUniqueGenres(films).slice(0, GENRE_COUNT);
+  const genres = useMemo(() => getUniqueGenres(films).slice(0, GENRE_COUNT));
 
   const handleGenreItemClick = (evt) => {
     const genreItem = evt.target.textContent;
-    const list = filterFilmsByGenre(genreItem, films);
+    const list = filterFilmsByGenre(genreItem, films); // reselect???
 
-    onGenreItemClick(evt.target.textContent);
+    onChangeGenre(evt.target.textContent);
     onChangeFilmsList(list);
   };
 

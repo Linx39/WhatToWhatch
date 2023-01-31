@@ -13,8 +13,6 @@ import browserHistory from "../../browser-history";
 import {Patch} from '../../const';
 
 const App = () => {
-  // const goBack = (history) => history.goBack();
-
   return (
     <Router history={browserHistory}>
       <Switch>

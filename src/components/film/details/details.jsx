@@ -6,8 +6,8 @@ import {getTimeInHoursMinutes} from "../../component-utils";
 const getFormatedTimeTemplate = (time) => {
   const {hours, minutes} = getTimeInHoursMinutes(time);
 
-  const h = hours !== 0 ? `${hours}:` : ``;
-  const m = minutes.lenght === 1 ? `0${minutes}:` : `${minutes}`;
+  const h = hours !== 0 ? `${hours}h ` : ``;
+  const m = minutes.lenght === 1 ? `0${minutes}m` : `${minutes}m`;
 
   return `${h}${m}`;
 };
@@ -31,7 +31,14 @@ const Details = ({film}) => {
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Starring</strong>
           <span className="movie-card__details-value">
-            {starring.map((star) => star).join(`,\n`)}
+            {starring.map((actor, index) => {
+              return (
+                <React.Fragment key={`star-${index}`}>
+                  {index !== starring.length - 1 ? `${actor},` : `${actor}`}
+                  {index !== starring.length - 1 ? <br /> : ``}
+                </React.Fragment>
+              );
+            })}
           </span>
         </p>
       </div>

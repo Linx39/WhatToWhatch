@@ -8,18 +8,12 @@ import {Patch} from '../../../const';
 
 const Logo = ({isAddClass, isClickable}) => {
   const dispatch = useDispatch();
-
-  const onLogoClick = () => {
-    dispatch(redirectToRoute(Patch.MAIN));
-  };
-
-  const onResetOnDefault = () => {
-    dispatch(resetOnDefaultFilmsList());
-  };
+  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
+  const onResetOnDefaultFilmsList = () => dispatch(resetOnDefaultFilmsList());
 
   const handleLogoClick = () => {
-    onResetOnDefault();
-    onLogoClick();
+    onResetOnDefaultFilmsList();
+    onRedirectToRoute(Patch.MAIN);
   };
 
   let logoLinkClassName = `logo__link`;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -20,62 +20,31 @@ import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
 
 const Film = () => {
-  const {films, isFilmsLoaded, film, comments} = useSelector((state) => state.DATA);
+  const {films, isFilmsLoaded, film, isFilmLoaded, comments, isCommentsLoaded} = useSelector((state) => state.DATA);
   const {activeNavItem} = useSelector((state) => state.FILM_INFO_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
+
   const dispatch = useDispatch();
+  const onLoadFilms = () => dispatch(fetchFilms());
+  const onLoadFilm = (id) => dispatch(fetchFilm(id));
+  const onLoadComments = (id) => dispatch(fetchComments(id));
+  const onChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
-  // const getFilmsLikeThis = () => {
-  //   const filmsLikeThis = films.slice().filter((item) => item.genre === genre && item.id !== id);
-  //   return filmsLikeThis;
-  // };
-
-
-  const [isFilmLoaded, setIsFilmLoaded] = useState(false);
-  const [isCommentsLoaded, setIsCommentsLoaded] = useState(false);
-
-  const onLoadFilms = () => {
-    dispatch(fetchFilms());
-  };
-
-  const onLoadFilm = (id) => {
-    dispatch(fetchFilm(id))
-      .then(() => setIsFilmLoaded(true));
-  };
-
-  const onLoadComments = (id) => {
-    dispatch(fetchComments(id))
-      .then(() => setIsCommentsLoaded(true));
-  };
-
-  const onNavItemClick = (item) =>{
-    dispatch(changeActiveNavItem(item));
-  };
-
-  const filmId = Number(useParams().id);
+  const paramsId = Number(useParams().id);
 
   useEffect(() => {
     if (!isFilmsLoaded) {
       onLoadFilms();
     }
 
-    setIsFilmLoaded(false);
-    setIsCommentsLoaded(false);
-  }, [filmId, isFilmsLoaded]);
-
-  useEffect(() => {
-    // if (!isFilmsLoaded) {
-    //   onLoadFilms();
-    // }
-
     if (!isFilmLoaded) {
-      onLoadFilm(filmId);
+      onLoadFilm(paramsId);
     }
 
     if (!isCommentsLoaded) {
-      onLoadComments(filmId);
+      onLoadComments(paramsId);
     }
-  }, [isFilmLoaded && isCommentsLoaded]);
+  }, [isFilmsLoaded && isFilmLoaded && isCommentsLoaded]);
 
   if (!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) {
     return (
@@ -85,8 +54,8 @@ const Film = () => {
 
   const {id, name, posterImage, backgroundImage, genre, released} = film;
 
-  const getActiveComponent = (navItem) => {
-    switch (navItem) {
+  const getActiveComponent = (item) => {
+    switch (item) {
       case NavItem.OVERVIEW:
         return <Overview film={film} />;
       case NavItem.DETAILS:
@@ -94,7 +63,7 @@ const Film = () => {
       case NavItem.REVIEWS:
         return <Reviews comments={comments} />;
       default:
-        throw new Error(`Unknown switch case expression: '${navItem}'!`);
+        throw new Error(`Unknown switch case expression: '${item}'!`);
     }
   };
 
@@ -149,7 +118,7 @@ const Film = () => {
           <div className="movie-card__desc">
             <NavList
               activeNavItem={activeNavItem}
-              onClick={onNavItemClick}
+              onClick={onChangeActiveNavItem}
             />
 
             {getActiveComponent(activeNavItem)}

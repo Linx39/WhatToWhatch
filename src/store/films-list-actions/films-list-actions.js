@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {changeGenre, getFilmsList, changeFilmsCount, resetOnDefaultFilmsList} from '../action';
+import {changeGenre, changeFilmsList, changeFilmsCount, resetOnDefaultFilmsList} from '../action';
 import {FilmsCount, GENRE_DEFAULT} from '../../const';
 
 const initialState = {
@@ -16,7 +16,7 @@ const filmsListAction = createReducer(initialState, (builder) => {
   builder.addCase(changeFilmsCount, (state, action) => {
     state.count = action.payload;
   });
-  builder.addCase(getFilmsList, (state, action) => {
+  builder.addCase(changeFilmsList, (state, action) => {
     state.filmsList = action.payload;
   });
   builder.addCase(resetOnDefaultFilmsList, (state) => {

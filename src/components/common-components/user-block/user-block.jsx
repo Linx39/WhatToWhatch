@@ -6,17 +6,17 @@ import {Patch} from '../../../const';
 
 const UserBlock = () => {
   const {user} = useSelector((state) => state.USER);
-  const dispatch = useDispatch();
 
-  const onAvatarClick = () => {
-    dispatch(redirectToRoute(Patch.MY_LIST));
-  };
+  const dispatch = useDispatch();
+  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
   const {avatarUrl} = user;
 
+  const handleOnAvatarClick = () => onRedirectToRoute(Patch.MY_LIST);
+
   return (
     <div className="user-block">
-      <div onClick={onAvatarClick} className="user-block__avatar">
+      <div onClick={handleOnAvatarClick} className="user-block__avatar">
         <img src={avatarUrl} alt="User avatar" width="63" height="63"/>
       </div>
     </div>

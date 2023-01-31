@@ -1,50 +1,26 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import PropTypes from 'prop-types';
 
+import Stars from '../stars/stars';
+import {filmProp} from '../../props-types';
 import {fetchAddComment} from '../../../store/api-actions';
+import {redirectToRoute} from '../../../store/action';
+import {RATING_MAX, ReviewTextLength, Patch} from '../../../const';
 
-const RATING_MAX = 10;
-
-const Stars = ({ratingValue, onChange}) => {
-  return (
-    <div className="rating__stars">
-      {new Array(RATING_MAX).fill(null).map((item, index) => {
-        const value = index + 1;
-        const id = `star-${value}`;
-
-        return (
-          <React.Fragment key={id}>
-            <input
-              value={value}
-              onChange={onChange}
-              checked={value === ratingValue}
-              className="rating__input"
-              id={id}
-              type="radio"
-              name="rating"
-            />
-            <label
-              className="rating__label"
-              htmlFor={id}>
-              {`Rating ${value}`}
-            </label>
-          </React.Fragment>
-        );
-      })}
-    </div>
-  );
-};
-
-const AddReviewForm = ({id}) => {
+const AddReviewForm = ({film}) => {
   const dispatch = useDispatch();
+  const onAddComment = (id, userForm) => dispatch(fetchAddComment(id, userForm));
+  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
+
+  const {id} = film;
 
   const onSubmit = (userForm) => {
-    dispatch(fetchAddComment(id, userForm));
+    onAddComment(id, userForm);
+    onRedirectToRoute(`${Patch.FILMS}/${id}`);
   };
 
   const [userForm, setUserForm] = useState({
-    rating: 0,
+    rating: RATING_MAX,
     comment: ``
   });
 
@@ -59,34 +35,39 @@ const AddReviewForm = ({id}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onSubmit(userForm);
-    setUserForm({rating: 0, comment: ``});
   };
+
+  const {rating, comment} = userForm;
 
   return (
     <div className="add-review">
       <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
-          {/* <div className="rating__stars"> */}
-            <Stars
-              ratingValue={Number(userForm.rating)}
-              onChange={handleRatingChange}
-            />
-          {/* </div> */}
+          <Stars
+            ratingValue={Number(rating)}
+            onChange={handleRatingChange}
+          />
         </div>
 
         <div className="add-review__text">
           <textarea
-            value={userForm.comment}
+            value={comment}
             onChange={handleCommentChange}
             className="add-review__textarea"
             name="review-text"
             id="review-text"
             placeholder="Review text">
           </textarea>
-          <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
-          </div>
 
+          <div className="add-review__submit">
+            <button
+              className="add-review__btn"
+              type="submit"
+              disabled={rating === 0 || comment.length < ReviewTextLength.MIN || comment.length > ReviewTextLength.MAX}
+            >
+              Post
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -94,12 +75,7 @@ const AddReviewForm = ({id}) => {
 };
 
 AddReviewForm.propTypes = {
-  id: PropTypes.number.isRequired,
-};
-
-Stars.propTypes = {
-  ratingValue: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  film: filmProp,
 };
 
 export default AddReviewForm;

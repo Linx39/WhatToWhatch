@@ -2,23 +2,21 @@ import React, {useRef} from 'react';
 import PropTypes from "prop-types";
 import {useSelector, useDispatch} from 'react-redux';
 
-import {login} from "../../store/api-actions";
+import {login} from '../../store/api-actions';
 import Logo from '../common-components/logo/logo';
 import Copyright from '../common-components/copyright/copyright';
-// import {redirectToBack} from '../../store/action';
+import {redirectToRoute} from '../../store/action';
+import {AuthorizationStatus, Patch} from '../../const';
 
 const SignIn = () => {
-  // const {authorizationStatus} = useSelector((state) => state.USER);
+  const {authorizationStatus} = useSelector((state) => state.USER);
+
   const dispatch = useDispatch();
+  const onLogin = (authData) => dispatch(login(authData));
 
-  const onSubmit = (authData) => {
-    dispatch(login(authData));
-  };
-
-  // const onRedirectToBack = () => {
-  //   dispatch(redirectToBack);
-  // };
-
+  // if (authorizationStatus === AuthorizationStatus.AUTH) {
+  //   dispatch(redirectToRoute(Patch.MAIN));
+  // }
 
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -26,12 +24,10 @@ const SignIn = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    onLogin({
       login: loginRef.current.value,
       password: passwordRef.current.value,
     });
-
-    // onRedirectToBack();
   };
 
   return <React.Fragment>
@@ -48,6 +44,14 @@ const SignIn = () => {
           className="sign-in__form"
           onSubmit={handleSubmit}
         >
+          <div className="sign-in__message">
+            <p>Please enter a valid email address</p>
+          </div>
+
+          <div className="sign-in__message">
+            <p>We can\’t recognize this email <br /> and password combination. Please try again.</p>
+          </div>
+
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input

@@ -7,11 +7,10 @@ import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
 import Loading from '../common-components/loading/loading';
+import PromoFilm from './promo-film/promo-film';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
-import PlayButton from '../common-components/play-button/play-button';
-import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
-import {getFilmsList} from '../../store/action';
+import {changeFilmsList} from '../../store/action';
 import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../const';
 
@@ -19,19 +18,11 @@ const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
   const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
+
   const dispatch = useDispatch();
-
-  const onLoadFilms = () => {
-    dispatch(fetchFilms());
-  };
-
-  const onLoadPromoFilm = () => {
-    dispatch(fetchPromoFilm());
-  };
-
-  const onChangeFilmsList = (list) => {
-    dispatch(getFilmsList(list));
-  };
+  const onLoadFilms = () => dispatch(fetchFilms());
+  const onLoadPromoFilm = () => dispatch(fetchPromoFilm());
+  const onChangeFilmsList = (list) => dispatch(changeFilmsList(list));
 
   useEffect(() => {
     if (!isFilmsLoaded) {
@@ -55,7 +46,7 @@ const Main = () => {
     );
   }
 
-  const {name, posterImage, backgroundImage, genre, released} = promoFilm;
+  const {name, backgroundImage} = promoFilm;
 
   return <React.Fragment>
     <section className='movie-card'>
@@ -74,27 +65,7 @@ const Main = () => {
         }
       </header>
 
-      <div className='movie-card__wrap'>
-        <div className='movie-card__info'>
-          <div className='movie-card__poster'>
-            <img src={posterImage} alt={{name} + ` poster`} width='218' height='327' />
-          </div>
-
-          <div className='movie-card__desc'>
-            <h2 className='movie-card__title'>{name}</h2>
-            <p className='movie-card__meta'>
-              <span className='movie-card__genre'>{genre}</span>
-              <span className='movie-card__year'>{released}</span>
-            </p>
-
-            <div className='movie-card__buttons'>
-              <PlayButton film={promoFilm}/>
-
-              <AddFavoriteButton film={promoFilm} isPromo={true} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <PromoFilm film={promoFilm} />
     </section>
 
     <div className='page-content'>

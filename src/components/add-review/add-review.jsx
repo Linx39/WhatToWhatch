@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -11,27 +11,19 @@ import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
 
 const AddReview = () => {
-  const {film} = useSelector((state) => state.DATA);
+  const {film, isFilmLoaded} = useSelector((state) => state.DATA);
+
   const dispatch = useDispatch();
+  const onLoadFilm = (id) => dispatch(fetchFilm(id));
+  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  const [isFilmLoaded, setIsFilmLoaded] = useState(false);
-
-  const onLoadFilm = (id) => {
-    dispatch(fetchFilm(id))
-      .then(() => setIsFilmLoaded(true));
-  };
-
-  const onFilmNameClick = (filmId) => {
-    dispatch(redirectToRoute(`${Patch.FILMS}/${filmId}`));
-  };
-
-  const filmId = Number(useParams().id);
+  const paramsId = Number(useParams().id);
 
   useEffect(() => {
     if (!isFilmLoaded) {
-      onLoadFilm(filmId);
+      onLoadFilm(paramsId);
     }
-  }, [filmId, isFilmLoaded]);
+  }, [isFilmLoaded]);
 
   if (!isFilmLoaded) {
     return (
@@ -41,7 +33,7 @@ const AddReview = () => {
 
   const {id, name, posterImage, backgroundImage} = film;
 
-  const handleFilmNameClick = () => onFilmNameClick(id);
+  const handleFilmNameClick = () => onRedirectToRoute(`${Patch.FILMS}/${id}`);
 
   return (
     <section className="movie-card movie-card--full">
@@ -74,7 +66,7 @@ const AddReview = () => {
         </div>
       </div>
 
-      <AddReviewForm id={filmId} />
+      <AddReviewForm film={film} />
     </section>
   );
 };

@@ -4,8 +4,8 @@ import browserHistory from '../browser-history';
 
 export const ActionType = {
   CHANGE_GENRE: `filmsList/changeGenre`,
-  GET_FILMS_LIST: `filmsList/getFilmsList`,
   CHANGE_FILMS_COUNT: `filmsList/changeFilmsCount`,
+  CHANGE_FILMS_LIST: `filmsList/changeFilmsList`,
   RESET_ON_DEFAULT_FILMS_LIST: `filmsList/resetOnDefaultFilmsList`,
   CHANGE_ACTIVE_NAV_ITEM: `filmInfo/changeActiveNavItem`,
   RESET_ON_DEFAULT_FILM_INFO: `filmInfo/resetOnDefaultFilmInfo`,
@@ -14,10 +14,11 @@ export const ActionType = {
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
+  RESET_LOADED_FILM: `data/resetLoadedFilm`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
   LOAD_USER_DATA: `user/loadUserData`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
-  REDIRECT_TO_BACK: `app/redirectToBack`,
+  // REDIRECT_TO_BACK: `app/redirectToBack`,
 };
 
 export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {
@@ -26,15 +27,15 @@ export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {
   };
 });
 
-export const getFilmsList = createAction(ActionType.GET_FILMS_LIST, (films) => {
-  return {
-    payload: films,
-  };
-});
-
 export const changeFilmsCount = createAction(ActionType.CHANGE_FILMS_COUNT, (count) => {
   return {
     payload: count,
+  };
+});
+
+export const changeFilmsList = createAction(ActionType.CHANGE_FILMS_LIST, (films) => {
+  return {
+    payload: films,
   };
 });
 
@@ -78,6 +79,8 @@ export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (f
   };
 });
 
+export const resetLoadedFilm = createAction(ActionType.RESET_LOADED_FILM);
+
 export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATION, (status) => {
   return {
     payload: status,
@@ -96,8 +99,8 @@ export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) 
   };
 });
 
-export const redirectToBack = createAction(ActionType.REDIRECT_TO_BACK, () => {
-  return {
-    payload: browserHistory.goBack(),
-  };
-});
+// export const redirectToBack = createAction(ActionType.REDIRECT_TO_BACK, () => {
+//   return {
+//     payload: browserHistory.goBack(),
+//   };
+// });
