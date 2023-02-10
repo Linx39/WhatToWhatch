@@ -5,7 +5,8 @@
   "description": "Личный проект «{{projectTitle}}» от HTML Academy",
   "scripts": {
     "eslint": "eslint --ext .jsx --ext .js src/",
-    "test": "npm run eslint",
+    "test": "npm run eslint && npm run test.jest",
+    "test.jest": "jest",
     "build": "webpack --mode production",
     "start": "webpack-dev-server"
   },
@@ -13,10 +14,16 @@
     "@babel/core": "7.12.17",
     "@babel/preset-env": "7.12.17",
     "@babel/preset-react": "7.12.13",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "11.2.7",
+    "@testing-library/user-event": "14.4.3",
+    "axios-mock-adapter": "1.19.0",
     "babel-loader": "8.2.5",
     "eslint": "7.18.0",
     "eslint-config-htmlacademy": "2.1.0",
     "eslint-plugin-react": "7.22.0",
+    "jest": "26.6.3",
+    "redux-mock-store": "1.5.4",
     "webpack": "4.46.0",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.3"
@@ -34,5 +41,13 @@
     "react-dom": "16.14.0",
     "react-redux": "7.2.9",
     "react-router-dom": "5.2.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/src/style-mock.js"
+    },
+    "setupFilesAfterEnv": [
+      "./setup-tests.js"
+    ]
   }
 }

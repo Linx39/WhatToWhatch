@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {changeGenre, changeFilmsList, changeFilmsCount, resetOnDefaultFilmsList} from '../action';
+import {changeGenre, changeFilmsCount, changeFilmsList, resetOnDefaultFilmsList} from '../action';
 import {FilmsCount, GENRE_DEFAULT} from '../../const';
 
 const initialState = {

@@ -1,7 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
 
-import browserHistory from '../browser-history';
-
 export const ActionType = {
   CHANGE_GENRE: `filmsList/changeGenre`,
   CHANGE_FILMS_COUNT: `filmsList/changeFilmsCount`,
