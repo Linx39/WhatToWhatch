@@ -16,4 +16,4 @@ const filmInfoAction = createReducer(initialState, (builder) => {
   });
 });
 
-export {filmInfoAction};
+export {initialState, filmInfoAction};

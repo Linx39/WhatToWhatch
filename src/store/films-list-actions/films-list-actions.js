@@ -26,4 +26,4 @@ const filmsListAction = createReducer(initialState, (builder) => {
   });
 });
 
-export {filmsListAction};
+export {initialState, filmsListAction};

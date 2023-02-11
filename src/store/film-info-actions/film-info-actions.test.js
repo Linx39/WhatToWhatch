@@ -1,11 +1,10 @@
-import {filmInfoAction} from './film-info-actions';
+import {initialState, filmInfoAction} from './film-info-actions';
 import {ActionType} from '../action';
-import {NavItem} from '../../const';
 
 describe(`Reducers work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
     expect(filmInfoAction(undefined, {}))
-      .toEqual({activeNavItem: NavItem.OVERVIEW});
+      .toEqual(initialState);
   });
 
   it(`Reducer should change active item by a given value`, () => {
@@ -27,6 +26,6 @@ describe(`Reducers work correctly`, () => {
     };
 
     expect(filmInfoAction({activeNavItem: `Reviews`}, resetFilmsListAction))
-      .toEqual({activeNavItem: NavItem.OVERVIEW});
+      .toEqual(initialState);
   });
 });

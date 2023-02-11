@@ -44,4 +44,4 @@ const appData = createReducer(initialState, (builder) => {
   });
 });
 
-export {appData};
+export {initialState, appData};

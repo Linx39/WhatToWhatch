@@ -17,4 +17,4 @@ const userData = createReducer(initialState, (builder) => {
   });
 });
 
-export {userData};
+export {initialState, userData};

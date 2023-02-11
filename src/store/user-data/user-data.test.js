@@ -1,6 +1,6 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../services/api';
-import {userData} from './user-data';
+import {initialState, userData} from './user-data';
 import {ActionType} from '../action';
 import {checkAuth, login, logout} from '../api-actions';
 import {AdditionalUrl, Patch, AuthorizationStatus} from '../../const';
@@ -10,7 +10,7 @@ const api = createAPI(() => {});
 describe(`Reducer 'user' should work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
     expect(userData(undefined, {}))
-      .toEqual({authorizationStatus: AuthorizationStatus.NO_AUTH, user: {}});
+      .toEqual(initialState);
   });
 
   it(`Reducer should update authorizationStatus to 'auth'`, () => {

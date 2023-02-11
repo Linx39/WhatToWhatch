@@ -8,7 +8,7 @@ export const ActionType = {
   CHANGE_ACTIVE_NAV_ITEM: `filmInfo/changeActiveNavItem`,
   RESET_ON_DEFAULT_FILM_INFO: `filmInfo/resetOnDefaultFilmInfo`,
   LOAD_FILMS: `data/loadFilms`,
-  LOAD__PROMO_FILM: `data/loadPromoFilm`,
+  LOAD_PROMO_FILM: `data/loadPromoFilm`,
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
@@ -53,7 +53,7 @@ export const loadFilms = createAction(ActionType.LOAD_FILMS, (films) => {
   };
 });
 
-export const loadPromoFilm = createAction(ActionType.LOAD__PROMO_FILM, (film) => {
+export const loadPromoFilm = createAction(ActionType.LOAD_PROMO_FILM, (film) => {
   return {
     payload: film,
   };

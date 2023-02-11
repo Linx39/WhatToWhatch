@@ -1,11 +1,10 @@
-import {filmsListAction} from './films-list-actions';
+import {initialState, filmsListAction} from './films-list-actions';
 import {ActionType} from '../action';
-import {GENRE_DEFAULT, FilmsCount} from '../../const';
 
 describe(`Reducers work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
     expect(filmsListAction(undefined, {}))
-      .toEqual({activeGenre: GENRE_DEFAULT, count: FilmsCount.MAIN, filmsList: []});
+      .toEqual(initialState);
   });
 
   it(`Reducer should change genre by a given value`, () => {
@@ -52,11 +51,9 @@ describe(`Reducers work correctly`, () => {
       payload: null,
     };
 
-    const defaultState = {activeGenre: GENRE_DEFAULT, count: FilmsCount.MAIN, filmsList: []};
-
     const films = [{id: 1, name: ``}, {id: 2, name: ``}];
 
     expect(filmsListAction({activeGenre: `drama`, count: 4, filmsList: films}, resetFilmsListAction))
-      .toEqual(defaultState);
+      .toEqual(initialState);
   });
 });

@@ -5,7 +5,7 @@ import {RATING_MAX} from '../../../const';
 
 const Stars = ({ratingValue, onChange}) => {
   return (
-    <div className="rating__stars">
+    <div className="rating__stars" data-testid={`rating`}>
       {new Array(RATING_MAX)
         .fill(null)
         .map((item, index) => {
