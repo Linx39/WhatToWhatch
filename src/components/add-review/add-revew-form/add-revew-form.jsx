@@ -56,7 +56,8 @@ const AddReviewForm = ({film}) => {
             className="add-review__textarea"
             name="review-text"
             id="review-text"
-            placeholder="Review text">
+            placeholder="Review text"
+            data-testid="review">
           </textarea>
 
           <div className="add-review__submit">
