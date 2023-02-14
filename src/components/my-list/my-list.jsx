@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
@@ -9,31 +9,16 @@ import {fetchFavoriteFilms} from '../../store/api-actions';
 import Loading from '../common-components/loading/loading';
 
 const MyList = () => {
-  const {favoriteFilms} = useSelector((state) => state.DATA);
+  const {favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
-
-  const [isFavoriteFilmsLoaded, setIsFavoriteFilmsLoaded] = useState(false);
-
   const onLoadFavoriteFilms = () => dispatch(fetchFavoriteFilms());
 
   useEffect(() => {
     if (!isFavoriteFilmsLoaded) {
       onLoadFavoriteFilms();
-      setIsFavoriteFilmsLoaded(true);
     }
   }, [isFavoriteFilmsLoaded]);
-
-  // const onLoadFavoriteFilms = () => {
-  //   dispatch(fetchFavoriteFilms())
-  //   .then(() => setIsFavoriteFilmsLoaded(true));
-  // };
-
-  // useEffect(() => {
-  //   if (!isFavoriteFilmsLoaded) {
-  //     onLoadFavoriteFilms();
-  //   }
-  // }, [isFavoriteFilmsLoaded]);
 
   if (!isFavoriteFilmsLoaded) {
     return (

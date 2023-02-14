@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {fetchAddFavoriteFilm} from '../../../store/api-actions';
-import {redirectToRoute} from '../../../store/action';
+import {redirectToRoute, resetLoadedFavoriteFilms} from '../../../store/action';
 import {AuthorizationStatus, Patch} from '../../../const';
 import {filmProp} from '../../props-types';
 
@@ -13,6 +13,7 @@ const AddFavoriteButton = ({film, isPromo}) => {
   const dispatch = useDispatch();
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
   const onAddFavoriteFilm = (id, status) => dispatch(fetchAddFavoriteFilm(id, status, isPromo));
+  const onResetLoadedFavoriteFilms = () => dispatch(resetLoadedFavoriteFilms());
 
   const {id, isFavorite} = film;
 
@@ -23,6 +24,7 @@ const AddFavoriteButton = ({film, isPromo}) => {
     }
 
     onAddFavoriteFilm(id, Number(!isFavorite));
+    onResetLoadedFavoriteFilms();
   };
 
   return (

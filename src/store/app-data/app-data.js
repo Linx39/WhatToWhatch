@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {loadFilms, loadPromoFilm, loadFilm, loadComments, loadFavoriteFilms, resetLoadedFilm} from '../action';
+import {loadFilms, loadPromoFilm, loadFilm, loadComments, loadFavoriteFilms, resetLoadedFilm, resetLoadedFavoriteFilms} from '../action';
 
 const initialState = {
   films: [],
@@ -41,6 +41,10 @@ const appData = createReducer(initialState, (builder) => {
     state.isFilmLoaded = false;
     state.comments = [];
     state.isCommentsLoaded = false;
+  });
+  builder.addCase(resetLoadedFavoriteFilms, (state) => {
+    state.favoriteFilms = [];
+    state.isFavoriteFilmsLoaded = false;
   });
 });
 

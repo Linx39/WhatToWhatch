@@ -9,7 +9,7 @@ import {redirectToRoute} from '../../store/action';
 import {AuthorizationStatus, Patch} from '../../const';
 
 const SignIn = () => {
-  const {authorizationStatus} = useSelector((state) => state.USER);
+  // const {authorizationStatus} = useSelector((state) => state.USER);
 
   const dispatch = useDispatch();
   const onLogin = (authData) => dispatch(login(authData));

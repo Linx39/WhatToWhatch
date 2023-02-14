@@ -4,26 +4,28 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
-// import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 
-import AddReviewForm from './add-revew-form';
-import film from '../../../mock/film';
+import UserBlock from './user-block';
+import user from '../../../mock/user';
 
 const mockStore = configureStore({});
 jest.spyOn(redux, `useDispatch`);
 
-it(`'AddReviewForm' should render correctly`, () => {
+it(`'UserBlock' should render correctly`, () => {
+  const store = mockStore({
+    USER: {user},
+  });
+
   const history = createMemoryHistory();
 
   render(
-      <redux.Provider store={mockStore({})}>
+      <redux.Provider store={store}>
         <Router history={history}>
-          <AddReviewForm film={film}/>
+          <UserBlock />
         </Router>
       </redux.Provider>
   );
 
-  expect(screen.getByText(/Post/i)).toBeInTheDocument();
-  expect(screen.getByPlaceholderText(/Review text/i)).toBeInTheDocument();
+  expect(screen.getByAltText(/User avatar/i)).toBeInTheDocument();
 });

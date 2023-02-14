@@ -9,7 +9,6 @@ export const Patch = {
 export const FilmsCount = {
   MAIN: 8,
   FILMS_LIKE_THIS: 4,
-  // MY_LIST: 5,
 };
 
 export const NavItem = {

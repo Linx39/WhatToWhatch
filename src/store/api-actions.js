@@ -4,6 +4,7 @@ import {
   loadPromoFilm,
   loadComments,
   loadFavoriteFilms,
+  resetLoadedFavoriteFilms,
   requireAuthorization,
   loadUserData,
   redirectToRoute,
@@ -40,7 +41,6 @@ export const fetchFilm = (id) => (dispatch, _getState, api) => (
 export const fetchComments = (id) => (dispatch, _getState, api) => (
   api.get(`${AdditionalUrl.COMMENTS}/${id}`)
     .then(({data}) => {
-      // const comments = data.map((item) => adaptCommentsToClient(item));
       dispatch(loadComments(data));
     })
     .catch(() => {})
@@ -71,7 +71,6 @@ export const fetchAddFavoriteFilm = (id, status, isPromo) => (dispatch, _getStat
         dispatch(loadFilm(film));
       }
     })
-    .catch(() => {})
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

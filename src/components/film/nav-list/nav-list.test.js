@@ -4,26 +4,25 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
-// import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 
-import AddReviewForm from './add-revew-form';
-import film from '../../../mock/film';
-
+import NavList from './nav-list';
+import {NavItem} from '../../../const';
 const mockStore = configureStore({});
-jest.spyOn(redux, `useDispatch`);
+// jest.spyOn(redux, `useDispatch`);
 
-it(`'AddReviewForm' should render correctly`, () => {
+it(`'NavList' should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
       <redux.Provider store={mockStore({})}>
         <Router history={history}>
-          <AddReviewForm film={film}/>
+          <NavList activeNavItem={NavItem.DETAILS} onClick={() => {}}/>
         </Router>
       </redux.Provider>
   );
 
-  expect(screen.getByText(/Post/i)).toBeInTheDocument();
-  expect(screen.getByPlaceholderText(/Review text/i)).toBeInTheDocument();
+  expect(screen.getByText(/Overview/i)).toBeInTheDocument();
+  expect(screen.getByText(/Details/i)).toBeInTheDocument();
+  expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
 });
