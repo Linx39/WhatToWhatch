@@ -6,27 +6,29 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
 
-import UserBlock from './user-block';
-import user from '../../../mock/user';
+import NotFoundPage from './not-found-page';
+import {AuthorizationStatus} from '../../const';
+import user from '../../mock/user';
 
 const mockStore = configureStore({});
-jest.spyOn(redux, `useSelector`);
-jest.spyOn(redux, `useDispatch`);
 
-it(`'UserBlock' should render correctly`, () => {
+it(`'NotFoundPage' should render correctly`, () => {
   const store = mockStore({
-    USER: {user},
+    USER: {
+      authorizationStatus: AuthorizationStatus.AUTH,
+      user,
+    },
   });
-
   const history = createMemoryHistory();
 
   render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <UserBlock />
+          <NotFoundPage />
         </Router>
       </redux.Provider>
   );
 
-  expect(screen.getByAltText(/User avatar/i)).toBeInTheDocument();
+  expect(screen.getByText(/404. Page not found/i)).toBeInTheDocument();
+  expect(screen.getByText(/Вернуться на главную/i)).toBeInTheDocument();
 });

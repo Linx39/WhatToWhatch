@@ -20,5 +20,5 @@ it(`'Loading' should render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(screen.getByText(/Loading .../)).toBeInTheDocument();
+  expect(screen.getByText(/Loading .../i)).toBeInTheDocument();
 });

@@ -17,7 +17,7 @@ const FilmsList = ({films, count = films.length}) => {
   );
 
   return (
-    <div className='catalog__movies-list'>
+    <div className='catalog__movies-list' data-testid="test-film-list">
       {films.slice(0, count).map((film) => {
         return (
           <FilmCard

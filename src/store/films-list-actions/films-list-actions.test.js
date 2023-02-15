@@ -37,7 +37,7 @@ describe(`Reducers work correctly`, () => {
     const films = [{id: 1, name: ``}, {id: 2, name: ``}];
 
     const changeFilmsListAction = {
-      type: ActionType.CHANGE_FILMS_COUNT,
+      type: ActionType.CHANGE_FILMS_LIST,
       payload: films,
     };
 

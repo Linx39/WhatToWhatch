@@ -14,7 +14,7 @@ const CardVideo = ({film}) => {
 
   return (
     <>
-      <div className="small-movie-card__image">
+      <div className="small-movie-card__image" data-testid={`test-card-video-${film.id}`}>
         <VideoPlayer
           src={previewVideoLink}
           poster={previewImage}

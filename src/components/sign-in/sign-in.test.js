@@ -6,23 +6,23 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
 
-import AddReviewButton from './add-review-button';
-import films from '../../../mock/films';
+import SignIn from './sign-in';
 
 const mockStore = configureStore({});
 jest.spyOn(redux, `useDispatch`);
 
-it(`'AddReviewButton' should render correctly`, () => {
-  const film = films[6];
+it(`'SignIn' should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
       <redux.Provider store={mockStore({})}>
         <Router history={history}>
-          <AddReviewButton film={film}/>
+          <SignIn />
         </Router>
       </redux.Provider>
   );
 
-  expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/Sign in/i)[0]).toBeInTheDocument();
+  expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
 });

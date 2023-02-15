@@ -20,8 +20,7 @@ const CardImage = ({film, onMouseEnter, onMouseLeave, onClick}) => {
 
   useEffect(() => {
     return () => clearTimeout(timer);
-  });
-// }, [film]);
+  }, [film]);
 
   return (
     <>

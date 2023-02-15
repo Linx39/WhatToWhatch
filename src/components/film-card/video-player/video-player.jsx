@@ -30,6 +30,7 @@ const VideoPlayer = (props) => {
       ref={videoRef}
       muted={isMuted}
       autoPlay={isPlaying}
+      data-testid={`test-video-player`}
     >
     </video>
   );

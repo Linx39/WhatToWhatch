@@ -14,5 +14,5 @@ it(`'Copyright' should render correctly`, () => {
       </Router>
   );
 
-  expect(screen.getByText(/© 2019 What to watch Ltd./)).toBeInTheDocument();
+  expect(screen.getByText(/© 2019 What to watch Ltd./i)).toBeInTheDocument();
 });

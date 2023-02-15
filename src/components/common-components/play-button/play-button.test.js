@@ -7,12 +7,13 @@ import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
 
 import PlayButton from './play-button';
-import film from '../../../mock/film';
+import films from '../../../mock/films';
 
 const mockStore = configureStore({});
 jest.spyOn(redux, `useDispatch`);
 
 it(`'PlayButton' should render correctly`, () => {
+  const film = films[6];
   const history = createMemoryHistory();
 
   render(

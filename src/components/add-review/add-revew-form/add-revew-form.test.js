@@ -4,16 +4,16 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
-// import {Provider} from 'react-redux';
 import userEvent from '@testing-library/user-event';
 
 import AddReviewForm from './add-revew-form';
-import film from '../../../mock/film';
+import films from '../../../mock/films';
 
 const mockStore = configureStore({});
 jest.spyOn(redux, `useDispatch`);
 
 it(`'AddReviewForm' should render correctly`, () => {
+  const film = films[5];
   const history = createMemoryHistory();
 
   render(

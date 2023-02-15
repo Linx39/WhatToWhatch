@@ -8,17 +8,20 @@ import configureStore from 'redux-mock-store';
 import {AuthorizationStatus, Patch, NavItem, FilmsCount} from '../../const';
 import App from './app';
 import films from '../../mock/films';
-import film from '../../mock/film';
 import comments from '../../mock/comments';
 import user from '../../mock/user';
 
 const mockStore = configureStore({});
+
 describe(`Test routing`, () => {
   jest.spyOn(redux, `useSelector`);
   jest.spyOn(redux, `useDispatch`);
-  jest.spyOn(redux, `play`);
+  // jest.spyOn(video, `play`);
+
+  const film = films[9];
 
   it(`Render 'Main' when user navigate to '/' url`, () => {
+    const {name} = film;
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
@@ -33,7 +36,7 @@ describe(`Test routing`, () => {
       FILMS_LIST_ACTIONS: {
         count: FilmsCount.MAIN,
         filmsList: films
-      }
+      },
     });
 
     const history = createMemoryHistory();
@@ -46,6 +49,7 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
+    expect(screen.getAllByAltText(new RegExp(`${name}`, `i`))[0]).toBeInTheDocument();
     expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
   });
 
@@ -61,6 +65,7 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
+    expect(screen.getAllByText(/Sign in/i)[0]).toBeInTheDocument();
     expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
   });
@@ -90,6 +95,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render 'Film' when user navigate to '/film/id' url`, () => {
+    const {name} = film;
     const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user},
       DATA: {
@@ -114,10 +120,12 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
+    expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();
     expect(screen.getByText(/More like this/i)).toBeInTheDocument();
   });
 
   it(`Render 'AddReview' when user navigate to '/film/id/review' url`, () => {
+    const {name} = film;
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
@@ -140,6 +148,8 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
+    expect(screen.getByText(new RegExp(`${name}`, `i`))).toBeInTheDocument();
+    expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();
     expect(screen.getByText(/Add review/i)).toBeInTheDocument();
   });
 
@@ -167,7 +177,10 @@ describe(`Test routing`, () => {
 
   it(`Render 'NotFoundPage' when user navigate to non-existent route`, () => {
     const store = mockStore({
-      USER: {authorizationStatus: AuthorizationStatus.AUTH, user},
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+        user,
+      },
     });
 
     const history = createMemoryHistory();

@@ -6,23 +6,24 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
 
-import AddReviewButton from './add-review-button';
-import films from '../../../mock/films';
+import FilmCard from './film-card';
+import films from '../../mock/films';
 
 const mockStore = configureStore({});
 jest.spyOn(redux, `useDispatch`);
 
-it(`'AddReviewButton' should render correctly`, () => {
-  const film = films[6];
+it(`'FilmCard' should render correctly`, () => {
+  const film = films[3];
+  const {id} = film;
   const history = createMemoryHistory();
 
   render(
       <redux.Provider store={mockStore({})}>
         <Router history={history}>
-          <AddReviewButton film={film}/>
+          <FilmCard film={film} isVideoMode={false} onMouseEnter={() => {}} onMouseLeave={() => {}} />
         </Router>
       </redux.Provider>
   );
 
-  expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+  expect(screen.getByTestId(new RegExp(`test-film-card-${id}`, `i`))).toBeInTheDocument();
 });

@@ -9,14 +9,13 @@ import {redirectToRoute} from '../../store/action';
 import {filmProp} from '../props-types';
 import {Patch} from '../../const';
 
-const FilmCard = (props) => {
-  // console.log (`FilmCard`);
+const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   const dispatch = useDispatch();
   const onResetLoadedFilm = () => dispatch(resetLoadedFilm());
   const onResetOnDefaultFilmInfo = () => dispatch(resetOnDefaultFilmInfo());
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  const {film, isVideoMode, onMouseEnter, onMouseLeave} = props;
+  // const {film, isVideoMode, onMouseEnter, onMouseLeave} = props;
 
   const handleCardClick = (id) => {
     onResetLoadedFilm();
@@ -25,7 +24,7 @@ const FilmCard = (props) => {
   };
 
   return (
-    <article className="small-movie-card catalog__movies-card">
+    <article className="small-movie-card catalog__movies-card" data-testid={`test-film-card-${film.id}`}>
       {isVideoMode
         ?
         <CardVideo

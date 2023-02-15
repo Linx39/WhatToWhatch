@@ -67,6 +67,7 @@ const VideoPlayer = (props) => {
       poster={poster}
       ref={videoRef}
       muted={isMuted}
+      data-testid={`test-video-player`}
     >
     </video>
   );

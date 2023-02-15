@@ -8,8 +8,8 @@ import userEvent from '@testing-library/user-event';
 
 import NavList from './nav-list';
 import {NavItem} from '../../../const';
+
 const mockStore = configureStore({});
-// jest.spyOn(redux, `useDispatch`);
 
 it(`'NavList' should render correctly`, () => {
   const history = createMemoryHistory();

@@ -6,23 +6,31 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
 
-import AddReviewButton from './add-review-button';
+import VideoPlayer from './video-player';
 import films from '../../../mock/films';
 
 const mockStore = configureStore({});
-jest.spyOn(redux, `useDispatch`);
+// jest.spyOn(redux, `play`);
 
-it(`'AddReviewButton' should render correctly`, () => {
-  const film = films[6];
+it(`'VideoPlayer' should render correctly`, () => {
+  const film = films[3];
   const history = createMemoryHistory();
 
   render(
       <redux.Provider store={mockStore({})}>
         <Router history={history}>
-          <AddReviewButton film={film}/>
+          <VideoPlayer
+            src={film.videoLink}
+            poster={film.previewImage}
+            isVideoLoaded={true}
+            isPlaying={true}
+            isFullScreen={false}
+            isMuted={false}
+            onChangeIsLoaded ={() => {}}
+          />
         </Router>
       </redux.Provider>
   );
 
-  expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+  expect(screen.getByTestId(`test-video-player`)).toBeInTheDocument();
 });

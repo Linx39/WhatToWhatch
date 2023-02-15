@@ -5,16 +5,15 @@ import {createMemoryHistory} from 'history';
 
 import Stars from './stars';
 
-const ratingValue = 6;
-
 it(`'Stars' should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
       <Router history={history}>
-        <Stars ratingValue={ratingValue} onChange={() => {}} />
+        <Stars ratingValue={6} onChange={() => {}} />
       </Router>
   );
 
   expect(screen.getByLabelText(/Rating 3/)).toBeInTheDocument();
+  expect(screen.getByLabelText(/Rating 8/)).toBeInTheDocument();
 });

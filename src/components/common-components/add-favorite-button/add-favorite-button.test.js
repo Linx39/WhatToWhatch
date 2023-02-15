@@ -7,13 +7,14 @@ import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
 
 import AddFavoriteButton from './add-favorite-button';
-import film from '../../../mock/film';
+import films from '../../../mock/films';
 import user from '../../../mock/user';
 
 const mockStore = configureStore({});
 jest.spyOn(redux, `useDispatch`);
 
 it(`'AddFavoriteButton' should render correctly`, () => {
+  const film = films[8];
   const store = mockStore({
     USER: {user},
   });
