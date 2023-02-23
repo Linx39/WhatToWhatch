@@ -12,8 +12,8 @@ import films from '../../mock/films';
 import user from '../../mock/user';
 
 const mockStore = configureStore({});
-jest.spyOn(redux, `useSelector`);
-jest.spyOn(redux, `useDispatch`);
+// jest.spyOn(redux, `useSelector`);
+// jest.spyOn(redux, `useDispatch`);
 
 it(`'AddReview' should render correctly`, () => {
   const film = films[7];

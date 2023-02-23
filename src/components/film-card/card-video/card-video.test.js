@@ -7,6 +7,17 @@ import userEvent from '@testing-library/user-event';
 import CardVideo from './card-video';
 import films from '../../../mock/films';
 
+jest.mock(`../../../components/film-card/video-player/video-player`, () => {
+  const mockAudioPlayer = () => <>This is mock VideoPlayer</>;
+  mockAudioPlayer.displayName = `MockAudioPlayer`;
+  return {
+    __esModule: true,
+    default: () => {
+      return mockAudioPlayer();
+    }
+  };
+});
+
 it(`'CardVideo' should render correctly`, () => {
   const film = films[8];
   const {id} = film;

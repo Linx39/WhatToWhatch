@@ -8,7 +8,7 @@ import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
-import PrivateRoute from '../private-router/private-router';
+import PrivateRoute from '../private-router/private-route';
 
 import {Patch} from '../../const';
 

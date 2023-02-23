@@ -12,7 +12,16 @@ import films from '../../mock/films';
 const mockStore = configureStore({});
 jest.spyOn(redux, `useSelector`);
 jest.spyOn(redux, `useDispatch`);
-// jest.spyOn(redux, `play`);
+jest.mock(`../../components/player/video-player/video-player`, () => {
+  const mockAudioPlayer = () => <>This is mock VideoPlayer</>;
+  mockAudioPlayer.displayName = `MockAudioPlayer`;
+  return {
+    __esModule: true,
+    default: () => {
+      return mockAudioPlayer();
+    }
+  };
+});
 
 it(`'Player' should render correctly`, () => {
   const film = films[6];

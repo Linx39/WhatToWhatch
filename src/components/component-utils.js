@@ -1,13 +1,14 @@
 import dayjs from 'dayjs';
 
-const SECONDS_IN_HOUR = 3600;
 const MINUTES_IN_HOUR = 60;
 const SECONDS_IN_MINUTE = 60;
 
 export const getTimeInHoursMinutesSeconds = (time) => {
-  const hours = Math.floor(time / SECONDS_IN_HOUR);
-  const minutes = Math.floor((time - hours * SECONDS_IN_HOUR) / MINUTES_IN_HOUR);
-  const seconds = Math.round(time - hours * SECONDS_IN_HOUR - minutes * SECONDS_IN_MINUTE);
+  const secondsInHour = MINUTES_IN_HOUR * SECONDS_IN_MINUTE;
+
+  const hours = Math.floor(time / secondsInHour);
+  const minutes = Math.floor((time - hours * secondsInHour) / MINUTES_IN_HOUR);
+  const seconds = Math.round(time - hours * secondsInHour - minutes * SECONDS_IN_MINUTE);
 
   return {hours, minutes, seconds};
 };
@@ -19,6 +20,6 @@ export const getTimeInHoursMinutes = (time) => {
   return {hours, minutes};
 };
 
-export const formatDateInMonthDDYYYY = (date) => {
+export const formatDateInMMMMDDYYYY = (date) => {
   return dayjs(date).format(`MMMM DD, YYYY`);
 };
