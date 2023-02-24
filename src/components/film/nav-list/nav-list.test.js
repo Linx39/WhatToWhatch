@@ -17,7 +17,7 @@ it(`'NavList' should render correctly`, () => {
   render(
       <redux.Provider store={mockStore({})}>
         <Router history={history}>
-          <NavList activeNavItem={NavItem.DETAILS} onClick={() => {}}/>
+          <NavList activeNavItem={NavItem.DETAILS} onClick={jest.fn()}/>
         </Router>
       </redux.Provider>
   );

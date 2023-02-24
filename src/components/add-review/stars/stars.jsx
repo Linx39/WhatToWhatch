@@ -22,6 +22,7 @@ const Stars = ({ratingValue, onChange}) => {
                 id={id}
                 type="radio"
                 name="rating"
+                data-testid={`Rating ${value}`}
               />
               <label
                 className="rating__label"

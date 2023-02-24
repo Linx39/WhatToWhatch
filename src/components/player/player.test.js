@@ -13,12 +13,12 @@ const mockStore = configureStore({});
 jest.spyOn(redux, `useSelector`);
 jest.spyOn(redux, `useDispatch`);
 jest.mock(`../../components/player/video-player/video-player`, () => {
-  const mockAudioPlayer = () => <>This is mock VideoPlayer</>;
-  mockAudioPlayer.displayName = `MockAudioPlayer`;
+  const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
+  mockVideoPlayer.displayName = `MockVideoPlayer`;
   return {
     __esModule: true,
     default: () => {
-      return mockAudioPlayer();
+      return mockVideoPlayer();
     }
   };
 });

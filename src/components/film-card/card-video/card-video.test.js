@@ -8,12 +8,12 @@ import CardVideo from './card-video';
 import films from '../../../mock/films';
 
 jest.mock(`../../../components/film-card/video-player/video-player`, () => {
-  const mockAudioPlayer = () => <>This is mock VideoPlayer</>;
-  mockAudioPlayer.displayName = `MockAudioPlayer`;
+  const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
+  mockVideoPlayer.displayName = `MockVideoPlayer`;
   return {
     __esModule: true,
     default: () => {
-      return mockAudioPlayer();
+      return mockVideoPlayer();
     }
   };
 });

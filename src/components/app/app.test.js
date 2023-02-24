@@ -14,9 +14,8 @@ import user from '../../mock/user';
 const mockStore = configureStore({});
 
 describe(`Test routing`, () => {
-  jest.spyOn(redux, `useSelector`);
-  jest.spyOn(redux, `useDispatch`);
-  // jest.spyOn(video, `play`);
+  // jest.spyOn(redux, `useSelector`);
+  // jest.spyOn(redux, `useDispatch`);
 
   const film = films[9];
 
@@ -154,6 +153,9 @@ describe(`Test routing`, () => {
   });
 
   it(`Render 'Player' when user navigate to '/player/id' url`, () => {
+    window.HTMLMediaElement.prototype.play = jest.fn();
+    window.HTMLMediaElement.prototype.pause = jest.fn();
+
     const store = mockStore({
       DATA: {
         film,

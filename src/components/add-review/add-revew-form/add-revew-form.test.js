@@ -10,7 +10,7 @@ import AddReviewForm from './add-revew-form';
 import films from '../../../mock/films';
 
 const mockStore = configureStore({});
-jest.spyOn(redux, `useDispatch`);
+// jest.spyOn(redux, `useDispatch`);
 
 it(`'AddReviewForm' should render correctly`, () => {
   const film = films[5];
