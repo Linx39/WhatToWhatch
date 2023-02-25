@@ -23,3 +23,21 @@ export const getTimeInHoursMinutes = (time) => {
 export const formatDateInMMMMDDYYYY = (date) => {
   return dayjs(date).format(`MMMM DD, YYYY`);
 };
+
+export const getFormatedTimeTemplate = (time) => {
+  const {hours, minutes, seconds} = getTimeInHoursMinutesSeconds(time);
+
+  const h = hours !== 0 ? `${hours}:` : ``;
+  const m = minutes.lenght === 1 ? `0${minutes}:` : `${minutes}:`;
+  const s = seconds.lenght === 1 ? `0${seconds}` : `${seconds}`;
+
+  return `${h}${m}${s}`;
+};
+
+export const getProgressValue = (durationVideo, currentTime) => {
+  const progressValue = (durationVideo && currentTime)
+    ? currentTime * 100 / durationVideo
+    : `0`;
+
+  return progressValue;
+};

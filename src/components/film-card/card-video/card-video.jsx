@@ -4,7 +4,7 @@ import VideoPlayer from '../video-player/video-player';
 import {filmProp} from '../../props-types';
 
 const CardVideo = ({film}) => {
-  const {previewVideoLink, previewImage} = film;
+  const {id, previewVideoLink, previewImage} = film;
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
@@ -14,7 +14,7 @@ const CardVideo = ({film}) => {
 
   return (
     <>
-      <div className="small-movie-card__image" data-testid={`test-card-video-${film.id}`}>
+      <div className="small-movie-card__image" data-testid={`test-card-video-${id}`}>
         <VideoPlayer
           src={previewVideoLink}
           poster={previewImage}

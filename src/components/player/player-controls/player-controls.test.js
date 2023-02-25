@@ -1,38 +1,73 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import * as redux from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import PlayerControls from './player-controls';
-import films from '../../../mock/films';
 
-const mockStore = configureStore({});
+let name;
 
-it(`'PlayerControls' should render correctly`, () => {
-  const {name} = films[3];
-  const history = createMemoryHistory();
+describe(`Test PlayerControls`, () => {
+  beforeAll(() => {
+    name = `fakeName`;
+  });
+  it(`PlayerControls should render correctly`, () => {
+    render(
+        <PlayerControls
+          name={name}
+          durationVideo={50}
+          currentTime={15}
+          isVideoLoaded={true}
+          isPlaying={true}
+          onPlayPauseButtonClick={jest.fn()}
+          onFullScreenButtonClick={jest.fn()}
+        />
+    );
 
-  render(
-      <redux.Provider store={mockStore({})}>
-        <Router history={history}>
-          <PlayerControls
-            name={name}
-            durationVideo={50}
-            currentTime={15}
-            isVideoLoaded={true}
-            isPlaying={true}
-            onButtonPlayClick={() => {}}
-            onButtonFullScreenClick={() => {}}
-          />
-        </Router>
-      </redux.Provider>
-  );
+    expect(screen.getByText(/Toggler/i)).toBeInTheDocument();
+    expect(screen.getByText(/Pause/i)).toBeInTheDocument();
+    expect(screen.getByText(/Full screen/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Play/i)).not.toBeInTheDocument();
+  });
 
-  expect(screen.getByText(/Toggler/i)).toBeInTheDocument();
-  // expect(screen.getByText(/Play/i)).toBeInTheDocument();
-  expect(screen.getByText(/Pause/i)).toBeInTheDocument();
-  expect(screen.getByText(/Full screen/i)).toBeInTheDocument();
+  it(`When user click 'Play Pause' should be call playPauseButtonClicklHandle`, () => {
+    const playPauseButtonClicklHandle = jest.fn();
+
+    render(
+        <PlayerControls
+          name={name}
+          durationVideo={50}
+          currentTime={15}
+          isVideoLoaded={true}
+          isPlaying={true}
+          onPlayPauseButtonClick={playPauseButtonClicklHandle}
+          onFullScreenButtonClick={jest.fn()}
+        />
+    );
+
+    const playPauseButton = screen.getByText((/Pause/i));
+
+    fireEvent.click(playPauseButton);
+    expect(playPauseButtonClicklHandle).toBeCalled();
+  });
+
+  it(`When user click 'Full screen' should be call fullScreenButtonClicklHandle`, () => {
+    const fullScreenButtonClicklHandle = jest.fn();
+
+    render(
+        <PlayerControls
+          name={name}
+          durationVideo={50}
+          currentTime={15}
+          isVideoLoaded={true}
+          isPlaying={true}
+          onPlayPauseButtonClick={jest.fn()}
+          onFullScreenButtonClick={fullScreenButtonClicklHandle}
+        />
+    );
+
+    // const fullScreenButton = screen.getByText((/Full screen/i));
+
+    fireEvent.click(screen.getByText((/Full screen/i)));
+    expect(fullScreenButtonClicklHandle).toBeCalled();
+  });
 });

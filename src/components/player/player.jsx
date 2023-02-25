@@ -38,7 +38,7 @@ const Player = () => {
 
   const {id, name, previewImage, videoLink} = film;
 
-  const handleButtonExitClick = () => {
+  const handleExitButtonClick = () => {
     // setIsPlaying(false);
     onRedirectToRoute(`${Patch.FILMS}/${id}`);
   };
@@ -53,9 +53,9 @@ const Player = () => {
 
   const handleGetCurrentTime = (time) => setCurrentTime(time);
 
-  const handleButtonPlayClick = () => setIsPlaying(!isPlaying);
+  const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
 
-  const handleButtonFullScreenClick = () => setIsFullScreen(!isFullScreen);
+  const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
 
   return <React.Fragment>
     <div className="player">
@@ -71,7 +71,7 @@ const Player = () => {
         onChangeCurrentTime={handleGetCurrentTime}
       />
 
-      <button type="button" className="player__exit" onClick={handleButtonExitClick}>Exit</button>
+      <button type="button" className="player__exit" onClick={handleExitButtonClick}>Exit</button>
 
       <PlayerControls
         name={name}
@@ -79,8 +79,8 @@ const Player = () => {
         currentTime={currentTime}
         isVideoLoaded={isVideoLoaded}
         isPlaying={isPlaying}
-        onButtonPlayClick={handleButtonPlayClick}
-        onButtonFullScreenClick={handleButtonFullScreenClick}
+        onPlayPauseButtonClick={handlePlayPauseButtonClick}
+        onFullScreenButtonClick={handleFullScreenButtonClick}
       />
     </div>
   </React.Fragment>;
