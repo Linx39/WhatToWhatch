@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 
-import VideoPlayer from '../video-player/video-player';
+import VideoPlayer from '../../video-player/video-player';
 import {filmProp} from '../../props-types';
 
 const CardVideo = ({film}) => {
   const {id, previewVideoLink, previewImage} = film;
+
+  const videoRef = useRef();
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
@@ -13,19 +15,18 @@ const CardVideo = ({film}) => {
   };
 
   return (
-    <>
-      <div className="small-movie-card__image" data-testid={`test-card-video-${id}`}>
-        <VideoPlayer
-          src={previewVideoLink}
-          poster={previewImage}
-          isVideoLoaded={isVideoLoaded}
-          onChangeIsLoaded ={handleChangeIsVideoLoaded}
-          isPlaying={true}
-          isMuted={true}
-        />;
-      </div>
-    </>);
-
+    <div className="small-movie-card__image" data-testid={`test-card-video-${id}`}>
+      <VideoPlayer
+        src={previewVideoLink}
+        poster={previewImage}
+        isMuted={true}
+        isPlaying={true}
+        isVideoLoaded={isVideoLoaded}
+        onChangeIsLoaded ={handleChangeIsVideoLoaded}
+        videoRef={videoRef}
+      />;
+    </div>
+  );
 };
 
 CardVideo.propTypes = {

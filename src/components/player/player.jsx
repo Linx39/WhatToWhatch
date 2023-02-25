@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import VideoPlayer from './video-player/video-player';
+import VideoPlayerWithUtils from '../video-player/video-player-with-utils';
 import PlayerControls from './player-controls/player-controls';
 import Loading from '../common-components/loading/loading';
 import {fetchFilm} from '../../store/api-actions';
@@ -15,6 +15,8 @@ const Player = () => {
   const dispatch = useDispatch();
   const onLoadFilm = (id) => dispatch(fetchFilm(id));
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
+
+  const videoRef = useRef();
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [durationVideo, setDurationVideo] = useState(0);
@@ -57,18 +59,19 @@ const Player = () => {
 
   const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
 
-  return <React.Fragment>
+  return (
     <div className="player">
-      <VideoPlayer
+      <VideoPlayerWithUtils
         src={videoLink}
         poster={previewImage}
-        isVideoLoaded={isVideoLoaded}
-        isPlaying={isPlaying}
-        isFullScreen={isFullScreen}
         isMuted={false}
+        isPlaying={isPlaying}
+        isVideoLoaded={isVideoLoaded}
         onChangeIsLoaded ={handleChangeIsVideoLoaded}
+        isFullScreen={isFullScreen}
         onGetDuration={handleGetDuration}
         onChangeCurrentTime={handleGetCurrentTime}
+        videoRef={videoRef}
       />
 
       <button type="button" className="player__exit" onClick={handleExitButtonClick}>Exit</button>
@@ -83,7 +86,7 @@ const Player = () => {
         onFullScreenButtonClick={handleFullScreenButtonClick}
       />
     </div>
-  </React.Fragment>;
+  );
 };
 
 export default Player;
