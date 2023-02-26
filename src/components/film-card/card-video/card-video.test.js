@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react';
 import CardVideo from './card-video';
 import films from '../../../mock/films';
 
-jest.mock(`../../../components/film-card/video-player/video-player`, () => {
+jest.mock(`../../video-player/video-player`, () => {
   const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
   mockVideoPlayer.displayName = `MockVideoPlayer`;
   return {
@@ -15,7 +15,7 @@ jest.mock(`../../../components/film-card/video-player/video-player`, () => {
   };
 });
 
-it(`'CardVideo' should render correctly`, () => {
+it(`CardVideo should render correctly`, () => {
   const film = films[8];
   const {id} = film;
 

@@ -5,7 +5,6 @@ import {filmProp} from '../../props-types';
 
 const CardVideo = ({film}) => {
   const {id, previewVideoLink, previewImage} = film;
-
   const videoRef = useRef();
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -17,13 +16,13 @@ const CardVideo = ({film}) => {
   return (
     <div className="small-movie-card__image" data-testid={`test-card-video-${id}`}>
       <VideoPlayer
+        videoRef={videoRef}
         src={previewVideoLink}
         poster={previewImage}
         isMuted={true}
         isPlaying={true}
         isVideoLoaded={isVideoLoaded}
-        onChangeIsLoaded ={handleChangeIsVideoLoaded}
-        videoRef={videoRef}
+        onChangeIsVideoLoaded ={handleChangeIsVideoLoaded}
       />;
     </div>
   );

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import Logo from '../common-components/logo/logo';
+import LogoHeader from '../common-components/logo/logo-header';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
 import Loading from '../common-components/loading/loading';
@@ -45,7 +45,7 @@ const AddReview = () => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <Logo isAddClass={false} isLink={true} />
+          <LogoHeader />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">

@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 
 import {getProgressValue, getFormatedTimeTemplate} from '../../component-utils';
 
-
-const PlayerControls = ({name, durationVideo, currentTime, isVideoLoaded, isPlaying, onPlayPauseButtonClick, onFullScreenButtonClick}) => {
+const PlayerControls = (props) => {
+  const {
+    name,
+    isPlaying,
+    isVideoLoaded,
+    durationVideo,
+    currentTime,
+    onPlayPauseButtonClick,
+    onFullScreenButtonClick
+  } = props;
   const progressValue = getProgressValue(durationVideo, currentTime);
 
   return <React.Fragment>
@@ -56,10 +64,10 @@ const PlayerControls = ({name, durationVideo, currentTime, isVideoLoaded, isPlay
 
 PlayerControls.propTypes = {
   name: PropTypes.string.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+  isVideoLoaded: PropTypes.bool.isRequired,
   durationVideo: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
-  isVideoLoaded: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
   onPlayPauseButtonClick: PropTypes.func,
   onFullScreenButtonClick: PropTypes.func,
 };

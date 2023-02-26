@@ -56,10 +56,10 @@ describe(`Test PlayerControls`, () => {
     render(
         <PlayerControls
           name={name}
+          isPlaying={true}
+          isVideoLoaded={true}
           durationVideo={50}
           currentTime={15}
-          isVideoLoaded={true}
-          isPlaying={true}
           onPlayPauseButtonClick={jest.fn()}
           onFullScreenButtonClick={fullScreenButtonClicklHandle}
         />

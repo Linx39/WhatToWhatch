@@ -11,11 +11,9 @@ import {Patch} from '../../const';
 
 const Player = () => {
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
-
   const dispatch = useDispatch();
   const onLoadFilm = (id) => dispatch(fetchFilm(id));
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-
   const videoRef = useRef();
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -62,26 +60,26 @@ const Player = () => {
   return (
     <div className="player">
       <VideoPlayerWithUtils
+        videoRef={videoRef}
         src={videoLink}
         poster={previewImage}
         isMuted={false}
         isPlaying={isPlaying}
         isVideoLoaded={isVideoLoaded}
-        onChangeIsLoaded ={handleChangeIsVideoLoaded}
+        onChangeIsVideoLoaded ={handleChangeIsVideoLoaded}
         isFullScreen={isFullScreen}
         onGetDuration={handleGetDuration}
         onChangeCurrentTime={handleGetCurrentTime}
-        videoRef={videoRef}
       />
 
       <button type="button" className="player__exit" onClick={handleExitButtonClick}>Exit</button>
 
       <PlayerControls
         name={name}
+        isPlaying={isPlaying}
+        isVideoLoaded={isVideoLoaded}
         durationVideo={durationVideo}
         currentTime={currentTime}
-        isVideoLoaded={isVideoLoaded}
-        isPlaying={isPlaying}
         onPlayPauseButtonClick={handlePlayPauseButtonClick}
         onFullScreenButtonClick={handleFullScreenButtonClick}
       />

@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
-import Logo from '../common-components/logo/logo';
+import LogoHeader from '../common-components/logo/logo-header';
+import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
@@ -57,7 +58,7 @@ const Main = () => {
       <h1 className='visually-hidden'>WTW</h1>
 
       <header className='page-header movie-card__head'>
-        <Logo isAddClass={false} isClickable={false} />
+        <LogoHeader isActive={false} />
 
         {authorizationStatus === AuthorizationStatus.AUTH
           ? <UserBlock />
@@ -80,7 +81,7 @@ const Main = () => {
       </section>
 
       <footer className='page-footer'>
-        <Logo isAddClass={true} isClickable={false} />
+        <LogoFooter isActive={false} />
 
         <Copyright />
       </footer>

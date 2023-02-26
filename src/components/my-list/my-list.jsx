@@ -2,7 +2,8 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
-import Logo from '../common-components/logo/logo';
+import LogoHeader from '../common-components/logo/logo-header';
+import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
 import {fetchFavoriteFilms} from '../../store/api-actions';
@@ -29,7 +30,7 @@ const MyList = () => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo isAddClass={false} isClickable={true} />
+        <LogoHeader />
 
         <h1 className="page-title user-page__title">My list</h1>
 
@@ -44,7 +45,7 @@ const MyList = () => {
       </section>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} isClickable={true} />
+        <LogoFooter />
 
         <Copyright />
       </footer>

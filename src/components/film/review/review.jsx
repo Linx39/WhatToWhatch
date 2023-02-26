@@ -1,7 +1,7 @@
 import React from "react";
 
 import {commentProp} from "../../props-types";
-import {formatDateInMonthDDYYYY} from "../../component-utils";
+import {formatDateInMMMMDDYYYY} from "../../component-utils";
 
 const Review = ({filmComment}) => {
   const {user, rating, comment, date} = filmComment;
@@ -14,7 +14,7 @@ const Review = ({filmComment}) => {
 
         <footer className="review__details">
           <cite className="review__author">{name}</cite>
-          <time className="review__date" dateTime="{date}">{formatDateInMonthDDYYYY(date)}</time>
+          <time className="review__date" dateTime="{date}">{formatDateInMMMMDDYYYY(date)}</time>
         </footer>
       </blockquote>
 

@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import {useSelector, useDispatch} from 'react-redux';
 
 import {login} from '../../store/api-actions';
-import Logo from '../common-components/logo/logo';
+import LogoHeader from '../common-components/logo/logo-header';
+import LogoFooter from '../common-components/logo/logo-footer';
 import Copyright from '../common-components/copyright/copyright';
 import {redirectToRoute} from '../../store/action';
 import {AuthorizationStatus, Patch} from '../../const';
@@ -33,7 +34,7 @@ const SignIn = () => {
   return <React.Fragment>
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo isAddClass={false} isClickable={true} />
+        <LogoHeader />
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -87,7 +88,7 @@ const SignIn = () => {
       </div>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} isClickable={true} />
+        <LogoFooter />
 
         <Copyright />
       </footer>

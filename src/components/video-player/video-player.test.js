@@ -6,12 +6,16 @@ import VideoPlayer from './video-player';
 window.HTMLMediaElement.prototype.play = () => {};
 window.HTMLMediaElement.prototype.pause = () => {};
 
-it(`'VideoPlayer' should render correctly`, () => {
+it(`VideoPlayer should render correctly`, () => {
+  const mockVideoRef = {
+    current: null,
+  };
   const mockSrcPath = `mock-src-path`;
   const mockPosterPath = `mock-poster-path`;
 
   render(
       <VideoPlayer
+        videoRef={mockVideoRef}
         src={mockSrcPath}
         poster={mockPosterPath}
         isVideoLoaded={true}

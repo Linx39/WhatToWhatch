@@ -3,25 +3,26 @@ import PropTypes from 'prop-types';
 
 const VideoPlayer = (props) => {
   const {
+    videoRef,
     src,
     poster,
     isMuted,
     isPlaying,
     isVideoLoaded,
-    onChangeIsLoaded,
-    videoRef,
+    onChangeIsVideoLoaded,
   } = props;
 
   useEffect(() => {
-    videoRef.current.oncanplaythrough = () => onChangeIsLoaded(true);
+    videoRef.current.oncanplaythrough = () => onChangeIsVideoLoaded(true);
 
     return () => {
       videoRef.current.oncanplaythrough = null;
       videoRef.current.onplay = null;
       videoRef.current.onpause = null;
+      videoRef.current.ontimeupdate = null;
       videoRef.current = null;
     };
-  }, [src]);
+  }, [videoRef]); //было только src
 
   useEffect(() => {
     if (isPlaying && isVideoLoaded) {
@@ -35,10 +36,10 @@ const VideoPlayer = (props) => {
   return (
     <video
       className="player__video"
+      ref={videoRef}
       src={src}
       poster={poster}
       muted={isMuted}
-      ref={videoRef}
       data-testid={`test-video-player`}
     >
     </video>
@@ -46,13 +47,13 @@ const VideoPlayer = (props) => {
 };
 
 VideoPlayer.propTypes = {
+  videoRef: PropTypes.object,
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
   isMuted: PropTypes.bool.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   isVideoLoaded: PropTypes.bool.isRequired,
-  onChangeIsLoaded: PropTypes.func,
-  videoRef: PropTypes.any,
+  onChangeIsVideoLoaded: PropTypes.func,
 };
 
 export default VideoPlayer;

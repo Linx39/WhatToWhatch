@@ -11,7 +11,7 @@ import films from '../../mock/films';
 import {Patch} from '../../const';
 
 const mockStore = configureStore({});
-jest.mock(`../../components/player/video-player/video-player`, () => {
+jest.mock(`../video-player/video-player-with-utils`, () => {
   const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
   mockVideoPlayer.displayName = `MockVideoPlayer`;
   return {
@@ -21,7 +21,7 @@ jest.mock(`../../components/player/video-player/video-player`, () => {
     }
   };
 });
-jest.mock(`../../components/player/player-controls/player-controls`, () => {
+jest.mock(`../player/player-controls/player-controls`, () => {
   const mockPlayerControls = () => <>This is mock PlayerControls</>;
   mockPlayerControls.displayName = `MockPlayerControls`;
   return {

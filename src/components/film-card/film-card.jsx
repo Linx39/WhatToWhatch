@@ -15,8 +15,6 @@ const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   const onResetOnDefaultFilmInfo = () => dispatch(resetOnDefaultFilmInfo());
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  // const {film, isVideoMode, onMouseEnter, onMouseLeave} = props;
-
   const handleCardClick = (id) => {
     onResetLoadedFilm();
     onResetOnDefaultFilmInfo();

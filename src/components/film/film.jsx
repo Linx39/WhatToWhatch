@@ -3,7 +3,8 @@ import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
-import Logo from '../common-components/logo/logo';
+import LogoHeader from '../common-components/logo/logo-header';
+import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
@@ -79,7 +80,7 @@ const Film = () => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header movie-card__head">
-          <Logo isAddClass={false} isClickable={true} />
+          <LogoHeader />
 
           {authorizationStatus === AuthorizationStatus.AUTH
             ? <UserBlock />
@@ -135,7 +136,7 @@ const Film = () => {
       </section>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} isClickable={true} />
+        <LogoFooter />
 
         <Copyright />
       </footer>

@@ -13,9 +13,7 @@ const CardImage = ({film, onMouseEnter, onMouseLeave, onClick}) => {
   const handleMouseEnter = () => {
     timer = setTimeout(() => onMouseEnter(film), TIME_OUT);
   };
-
   const handleMouseLeave = () => onMouseLeave();
-
   const handleMouseClick = () => onClick(id);
 
   useEffect(() => {
