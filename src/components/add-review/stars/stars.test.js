@@ -1,43 +1,45 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
+import {render, screen, fireEvent} from '@testing-library/react';
 
 import Stars from './stars';
 
 describe(`Test Stars`, () => {
-  const history = createMemoryHistory();
-
   it(`'Stars' should render correctly`, () => {
     render(
-        <Router history={history}>
-          <Stars ratingValue={6} onChange={jest.fn()} />
-        </Router>
+        <Stars
+          ratingValue={6}
+          onChange={jest.fn()}
+        />
     );
 
-    expect(screen.getByLabelText(/Rating 3/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Rating 8/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Rating 5/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Rating 8/i)).toBeInTheDocument();
   });
 
-  it(`When user click Star should be change Rating Value`, () => {
-    let mockRatingValue = 2;
-    const starsChangeHandle = jest.fn();
-    // starsChangeHandle.mockImplementation(
-    //     () => 7
-    // );
+  it(`onChange should called when user click 'Star'`, () => {
+    const onChange = jest.fn();
 
     render(
-        <Router history={history}>
-          <Stars ratingValue={mockRatingValue} onChange={starsChangeHandle} />
-        </Router>
+        <Stars
+          ratingValue={2}
+          onChange={onChange}
+        />
     );
 
-    userEvent.click(screen.getByTestId(`Rating 7`));
+    expect(screen.getByLabelText(/Rating 6/i)).not.toBeChecked();
+    fireEvent.click(screen.getByLabelText(/Rating 6/i));
+    expect(onChange).toBeCalled();
+  });
 
-    expect(starsChangeHandle).toBeCalled();
+  it(`'Star' should checked when user choose`, () => {
+    render(
+        <Stars
+          ratingValue={3}
+          onChange={jest.fn()}
+        />
+    );
 
-    // expect(screen.getByTestId(`Rating 7`)).toBeChecked();
-    // expect(screen.getByText(/Mock Game Screen/i));
+    expect(screen.getByLabelText(/Rating 4/i)).not.toBeChecked();
+    expect(screen.getByLabelText(/Rating 3/i)).toBeChecked();
   });
 });

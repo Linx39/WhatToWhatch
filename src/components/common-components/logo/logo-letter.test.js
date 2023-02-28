@@ -1,10 +1,10 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import LogoLetter from './logo-letter';
+import LogoLetters from './logo-letter';
 
-it(`LogoLetter should render correctly`, () => {
+it(`LogoLetters should render correctly`, () => {
   render(
-      <LogoLetter />
+      <LogoLetters />
   );
 
   expect(screen.getAllByText(/W/i)[0]).toBeInTheDocument();

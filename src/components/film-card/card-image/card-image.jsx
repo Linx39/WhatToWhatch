@@ -27,6 +27,7 @@ const CardImage = ({film, onMouseEnter, onMouseLeave, onClick}) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleMouseClick}
+        data-testid="test-card"
       >
         <img src={previewImage} alt={name} width="280" height="175"/>
       </div>

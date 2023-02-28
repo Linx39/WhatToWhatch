@@ -4,16 +4,14 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
-import userEvent from '@testing-library/user-event';
 
 import AddFavoriteButton from './add-favorite-button';
 import films from '../../../mock/films';
 import user from '../../../mock/user';
 
 const mockStore = configureStore({});
-jest.spyOn(redux, `useDispatch`);
 
-it(`'AddFavoriteButton' should render correctly`, () => {
+it(`AddFavoriteButton should render correctly`, () => {
   const film = films[8];
   const store = mockStore({
     USER: {user},

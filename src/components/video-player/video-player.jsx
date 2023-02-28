@@ -40,7 +40,7 @@ const VideoPlayer = (props) => {
       src={src}
       poster={poster}
       muted={isMuted}
-      data-testid={`test-video-player`}
+      data-testid="test-video-player"
     >
     </video>
   );

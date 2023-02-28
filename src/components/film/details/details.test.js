@@ -1,20 +1,14 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import userEvent from '@testing-library/user-event';
 
 import Details from './details';
 import films from '../../../mock/films';
 
-it(`'Details' should render correctly`, () => {
+it(`Details should render correctly`, () => {
   const film = films[9];
-  const history = createMemoryHistory();
 
   render(
-      <Router history={history}>
-        <Details film={film}/>
-      </Router>
+      <Details film={film}/>
   );
 
   expect(screen.getByText(/Director/i)).toBeInTheDocument();
@@ -22,4 +16,7 @@ it(`'Details' should render correctly`, () => {
   expect(screen.getByText(/Run Time/i)).toBeInTheDocument();
   expect(screen.getByText(/Genre/i)).toBeInTheDocument();
   expect(screen.getByText(/Released/i)).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${film.director}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${film.genre}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${film.released}`, `i`))).toBeInTheDocument();
 });

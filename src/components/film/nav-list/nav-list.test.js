@@ -1,28 +1,45 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import * as redux from 'react-redux';
-import configureStore from 'redux-mock-store';
-import userEvent from '@testing-library/user-event';
 
 import NavList from './nav-list';
 import {NavItem} from '../../../const';
 
-const mockStore = configureStore({});
+const history = createMemoryHistory();
 
-it(`'NavList' should render correctly`, () => {
-  const history = createMemoryHistory();
-
-  render(
-      <redux.Provider store={mockStore({})}>
+describe(`Test NavList`, () => {
+  it(`NavList should render correctly`, () => {
+    render(
         <Router history={history}>
-          <NavList activeNavItem={NavItem.DETAILS} onClick={jest.fn()}/>
+          <NavList
+            activeNavItem={NavItem.OVERVIEW}
+            onClick={jest.fn()}
+          />
         </Router>
-      </redux.Provider>
-  );
+    );
 
-  expect(screen.getByText(/Overview/i)).toBeInTheDocument();
-  expect(screen.getByText(/Details/i)).toBeInTheDocument();
-  expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`${NavItem.OVERVIEW}`, `i`))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`${NavItem.DETAILS}`, `i`))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`${NavItem.REVIEWS}`, `i`))).toBeInTheDocument();
+  });
+
+  it(`onClick should called when user click 'NavItem'`, () => {
+    const onClick = jest.fn();
+
+    render(
+        <Router history={history}>
+          <NavList
+            activeNavItem={NavItem.OVERVIEW}
+            onClick={onClick}
+          />
+        </Router>
+
+    );
+
+    fireEvent.click(screen.getByText(new RegExp(`${NavItem.REVIEWS}`, `i`)));
+    expect(onClick).toBeCalled();
+    fireEvent.click(screen.getByText(new RegExp(`${NavItem.DETAILS}`, `i`)));
+    expect(onClick).toBeCalled();
+  });
 });

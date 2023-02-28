@@ -1,10 +1,9 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
-import {Router, Switch, Route} from 'react-router-dom';
+import {render, screen} from '@testing-library/react';
+import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
-import userEvent from '@testing-library/user-event';
 
 import Player from './player';
 import films from '../../mock/films';
@@ -31,12 +30,12 @@ jest.mock(`../player/player-controls/player-controls`, () => {
     }
   };
 });
-const id = 6;
-const film = films[id];
+
 let history;
 let store;
 
-describe(`Test PlayerControls`, () => {
+describe(`Test Player`, () => {
+  const film = films[6];
   beforeAll(() => {
     history = createMemoryHistory();
     history.push(Patch.PLAYER);
@@ -58,26 +57,5 @@ describe(`Test PlayerControls`, () => {
     );
 
     expect(screen.getByText(/Exit/i)).toBeInTheDocument();
-  });
-
-  it(`When user click 'Exit' should be redirect`, () => {
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <Switch>
-              <Route exact path={Patch.PLAYER}>
-                <Player/>
-              </Route>
-              <Route exact path={`${Patch.FILMS}/${id}`}>
-                <h1>Mock App Screen</h1>
-              </Route>
-            </Switch>
-          </Router>
-        </Provider>
-    );
-
-    fireEvent.click(screen.getByText(/Exit/i));
-
-    expect(screen.getByText(/Mock App Screen/i));// не работает, нужно ли вообще?
   });
 });

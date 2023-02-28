@@ -2,9 +2,8 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import * as redux from 'react-redux';
+import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
-import userEvent from '@testing-library/user-event';
 
 import Film from './film';
 import {AuthorizationStatus, NavItem} from '../../const';
@@ -13,8 +12,6 @@ import comments from '../../mock/comments';
 import user from '../../mock/user';
 
 const mockStore = configureStore({});
-jest.spyOn(redux, `useSelector`);
-jest.spyOn(redux, `useDispatch`);
 
 it(`'Film' should render correctly`, () => {
   const film = films[4];
@@ -39,11 +36,11 @@ it(`'Film' should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
-      <redux.Provider store={store}>
+      <Provider store={store}>
         <Router history={history}>
           <Film />
         </Router>
-      </redux.Provider>
+      </Provider>
   );
 
   expect(screen.getAllByAltText(new RegExp(`${name}`, `i`))[0]).toBeInTheDocument();

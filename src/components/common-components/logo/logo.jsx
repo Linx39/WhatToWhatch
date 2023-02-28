@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
-import LogoLetter from './logo-letter';
+import LogoLetters from './logo-letter';
 import {resetOnDefaultFilmsList, redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 
@@ -18,15 +18,15 @@ const Logo = ({isActive, className}) => {
   };
 
   return (
-    <div className="logo">
+    <div className="logo" data-testid={`test-logo`}>
       {isActive
         ?
         <Link to="#" className={className} onClick={handleLogoClick}>
-          <LogoLetter />
+          <LogoLetters />
         </Link>
         :
         <a className={className}>
-          <LogoLetter />
+          <LogoLetters />
         </a>
       }
     </div>

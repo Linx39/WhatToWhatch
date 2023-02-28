@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LogoLetter = () => {
+const LogoLetters = () => {
   return (
     <>
       <span className="logo__letter logo__letter--1">W</span>
@@ -10,4 +10,4 @@ const LogoLetter = () => {
   );
 };
 
-export default LogoLetter;
+export default LogoLetters;

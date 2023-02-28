@@ -14,12 +14,9 @@ import user from '../../mock/user';
 const mockStore = configureStore({});
 
 describe(`Test routing`, () => {
-  // jest.spyOn(redux, `useSelector`);
-  // jest.spyOn(redux, `useDispatch`);
-
   const film = films[9];
 
-  it(`Render 'Main' when user navigate to '/' url`, () => {
+  it(`Render Main when user navigate to '/' url`, () => {
     const {name} = film;
     const store = mockStore({
       USER: {
@@ -52,7 +49,7 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
   });
 
-  it(`Render 'SignIn' when user navigate to '/login' url`, () => {
+  it(`Render SignIn when user navigate to '/login' url`, () => {
     const history = createMemoryHistory();
     history.push(Patch.LOGIN);
 
@@ -69,7 +66,7 @@ describe(`Test routing`, () => {
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
   });
 
-  it(`Render 'MY_LIST' when user navigate to '/favorite' url`, () => {
+  it(`Render MY_LIST when user navigate to '/favorite' url`, () => {
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
@@ -93,7 +90,7 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
   });
 
-  it(`Render 'Film' when user navigate to '/film/id' url`, () => {
+  it(`Render Film when user navigate to '/film/id' url`, () => {
     const {name} = film;
     const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user},
@@ -123,7 +120,7 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/More like this/i)).toBeInTheDocument();
   });
 
-  it(`Render 'AddReview' when user navigate to '/film/id/review' url`, () => {
+  it(`Render AddReview when user navigate to '/film/id/review' url`, () => {
     const {name} = film;
     const store = mockStore({
       USER: {
@@ -152,7 +149,7 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/Add review/i)).toBeInTheDocument();
   });
 
-  it(`Render 'Player' when user navigate to '/player/id' url`, () => {
+  it(`Render Player when user navigate to '/player/id' url`, () => {
     window.HTMLMediaElement.prototype.play = jest.fn();
     window.HTMLMediaElement.prototype.pause = jest.fn();
 
@@ -177,7 +174,7 @@ describe(`Test routing`, () => {
     expect(screen.getByText(/Exit/i)).toBeInTheDocument();
   });
 
-  it(`Render 'NotFoundPage' when user navigate to non-existent route`, () => {
+  it(`Render NotFoundPage when user navigate to non-existent route`, () => {
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,

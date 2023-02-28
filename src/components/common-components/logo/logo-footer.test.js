@@ -5,22 +5,23 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import SignIn from './sign-in';
+import LogoFooter from './logo-footer';
 
 const mockStore = configureStore({});
 
-it(`'SignIn' should render correctly`, () => {
+it(`LogoFooter should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <SignIn />
+          <LogoFooter isActive={true} />
         </Router>
       </Provider>
   );
 
-  expect(screen.getAllByText(/Sign in/i)[0]).toBeInTheDocument();
-  expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
-  expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+  expect(screen.getByTestId(`test-logo`)).toBeInTheDocument();
+  expect(screen.getAllByText(/W/i)[0]).toBeInTheDocument();
+  expect(screen.getAllByText(/W/i)[1]).toBeInTheDocument();
+  expect(screen.getByText(/T/i)).toBeInTheDocument();
 });

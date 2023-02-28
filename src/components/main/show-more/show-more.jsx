@@ -2,14 +2,7 @@ import React from "react";
 import {useSelector, useDispatch} from 'react-redux';
 
 import {changeFilmsCount} from '../../../store/action';
-import {FilmsCount} from '../../../const';
-
-const getNewCount = (prevCount, maxCount) => {
-  const nextCount = prevCount + FilmsCount.MAIN;
-  const newCount = nextCount > maxCount ? maxCount : nextCount;
-
-  return newCount;
-};
+import {getNewCount} from "../../component-utils";
 
 const ShowMore = () => {
   const {count} = useSelector((state) => state.FILMS_LIST_ACTIONS);

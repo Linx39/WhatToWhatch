@@ -4,7 +4,6 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
-import userEvent from '@testing-library/user-event';
 
 import AddReview from './add-review';
 import {AuthorizationStatus} from '../../const';
@@ -12,10 +11,8 @@ import films from '../../mock/films';
 import user from '../../mock/user';
 
 const mockStore = configureStore({});
-// jest.spyOn(redux, `useSelector`);
-// jest.spyOn(redux, `useDispatch`);
 
-it(`'AddReview' should render correctly`, () => {
+it(`AddReview should render correctly`, () => {
   const film = films[7];
   const {name} = film;
 
@@ -29,7 +26,6 @@ it(`'AddReview' should render correctly`, () => {
       isFilmLoaded: true,
     },
   });
-
 
   const history = createMemoryHistory();
 

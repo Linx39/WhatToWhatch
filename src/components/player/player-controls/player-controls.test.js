@@ -1,15 +1,11 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import PlayerControls from './player-controls';
 
-let name;
-
 describe(`Test PlayerControls`, () => {
-  beforeAll(() => {
-    name = `fakeName`;
-  });
+  const name = `fakeName`;
+
   it(`PlayerControls should render correctly`, () => {
     render(
         <PlayerControls
@@ -29,8 +25,8 @@ describe(`Test PlayerControls`, () => {
     expect(screen.queryByText(/Play/i)).not.toBeInTheDocument();
   });
 
-  it(`When user click 'Play Pause' should be call playPauseButtonClicklHandle`, () => {
-    const playPauseButtonClicklHandle = jest.fn();
+  it(`When user click 'Play Pause' should be call onPlayPauseButtonClick`, () => {
+    const onPlayPauseButtonClick = jest.fn();
 
     render(
         <PlayerControls
@@ -39,7 +35,7 @@ describe(`Test PlayerControls`, () => {
           currentTime={15}
           isVideoLoaded={true}
           isPlaying={true}
-          onPlayPauseButtonClick={playPauseButtonClicklHandle}
+          onPlayPauseButtonClick={onPlayPauseButtonClick}
           onFullScreenButtonClick={jest.fn()}
         />
     );
@@ -47,11 +43,11 @@ describe(`Test PlayerControls`, () => {
     const playPauseButton = screen.getByText((/Pause/i));
 
     fireEvent.click(playPauseButton);
-    expect(playPauseButtonClicklHandle).toBeCalled();
+    expect(onPlayPauseButtonClick).toBeCalled();
   });
 
-  it(`When user click 'Full screen' should be call fullScreenButtonClicklHandle`, () => {
-    const fullScreenButtonClicklHandle = jest.fn();
+  it(`When user click 'Full screen' should be call onFullScreenButtonClick`, () => {
+    const onFullScreenButtonClick = jest.fn();
 
     render(
         <PlayerControls
@@ -61,13 +57,13 @@ describe(`Test PlayerControls`, () => {
           durationVideo={50}
           currentTime={15}
           onPlayPauseButtonClick={jest.fn()}
-          onFullScreenButtonClick={fullScreenButtonClicklHandle}
+          onFullScreenButtonClick={onFullScreenButtonClick}
         />
     );
 
-    // const fullScreenButton = screen.getByText((/Full screen/i));
+    const fullScreenButton = screen.getByText((/Full screen/i));
 
-    fireEvent.click(screen.getByText((/Full screen/i)));
-    expect(fullScreenButtonClicklHandle).toBeCalled();
+    fireEvent.click(fullScreenButton);
+    expect(onFullScreenButtonClick).toBeCalled();
   });
 });

@@ -15,10 +15,10 @@ jest.mock(`../../video-player/video-player`, () => {
   };
 });
 
-it(`CardVideo should render correctly`, () => {
-  const film = films[8];
-  const {id} = film;
+const film = films[8];
+const {id} = film;
 
+it(`CardVideo should render correctly`, () => {
   render(
       <CardVideo film={film} />
   );

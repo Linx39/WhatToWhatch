@@ -1,21 +1,15 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import userEvent from '@testing-library/user-event';
 
 import Overview from './overview';
 import films from '../../../mock/films';
 
-it(`'Overview' should render correctly`, () => {
+it(`Overview should render correctly`, () => {
   const film = films[9];
   const {scoresCount, director, starring} = film;
-  const history = createMemoryHistory();
 
   render(
-      <Router history={history}>
-        <Overview film={film}/>
-      </Router>
+      <Overview film={film}/>
   );
 
   expect(screen.getByText(new RegExp(`${scoresCount} ratings`, `i`))).toBeInTheDocument();

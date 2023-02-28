@@ -1,14 +1,15 @@
 import React from 'react';
 
-import Logo from '../../common-components/logo/logo';
-import Copyright from '../../common-components/copyright/copyright';
+import LogoHeader from '../logo/logo-header';
+import LogoFooter from '../logo/logo-footer';
+import Copyright from '../copyright/copyright';
 
 const Loading = () => {
   return <React.Fragment>
     <section className="movie-card">
       <h1 className="visually-hidden">WTW</h1>
       <header className="page-header movie-card__head">
-        <Logo isLink = {false} />
+        <LogoHeader />
       </header>
     </section>
 
@@ -18,7 +19,7 @@ const Loading = () => {
       </section>
 
       <footer className="page-footer">
-        <Logo isAddClass={true} isLink = {false} />
+        <LogoFooter />
 
         <Copyright />
       </footer>
