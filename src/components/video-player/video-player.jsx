@@ -22,7 +22,7 @@ const VideoPlayer = (props) => {
       videoRef.current.ontimeupdate = null;
       videoRef.current = null;
     };
-  }, [videoRef]); //было только src
+  }, [videoRef]);
 
   useEffect(() => {
     if (isPlaying && isVideoLoaded) {
@@ -47,13 +47,13 @@ const VideoPlayer = (props) => {
 };
 
 VideoPlayer.propTypes = {
-  videoRef: PropTypes.object,
+  videoRef: PropTypes.object.isRequired,
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   isMuted: PropTypes.bool.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isVideoLoaded: PropTypes.bool.isRequired,
-  onChangeIsVideoLoaded: PropTypes.func,
+  onChangeIsVideoLoaded: PropTypes.func.isRequired,
 };
 
 export default VideoPlayer;

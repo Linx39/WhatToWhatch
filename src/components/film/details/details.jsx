@@ -1,16 +1,7 @@
 import React from "react";
 
-import {filmProp} from "../../props-types";
-import {getTimeInHoursMinutes} from "../../component-utils";
-
-const getFormatedTimeTemplate = (time) => {
-  const {hours, minutes} = getTimeInHoursMinutes(time);
-
-  const h = hours !== 0 ? `${hours}h ` : ``;
-  const m = minutes.lenght === 1 ? `0${minutes}m` : `${minutes}m`;
-
-  return `${h}${m}`;
-};
+import {filmProp} from '../../props-types';
+import {getTimeInHoursMinutes} from '../../component-utils';
 
 const Details = ({film}) => {
   const {
@@ -20,6 +11,15 @@ const Details = ({film}) => {
     genre,
     released,
   } = film;
+
+  const getTimeTemplate = (time) => {
+    const {hours, minutes} = getTimeInHoursMinutes(time);
+
+    const h = hours !== 0 ? `${hours}h ` : ``;
+    const m = minutes.lenght === 1 ? `0${minutes}m` : `${minutes}m`;
+
+    return `${h}${m}`;
+  };
 
   return (
     <div className="movie-card__text movie-card__row">
@@ -46,7 +46,7 @@ const Details = ({film}) => {
       <div className="movie-card__text-col">
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Run Time</strong>
-          <span className="movie-card__details-value">{getFormatedTimeTemplate(runTime)}</span>
+          <span className="movie-card__details-value">{getTimeTemplate(runTime)}</span>
         </p>
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Genre</strong>

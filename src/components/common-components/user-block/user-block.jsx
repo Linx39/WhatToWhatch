@@ -6,8 +6,8 @@ import {Patch} from '../../../const';
 
 const UserBlock = () => {
   const {user} = useSelector((state) => state.USER);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
   const {avatarUrl} = user;

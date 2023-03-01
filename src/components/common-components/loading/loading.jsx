@@ -5,7 +5,7 @@ import LogoFooter from '../logo/logo-footer';
 import Copyright from '../copyright/copyright';
 
 const Loading = () => {
-  return <React.Fragment>
+  return <>
     <section className="movie-card">
       <h1 className="visually-hidden">WTW</h1>
       <header className="page-header movie-card__head">
@@ -24,7 +24,7 @@ const Loading = () => {
         <Copyright />
       </footer>
     </div>
-  </React.Fragment>;
+  </>;
 };
 
 export default Loading;

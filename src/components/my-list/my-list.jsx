@@ -41,7 +41,6 @@ const MyList = () => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <FilmsList films={favoriteFilms} count={favoriteFilms.length} />
-
       </section>
 
       <footer className="page-footer">

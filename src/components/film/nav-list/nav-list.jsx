@@ -29,7 +29,7 @@ const NavList = ({activeNavItem, onClick}) => {
 };
 
 NavList.propTypes = {
-  activeNavItem: PropTypes.string,
+  activeNavItem: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

@@ -7,12 +7,12 @@ import {redirectToRoute, resetLoadedFavoriteFilms} from '../../../store/action';
 import {AuthorizationStatus, Patch} from '../../../const';
 import {filmProp} from '../../props-types';
 
-const AddFavoriteButton = ({film, isPromo}) => {
+const AddFavoriteButton = ({film, fetchType}) => {
   const {authorizationStatus} = useSelector((state) => state.USER);
 
   const dispatch = useDispatch();
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-  const onAddFavoriteFilm = (id, status) => dispatch(fetchAddFavoriteFilm(id, status, isPromo));
+  const onAddFavoriteFilm = (id, status) => dispatch(fetchAddFavoriteFilm(id, status, fetchType));
   const onResetLoadedFavoriteFilms = () => dispatch(resetLoadedFavoriteFilms());
 
   const {id, isFavorite} = film;
@@ -42,7 +42,7 @@ const AddFavoriteButton = ({film, isPromo}) => {
 
 AddFavoriteButton.propTypes = {
   film: filmProp,
-  isPromo: PropTypes.bool,
+  fetchType: PropTypes.string.isRequired,
 };
 
 export default AddFavoriteButton;

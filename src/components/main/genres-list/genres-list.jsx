@@ -3,7 +3,28 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {changeGenre, changeFilmsList} from '../../../store/action';
-import {getUniqueGenres, filterFilmsByGenre} from '../../component-utils';
+import {GENRE_DEFAULT} from '../../../const';
+
+export const getUniqueGenres = (films) => { // сделать чеоез редусер
+  const uniqueGenres = [GENRE_DEFAULT];
+
+  films.forEach((film) => {
+    if (!uniqueGenres.find((genre) => genre === film.genre)) {
+      uniqueGenres.push(film.genre);
+    }
+  });
+
+  return uniqueGenres;
+};
+
+export const filterFilmsByGenre = (genre, films) => {
+  if (genre === GENRE_DEFAULT) {
+    return films;
+  }
+
+  return films.filter((film) => film.genre === genre);
+};
+
 
 const GENRE_COUNT = 10;
 

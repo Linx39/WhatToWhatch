@@ -42,12 +42,12 @@ const VideoPlayerWithUtils = (props) => {
 };
 
 VideoPlayerWithUtils.propTypes = {
-  videoRef: PropTypes.object,
+  videoRef: PropTypes.object.isRequired,
   isVideoLoaded: PropTypes.bool.isRequired,
-  onChangeIsVideoLoaded: PropTypes.func,
+  onChangeIsVideoLoaded: PropTypes.func.isRequired,
   isFullScreen: PropTypes.bool.isRequired,
-  onGetDuration: PropTypes.func,
-  onChangeCurrentTime: PropTypes.func,
+  onGetDuration: PropTypes.func.isRequired,
+  onChangeCurrentTime: PropTypes.func.isRequired,
 };
 
 export default VideoPlayerWithUtils;

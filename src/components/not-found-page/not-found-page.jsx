@@ -12,33 +12,36 @@ import {Patch, AuthorizationStatus} from '../../const';
 const NotFoundPage = () => {
   const {authorizationStatus} = useSelector((state) => state.USER);
 
-  return <React.Fragment>
-    <section className="movie-card">
-      <h1 className="visually-hidden">WTW</h1>
+  return (
+    <>
+      <section className="movie-card">
+        <h1 className="visually-hidden">WTW</h1>
 
-      <header className="page-header">
-        <LogoHeader />
+        <header className="page-header">
+          <LogoHeader />
 
-        {authorizationStatus === AuthorizationStatus.AUTH
-          ? <UserBlock />
-          : <UserBlockNoSign />
-        }
-      </header>
-    </section>
+          {authorizationStatus === AuthorizationStatus.AUTH
+            ? <UserBlock />
+            : <UserBlockNoSign />
+          }
+        </header>
+      </section>
 
-    <section className="page-header">
-      <h1>404. Page not found</h1>
-      <Link to={Patch.MAIN}>Вернуться на главную</Link>
-    </section>
+      <section className="page-header">
+        <h1>404. Page not found</h1>
 
-    <div className="page-content">
-      <footer className="page-footer">
-        <LogoFooter />
+        <Link to={Patch.MAIN}>Вернуться на главную</Link>
+      </section>
 
-        <Copyright />
-      </footer>
-    </div>
-  </React.Fragment>;
+      <div className="page-content">
+        <footer className="page-footer">
+          <LogoFooter />
+
+          <Copyright />
+        </footer>
+      </div>
+    </>
+  );
 };
 
 export default NotFoundPage;

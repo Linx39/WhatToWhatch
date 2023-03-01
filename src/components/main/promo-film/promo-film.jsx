@@ -3,6 +3,7 @@ import React from 'react';
 import PlayButton from '../../common-components/play-button/play-button';
 import AddFavoriteButton from '../../common-components/add-favorite-button/add-favorite-button';
 import {filmProp} from '../../props-types';
+import {AddFavoriteFetchType} from '../../../const';
 
 const PromoFilm = ({film}) => {
   const {name, posterImage, genre, released} = film;
@@ -24,7 +25,7 @@ const PromoFilm = ({film}) => {
           <div className='movie-card__buttons'>
             <PlayButton film={film}/>
 
-            <AddFavoriteButton film={film} isPromo={true} />
+            <AddFavoriteButton film={film} fetchType={AddFavoriteFetchType.PROMO_FILM} />
           </div>
         </div>
       </div>

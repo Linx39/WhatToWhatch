@@ -11,9 +11,11 @@ import {Patch} from '../../const';
 
 const Player = () => {
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
+
   const dispatch = useDispatch();
   const onLoadFilm = (id) => dispatch(fetchFilm(id));
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
+
   const videoRef = useRef();
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -39,7 +41,6 @@ const Player = () => {
   const {id, name, previewImage, videoLink} = film;
 
   const handleExitButtonClick = () => {
-    // setIsPlaying(false);
     onRedirectToRoute(`${Patch.FILMS}/${id}`);
   };
 

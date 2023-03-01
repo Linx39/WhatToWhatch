@@ -38,3 +38,8 @@ export const ReviewTextLength = {
   MIN: 10, // не забыть исправить на 50
   MAX: 400
 };
+
+export const AddFavoriteFetchType = {
+  FILM: `FILM`,
+  PROMO_FILM: `PROMO_FILM`,
+};

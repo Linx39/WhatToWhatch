@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import PropTypes from "prop-types";
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -8,16 +8,21 @@ import LogoFooter from '../common-components/logo/logo-footer';
 import Copyright from '../common-components/copyright/copyright';
 import {redirectToRoute} from '../../store/action';
 import {AuthorizationStatus, Patch} from '../../const';
+import {isEmailValid} from '../component-utils';
 
 const SignIn = () => {
-  // const {authorizationStatus} = useSelector((state) => state.USER);
+  const {authorizationStatus} = useSelector((state) => state.USER);
 
   const dispatch = useDispatch();
   const onLogin = (authData) => dispatch(login(authData));
+  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  // if (authorizationStatus === AuthorizationStatus.AUTH) {
-  //   dispatch(redirectToRoute(Patch.MAIN));
-  // }
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    onRedirectToRoute(Patch.MAIN);
+  }
+
+  const [isFormCorrect, setIsFormCorrect] = useState(true);
+  const [isEmailCorrect, setIsEmailCorrect] = useState(true);
 
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -25,10 +30,34 @@ const SignIn = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
+    const loginValue = loginRef.current.value;
+    const passwordValue = passwordRef.current.value;
+
+    if (loginValue === `` || passwordValue === ``) {
+      setIsFormCorrect(false);
+      return;
+    }
+
+    if (!isEmailValid(loginValue)) {
+      setIsEmailCorrect(false);
+      return;
+    }
+
     onLogin({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
+      login: loginValue,
+      password: passwordValue,
     });
+  };
+
+  const handleInput = (evt) => {
+    evt.preventDefault();
+
+    if (!isEmailValid(loginRef.current.value)) {
+      setIsEmailCorrect(false);
+      return;
+    } else {
+      setIsEmailCorrect(true);
+    }
   };
 
   return <React.Fragment>
@@ -45,16 +74,20 @@ const SignIn = () => {
           className="sign-in__form"
           onSubmit={handleSubmit}
         >
-          <div className="sign-in__message">
-            <p>Please enter a valid email address</p>
-          </div>
+          {!isEmailCorrect &&
+            <div className="sign-in__message">
+              <p>Please enter a valid email address</p>
+            </div>
+          }
 
-          <div className="sign-in__message">
-            <p>We can\’t recognize this email <br /> and password combination. Please try again.</p>
-          </div>
+          {!isFormCorrect &&
+            <div className="sign-in__message">
+              <p>We can\’t recognize this email <br /> and password combination. Please try again.</p>
+            </div>
+          }
 
           <div className="sign-in__fields">
-            <div className="sign-in__field">
+            <div className={isEmailCorrect ? `sign-in__field` : `sign-in__field--error`}>
               <input
                 ref={loginRef}
                 className="sign-in__input"
@@ -62,6 +95,7 @@ const SignIn = () => {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                onInput={handleInput}
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>

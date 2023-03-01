@@ -4,13 +4,12 @@ import {
   loadPromoFilm,
   loadComments,
   loadFavoriteFilms,
-  resetLoadedFavoriteFilms,
   requireAuthorization,
   loadUserData,
   redirectToRoute,
 } from './action';
 import {adaptFilmToClient, adaptUserToClient} from './adapter';
-import {AuthorizationStatus, AdditionalUrl, Patch} from '../const';
+import {AuthorizationStatus, AdditionalUrl, Patch, AddFavoriteFetchType} from '../const';
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.FILMS)
@@ -60,15 +59,22 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
     })
 );
 
-export const fetchAddFavoriteFilm = (id, status, isPromo) => (dispatch, _getState, api) => (
+export const fetchAddFavoriteFilm = (id, status, fetchType) => (dispatch, _getState, api) => (
   api.post(`${AdditionalUrl.FAVORITE}/${id}/${status}`)
     .then(({data}) => {
       const film = adaptFilmToClient(data);
-      if (isPromo) {
-        dispatch(loadPromoFilm(film));
-      }
-      if (!isPromo) {
-        dispatch(loadFilm(film));
+
+      switch (fetchType) {
+        case AddFavoriteFetchType.FILM:
+          dispatch(loadFilm(film));
+          break;
+
+        case AddFavoriteFetchType.PROMO_FILM:
+          dispatch(loadPromoFilm(film));
+          break;
+
+        default:
+          throw new Error(`Unknown switch case expression: '${fetchType}'!`);
       }
     })
 );

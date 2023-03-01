@@ -18,7 +18,7 @@ import PlayButton from '../common-components/play-button/play-button';
 import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
 import {fetchFilms, fetchFilm, fetchComments} from '../../store/api-actions';
 import {changeActiveNavItem} from '../../store/action';
-import {FilmsCount, NavItem, AuthorizationStatus} from '../../const';
+import {FilmsCount, NavItem, AuthorizationStatus, AddFavoriteFetchType} from '../../const';
 
 const Film = () => {
   const {films, isFilmsLoaded, film, isFilmLoaded, comments, isCommentsLoaded} = useSelector((state) => state.DATA);
@@ -45,7 +45,7 @@ const Film = () => {
     if (!isCommentsLoaded) {
       onLoadComments(paramsId);
     }
-  }, [isFilmsLoaded && isFilmLoaded && isCommentsLoaded]);
+  }, [isFilmsLoaded, isFilmLoaded, isCommentsLoaded]);
 
   if (!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) {
     return (
@@ -99,7 +99,7 @@ const Film = () => {
             <div className="movie-card__buttons">
               <PlayButton film={film}/>
 
-              <AddFavoriteButton film={film} isPromo={false} />
+              <AddFavoriteButton film={film} fetchType={AddFavoriteFetchType.FILM} />
 
               {authorizationStatus === AuthorizationStatus.AUTH
                 &&
