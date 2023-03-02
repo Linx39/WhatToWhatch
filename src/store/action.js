@@ -17,7 +17,6 @@ export const ActionType = {
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
   LOAD_USER_DATA: `user/loadUserData`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
-  // REDIRECT_TO_BACK: `app/redirectToBack`,
 };
 
 export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {

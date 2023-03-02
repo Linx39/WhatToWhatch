@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 const MINUTES_IN_HOUR = 60;
 const SECONDS_IN_MINUTE = 60;
-const EMAIL_REGEXP = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])/;
+const EMAIL_REGEXP = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
 export const isEmailValid = (value) => EMAIL_REGEXP.test(value);
 

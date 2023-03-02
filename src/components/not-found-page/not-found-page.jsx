@@ -1,17 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
 
 import LogoHeader from '../common-components/logo/logo-header';
 import LogoFooter from '../common-components/logo/logo-footer';
-import UserBlock from '../common-components/user-block/user-block';
-import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
-import {Patch, AuthorizationStatus} from '../../const';
+import {Patch} from '../../const';
 
 const NotFoundPage = () => {
-  const {authorizationStatus} = useSelector((state) => state.USER);
-
   return (
     <>
       <section className="movie-card">
@@ -19,11 +14,6 @@ const NotFoundPage = () => {
 
         <header className="page-header">
           <LogoHeader />
-
-          {authorizationStatus === AuthorizationStatus.AUTH
-            ? <UserBlock />
-            : <UserBlockNoSign />
-          }
         </header>
       </section>
 

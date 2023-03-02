@@ -49,44 +49,46 @@ const Main = () => {
 
   const {name, backgroundImage} = promoFilm;
 
-  return <React.Fragment>
-    <section className='movie-card'>
-      <div className='movie-card__bg'>
-        <img src={backgroundImage} alt={name} />
-      </div>
+  return (
+    <>
+      <section className='movie-card'>
+        <div className='movie-card__bg'>
+          <img src={backgroundImage} alt={name} />
+        </div>
 
-      <h1 className='visually-hidden'>WTW</h1>
+        <h1 className='visually-hidden'>WTW</h1>
 
-      <header className='page-header movie-card__head'>
-        <LogoHeader isActive={false} />
+        <header className='page-header movie-card__head'>
+          <LogoHeader isActive={false} />
 
-        {authorizationStatus === AuthorizationStatus.AUTH
-          ? <UserBlock />
-          : <UserBlockNoSign />
-        }
-      </header>
+          {authorizationStatus === AuthorizationStatus.AUTH
+            ? <UserBlock />
+            : <UserBlockNoSign />
+          }
+        </header>
 
-      <PromoFilm film={promoFilm} />
-    </section>
-
-    <div className='page-content'>
-      <section className='catalog'>
-        <h2 className='catalog__title visually-hidden'>Catalog</h2>
-
-        <GenresList />
-
-        <FilmsList films={filmsList} count={count} />
-
-        {(count < filmsList.length) && <ShowMore />}
+        <PromoFilm film={promoFilm} />
       </section>
 
-      <footer className='page-footer'>
-        <LogoFooter isActive={false} />
+      <div className='page-content'>
+        <section className='catalog'>
+          <h2 className='catalog__title visually-hidden'>Catalog</h2>
 
-        <Copyright />
-      </footer>
-    </div>
-  </React.Fragment>;
+          <GenresList />
+
+          <FilmsList films={filmsList} count={count} />
+
+          {(count < filmsList.length) && <ShowMore />}
+        </section>
+
+        <footer className='page-footer'>
+          <LogoFooter isActive={false} />
+
+          <Copyright />
+        </footer>
+      </div>
+    </>
+  );
 };
 
 export default Main;

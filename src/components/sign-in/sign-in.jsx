@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -17,15 +17,17 @@ const SignIn = () => {
   const onLogin = (authData) => dispatch(login(authData));
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    onRedirectToRoute(Patch.MAIN);
-  }
-
   const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [isEmailCorrect, setIsEmailCorrect] = useState(true);
 
   const loginRef = useRef();
   const passwordRef = useRef();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      onRedirectToRoute(Patch.MAIN);
+    }
+  }, [authorizationStatus]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -39,7 +41,6 @@ const SignIn = () => {
     }
 
     if (!isEmailValid(loginValue)) {
-      setIsEmailCorrect(false);
       return;
     }
 
@@ -47,6 +48,7 @@ const SignIn = () => {
       login: loginValue,
       password: passwordValue,
     });
+
   };
 
   const handleInput = (evt) => {
@@ -55,12 +57,12 @@ const SignIn = () => {
     if (!isEmailValid(loginRef.current.value)) {
       setIsEmailCorrect(false);
       return;
-    } else {
-      setIsEmailCorrect(true);
     }
+
+    setIsEmailCorrect(true);
   };
 
-  return <React.Fragment>
+  return (
     <div className="user-page">
       <header className="page-header user-page__head">
         <LogoHeader />
@@ -127,7 +129,7 @@ const SignIn = () => {
         <Copyright />
       </footer>
     </div>
-  </React.Fragment>;
+  );
 };
 
 SignIn.propTypes = {

@@ -27,7 +27,7 @@ const MyList = () => {
     );
   }
 
-  return <React.Fragment>
+  return (
     <div className="user-page">
       <header className="page-header user-page__head">
         <LogoHeader />
@@ -49,7 +49,7 @@ const MyList = () => {
         <Copyright />
       </footer>
     </div>
-  </React.Fragment>;
+  );
 };
 
 export default MyList;

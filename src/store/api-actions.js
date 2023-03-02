@@ -17,6 +17,7 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
       const films = data.map((item) => adaptFilmToClient(item));
       dispatch(loadFilms(films));
     })
+    .catch(() => {})
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
@@ -34,7 +35,7 @@ export const fetchFilm = (id) => (dispatch, _getState, api) => (
       const film = adaptFilmToClient(data);
       dispatch(loadFilm(film));
     })
-    .catch(() => dispatch(redirectToRoute(Patch.MAIN)))
+    .catch(() => {})
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (
@@ -57,6 +58,7 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
       const films = data.map((item) => adaptFilmToClient(item));
       dispatch(loadFavoriteFilms(films));
     })
+    .catch(() => {})
 );
 
 export const fetchAddFavoriteFilm = (id, status, fetchType) => (dispatch, _getState, api) => (
@@ -77,6 +79,7 @@ export const fetchAddFavoriteFilm = (id, status, fetchType) => (dispatch, _getSt
           throw new Error(`Unknown switch case expression: '${fetchType}'!`);
       }
     })
+    .catch(() => {})
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -97,10 +100,12 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(Patch.MAIN)))
+    .catch(() => {})
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGOUT)
     .then(() => dispatch(loadUserData({})))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .catch(() => {})
 );

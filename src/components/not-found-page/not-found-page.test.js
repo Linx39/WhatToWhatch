@@ -6,18 +6,11 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import NotFoundPage from './not-found-page';
-import {AuthorizationStatus} from '../../const';
-import user from '../../mock/user';
 
 const mockStore = configureStore({});
 
 it(`NotFoundPage should render correctly`, () => {
-  const store = mockStore({
-    USER: {
-      authorizationStatus: AuthorizationStatus.AUTH,
-      user,
-    },
-  });
+  const store = mockStore({});
   const history = createMemoryHistory();
 
   render(

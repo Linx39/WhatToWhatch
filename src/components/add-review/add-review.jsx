@@ -8,9 +8,10 @@ import AddReviewForm from './add-revew-form/add-revew-form';
 import Loading from '../common-components/loading/loading';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
-import {Patch} from '../../const';
+import {AuthorizationStatus, Patch} from '../../const';
 
 const AddReview = () => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
@@ -18,6 +19,12 @@ const AddReview = () => {
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
   const paramsId = Number(useParams().id);
+
+  // useEffect(() => {
+    if (authorizationStatus !== AuthorizationStatus.AUTH) {
+      onRedirectToRoute(Patch.LOGIN);
+    }
+  // }, [authorizationStatus]);
 
   useEffect(() => {
     if (!isFilmLoaded) {
