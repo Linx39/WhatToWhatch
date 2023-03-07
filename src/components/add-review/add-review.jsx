@@ -18,13 +18,11 @@ const AddReview = () => {
   const onLoadFilm = (id) => dispatch(fetchFilm(id));
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  const paramsId = Number(useParams().id);
+  if (authorizationStatus !== AuthorizationStatus.AUTH) {
+    onRedirectToRoute(Patch.LOGIN);
+  }
 
-  // useEffect(() => {
-    if (authorizationStatus !== AuthorizationStatus.AUTH) {
-      onRedirectToRoute(Patch.LOGIN);
-    }
-  // }, [authorizationStatus]);
+  const paramsId = Number(useParams().id);
 
   useEffect(() => {
     if (!isFilmLoaded) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {RATING_MAX} from '../../../const';
 
-const Stars = ({ratingValue, onChange}) => {
+const Stars = ({ratingValue, onChange, isSubmiting}) => {
   return (
     <div className="rating__stars">
       {new Array(RATING_MAX)
@@ -18,6 +18,7 @@ const Stars = ({ratingValue, onChange}) => {
                 value={value}
                 onChange={onChange}
                 checked={value === ratingValue}
+                disabled={isSubmiting}
                 className="rating__input"
                 id={id}
                 type="radio"
@@ -25,7 +26,8 @@ const Stars = ({ratingValue, onChange}) => {
               />
               <label
                 className="rating__label"
-                htmlFor={id}>
+                htmlFor={id}
+              >
                 {`Rating ${value}`}
               </label>
             </React.Fragment>
@@ -39,6 +41,7 @@ const Stars = ({ratingValue, onChange}) => {
 Stars.propTypes = {
   ratingValue: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
+  isSubmiting: PropTypes.bool.isRequired,
 };
 
 export default Stars;

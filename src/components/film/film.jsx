@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -16,6 +16,7 @@ import AddReviewButton from './add-review-button/add-review-button';
 import Loading from '../common-components/loading/loading';
 import PlayButton from '../common-components/play-button/play-button';
 import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
+import NotFoundPage from '../not-found-page/not-found-page';
 import {fetchFilms, fetchFilm, fetchComments} from '../../store/api-actions';
 import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus, AddFavoriteFetchType} from '../../const';
@@ -50,6 +51,12 @@ const Film = () => {
   if (!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) {
     return (
       <Loading />
+    );
+  }
+
+  if (Object.keys(film).length === 0) {
+    return (
+      <NotFoundPage />
     );
   }
 

@@ -1,28 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 import Stars from '../stars/stars';
 import {filmProp} from '../../props-types';
 import {fetchAddComment} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {RATING_MAX, ReviewTextLength, Patch} from '../../../const';
+import {ReviewTextLength, Patch} from '../../../const';
 
 const AddReviewForm = ({film}) => {
   const dispatch = useDispatch();
   const onAddComment = (id, userForm) => dispatch(fetchAddComment(id, userForm));
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  const {id} = film;
-
-  const onSubmit = (userForm) => {
-    onAddComment(id, userForm);
-    onRedirectToRoute(`${Patch.FILMS}/${id}`);
-  };
-
   const [userForm, setUserForm] = useState({
-    rating: RATING_MAX,
+    rating: null,
     comment: ``
   });
+
+  const [isSubmiting, setIsSubmiting] = useState(false);
+
+  const {id} = film;
 
   const handleRatingChange = (evt) => {
     setUserForm({...userForm, rating: evt.target.value});
@@ -34,7 +31,16 @@ const AddReviewForm = ({film}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit(userForm);
+    setIsSubmiting(true);
+
+    onAddComment(id, userForm)
+      .then(() => {
+        setIsSubmiting(false);
+        onRedirectToRoute(`${Patch.FILMS}/${id}`);
+      })
+      .catch(() => {
+        setIsSubmiting(false);
+      });
   };
 
   const {rating, comment} = userForm;
@@ -46,6 +52,7 @@ const AddReviewForm = ({film}) => {
           <Stars
             ratingValue={Number(rating)}
             onChange={handleRatingChange}
+            isSubmiting={isSubmiting}
           />
         </div>
 
@@ -53,18 +60,25 @@ const AddReviewForm = ({film}) => {
           <textarea
             value={comment}
             onChange={handleCommentChange}
+            disabled={isSubmiting}
             className="add-review__textarea"
             name="review-text"
             id="review-text"
             placeholder="Review text"
-            data-testid="review">
+            data-testid="review"
+          >
           </textarea>
 
           <div className="add-review__submit">
             <button
               className="add-review__btn"
               type="submit"
-              disabled={rating === 0 || comment.length < ReviewTextLength.MIN || comment.length > ReviewTextLength.MAX}
+              disabled={
+                !rating ||
+                comment.length < ReviewTextLength.MIN ||
+                comment.length > ReviewTextLength.MAX ||
+                isSubmiting
+              }
             >
               Post
             </button>

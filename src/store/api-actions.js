@@ -17,7 +17,9 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
       const films = data.map((item) => adaptFilmToClient(item));
       dispatch(loadFilms(films));
     })
-    .catch(() => {})
+    .catch(() => {
+      dispatch(loadFilms([]));
+    })
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
@@ -26,7 +28,6 @@ export const fetchPromoFilm = () => (dispatch, _getState, api) => (
       const film = adaptFilmToClient(data);
       dispatch(loadPromoFilm(film));
     })
-    .catch(() => {})
 );
 
 export const fetchFilm = (id) => (dispatch, _getState, api) => (
@@ -35,7 +36,9 @@ export const fetchFilm = (id) => (dispatch, _getState, api) => (
       const film = adaptFilmToClient(data);
       dispatch(loadFilm(film));
     })
-    .catch(() => {})
+    .catch(() => {
+      dispatch(loadFilm({}));
+    })
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (
@@ -43,7 +46,9 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(loadComments(data));
     })
-    .catch(() => {})
+    .catch(() => {
+      dispatch(loadComments([]));
+    })
 );
 
 export const fetchAddComment = (id, {rating, comment}) => (dispatch, _getState, api) => (
@@ -107,5 +112,4 @@ export const logout = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGOUT)
     .then(() => dispatch(loadUserData({})))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
-    .catch(() => {})
 );

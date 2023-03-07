@@ -1,20 +1,29 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 import FilmCard from '../film-card/film-card';
 import {filmsProp, countProp} from '../props-types';
 
 const FilmsList = ({films, count = films.length}) => {
   const [activeCard, setActiveCard] = useState(null);
+  let handleMouseEnter;
+  let handleMouseLeave;
 
-  const handleMouseEnter = useCallback(
+  handleMouseEnter = useCallback(
       (film) => setActiveCard(film),
       [films]
   );
 
-  const handleMouseLeave = useCallback(
+  handleMouseLeave = useCallback(
       () => setActiveCard(null),
       [films]
   );
+
+  useEffect(() => {
+    return () => {
+      handleMouseEnter = null;
+      handleMouseLeave = null;
+    };
+  }, [films]);
 
   return (
     <div className='catalog__movies-list' data-testid="test-film-list">
