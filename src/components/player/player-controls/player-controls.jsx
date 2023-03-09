@@ -27,12 +27,12 @@ const PlayerControls = (props) => {
     name,
     isPlaying,
     isVideoLoaded,
-    durationVideo,
+    duration,
     currentTime,
     onPlayPauseButtonClick,
     onFullScreenButtonClick
   } = props;
-  const progressValue = getProgressValue(durationVideo, currentTime);
+  const progressValue = getProgressValue(duration, currentTime);
 
   return (
     <div className="player__controls">
@@ -44,7 +44,7 @@ const PlayerControls = (props) => {
 
         {currentTime &&
           <div className="player__time-value">
-            {getTimeTemplate(durationVideo - currentTime)}
+            {getTimeTemplate(duration - currentTime)}
           </div>
         }
       </div>
@@ -87,7 +87,7 @@ PlayerControls.propTypes = {
   name: PropTypes.string.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isVideoLoaded: PropTypes.bool.isRequired,
-  durationVideo: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired,
   currentTime: PropTypes.number.isRequired,
   onPlayPauseButtonClick: PropTypes.func.isRequired,
   onFullScreenButtonClick: PropTypes.func.isRequired,

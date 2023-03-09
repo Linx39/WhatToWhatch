@@ -11,6 +11,7 @@ const VideoPlayerWithUtils = (props) => {
     isFullScreen,
     onGetDuration,
     onChangeCurrentTime,
+    onChangeIsPlaying,
     ...restProps
   } = props;
 
@@ -23,6 +24,7 @@ const VideoPlayerWithUtils = (props) => {
   useEffect(() => {
     if (isFullScreen && !document.fullscreenElement) {
       videoRef.current.requestFullscreen();
+      videoRef.current.controls = false;
       return;
     }
 
@@ -36,6 +38,7 @@ const VideoPlayerWithUtils = (props) => {
       videoRef={videoRef}
       isVideoLoaded={isVideoLoaded}
       onChangeIsVideoLoaded={onChangeIsVideoLoaded}
+      onChangeIsPlaying={onChangeIsPlaying}
       {...restProps}
     />
   );
@@ -48,6 +51,7 @@ VideoPlayerWithUtils.propTypes = {
   isFullScreen: PropTypes.bool.isRequired,
   onGetDuration: PropTypes.func.isRequired,
   onChangeCurrentTime: PropTypes.func.isRequired,
+  onChangeIsPlaying: PropTypes.func.isRequired,
 };
 
 export default VideoPlayerWithUtils;

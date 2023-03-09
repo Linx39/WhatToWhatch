@@ -10,6 +10,7 @@ const VideoPlayer = (props) => {
     isPlaying,
     isVideoLoaded,
     onChangeIsVideoLoaded,
+    onChangeIsPlaying,
   } = props;
 
   useEffect(() => {
@@ -26,7 +27,10 @@ const VideoPlayer = (props) => {
 
   useEffect(() => {
     if (isPlaying && isVideoLoaded) {
-      videoRef.current.play();
+      videoRef.current.play()
+      .catch(() => {
+        onChangeIsPlaying(false);
+      });
       return;
     }
 
@@ -40,10 +44,15 @@ const VideoPlayer = (props) => {
       src={src}
       poster={poster}
       muted={isMuted}
+      controls={false}
       data-testid="test-video-player"
     >
     </video>
   );
+};
+
+VideoPlayer.defaultProps = {
+  onChangeIsPlaying: () => {},
 };
 
 VideoPlayer.propTypes = {
@@ -54,6 +63,7 @@ VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isVideoLoaded: PropTypes.bool.isRequired,
   onChangeIsVideoLoaded: PropTypes.func.isRequired,
+  onChangeIsPlaying: PropTypes.func.isRequired,
 };
 
 export default VideoPlayer;

@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import VideoPlayerWithUtils from '../video-player/video-player-with-utils';
 import PlayerControls from './player-controls/player-controls';
 import Loading from '../common-components/loading/loading';
+import NotFoundPage from '../not-found-page/not-found-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
@@ -19,7 +20,7 @@ const Player = () => {
   const videoRef = useRef();
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [durationVideo, setDurationVideo] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -38,25 +39,21 @@ const Player = () => {
     );
   }
 
+  if (Object.keys(film).length === 0) {
+    return (
+      <NotFoundPage />
+    );
+  }
+
   const {id, name, previewImage, videoLink} = film;
 
-  const handleExitButtonClick = () => {
-    onRedirectToRoute(`${Patch.FILMS}/${id}`);
-  };
-
-  const handleChangeIsVideoLoaded = (isLoaded) => {
-    setIsVideoLoaded(isLoaded);
-  };
-
-  const handleGetDuration = (duration) => {
-    setDurationVideo(duration);
-  };
-
+  const handleExitButtonClick = () => onRedirectToRoute(`${Patch.FILMS}/${id}`);
+  const handleChangeIsVideoLoaded = (isLoaded) => setIsVideoLoaded(isLoaded);
+  const handleGetDuration = (time) => setDuration(time);
   const handleGetCurrentTime = (time) => setCurrentTime(time);
-
   const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
-
   const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
+  const handleChangeIsPlaying = (value) => setIsPlaying(value);
 
   return (
     <div className="player">
@@ -71,6 +68,7 @@ const Player = () => {
         isFullScreen={isFullScreen}
         onGetDuration={handleGetDuration}
         onChangeCurrentTime={handleGetCurrentTime}
+        onChangeIsPlaying={handleChangeIsPlaying}
       />
 
       <button type="button" className="player__exit" onClick={handleExitButtonClick}>Exit</button>
@@ -79,7 +77,7 @@ const Player = () => {
         name={name}
         isPlaying={isPlaying}
         isVideoLoaded={isVideoLoaded}
-        durationVideo={durationVideo}
+        duration={duration}
         currentTime={currentTime}
         onPlayPauseButtonClick={handlePlayPauseButtonClick}
         onFullScreenButtonClick={handleFullScreenButtonClick}

@@ -23,7 +23,7 @@ const FilmsList = ({films, count = films.length}) => {
       handleMouseEnter = null;
       handleMouseLeave = null;
     };
-  }, [films]);
+  }, []);
 
   return (
     <div className='catalog__movies-list' data-testid="test-film-list">
