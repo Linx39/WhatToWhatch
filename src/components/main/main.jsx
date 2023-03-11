@@ -1,19 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import FilmsList from '../films-list/films-list';
 import LogoHeader from '../common-components/logo/logo-header';
 import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
-import Loading from '../common-components/loading/loading';
+import LoadingPage from '../loading-page/loading-page';
+import ErrorPage from '../error-page/error-page';
 import PromoFilm from './promo-film/promo-film';
 import GenresList from './genres-list/genres-list';
+import FilmsList from '../films-list/films-list';
 import ShowMore from './show-more/show-more';
 import {changeFilmsList} from '../../store/action';
 import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, Patch} from '../../const';
 
 const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
@@ -25,25 +26,37 @@ const Main = () => {
   const onLoadPromoFilm = () => dispatch(fetchPromoFilm());
   const onChangeFilmsList = (list) => dispatch(changeFilmsList(list));
 
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
+
   useEffect(() => {
     if (!isFilmsLoaded) {
-      onLoadFilms();
+      onLoadFilms()
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
+    }
+
+    if (!isPromoFilmLoaded) {
+      onLoadPromoFilm()
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
     }
 
     if (isFilmsLoaded) {
       onChangeFilmsList(films);
     }
-  }, [isFilmsLoaded]);
+  }, [isFilmsLoaded && isPromoFilmLoaded]);
 
-  useEffect(() => {
-    if (!isPromoFilmLoaded) {
-      onLoadPromoFilm();
-    }
-  }, [isPromoFilmLoaded]);
-
-  if (!isFilmsLoaded || !isPromoFilmLoaded) {
+  if ((!isFilmsLoaded || !isPromoFilmLoaded) && !isErrorLoading) {
     return (
-      <Loading />
+      <LoadingPage />
+    );
+  }
+
+  if (isErrorLoading) {
+    return (
+      <ErrorPage />
     );
   }
 

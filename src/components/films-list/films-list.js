@@ -1,39 +1,30 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 
 import FilmCard from '../film-card/film-card';
 import {filmsProp, countProp} from '../props-types';
 
 const FilmsList = ({films, count = films.length}) => {
-  const [activeCard, setActiveCard] = useState(null);
-  let handleMouseEnter;
-  let handleMouseLeave;
+  const [activeCardId, setActiveCardId] = useState(null);
 
-  handleMouseEnter = useCallback(
-      (film) => setActiveCard(film),
+  const handleMouseEnter = useCallback(
+      (id) => setActiveCardId(id),
       [films]
   );
-
-  handleMouseLeave = useCallback(
-      () => setActiveCard(null),
+  const handleMouseLeave = useCallback(
+      () => setActiveCardId(null),
       [films]
   );
-
-  useEffect(() => {
-    return () => {
-      handleMouseEnter = null;
-      handleMouseLeave = null;
-    };
-  }, []);
 
   return (
-    <div className='catalog__movies-list' data-testid="test-film-list">
+    <div className="catalog__movies-list" data-testid="test-film-list">
       {films.slice(0, count).map((film) => {
+        const {id} = film;
 
         return (
           <FilmCard
-            key={film.id}
+            key={id}
             film={film}
-            isVideoMode={(activeCard && film.id === activeCard.id) || false}
+            isVideoMode={(activeCardId && id === activeCardId) || false}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           />

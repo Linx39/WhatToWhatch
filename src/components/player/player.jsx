@@ -4,7 +4,8 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import VideoPlayerWithUtils from '../video-player/video-player-with-utils';
 import PlayerControls from './player-controls/player-controls';
-import Loading from '../common-components/loading/loading';
+import LoadingPage from '../loading-page/loading-page';
+import ErrorPage from '../error-page/error-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
@@ -27,15 +28,26 @@ const Player = () => {
 
   const paramsId = Number(useParams().id);
 
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
+
   useEffect(() => {
     if (!isFilmLoaded) {
-      onLoadFilm(paramsId);
+      onLoadFilm(paramsId)
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
     }
   }, [isFilmLoaded]);
 
-  if (!isFilmLoaded) {
+  if (!isFilmLoaded && !isErrorLoading) {
     return (
-      <Loading />
+      <LoadingPage />
+    );
+  }
+
+  if (isErrorLoading) {
+    return (
+      <ErrorPage />
     );
   }
 
@@ -45,7 +57,7 @@ const Player = () => {
     );
   }
 
-  const {id, name, previewImage, videoLink} = film;
+  const {id, previewImage, videoLink} = film;
 
   const handleExitButtonClick = () => onRedirectToRoute(`${Patch.FILMS}/${id}`);
   const handleChangeIsVideoLoaded = (isLoaded) => setIsVideoLoaded(isLoaded);
@@ -74,7 +86,6 @@ const Player = () => {
       <button type="button" className="player__exit" onClick={handleExitButtonClick}>Exit</button>
 
       <PlayerControls
-        name={name}
         isPlaying={isPlaying}
         isVideoLoaded={isVideoLoaded}
         duration={duration}

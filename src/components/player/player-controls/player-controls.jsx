@@ -24,7 +24,6 @@ const getTimeTemplate = (time) => {
 
 const PlayerControls = (props) => {
   const {
-    name,
     isPlaying,
     isVideoLoaded,
     duration,
@@ -70,7 +69,7 @@ const PlayerControls = (props) => {
           }
         </button>
 
-        <div className="player__name">{name}</div>
+        <div className="player__name">Transpotting</div>
 
         <button onClick={onFullScreenButtonClick} type="button" className="player__full-screen">
           <svg viewBox="0 0 27 27" width="27" height="27">
@@ -84,7 +83,6 @@ const PlayerControls = (props) => {
 };
 
 PlayerControls.propTypes = {
-  name: PropTypes.string.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   isVideoLoaded: PropTypes.bool.isRequired,
   duration: PropTypes.number.isRequired,

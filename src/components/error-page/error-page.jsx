@@ -1,12 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 import LogoHeader from '../common-components/logo/logo-header';
 import LogoFooter from '../common-components/logo/logo-footer';
 import Copyright from '../common-components/copyright/copyright';
-import {Patch} from '../../const';
 
-const NotFoundPage = () => {
+const ErrorPage = () => {
   return (
     <>
       <section className="movie-card">
@@ -19,10 +17,9 @@ const NotFoundPage = () => {
 
       <div className="page-content">
         <section className="catalog">
-          <h2 className="catalog__title">404. Page not found</h2>
-
-          <Link to={Patch.MAIN}>Вернуться на главную</Link>
+          <h2 className="catalog__title">Server Error!!! Обновите страницу</h2>
         </section>
+
         <footer className="page-footer">
           <LogoFooter />
 
@@ -33,4 +30,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default ErrorPage;

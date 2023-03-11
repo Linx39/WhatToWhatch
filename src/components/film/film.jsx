@@ -8,15 +8,16 @@ import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
+import LoadingPage from '../loading-page/loading-page';
+import ErrorPage from '../error-page/error-page';
+import NotFoundPage from '../not-found-page/not-found-page';
 import NavList from './nav-list/nav-list';
 import Overview from './overview/overview';
 import Details from './details/details';
 import Reviews from './reviews/reviews';
 import AddReviewButton from './add-review-button/add-review-button';
-import Loading from '../common-components/loading/loading';
 import PlayButton from '../common-components/play-button/play-button';
 import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
-import NotFoundPage from '../not-found-page/not-found-page';
 import {fetchFilms, fetchFilm, fetchComments} from '../../store/api-actions';
 import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus, AddFavoriteFetchType} from '../../const';
@@ -34,23 +35,40 @@ const Film = () => {
 
   const paramsId = Number(useParams().id);
 
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
+
   useEffect(() => {
     if (!isFilmsLoaded) {
-      onLoadFilms();
+      onLoadFilms()
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
     }
 
     if (!isFilmLoaded) {
-      onLoadFilm(paramsId);
+      onLoadFilm(paramsId)
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
     }
 
     if (!isCommentsLoaded) {
-      onLoadComments(paramsId);
+      onLoadComments(paramsId)
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
     }
   }, [isFilmsLoaded && isFilmLoaded && isCommentsLoaded]);
 
-  if (!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) {
+  if ((!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) && !isErrorLoading) {
     return (
-      <Loading />
+      <LoadingPage />
+    );
+  }
+
+  if (isErrorLoading) {
+    return (
+      <ErrorPage />
     );
   }
 

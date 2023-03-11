@@ -1,24 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import {filmProp} from '../../props-types';
 
-const TIME_OUT = 1000;
-
 const CardImage = ({film, onMouseEnter, onMouseLeave, onClick}) => {
   const {id, name, previewImage} = film;
 
-  let timer = null;
-  const handleMouseEnter = () => {
-    timer = setTimeout(() => onMouseEnter(film), TIME_OUT);
-  };
-  const handleMouseLeave = () => onMouseLeave();
   const handleMouseClick = () => onClick(id);
-
-  useEffect(() => {
-    return () => clearTimeout(timer);
-  }, [film]);
+  const handleMouseEnter = () => onMouseEnter(id);
+  const handleMouseLeave = () => onMouseLeave();
 
   return (
     <>

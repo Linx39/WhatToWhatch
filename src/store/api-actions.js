@@ -17,9 +17,6 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
       const films = data.map((item) => adaptFilmToClient(item));
       dispatch(loadFilms(films));
     })
-    .catch(() => {
-      dispatch(loadFilms([]));
-    })
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
@@ -46,15 +43,16 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
     .then(({data}) => {
       dispatch(loadComments(data));
     })
-    .catch(() => {
-      dispatch(loadComments([]));
-    })
 );
 
 export const fetchAddComment = (id, {rating, comment}) => (dispatch, _getState, api) => (
   api.post(`${AdditionalUrl.COMMENTS}/${id}`, {rating, comment})
-    .then(({data}) => dispatch(loadComments(data)))
-    .catch(() => {})
+    .then(({data}) => {
+      dispatch(loadComments(data));
+    })
+    .catch(() => {
+      dispatch(loadComments([]));
+    })
 );
 
 export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
@@ -63,7 +61,9 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
       const films = data.map((item) => adaptFilmToClient(item));
       dispatch(loadFavoriteFilms(films));
     })
-    .catch(() => {})
+    // .catch(() => {
+    //   dispatch(loadFavoriteFilms([]));
+    // })
 );
 
 export const fetchAddFavoriteFilm = (id, status, fetchType) => (dispatch, _getState, api) => (

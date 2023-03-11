@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import LogoHeader from '../common-components/logo/logo-header';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
-import Loading from '../common-components/loading/loading';
+import LoadingPage from '../loading-page/loading-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
 import {AuthorizationStatus, Patch} from '../../const';
@@ -32,7 +32,7 @@ const AddReview = () => {
 
   if (!isFilmLoaded) {
     return (
-      <Loading />
+      <LoadingPage />
     );
   }
 

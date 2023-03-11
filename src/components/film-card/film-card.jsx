@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 
@@ -9,17 +9,30 @@ import {redirectToRoute} from '../../store/action';
 import {filmProp} from '../props-types';
 import {Patch} from '../../const';
 
+const TIME_OUT = 1000;
+
 const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   const dispatch = useDispatch();
   const onResetLoadedFilm = () => dispatch(resetLoadedFilm());
   const onResetOnDefaultFilmInfo = () => dispatch(resetOnDefaultFilmInfo());
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
-  const handleCardClick = (id) => {
+  const timerRef = useRef(null);
+  const handleMouseEnter = (id) => {
+    timerRef.current = setTimeout(() => onMouseEnter(id), TIME_OUT);
+  };
+  const handleMouseLeave = () => onMouseLeave();
+  const handleMouseClick = (id) => {
     onResetLoadedFilm();
     onResetOnDefaultFilmInfo();
     onRedirectToRoute(`${Patch.FILMS}/${id}`);
   };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerRef.current);
+    };
+  }, []);
 
   return (
     <article className="small-movie-card catalog__movies-card" data-testid={`test-film-card-${film.id}`}>
@@ -31,9 +44,9 @@ const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
         :
         <CardImage
           film={film}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-          onClick={handleCardClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={handleMouseClick}
         />
       }
     </article>

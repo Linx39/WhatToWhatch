@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import FilmsList from '../films-list/films-list';
@@ -6,8 +6,9 @@ import LogoHeader from '../common-components/logo/logo-header';
 import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
+import LoadingPage from '../loading-page/loading-page';
+import ErrorPage from '../error-page/error-page';
 import {fetchFavoriteFilms} from '../../store/api-actions';
-import Loading from '../common-components/loading/loading';
 
 const MyList = () => {
   const {favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
@@ -15,15 +16,26 @@ const MyList = () => {
   const dispatch = useDispatch();
   const onLoadFavoriteFilms = () => dispatch(fetchFavoriteFilms());
 
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
+
   useEffect(() => {
     if (!isFavoriteFilmsLoaded) {
-      onLoadFavoriteFilms();
+      onLoadFavoriteFilms()
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
     }
   }, [isFavoriteFilmsLoaded]);
 
-  if (!isFavoriteFilmsLoaded) {
+  if (!isFavoriteFilmsLoaded && !isErrorLoading) {
     return (
-      <Loading />
+      <LoadingPage />
+    );
+  }
+
+  if (isErrorLoading) {
+    return (
+      <ErrorPage />
     );
   }
 
