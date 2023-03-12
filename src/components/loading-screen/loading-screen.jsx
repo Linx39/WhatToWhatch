@@ -4,7 +4,7 @@ import LogoHeader from '../common-components/logo/logo-header';
 import LogoFooter from '../common-components/logo/logo-footer';
 import Copyright from '../common-components/copyright/copyright';
 
-const ErrorPage = () => {
+const LoadingScreen = () => {
   return (
     <>
       <section className="movie-card">
@@ -17,7 +17,7 @@ const ErrorPage = () => {
 
       <div className="page-content">
         <section className="catalog">
-          <h2 className="catalog__title">Server Error!!! Обновите страницу</h2>
+          <h2 className="catalog__title">Loading ...</h2>
         </section>
 
         <footer className="page-footer">
@@ -30,4 +30,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default LoadingScreen;

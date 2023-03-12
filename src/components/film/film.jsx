@@ -8,8 +8,8 @@ import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
-import LoadingPage from '../loading-page/loading-page';
-import ErrorPage from '../error-page/error-page';
+import LoadingScreen from '../loading-screen/loading-screen';
+import ErrorScreen from '../error-screen/error-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
 import NavList from './nav-list/nav-list';
 import Overview from './overview/overview';
@@ -62,13 +62,13 @@ const Film = () => {
 
   if ((!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) && !isErrorLoading) {
     return (
-      <LoadingPage />
+      <LoadingScreen />
     );
   }
 
   if (isErrorLoading) {
     return (
-      <ErrorPage />
+      <ErrorScreen />
     );
   }
 
@@ -108,9 +108,10 @@ const Film = () => {
           <header className="page-header movie-card__head">
             <LogoHeader />
 
-            {authorizationStatus === AuthorizationStatus.AUTH
-              ? <UserBlock />
-              : <UserBlockNoSign />
+            {
+              authorizationStatus === AuthorizationStatus.AUTH
+                ? <UserBlock />
+                : <UserBlockNoSign />
             }
           </header>
 
@@ -127,9 +128,10 @@ const Film = () => {
 
                 <AddFavoriteButton film={film} fetchType={AddFavoriteFetchType.FILM} />
 
-                {authorizationStatus === AuthorizationStatus.AUTH
-                &&
-                <AddReviewButton film={film}/>
+                {
+                  authorizationStatus === AuthorizationStatus.AUTH
+                  &&
+                  <AddReviewButton film={film}/>
                 }
               </div>
             </div>

@@ -23,11 +23,11 @@ const SignIn = () => {
   const loginRef = useRef();
   const passwordRef = useRef();
 
-  useEffect(() => {
+  // useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       onRedirectToRoute(Patch.MAIN);
     }
-  }, [authorizationStatus]);
+  // }, [authorizationStatus]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

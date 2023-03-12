@@ -4,8 +4,8 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import VideoPlayerWithUtils from '../video-player/video-player-with-utils';
 import PlayerControls from './player-controls/player-controls';
-import LoadingPage from '../loading-page/loading-page';
-import ErrorPage from '../error-page/error-page';
+import LoadingScreen from '../loading-screen/loading-screen';
+import ErrorScreen from '../error-screen/error-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
@@ -41,13 +41,13 @@ const Player = () => {
 
   if (!isFilmLoaded && !isErrorLoading) {
     return (
-      <LoadingPage />
+      <LoadingScreen />
     );
   }
 
   if (isErrorLoading) {
     return (
-      <ErrorPage />
+      <ErrorScreen />
     );
   }
 

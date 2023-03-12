@@ -91,9 +91,10 @@ export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGIN)
     .then(({data}) => {
       const user = adaptUserToClient(data);
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(user));
     })
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
@@ -101,15 +102,19 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(AdditionalUrl.LOGIN, {email, password})
     .then(({data}) => {
       const user = adaptUserToClient(data);
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(user));
     })
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(Patch.MAIN)))
+    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    // .then(() => dispatch(redirectToRoute(Patch.MAIN)))
     .catch(() => {})
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGOUT)
-    .then(() => dispatch(loadUserData({})))
-    .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => {
+      dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
+      dispatch(loadUserData({}));
+    })
+    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );

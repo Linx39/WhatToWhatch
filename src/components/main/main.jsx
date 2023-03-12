@@ -6,8 +6,8 @@ import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
 import Copyright from '../common-components/copyright/copyright';
-import LoadingPage from '../loading-page/loading-page';
-import ErrorPage from '../error-page/error-page';
+import LoadingScreen from '../loading-screen/loading-screen';
+import ErrorScreen from '../error-screen/error-screen';
 import PromoFilm from './promo-film/promo-film';
 import GenresList from './genres-list/genres-list';
 import FilmsList from '../films-list/films-list';
@@ -50,13 +50,13 @@ const Main = () => {
 
   if ((!isFilmsLoaded || !isPromoFilmLoaded) && !isErrorLoading) {
     return (
-      <LoadingPage />
+      <LoadingScreen />
     );
   }
 
   if (isErrorLoading) {
     return (
-      <ErrorPage />
+      <ErrorScreen />
     );
   }
 

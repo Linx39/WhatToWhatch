@@ -1,11 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
 import LogoHeader from '../common-components/logo/logo-header';
 import UserBlock from '../common-components/user-block/user-block';
 import AddReviewForm from './add-revew-form/add-revew-form';
-import LoadingPage from '../loading-page/loading-page';
+import LoadingScreen from '../loading-screen/loading-screen';
+import ErrorScreen from '../error-screen/error-screen';
+import NotFoundPage from '../not-found-page/not-found-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
 import {AuthorizationStatus, Patch} from '../../const';
@@ -23,18 +25,35 @@ const AddReview = () => {
   }
 
   const paramsId = Number(useParams().id);
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {
     if (!isFilmLoaded) {
-      onLoadFilm(paramsId);
+      onLoadFilm(paramsId)
+      .catch(() => {
+        setIsErrorLoading(true);
+      });
     }
   }, [isFilmLoaded]);
 
-  if (!isFilmLoaded) {
+  if (!isFilmLoaded && !isErrorLoading) {
     return (
-      <LoadingPage />
+      <LoadingScreen />
     );
   }
+
+  if (isErrorLoading) {
+    return (
+      <ErrorScreen />
+    );
+  }
+
+  if (Object.keys(film).length === 0) {
+    return (
+      <NotFoundPage />
+    );
+  }
+
 
   const {id, name, posterImage, backgroundImage} = film;
 

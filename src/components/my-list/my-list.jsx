@@ -6,8 +6,8 @@ import LogoHeader from '../common-components/logo/logo-header';
 import LogoFooter from '../common-components/logo/logo-footer';
 import UserBlock from '../common-components/user-block/user-block';
 import Copyright from '../common-components/copyright/copyright';
-import LoadingPage from '../loading-page/loading-page';
-import ErrorPage from '../error-page/error-page';
+import LoadingScreen from '../loading-screen/loading-screen';
+import ErrorScreen from '../error-screen/error-screen';
 import {fetchFavoriteFilms} from '../../store/api-actions';
 
 const MyList = () => {
@@ -29,13 +29,13 @@ const MyList = () => {
 
   if (!isFavoriteFilmsLoaded && !isErrorLoading) {
     return (
-      <LoadingPage />
+      <LoadingScreen />
     );
   }
 
   if (isErrorLoading) {
     return (
-      <ErrorPage />
+      <ErrorScreen />
     );
   }
 

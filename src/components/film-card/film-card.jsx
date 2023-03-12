@@ -18,14 +18,17 @@ const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
   const timerRef = useRef(null);
-  const handleMouseEnter = (id) => {
-    timerRef.current = setTimeout(() => onMouseEnter(id), TIME_OUT);
+  const handleMouseEnter = () => {
+    timerRef.current = setTimeout(() => onMouseEnter(film), TIME_OUT);
   };
-  const handleMouseLeave = () => onMouseLeave();
-  const handleMouseClick = (id) => {
+  const handleMouseLeave = () => {
+    onMouseLeave();
+    clearTimeout(timerRef.current);
+  };
+  const handleMouseClick = () => {
     onResetLoadedFilm();
     onResetOnDefaultFilmInfo();
-    onRedirectToRoute(`${Patch.FILMS}/${id}`);
+    onRedirectToRoute(`${Patch.FILMS}/${film.id}`);
   };
 
   useEffect(() => {

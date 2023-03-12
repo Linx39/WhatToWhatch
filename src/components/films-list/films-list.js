@@ -4,27 +4,26 @@ import FilmCard from '../film-card/film-card';
 import {filmsProp, countProp} from '../props-types';
 
 const FilmsList = ({films, count = films.length}) => {
-  const [activeCardId, setActiveCardId] = useState(null);
+  const [activeCard, setActiveCard] = useState(null);
 
   const handleMouseEnter = useCallback(
-      (id) => setActiveCardId(id),
+      (film) => setActiveCard(film),
       [films]
   );
   const handleMouseLeave = useCallback(
-      () => setActiveCardId(null),
+      () => setActiveCard(null),
       [films]
   );
 
   return (
     <div className="catalog__movies-list" data-testid="test-film-list">
       {films.slice(0, count).map((film) => {
-        const {id} = film;
-
+        
         return (
           <FilmCard
-            key={id}
+            key={film.id}
             film={film}
-            isVideoMode={(activeCardId && id === activeCardId) || false}
+            isVideoMode={(activeCard && film === activeCard) || false}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           />
