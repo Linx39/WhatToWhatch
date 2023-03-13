@@ -1,5 +1,6 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
@@ -7,12 +8,20 @@ import MyList from '../my-list/my-list';
 import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
+import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-router/private-route';
-
-import {Patch} from '../../const';
+import {Patch, AuthorizationStatus} from '../../const';
 
 const App = () => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+
+  if (authorizationStatus === AuthorizationStatus.UNKNOW) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <Switch>
       <Route exact path={Patch.MAIN}>

@@ -94,8 +94,8 @@ export const checkAuth = () => (dispatch, _getState, api) => (
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(user));
     })
-    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
+    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
@@ -107,7 +107,6 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     })
     // .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     // .then(() => dispatch(redirectToRoute(Patch.MAIN)))
-    .catch(() => {})
 );
 
 export const logout = () => (dispatch, _getState, api) => (

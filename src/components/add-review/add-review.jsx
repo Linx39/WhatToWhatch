@@ -10,19 +10,14 @@ import ErrorScreen from '../error-screen/error-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
-import {AuthorizationStatus, Patch} from '../../const';
+import {Patch} from '../../const';
 
 const AddReview = () => {
-  const {authorizationStatus} = useSelector((state) => state.USER);
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
 
   const dispatch = useDispatch();
   const onLoadFilm = (id) => dispatch(fetchFilm(id));
   const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-
-  if (authorizationStatus !== AuthorizationStatus.AUTH) {
-    onRedirectToRoute(Patch.LOGIN);
-  }
 
   const paramsId = Number(useParams().id);
   const [isErrorLoading, setIsErrorLoading] = useState(false);

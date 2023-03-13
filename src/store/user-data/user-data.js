@@ -4,7 +4,7 @@ import {requireAuthorization, loadUserData} from '../action';
 import {AuthorizationStatus} from '../../const';
 
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.UNKNOW,
   user: {},
 };
 

@@ -22,6 +22,7 @@ export const GENRE_DEFAULT = `All genres`;
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
+  UNKNOW: `UNKNOW`,
 };
 
 export const AdditionalUrl = {
