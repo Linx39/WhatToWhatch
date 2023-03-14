@@ -5,9 +5,9 @@ import {loadFilms, loadPromoFilm, loadFilm, loadComments, loadFavoriteFilms, res
 const initialState = {
   films: [],
   isFilmsLoaded: false,
-  promoFilm: {},
+  promoFilm: null,
   isPromoFilmLoaded: false,
-  film: {},
+  film: null,
   isFilmLoaded: false,
   comments: [],
   isCommentsLoaded: false,
@@ -37,7 +37,7 @@ const appData = createReducer(initialState, (builder) => {
     state.isFavoriteFilmsLoaded = true;
   });
   builder.addCase(resetLoadedFilm, (state) => {
-    state.film = {};
+    state.film = null;
     state.isFilmLoaded = false;
     state.comments = [];
     state.isCommentsLoaded = false;

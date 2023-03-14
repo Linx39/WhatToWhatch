@@ -7,14 +7,12 @@ import {Patch} from '../../../const';
 
 const UserBlock = () => {
   const {user} = useSelector((state) => state.USER);
-
   const dispatch = useDispatch();
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-  const onLogout = () => dispatch(logout());
+
+  const handleLogout = () => dispatch(logout());
+  const handleOnAvatarClick = () => dispatch(redirectToRoute((Patch.MY_LIST)));
 
   const {avatarUrl} = user;
-
-  const handleOnAvatarClick = () => onRedirectToRoute(Patch.MY_LIST);
 
   return (
     <div className="user-block">
@@ -23,7 +21,7 @@ const UserBlock = () => {
       </div>
       {/* удалить */}
       <div>
-        <span onClick={onLogout}>Logout</span>
+        <span onClick={handleLogout}>Logout</span>
       </div>
     </div>
   );

@@ -3,6 +3,15 @@ import React from "react";
 import {filmProp} from '../../props-types';
 import {getTimeInHoursMinutes} from '../../component-utils';
 
+const getTimeTemplate = (time) => {
+  const {hours, minutes} = getTimeInHoursMinutes(time);
+
+  const h = hours !== 0 ? `${hours}h ` : ``;
+  const m = minutes.lenght === 1 ? `0${minutes}m` : `${minutes}m`;
+
+  return `${h}${m}`;
+};
+
 const Details = ({film}) => {
   const {
     director,
@@ -11,15 +20,6 @@ const Details = ({film}) => {
     genre,
     released,
   } = film;
-
-  const getTimeTemplate = (time) => {
-    const {hours, minutes} = getTimeInHoursMinutes(time);
-
-    const h = hours !== 0 ? `${hours}h ` : ``;
-    const m = minutes.lenght === 1 ? `0${minutes}m` : `${minutes}m`;
-
-    return `${h}${m}`;
-  };
 
   return (
     <div className="movie-card__text movie-card__row">

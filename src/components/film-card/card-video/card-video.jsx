@@ -9,10 +9,8 @@ const CardVideo = ({film}) => {
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
-  const handleChangeIsVideoLoaded = (isLoaded) => {
-    setIsVideoLoaded(isLoaded);
-  };
-
+  const handleChangeIsVideoLoaded = (isLoaded) => setIsVideoLoaded(isLoaded);
+  
   return (
     <div className="small-movie-card__image" data-testid={`test-card-video-${id}`}>
       <VideoPlayer

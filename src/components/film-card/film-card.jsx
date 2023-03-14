@@ -13,22 +13,21 @@ const TIME_OUT = 1000;
 
 const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   const dispatch = useDispatch();
-  const onResetLoadedFilm = () => dispatch(resetLoadedFilm());
-  const onResetOnDefaultFilmInfo = () => dispatch(resetOnDefaultFilmInfo());
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-
   const timerRef = useRef(null);
+
   const handleMouseEnter = () => {
     timerRef.current = setTimeout(() => onMouseEnter(film), TIME_OUT);
   };
+
   const handleMouseLeave = () => {
     onMouseLeave();
     clearTimeout(timerRef.current);
   };
+  
   const handleMouseClick = () => {
-    onResetLoadedFilm();
-    onResetOnDefaultFilmInfo();
-    onRedirectToRoute(`${Patch.FILMS}/${film.id}`);
+    dispatch(resetLoadedFilm());
+    dispatch(resetOnDefaultFilmInfo());
+    dispatch(redirectToRoute((`${Patch.FILMS}/${film.id}`)));
   };
 
   useEffect(() => {

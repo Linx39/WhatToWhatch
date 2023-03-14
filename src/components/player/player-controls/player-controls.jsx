@@ -11,7 +11,6 @@ const getProgressValue = (durationVideo, currentTime) => {
   return progressValue;
 };
 
-
 const getTimeTemplate = (time) => {
   const {hours, minutes, seconds} = getTimeInHoursMinutesSeconds(time);
 
@@ -31,6 +30,7 @@ const PlayerControls = (props) => {
     onPlayPauseButtonClick,
     onFullScreenButtonClick
   } = props;
+
   const progressValue = getProgressValue(duration, currentTime);
 
   return (

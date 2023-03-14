@@ -23,37 +23,33 @@ import {changeActiveNavItem} from '../../store/action';
 import {FilmsCount, NavItem, AuthorizationStatus, AddFavoriteFetchType} from '../../const';
 
 const Film = () => {
+  const {id} = useParams();
   const {films, isFilmsLoaded, film, isFilmLoaded, comments, isCommentsLoaded} = useSelector((state) => state.DATA);
   const {activeNavItem} = useSelector((state) => state.FILM_INFO_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
-
   const dispatch = useDispatch();
-  const onLoadFilms = () => dispatch(fetchFilms());
-  const onLoadFilm = (id) => dispatch(fetchFilm(id));
-  const onLoadComments = (id) => dispatch(fetchComments(id));
-  const onChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
-  const paramsId = Number(useParams().id);
+  const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
   const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {
     if (!isFilmsLoaded) {
-      onLoadFilms()
+      dispatch(fetchFilms())
       .catch(() => {
         setIsErrorLoading(true);
       });
     }
 
     if (!isFilmLoaded) {
-      onLoadFilm(paramsId)
+      dispatch(fetchFilm(id))
       .catch(() => {
         setIsErrorLoading(true);
       });
     }
 
     if (!isCommentsLoaded) {
-      onLoadComments(paramsId)
+      dispatch(fetchComments(id))
       .catch(() => {
         setIsErrorLoading(true);
       });
@@ -66,19 +62,19 @@ const Film = () => {
     );
   }
 
+  if (!film) {
+    return (
+      <NotFoundPage />
+    );
+  }
+
   if (isErrorLoading) {
     return (
       <ErrorScreen />
     );
   }
 
-  if (Object.keys(film).length === 0) {
-    return (
-      <NotFoundPage />
-    );
-  }
-
-  const {id, name, posterImage, backgroundImage, genre, released} = film;
+  const {name, posterImage, backgroundImage, genre, released} = film;
 
   const getActiveComponent = (item) => {
     switch (item) {
@@ -147,7 +143,7 @@ const Film = () => {
             <div className="movie-card__desc">
               <NavList
                 activeNavItem={activeNavItem}
-                onClick={onChangeActiveNavItem}
+                onClick={handleChangeActiveNavItem}
               />
 
               {getActiveComponent(activeNavItem)}

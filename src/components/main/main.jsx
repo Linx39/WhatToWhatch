@@ -14,37 +14,33 @@ import FilmsList from '../films-list/films-list';
 import ShowMore from './show-more/show-more';
 import {changeFilmsList} from '../../store/action';
 import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
-import {AuthorizationStatus, Patch} from '../../const';
+import {AuthorizationStatus} from '../../const';
 
 const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
   const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
-
   const dispatch = useDispatch();
-  const onLoadFilms = () => dispatch(fetchFilms());
-  const onLoadPromoFilm = () => dispatch(fetchPromoFilm());
-  const onChangeFilmsList = (list) => dispatch(changeFilmsList(list));
 
   const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {
     if (!isFilmsLoaded) {
-      onLoadFilms()
+      dispatch(fetchFilms())
       .catch(() => {
         setIsErrorLoading(true);
       });
     }
 
     if (!isPromoFilmLoaded) {
-      onLoadPromoFilm()
+      dispatch(fetchPromoFilm())
       .catch(() => {
         setIsErrorLoading(true);
       });
     }
 
     if (isFilmsLoaded) {
-      onChangeFilmsList(films);
+      dispatch(changeFilmsList(films));
     }
   }, [isFilmsLoaded && isPromoFilmLoaded]);
 

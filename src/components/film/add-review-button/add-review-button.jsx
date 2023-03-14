@@ -7,12 +7,10 @@ import {Patch} from '../../../const';
 import {filmProp} from '../../props-types';
 
 const AddReviewButton = ({film}) => {
-  const dispatch = useDispatch();
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-
   const {id} = film;
+  const dispatch = useDispatch();
 
-  const handleAddReviewClick = () => onRedirectToRoute(`${Patch.FILMS}/${id}/review`);
+  const handleAddReviewClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}/review`)));
 
   return (
     <Link to="#"

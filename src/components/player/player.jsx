@@ -12,12 +12,9 @@ import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
 
 const Player = () => {
+  const {id} = useParams();
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
-
   const dispatch = useDispatch();
-  const onLoadFilm = (id) => dispatch(fetchFilm(id));
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-
   const videoRef = useRef();
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -25,14 +22,19 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullScreen, setIsFullScreen] = useState(false);
-
-  const paramsId = Number(useParams().id);
-
   const [isErrorLoading, setIsErrorLoading] = useState(false);
+
+  const handleExitButtonClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
+  const handleChangeIsVideoLoaded = (isLoaded) => setIsVideoLoaded(isLoaded);
+  const handleGetDuration = (time) => setDuration(time);
+  const handleGetCurrentTime = (time) => setCurrentTime(time);
+  const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
+  const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
+  const handleChangeIsPlaying = (value) => setIsPlaying(value);
 
   useEffect(() => {
     if (!isFilmLoaded) {
-      onLoadFilm(paramsId)
+      dispatch(fetchFilm(id))
       .catch(() => {
         setIsErrorLoading(true);
       });
@@ -45,27 +47,19 @@ const Player = () => {
     );
   }
 
-  if (isErrorLoading) {
-    return (
-      <ErrorScreen />
-    );
-  }
+  // if (isErrorLoading) {
+  //   return (
+  //     <ErrorScreen />
+  //   );
+  // }
 
-  if (Object.keys(film).length === 0) {
+  if (!film) {
     return (
       <NotFoundPage />
     );
   }
 
-  const {id, previewImage, videoLink} = film;
-
-  const handleExitButtonClick = () => onRedirectToRoute(`${Patch.FILMS}/${id}`);
-  const handleChangeIsVideoLoaded = (isLoaded) => setIsVideoLoaded(isLoaded);
-  const handleGetDuration = (time) => setDuration(time);
-  const handleGetCurrentTime = (time) => setCurrentTime(time);
-  const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
-  const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
-  const handleChangeIsPlaying = (value) => setIsPlaying(value);
+  const {previewImage, videoLink} = film;
 
   return (
     <div className="player">

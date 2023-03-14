@@ -13,18 +13,16 @@ import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
 
 const AddReview = () => {
+  const {id} = useParams();
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
-
   const dispatch = useDispatch();
-  const onLoadFilm = (id) => dispatch(fetchFilm(id));
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
+  const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
 
-  const paramsId = Number(useParams().id);
   const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {
     if (!isFilmLoaded) {
-      onLoadFilm(paramsId)
+      dispatch(fetchFilm(id))
       .catch(() => {
         setIsErrorLoading(true);
       });
@@ -37,11 +35,11 @@ const AddReview = () => {
     );
   }
 
-  if (isErrorLoading) {
-    return (
-      <ErrorScreen />
-    );
-  }
+  // if (isErrorLoading) {
+  //   return (
+  //     <ErrorScreen />
+  //   );
+  // }
 
   if (Object.keys(film).length === 0) {
     return (
@@ -49,10 +47,7 @@ const AddReview = () => {
     );
   }
 
-
-  const {id, name, posterImage, backgroundImage} = film;
-
-  const handleFilmNameClick = () => onRedirectToRoute(`${Patch.FILMS}/${id}`);
+  const {name, posterImage, backgroundImage} = film;
 
   return (
     <section className="movie-card movie-card--full">

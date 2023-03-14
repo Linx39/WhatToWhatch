@@ -9,12 +9,10 @@ import {Patch} from '../../../const';
 
 const Logo = ({isActive, className}) => {
   const dispatch = useDispatch();
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-  const onResetOnDefaultFilmsList = () => dispatch(resetOnDefaultFilmsList());
 
   const handleLogoClick = () => {
-    onResetOnDefaultFilmsList();
-    onRedirectToRoute(Patch.MAIN);
+    dispatch(resetOnDefaultFilmsList());
+    dispatch(redirectToRoute((Patch.MAIN)));
   };
 
   return (

@@ -12,15 +12,13 @@ import {fetchFavoriteFilms} from '../../store/api-actions';
 
 const MyList = () => {
   const {favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
-
   const dispatch = useDispatch();
-  const onLoadFavoriteFilms = () => dispatch(fetchFavoriteFilms());
 
   const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {
     if (!isFavoriteFilmsLoaded) {
-      onLoadFavoriteFilms()
+      dispatch(fetchFavoriteFilms())
       .catch(() => {
         setIsErrorLoading(true);
       });

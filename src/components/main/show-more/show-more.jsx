@@ -14,13 +14,11 @@ export const getNewCount = (prevCount, maxCount) => {
 const ShowMore = () => {
   const {count} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const {filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
-
   const dispatch = useDispatch();
-  const onChangeFilmsCount = (newCount) => dispatch(changeFilmsCount(newCount));
 
   const handleShowMoreClick = () => {
     const newCount = getNewCount(count, filmsList.length);
-    onChangeFilmsCount(newCount);
+    dispatch(changeFilmsCount(newCount));
   };
 
   return (

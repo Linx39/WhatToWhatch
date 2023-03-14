@@ -33,9 +33,6 @@ export const fetchFilm = (id) => (dispatch, _getState, api) => (
       const film = adaptFilmToClient(data);
       dispatch(loadFilm(film));
     })
-    .catch(() => {
-      dispatch(loadFilm({}));
-    })
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (
@@ -50,9 +47,6 @@ export const fetchAddComment = (id, {rating, comment}) => (dispatch, _getState, 
     .then(({data}) => {
       dispatch(loadComments(data));
     })
-    .catch(() => {
-      dispatch(loadComments([]));
-    })
 );
 
 export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
@@ -61,9 +55,6 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
       const films = data.map((item) => adaptFilmToClient(item));
       dispatch(loadFavoriteFilms(films));
     })
-    // .catch(() => {
-    //   dispatch(loadFavoriteFilms([]));
-    // })
 );
 
 export const fetchAddFavoriteFilm = (id, status, fetchType) => (dispatch, _getState, api) => (
@@ -84,7 +75,6 @@ export const fetchAddFavoriteFilm = (id, status, fetchType) => (dispatch, _getSt
           throw new Error(`Unknown switch case expression: '${fetchType}'!`);
       }
     })
-    .catch(() => {})
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -94,8 +84,6 @@ export const checkAuth = () => (dispatch, _getState, api) => (
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(user));
     })
-    .catch(() => {})
-    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
@@ -105,8 +93,6 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(user));
     })
-    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    // .then(() => dispatch(redirectToRoute(Patch.MAIN)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
@@ -115,5 +101,4 @@ export const logout = () => (dispatch, _getState, api) => (
       dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
       dispatch(loadUserData({}));
     })
-    // .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );

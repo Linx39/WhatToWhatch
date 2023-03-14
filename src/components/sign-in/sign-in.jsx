@@ -12,22 +12,12 @@ import {isEmailValid} from '../component-utils';
 
 const SignIn = () => {
   const {authorizationStatus} = useSelector((state) => state.USER);
-
   const dispatch = useDispatch();
-  const onLogin = (authData) => dispatch(login(authData));
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-
-  const [isFormCorrect, setIsFormCorrect] = useState(true);
-  const [isEmailCorrect, setIsEmailCorrect] = useState(true);
-
   const loginRef = useRef();
   const passwordRef = useRef();
 
-  // useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.AUTH) {
-      onRedirectToRoute(Patch.MAIN);
-    }
-  // }, [authorizationStatus]);
+  const [isFormCorrect, setIsFormCorrect] = useState(true);
+  const [isEmailCorrect, setIsEmailCorrect] = useState(true);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -44,11 +34,7 @@ const SignIn = () => {
       return;
     }
 
-    onLogin({
-      login: loginValue,
-      password: passwordValue,
-    });
-
+    dispatch(login({login: loginValue, password: passwordValue}));
   };
 
   const handleInput = (evt) => {
@@ -61,6 +47,12 @@ const SignIn = () => {
 
     setIsEmailCorrect(true);
   };
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      dispatch(redirectToRoute((Patch.MAIN)));
+    }
+  }, [authorizationStatus]);
 
   return (
     <div className="user-page">

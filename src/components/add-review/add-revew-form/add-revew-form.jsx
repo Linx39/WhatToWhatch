@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 import Stars from '../stars/stars';
@@ -8,9 +8,8 @@ import {redirectToRoute} from '../../../store/action';
 import {ReviewTextLength, Patch} from '../../../const';
 
 const AddReviewForm = ({film}) => {
+  const {id} = film;
   const dispatch = useDispatch();
-  const onAddComment = (id, userForm) => dispatch(fetchAddComment(id, userForm));
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
 
   const [userForm, setUserForm] = useState({
     rating: null,
@@ -18,8 +17,6 @@ const AddReviewForm = ({film}) => {
   });
 
   const [isSubmiting, setIsSubmiting] = useState(false);
-
-  const {id} = film;
 
   const handleRatingChange = (evt) => {
     setUserForm({...userForm, rating: evt.target.value});
@@ -33,10 +30,10 @@ const AddReviewForm = ({film}) => {
     evt.preventDefault();
     setIsSubmiting(true);
 
-    onAddComment(id, userForm)
+    dispatch(fetchAddComment(id, userForm))
       .then(() => {
         setIsSubmiting(false);
-        onRedirectToRoute(`${Patch.FILMS}/${id}`);
+        dispatch(redirectToRoute(`${Patch.FILMS}/${id}`));
       })
       .catch(() => {
         setIsSubmiting(false);

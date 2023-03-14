@@ -8,23 +8,18 @@ import {AuthorizationStatus, Patch} from '../../../const';
 import {filmProp} from '../../props-types';
 
 const AddFavoriteButton = ({film, fetchType}) => {
-  const {authorizationStatus} = useSelector((state) => state.USER);
-
-  const dispatch = useDispatch();
-  const onRedirectToRoute = (url) => dispatch(redirectToRoute(url));
-  const onAddFavoriteFilm = (id, status) => dispatch(fetchAddFavoriteFilm(id, status, fetchType));
-  const onResetLoadedFavoriteFilms = () => dispatch(resetLoadedFavoriteFilms());
-
   const {id, isFavorite} = film;
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const dispatch = useDispatch();
 
   const handleAddFavoriteFilm = () => {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      onRedirectToRoute(Patch.LOGIN);
+      dispatch(redirectToRoute((Patch.LOGIN)));
       return;
     }
 
-    onAddFavoriteFilm(id, Number(!isFavorite));
-    onResetLoadedFavoriteFilms();
+    dispatch(fetchAddFavoriteFilm(id, Number(!isFavorite), fetchType));
+    dispatch(resetLoadedFavoriteFilms());
   };
 
   return (
