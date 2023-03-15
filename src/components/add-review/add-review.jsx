@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import MovieCardBg from '../common-components/movie-card-bg/movie-card-bg';
+import MovieCardBig from '../common-components/movie-card-big/movie-card-big';
 import Header from '../common-components/header/header';
 import BreadCrumbs from './breadcrumbs/breadcrumbs';
 import AddReviewForm from './add-revew-form/add-revew-form';
@@ -53,7 +53,7 @@ const AddReview = () => {
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
-        <MovieCardBg src={backgroundImage} alt={name} />
+        <MovieCardBig src={backgroundImage} alt={name} />
 
         <h1 className="visually-hidden">WTW</h1>
 

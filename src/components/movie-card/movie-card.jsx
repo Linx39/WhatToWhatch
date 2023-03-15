@@ -11,7 +11,7 @@ import {Patch} from '../../const';
 
 const TIME_OUT = 1000;
 
-const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
+const MovieCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   const dispatch = useDispatch();
   const timerRef = useRef(null);
 
@@ -23,7 +23,7 @@ const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
     onMouseLeave();
     clearTimeout(timerRef.current);
   };
-  
+
   const handleMouseClick = () => {
     dispatch(resetLoadedFilm());
     dispatch(resetOnDefaultFilmInfo());
@@ -55,11 +55,11 @@ const FilmCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   );
 };
 
-FilmCard.propTypes = {
+MovieCard.propTypes = {
   film: filmProp,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   isVideoMode: PropTypes.bool.isRequired,
 };
 
-export default memo(FilmCard);
+export default memo(MovieCard);

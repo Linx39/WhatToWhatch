@@ -3,19 +3,19 @@ import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import FilmCard from './film-card';
+import MovieCard from './film-card';
 import films from '../../mock/films';
 
 const mockStore = configureStore({});
 
-describe(`Test FilmCard`, () => {
+describe(`Test MovieCard`, () => {
   const film = films[3];
   const {id} = film;
 
-  it(`FilmCard should render correctly`, () => {
+  it(`MovieCard should render correctly`, () => {
     render(
         <Provider store={mockStore({})}>
-          <FilmCard
+          <MovieCard
             film={film}
             isVideoMode={false}
             onMouseEnter={jest.fn()}

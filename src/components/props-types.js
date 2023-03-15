@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 
-export const countProp = PropTypes.number.isRequired;
-
 export const filmProp = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
@@ -22,8 +20,6 @@ export const filmProp = PropTypes.shape({
   isFavorite: PropTypes.bool.isRequired,
 }).isRequired;
 
-export const filmsProp = PropTypes.arrayOf(filmProp).isRequired;
-
 export const commentProp = PropTypes.shape({
   id: PropTypes.number.isRequired,
   user: PropTypes.shape({
@@ -33,6 +29,4 @@ export const commentProp = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired
-});
-
-export const commentsProp = PropTypes.arrayOf(commentProp).isRequired;
+}).isRequired;

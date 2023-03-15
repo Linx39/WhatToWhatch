@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MovieCardBg = ({src, alt}) => {
+const MovieCardBig = ({src, alt}) => {
   return (
     <div className="movie-card__bg">
       <img src={src} alt={alt} />
@@ -9,9 +9,9 @@ const MovieCardBg = ({src, alt}) => {
   );
 };
 
-MovieCardBg.propTypes = {
+MovieCardBig.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
 };
 
-export default MovieCardBg;
+export default MovieCardBig;

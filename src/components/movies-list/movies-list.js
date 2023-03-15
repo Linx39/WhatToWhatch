@@ -1,9 +1,10 @@
 import React, {useState, useCallback} from 'react';
+import PropTypes from 'prop-types';
 
-import FilmCard from '../film-card/film-card';
-import {filmsProp, countProp} from '../props-types';
+import MovieCard from '../movie-card/movie-card';
+import {filmProp} from '../props-types';
 
-const FilmsList = ({films, count = films.length}) => {
+const MoviesList = ({films, count = films.length}) => {
   const [activeCard, setActiveCard] = useState(null);
 
   const handleMouseEnter = useCallback(
@@ -18,9 +19,8 @@ const FilmsList = ({films, count = films.length}) => {
   return (
     <div className="catalog__movies-list" data-testid="test-film-list">
       {films.slice(0, count).map((film) => {
-
         return (
-          <FilmCard
+          <MovieCard
             key={film.id}
             film={film}
             isVideoMode={(activeCard && film === activeCard) || false}
@@ -33,9 +33,9 @@ const FilmsList = ({films, count = films.length}) => {
   );
 };
 
-FilmsList.propTypes = {
-  films: filmsProp,
-  count: countProp,
+MoviesList.propTypes = {
+  films: PropTypes.arrayOf(filmProp).isRequired,
+  count: PropTypes.number.isRequired,
 };
 
-export default FilmsList;
+export default MoviesList;

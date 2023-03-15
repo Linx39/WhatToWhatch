@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import Header from '../common-components/header/header';
-import FilmsList from '../films-list/films-list';
+import MoviesList from '../movies-list/movies-list';
 import Footer from '../common-components/footer/footer';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
@@ -45,7 +45,7 @@ const MyList = () => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList films={favoriteFilms} count={favoriteFilms.length} />
+        <MoviesList films={favoriteFilms} count={favoriteFilms.length} />
       </section>
 
       <Footer />

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import MovieCardBg from '../common-components/movie-card-bg/movie-card-bg';
+import MovieCardBig from '../common-components/movie-card-big/movie-card-big';
 import Header from '../common-components/header/header';
 import Footer from '../common-components/footer/footer';
 import PromoFilm from './promo-film/promo-film';
 import GenresList from './genres-list/genres-list';
-import FilmsList from '../films-list/films-list';
+import MoviesList from '../movies-list/movies-list';
 import ShowMore from './show-more/show-more';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
@@ -57,7 +57,7 @@ const Main = () => {
   return (
     <>
       <section className='movie-card'>
-        <MovieCardBg src={backgroundImage} alt={name} />
+        <MovieCardBig src={backgroundImage} alt={name} />
 
         <h1 className="visually-hidden">WTW</h1>
 
@@ -72,7 +72,7 @@ const Main = () => {
 
           <GenresList />
 
-          <FilmsList films={filmsList} count={count} />
+          <MoviesList films={filmsList} count={count} />
 
           {(count < filmsList.length) && <ShowMore />}
         </section>

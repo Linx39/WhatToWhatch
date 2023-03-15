@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import Review from "../review/review";
-import {commentsProp} from "../../props-types";
+import {commentProp} from "../../props-types";
 
 const COLUMNS_COUNT = 2;
 
@@ -35,7 +36,7 @@ const Reviews = ({comments}) => {
 };
 
 Reviews.propTypes = {
-  comments: commentsProp,
+  comments: PropTypes.arrayOf(commentProp).isRequired,
 };
 
 export default Reviews;
