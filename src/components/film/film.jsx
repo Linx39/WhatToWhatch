@@ -2,15 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
+import MovieCardBg from '../common-components/movie-card-bg/movie-card-bg';
+import Header from '../common-components/header/header';
 import FilmsList from '../films-list/films-list';
-import LogoHeader from '../common-components/logo/logo-header';
-import LogoFooter from '../common-components/logo/logo-footer';
-import UserBlock from '../common-components/user-block/user-block';
-import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
-import Copyright from '../common-components/copyright/copyright';
-import LoadingScreen from '../loading-screen/loading-screen';
-import ErrorScreen from '../error-screen/error-screen';
-import NotFoundPage from '../not-found-page/not-found-page';
+import Footer from '../common-components/footer/footer';
 import NavList from './nav-list/nav-list';
 import Overview from './overview/overview';
 import Details from './details/details';
@@ -18,9 +13,12 @@ import Reviews from './reviews/reviews';
 import AddReviewButton from './add-review-button/add-review-button';
 import PlayButton from '../common-components/play-button/play-button';
 import AddFavoriteButton from '../common-components/add-favorite-button/add-favorite-button';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import ErrorPage from '../info-page/error-page/error-page';
+import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import {fetchFilms, fetchFilm, fetchComments} from '../../store/api-actions';
 import {changeActiveNavItem} from '../../store/action';
-import {FilmsCount, NavItem, AuthorizationStatus, AddFavoriteFetchType} from '../../const';
+import {FilmsCount, NavItem, AuthorizationStatus, AddFavoriteFetchType, AdditionalClass} from '../../const';
 
 const Film = () => {
   const {id} = useParams();
@@ -58,7 +56,7 @@ const Film = () => {
 
   if ((!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) && !isErrorLoading) {
     return (
-      <LoadingScreen />
+      <LoadingPage />
     );
   }
 
@@ -70,7 +68,7 @@ const Film = () => {
 
   if (isErrorLoading) {
     return (
-      <ErrorScreen />
+      <ErrorPage />
     );
   }
 
@@ -95,21 +93,11 @@ const Film = () => {
     <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
-          <div className="movie-card__bg">
-            <img src={backgroundImage} alt={name} />
-          </div>
+          <MovieCardBg src={backgroundImage} alt={name} />
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header movie-card__head">
-            <LogoHeader />
-
-            {
-              authorizationStatus === AuthorizationStatus.AUTH
-                ? <UserBlock />
-                : <UserBlockNoSign />
-            }
-          </header>
+          <Header additionalHeaderClass={AdditionalClass.HEADER.MOVIE_CARD} />
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -159,11 +147,7 @@ const Film = () => {
           <FilmsList films={filmsLikeThis} count={FilmsCount.FILMS_LIKE_THIS} />
         </section>
 
-        <footer className="page-footer">
-          <LogoFooter />
-
-          <Copyright />
-        </footer>
+        <Footer />
       </div>
     </>
   );

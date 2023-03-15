@@ -1,14 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
+import Header from '../common-components/header/header';
 import FilmsList from '../films-list/films-list';
-import LogoHeader from '../common-components/logo/logo-header';
-import LogoFooter from '../common-components/logo/logo-footer';
-import UserBlock from '../common-components/user-block/user-block';
-import Copyright from '../common-components/copyright/copyright';
-import LoadingScreen from '../loading-screen/loading-screen';
-import ErrorScreen from '../error-screen/error-screen';
+import Footer from '../common-components/footer/footer';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFavoriteFilms} from '../../store/api-actions';
+import {AdditionalClass} from '../../const';
 
 const MyList = () => {
   const {favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
@@ -27,25 +26,21 @@ const MyList = () => {
 
   if (!isFavoriteFilmsLoaded && !isErrorLoading) {
     return (
-      <LoadingScreen />
+      <LoadingPage />
     );
   }
 
   if (isErrorLoading) {
     return (
-      <ErrorScreen />
+      <ErrorPage />
     );
   }
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <LogoHeader />
-
+      <Header additionalHeaderClass={AdditionalClass.HEADER.USER_PAGE}>
         <h1 className="page-title user-page__title">My list</h1>
-
-        <UserBlock />
-      </header>
+      </Header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
@@ -53,11 +48,7 @@ const MyList = () => {
         <FilmsList films={favoriteFilms} count={favoriteFilms.length} />
       </section>
 
-      <footer className="page-footer">
-        <LogoFooter />
-
-        <Copyright />
-      </footer>
+      <Footer />
     </div>
   );
 };

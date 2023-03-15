@@ -11,12 +11,9 @@ const AddReviewForm = ({film}) => {
   const {id} = film;
   const dispatch = useDispatch();
 
-  const [userForm, setUserForm] = useState({
-    rating: null,
-    comment: ``
-  });
-
+  const [userForm, setUserForm] = useState({rating: null, comment: ``});
   const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
 
   const handleRatingChange = (evt) => {
     setUserForm({...userForm, rating: evt.target.value});
@@ -32,11 +29,11 @@ const AddReviewForm = ({film}) => {
 
     dispatch(fetchAddComment(id, userForm))
       .then(() => {
-        setIsSubmiting(false);
         dispatch(redirectToRoute(`${Patch.FILMS}/${id}`));
       })
       .catch(() => {
         setIsSubmiting(false);
+        setIsErrorSubmiting(true);
       });
   };
 
@@ -81,6 +78,12 @@ const AddReviewForm = ({film}) => {
             </button>
           </div>
         </div>
+
+        {isErrorSubmiting &&
+          <div>
+            <p>Ошибка отправки, повторите попытку</p>
+          </div>
+        }
       </form>
     </div>
   );

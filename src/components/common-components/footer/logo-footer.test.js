@@ -24,4 +24,6 @@ it(`LogoFooter should render correctly`, () => {
   expect(screen.getAllByText(/W/i)[0]).toBeInTheDocument();
   expect(screen.getAllByText(/W/i)[1]).toBeInTheDocument();
   expect(screen.getByText(/T/i)).toBeInTheDocument();
+
+  expect(screen.getByText(/© 2019 What to watch Ltd./i)).toBeInTheDocument(); //////////////////////////
 });

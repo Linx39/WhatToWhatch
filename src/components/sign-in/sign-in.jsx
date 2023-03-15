@@ -2,12 +2,11 @@ import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {useSelector, useDispatch} from 'react-redux';
 
+import Header from '../common-components/header/header';
+import Footer from '../common-components/footer/footer';
 import {login} from '../../store/api-actions';
-import LogoHeader from '../common-components/logo/logo-header';
-import LogoFooter from '../common-components/logo/logo-footer';
-import Copyright from '../common-components/copyright/copyright';
 import {redirectToRoute} from '../../store/action';
-import {AuthorizationStatus, Patch} from '../../const';
+import {AuthorizationStatus, Patch, AdditionalClass} from '../../const';
 import {isEmailValid} from '../component-utils';
 
 const SignIn = () => {
@@ -56,11 +55,9 @@ const SignIn = () => {
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <LogoHeader />
-
+      <Header additionalHeaderClass={AdditionalClass.HEADER.USER_PAGE} isUserBlock={false}>
         <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+      </Header>
 
       <div className="sign-in user-page__content">
         <form
@@ -115,11 +112,7 @@ const SignIn = () => {
         </form>
       </div>
 
-      <footer className="page-footer">
-        <LogoFooter />
-
-        <Copyright />
-      </footer>
+      <Footer />
     </div>
   );
 };

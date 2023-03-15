@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
-import LogoLetters from './logo-letter';
+import LogoLetters from './logo-letters';
 import {resetOnDefaultFilmsList, redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 
-const Logo = ({isActive, className}) => {
+const Logo = ({additionalLogoClass, isLogoClickable}) => {
   const dispatch = useDispatch();
+
+  const className = `logo__link ${additionalLogoClass}`;
 
   const handleLogoClick = () => {
     dispatch(resetOnDefaultFilmsList());
@@ -17,7 +19,7 @@ const Logo = ({isActive, className}) => {
 
   return (
     <div className="logo" data-testid={`test-logo`}>
-      {isActive
+      {isLogoClickable
         ?
         <Link to="#" className={className} onClick={handleLogoClick}>
           <LogoLetters />
@@ -31,9 +33,13 @@ const Logo = ({isActive, className}) => {
   );
 };
 
+Logo.defaultProps = {
+  additionalLogoClass: ``,
+};
+
 Logo.propTypes = {
-  isActive: PropTypes.bool,
-  className: PropTypes.string,
+  additionalLogoClass: PropTypes.string.isRequired,
+  isLogoClickable: PropTypes.bool.isRequired,
 };
 
 export default Logo;

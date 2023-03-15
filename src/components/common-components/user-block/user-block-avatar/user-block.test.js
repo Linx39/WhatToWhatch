@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import UserBlock from './user-block';
-import user from '../../../mock/user';
+import user from '../../../../mock/user';
 
 const mockStore = configureStore({});
 

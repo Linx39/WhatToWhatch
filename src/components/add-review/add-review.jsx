@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import LogoHeader from '../common-components/logo/logo-header';
-import UserBlock from '../common-components/user-block/user-block';
+import MovieCardBg from '../common-components/movie-card-bg/movie-card-bg';
+import Header from '../common-components/header/header';
+import BreadCrumbs from './breadcrumbs/breadcrumbs';
 import AddReviewForm from './add-revew-form/add-revew-form';
-import LoadingScreen from '../loading-screen/loading-screen';
-import ErrorScreen from '../error-screen/error-screen';
-import NotFoundPage from '../not-found-page/not-found-page';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import ErrorPage from '../info-page/error-page/error-page';
+import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
@@ -31,17 +32,17 @@ const AddReview = () => {
 
   if (!isFilmLoaded && !isErrorLoading) {
     return (
-      <LoadingScreen />
+      <LoadingPage />
     );
   }
 
   // if (isErrorLoading) {
   //   return (
-  //     <ErrorScreen />
+  //     <ErrorPage />
   //   );
   // }
 
-  if (Object.keys(film).length === 0) {
+  if (!film) {
     return (
       <NotFoundPage />
     );
@@ -52,28 +53,13 @@ const AddReview = () => {
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
-        <div className="movie-card__bg">
-          <img src={backgroundImage} alt={name} />
-        </div>
+        <MovieCardBg src={backgroundImage} alt={name} />
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
-          <LogoHeader />
-
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <Link to="#" onClick={handleFilmNameClick} className="breadcrumbs__link">{name}</Link>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
-              </li>
-            </ul>
-          </nav>
-
-          <UserBlock />
-        </header>
+        <Header>
+          <BreadCrumbs name={name} onClick={handleFilmNameClick} />
+        </Header>
 
         <div className="movie-card__poster movie-card__poster--small">
           <img src={posterImage} alt={`${name} poster`} width="218" height="327" />

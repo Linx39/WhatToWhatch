@@ -4,7 +4,7 @@ export const Patch = {
   MY_LIST: `/mylist`,
   FILMS: `/films`,
   PLAYER: `/player`,
-  NOT_FOUND: `/404`,
+  // NOT_FOUND: `/404`,
 };
 
 export const FilmsCount = {
@@ -44,4 +44,20 @@ export const ReviewTextLength = {
 export const AddFavoriteFetchType = {
   FILM: `FILM`,
   PROMO_FILM: `PROMO_FILM`,
+};
+
+export const InfoText = {
+  ERROR_404: `Error 404. Page not found.`,
+  LOADING: `Loading ... Please wait...`,
+  LOADING_ERROR: `Loading error! Please reload the page!`,
+};
+
+export const AdditionalClass = {
+  HEADER: {
+    MOVIE_CARD: `movie-card__head`,
+    USER_PAGE: `user-page__head`,
+  },
+  LOGO: {
+    LIGHT: `logo__link--light`,
+  },
 };

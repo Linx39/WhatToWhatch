@@ -1,25 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import LogoHeader from '../common-components/logo/logo-header';
-import LogoFooter from '../common-components/logo/logo-footer';
-import UserBlock from '../common-components/user-block/user-block';
-import UserBlockNoSign from '../common-components/user-block-no-sign/user-block-no-sign';
-import Copyright from '../common-components/copyright/copyright';
-import LoadingScreen from '../loading-screen/loading-screen';
-import ErrorScreen from '../error-screen/error-screen';
+import MovieCardBg from '../common-components/movie-card-bg/movie-card-bg';
+import Header from '../common-components/header/header';
+import Footer from '../common-components/footer/footer';
 import PromoFilm from './promo-film/promo-film';
 import GenresList from './genres-list/genres-list';
 import FilmsList from '../films-list/films-list';
 import ShowMore from './show-more/show-more';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import ErrorPage from '../info-page/error-page/error-page';
 import {changeFilmsList} from '../../store/action';
 import {fetchFilms, fetchPromoFilm} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../const';
 
 const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
   const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
-  const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
 
   const [isErrorLoading, setIsErrorLoading] = useState(false);
@@ -46,13 +42,13 @@ const Main = () => {
 
   if ((!isFilmsLoaded || !isPromoFilmLoaded) && !isErrorLoading) {
     return (
-      <LoadingScreen />
+      <LoadingPage />
     );
   }
 
   if (isErrorLoading) {
     return (
-      <ErrorScreen />
+      <ErrorPage />
     );
   }
 
@@ -61,20 +57,11 @@ const Main = () => {
   return (
     <>
       <section className='movie-card'>
-        <div className='movie-card__bg'>
-          <img src={backgroundImage} alt={name} />
-        </div>
+        <MovieCardBg src={backgroundImage} alt={name} />
 
-        <h1 className='visually-hidden'>WTW</h1>
+        <h1 className="visually-hidden">WTW</h1>
 
-        <header className='page-header movie-card__head'>
-          <LogoHeader isActive={false} />
-
-          {authorizationStatus === AuthorizationStatus.AUTH
-            ? <UserBlock />
-            : <UserBlockNoSign />
-          }
-        </header>
+        <Header isLogoClickable={false} />
 
         <PromoFilm film={promoFilm} />
       </section>
@@ -90,11 +77,7 @@ const Main = () => {
           {(count < filmsList.length) && <ShowMore />}
         </section>
 
-        <footer className='page-footer'>
-          <LogoFooter isActive={false} />
-
-          <Copyright />
-        </footer>
+        <Footer isLogoClickable={false}/>
       </div>
     </>
   );

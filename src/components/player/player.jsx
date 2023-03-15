@@ -4,9 +4,9 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import VideoPlayerWithUtils from '../video-player/video-player-with-utils';
 import PlayerControls from './player-controls/player-controls';
-import LoadingScreen from '../loading-screen/loading-screen';
-import ErrorScreen from '../error-screen/error-screen';
-import NotFoundPage from '../not-found-page/not-found-page';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import ErrorPage from '../info-page/error-page/error-page';
+import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import {fetchFilm} from '../../store/api-actions';
 import {redirectToRoute} from '../../store/action';
 import {Patch} from '../../const';
@@ -43,13 +43,13 @@ const Player = () => {
 
   if (!isFilmLoaded && !isErrorLoading) {
     return (
-      <LoadingScreen />
+      <LoadingPage />
     );
   }
 
   // if (isErrorLoading) {
   //   return (
-  //     <ErrorScreen />
+  //     <ErrorPage />
   //   );
   // }
 
@@ -59,7 +59,7 @@ const Player = () => {
     );
   }
 
-  const {previewImage, videoLink} = film;
+  const {name, previewImage, videoLink} = film;
 
   return (
     <div className="player">
@@ -80,6 +80,7 @@ const Player = () => {
       <button type="button" className="player__exit" onClick={handleExitButtonClick}>Exit</button>
 
       <PlayerControls
+        name={name}
         isPlaying={isPlaying}
         isVideoLoaded={isVideoLoaded}
         duration={duration}
