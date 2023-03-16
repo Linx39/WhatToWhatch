@@ -6,10 +6,9 @@ import {
   loadFavoriteFilms,
   requireAuthorization,
   loadUserData,
-  redirectToRoute,
 } from './action';
 import {adaptFilmToClient, adaptUserToClient} from './adapter';
-import {AuthorizationStatus, AdditionalUrl, Patch, AddFavoriteFetchType} from '../const';
+import {AuthorizationStatus, AdditionalUrl, AddFavoriteFetchType} from '../const';
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.FILMS)

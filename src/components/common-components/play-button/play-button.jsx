@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 
 import {redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
-import {filmProp} from '../../props-types';
+import {filmProp} from '../../../props-types';
 
 const PlayButton = ({film}) => {
   const {id} = film;

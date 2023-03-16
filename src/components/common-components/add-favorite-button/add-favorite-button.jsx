@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {fetchAddFavoriteFilm} from '../../../store/api-actions';
 import {redirectToRoute, resetLoadedFavoriteFilms} from '../../../store/action';
 import {AuthorizationStatus, Patch} from '../../../const';
-import {filmProp} from '../../props-types';
+import {filmProp} from '../../../props-types';
 
 const AddFavoriteButton = ({film, fetchType}) => {
   const {id, isFavorite} = film;

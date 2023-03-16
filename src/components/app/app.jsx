@@ -2,14 +2,14 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
-import Main from '../main/main';
-import SignIn from '../sign-in/sign-in';
-import MyList from '../my-list/my-list';
-import Film from '../film/film';
-import AddReview from '../add-review/add-review';
-import Player from '../player/player';
-import LoadingPage from '../info-page/loading-page/loading-page';
-import NotFoundPage from '../info-page/not-found-page/not-found-page';
+import Main from '../pages/main/main';
+import SignIn from '../pages/sign-in/sign-in';
+import MyList from '../pages/my-list/my-list';
+import Film from '../pages/film/film';
+import AddReview from '../pages/add-review/add-review';
+import Player from '../pages/player/player';
+import LoadingPage from '../pages/info-page/loading-page/loading-page';
+import NotFoundPage from '../pages/info-page/not-found-page/not-found-page';
 import PrivateRoute from '../private-router/private-route';
 import {Patch, AuthorizationStatus} from '../../const';
 
