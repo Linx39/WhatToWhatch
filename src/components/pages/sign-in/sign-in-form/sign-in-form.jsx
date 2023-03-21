@@ -1,15 +1,27 @@
 import React, {useState, useRef} from 'react';
+import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 
 import {login} from '../../../../store/api-actions';
 import {isEmailValid} from '../../../../utils';
 
-const SignInForm = () => {
+const SignInForm = ({onFetchingError}) => {
   const dispatch = useDispatch();
-  const loginRef = useRef();
-  const passwordRef = useRef();
   const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [isEmailCorrect, setIsEmailCorrect] = useState(true);
+  const loginRef = useRef();
+  const passwordRef = useRef();
+
+  const handleInput = (evt) => {
+    evt.preventDefault();
+
+    if (!isEmailValid(loginRef.current.value)) {
+      setIsEmailCorrect(false);
+      return;
+    }
+
+    setIsEmailCorrect(true);
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -26,18 +38,11 @@ const SignInForm = () => {
       return;
     }
 
-    dispatch(login({login: loginValue, password: passwordValue}));
-  };
-
-  const handleInput = (evt) => {
-    evt.preventDefault();
-
-    if (!isEmailValid(loginRef.current.value)) {
-      setIsEmailCorrect(false);
+    dispatch(login({login: loginValue, password: passwordValue}))
+    .catch(() => {
+      onFetchingError(true);
       return;
-    }
-
-    setIsEmailCorrect(true);
+    });
   };
 
   return (
@@ -90,6 +95,10 @@ const SignInForm = () => {
       </form>
     </div>
   );
+};
+
+SignInForm.propTypes = {
+  onFetchingError: PropTypes.func.isRequired,
 };
 
 export default SignInForm;

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import {getTimeInHoursMinutesSeconds} from '../../../../utils';
 
+const MAX_PROGRESS = 100;
+
 const getProgressValue = (durationVideo, currentTime) => {
   const progressValue = (durationVideo && currentTime)
     ? currentTime * 100 / durationVideo
@@ -38,7 +40,7 @@ const PlayerControls = (props) => {
     <div className="player__controls">
       <div className="player__controls-row">
         <div className="player__time">
-          <progress className="player__progress" value={progressValue} max="100"></progress>
+          <progress className="player__progress" value={progressValue} max={MAX_PROGRESS}></progress>
           <div className="player__toggler" style={{left: `${progressValue}%`}}>Toggler</div>
         </div>
 

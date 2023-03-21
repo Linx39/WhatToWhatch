@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import VideoPlayerWithUtils from '../../common-components/video-player/video-player-with-utils';
+import VideoPlayerWithControls from './video-player-with-controls/video-player-with-controls';
 import PlayerControls from './player-controls/player-controls';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
@@ -17,7 +17,7 @@ const Player = () => {
   const dispatch = useDispatch();
   const videoRef = useRef();
   const [isNotFoundPage, setIsNotFoundPage] = useState(false);
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
+  const [isFetchingError, setIsFetchingError] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -25,7 +25,7 @@ const Player = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const handleExitButtonClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
-  const handleChangeIsVideoLoaded = (isLoaded) => setIsVideoLoaded(isLoaded);
+  const handleChangeIsVideoLoaded = (value) => setIsVideoLoaded(value);
   const handleGetDuration = (time) => setDuration(time);
   const handleGetCurrentTime = (time) => setCurrentTime(time);
   const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
@@ -39,18 +39,18 @@ const Player = () => {
         if (err === HttpCode.PAGE_NOT_FOUND) {
           setIsNotFoundPage(true);
         }
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
       });
     }
   }, [isFilmLoaded]);
 
-  if (!isFilmLoaded && !isErrorLoading) {
+  if (!isFilmLoaded && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isErrorLoading && !isNotFoundPage) {
+  if (isFetchingError && !isNotFoundPage) {
     return (
       <ErrorPage />
     );
@@ -66,7 +66,7 @@ const Player = () => {
 
   return (
     <div className="player">
-      <VideoPlayerWithUtils
+      <VideoPlayerWithControls
         videoRef={videoRef}
         src={videoLink}
         poster={previewImage}

@@ -7,29 +7,29 @@ import Footer from '../../common-components/footer/footer';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFavoriteFilms} from '../../../store/api-actions';
-import {AdditionalClass} from '../../../const';
+import {AdditionalClassName} from '../../../const';
 
 const MyList = () => {
   const {favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
+  const [isFetchingError, setIsFetchingError] = useState(false);
 
   useEffect(() => {
     if (!isFavoriteFilmsLoaded) {
       dispatch(fetchFavoriteFilms())
       .catch(() => {
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
       });
     }
   }, [isFavoriteFilmsLoaded]);
 
-  if (!isFavoriteFilmsLoaded && !isErrorLoading) {
+  if (!isFavoriteFilmsLoaded && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isErrorLoading) {
+  if (isFetchingError) {
     return (
       <ErrorPage />
     );
@@ -37,7 +37,7 @@ const MyList = () => {
 
   return (
     <div className="user-page">
-      <Header additionalHeaderClass={AdditionalClass.HEADER.USER_PAGE}>
+      <Header additionalClassName={AdditionalClassName.HEADER.USER_PAGE}>
         <h1 className="page-title user-page__title">My list</h1>
       </Header>
 

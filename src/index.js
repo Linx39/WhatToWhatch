@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import {Router} from 'react-router-dom';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
-import browserHistory from './browser-history';
 
 import {createAPI} from './services/api';
-import App from './components/app/app';
 import rootReducer from './store/root-reducer';
+import browserHistory from './browser-history';
+import App from './components/app/app';
 import {requireAuthorization} from './store/action';
 import {checkAuth} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
@@ -26,7 +26,6 @@ const store = configureStore({
       },
     }).concat(redirect)
 });
-
 
 store.dispatch(checkAuth());
 

@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import PropTypes from 'prop-types';
 
-import VideoPlayer from "./video-player";
+import VideoPlayer from "../../../common-components/video-player/video-player";
 
-const VideoPlayerWithUtils = (props) => {
+const VideoPlayerWithControls = (props) => {
   const {
     videoRef,
     isVideoLoaded,
@@ -44,7 +44,7 @@ const VideoPlayerWithUtils = (props) => {
   );
 };
 
-VideoPlayerWithUtils.propTypes = {
+VideoPlayerWithControls.propTypes = {
   videoRef: PropTypes.object.isRequired,
   isVideoLoaded: PropTypes.bool.isRequired,
   onChangeIsVideoLoaded: PropTypes.func.isRequired,
@@ -54,4 +54,4 @@ VideoPlayerWithUtils.propTypes = {
   onChangeIsPlaying: PropTypes.func.isRequired,
 };
 
-export default VideoPlayerWithUtils;
+export default VideoPlayerWithControls;

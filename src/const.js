@@ -49,10 +49,10 @@ export const AddFavoriteFetchType = {
 export const InfoText = {
   ERROR_404: `Error 404. Page not found.`,
   LOADING: `Loading ... Please wait...`,
-  LOADING_ERROR: `Loading error! Please reload the page!`,
+  LOADING_ERROR: `Loading error. Please reload the page.`,
 };
 
-export const AdditionalClass = {
+export const AdditionalClassName = {
   HEADER: {
     MOVIE_CARD: `movie-card__head`,
     USER_PAGE: `user-page__head`,

@@ -13,7 +13,7 @@ import ErrorPage from '../info-page/error-page/error-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import {fetchFilms, fetchFilm, fetchComments} from '../../../store/api-actions';
 import {changeActiveNavItem} from '../../../store/action';
-import {FilmsCount, AdditionalClass, HttpCode} from '../../../const';
+import {FilmsCount, AdditionalClassName, HttpCode} from '../../../const';
 
 const Film = () => {
   const {id} = useParams();
@@ -22,7 +22,7 @@ const Film = () => {
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
   const [isNotFoundPage, setIsNotFoundPage] = useState(false);
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
+  const [isFetchingError, setIsFetchingError] = useState(false);
 
   const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
@@ -30,7 +30,8 @@ const Film = () => {
     if (!isFilmsLoaded) {
       dispatch(fetchFilms())
       .catch(() => {
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
+        return;
       });
     }
 
@@ -40,7 +41,8 @@ const Film = () => {
         if (err === HttpCode.PAGE_NOT_FOUND) {
           setIsNotFoundPage(true);
         }
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
+        return;
       });
     }
 
@@ -50,18 +52,19 @@ const Film = () => {
         if (err === HttpCode.PAGE_NOT_FOUND) {
           setIsNotFoundPage(true);
         }
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
+        return;
       });
     }
   }, [isFilmsLoaded && isFilmLoaded && isCommentsLoaded]);
 
-  if ((!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) && !isErrorLoading) {
+  if ((!isFilmsLoaded || !isFilmLoaded || !isCommentsLoaded) && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isErrorLoading && !isNotFoundPage) {
+  if (isFetchingError && !isNotFoundPage) {
     return (
       <ErrorPage />
     );
@@ -85,7 +88,7 @@ const Film = () => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header additionalHeaderClass={AdditionalClass.HEADER.MOVIE_CARD} />
+          <Header additionalClassName={AdditionalClassName.HEADER.MOVIE_CARD} />
 
           <MovieCardDesc film={film} authorizationStatus={authorizationStatus}/>
         </div>

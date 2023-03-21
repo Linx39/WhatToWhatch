@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 
-const Header = ({additionalHeaderClass, isLogoClickable, isUserBlock, children}) => {
+const Header = ({additionalClassName, isLogoClickable, isUserBlock, children}) => {
   return (
-    <header className={`page-header ${additionalHeaderClass}`}>
+    <header className={`page-header ${additionalClassName}`}>
       <Logo
         isLogoClickable={isLogoClickable}
       />
@@ -19,13 +19,13 @@ const Header = ({additionalHeaderClass, isLogoClickable, isUserBlock, children})
 };
 
 Header.defaultProps = {
-  additionalHeaderClass: ``,
+  additionalClassName: ``,
   isLogoClickable: true,
   isUserBlock: true,
 };
 
 Header.propTypes = {
-  additionalHeaderClass: PropTypes.string.isRequired,
+  additionalClassName: PropTypes.string.isRequired,
   isLogoClickable: PropTypes.bool.isRequired,
   isUserBlock: PropTypes.bool.isRequired,
   children: PropTypes.element, // isRequired???

@@ -17,20 +17,22 @@ const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
   const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const dispatch = useDispatch();
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
+  const [isFetchingError, setIsFetchingError] = useState(false);
 
   useEffect(() => {
     if (!isFilmsLoaded) {
       dispatch(fetchFilms())
       .catch(() => {
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
+        return;
       });
     }
 
     if (!isPromoFilmLoaded) {
       dispatch(fetchPromoFilm())
       .catch(() => {
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
+        return;
       });
     }
 
@@ -39,13 +41,13 @@ const Main = () => {
     }
   }, [isFilmsLoaded && isPromoFilmLoaded]);
 
-  if ((!isFilmsLoaded || !isPromoFilmLoaded) && !isErrorLoading) {
+  if ((!isFilmsLoaded || !isPromoFilmLoaded) && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isErrorLoading) {
+  if (isFetchingError) {
     return (
       <ErrorPage />
     );

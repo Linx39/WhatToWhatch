@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Logo from '../logo/logo';
-import {AdditionalClass} from '../../../const';
+import {AdditionalClassName} from '../../../const';
 
 const Footer = ({isLogoClickable = true}) => {
   return (
     <footer className="page-footer">
       <Logo
-        additionalLogoClass={AdditionalClass.LOGO.LIGHT}
+        additionalClassName={AdditionalClassName.LOGO.LIGHT}
         isLogoClickable={isLogoClickable}
       />
 

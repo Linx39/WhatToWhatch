@@ -7,10 +7,10 @@ import LogoLetters from './logo-letters';
 import {resetOnDefaultFilmsList, redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 
-const Logo = ({additionalLogoClass, isLogoClickable}) => {
+const Logo = ({additionalClassName, isLogoClickable}) => {
   const dispatch = useDispatch();
 
-  const className = `logo__link ${additionalLogoClass}`;
+  const className = `logo__link ${additionalClassName}`;
 
   const handleLogoClick = () => {
     dispatch(resetOnDefaultFilmsList());
@@ -34,11 +34,11 @@ const Logo = ({additionalLogoClass, isLogoClickable}) => {
 };
 
 Logo.defaultProps = {
-  additionalLogoClass: ``,
+  additionalClassName: ``,
 };
 
 Logo.propTypes = {
-  additionalLogoClass: PropTypes.string.isRequired,
+  additionalClassName: PropTypes.string.isRequired,
   isLogoClickable: PropTypes.bool.isRequired,
 };
 

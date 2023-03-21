@@ -19,7 +19,7 @@ const AddReview = () => {
   const dispatch = useDispatch();
   const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
   const [isNotFoundPage, setIsNotFoundPage] = useState(false);
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
+  const [isFetchingError, setIsFetchingError] = useState(false);
 
   useEffect(() => {
     if (!isFilmLoaded) {
@@ -28,18 +28,18 @@ const AddReview = () => {
         if (err === HttpCode.PAGE_NOT_FOUND) {
           setIsNotFoundPage(true);
         }
-        setIsErrorLoading(true);
+        setIsFetchingError(true);
       });
     }
   }, [isFilmLoaded]);
 
-  if (!isFilmLoaded && !isErrorLoading) {
+  if (!isFilmLoaded && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isErrorLoading && !isNotFoundPage) {
+  if (isFetchingError && !isNotFoundPage) {
     return (
       <ErrorPage />
     );
