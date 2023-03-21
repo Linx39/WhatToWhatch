@@ -61,3 +61,8 @@ export const AdditionalClass = {
     LIGHT: `logo__link--light`,
   },
 };
+
+export const HttpCode = {
+  UNAUTHORIZED: 401,
+  PAGE_NOT_FOUND: 404,
+};

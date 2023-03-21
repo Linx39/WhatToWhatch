@@ -11,20 +11,23 @@ import ErrorPage from '../info-page/error-page/error-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import {fetchFilm} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch} from '../../../const';
+import {Patch, HttpCode} from '../../../const';
 
 const AddReview = () => {
   const {id} = useParams();
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
   const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
-
+  const [isNotFoundPage, setIsNotFoundPage] = useState(false);
   const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {
     if (!isFilmLoaded) {
       dispatch(fetchFilm(id))
-      .catch(() => {
+      .catch((err) => {
+        if (err === HttpCode.PAGE_NOT_FOUND) {
+          setIsNotFoundPage(true);
+        }
         setIsErrorLoading(true);
       });
     }
@@ -36,13 +39,13 @@ const AddReview = () => {
     );
   }
 
-  // if (isErrorLoading) {
-  //   return (
-  //     <ErrorPage />
-  //   );
-  // }
+  if (isErrorLoading && !isNotFoundPage) {
+    return (
+      <ErrorPage />
+    );
+  }
 
-  if (!film) {
+  if (isNotFoundPage) {
     return (
       <NotFoundPage />
     );

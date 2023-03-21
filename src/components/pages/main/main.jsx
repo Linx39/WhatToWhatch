@@ -17,7 +17,6 @@ const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
   const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const dispatch = useDispatch();
-
   const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {

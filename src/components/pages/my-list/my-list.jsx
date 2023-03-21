@@ -12,7 +12,6 @@ import {AdditionalClass} from '../../../const';
 const MyList = () => {
   const {favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
-
   const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   useEffect(() => {

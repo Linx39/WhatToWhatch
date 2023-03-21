@@ -9,20 +9,20 @@ import ErrorPage from '../info-page/error-page/error-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import {fetchFilm} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch} from '../../../const';
+import {Patch, HttpCode} from '../../../const';
 
 const Player = () => {
   const {id} = useParams();
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
   const videoRef = useRef();
-
+  const [isNotFoundPage, setIsNotFoundPage] = useState(false);
+  const [isErrorLoading, setIsErrorLoading] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isErrorLoading, setIsErrorLoading] = useState(false);
 
   const handleExitButtonClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
   const handleChangeIsVideoLoaded = (isLoaded) => setIsVideoLoaded(isLoaded);
@@ -35,7 +35,10 @@ const Player = () => {
   useEffect(() => {
     if (!isFilmLoaded) {
       dispatch(fetchFilm(id))
-      .catch(() => {
+      .catch((err) => {
+        if (err === HttpCode.PAGE_NOT_FOUND) {
+          setIsNotFoundPage(true);
+        }
         setIsErrorLoading(true);
       });
     }
@@ -47,13 +50,13 @@ const Player = () => {
     );
   }
 
-  // if (isErrorLoading) {
-  //   return (
-  //     <ErrorPage />
-  //   );
-  // }
+  if (isErrorLoading && !isNotFoundPage) {
+    return (
+      <ErrorPage />
+    );
+  }
 
-  if (!film) {
+  if (isNotFoundPage) {
     return (
       <NotFoundPage />
     );

@@ -5,7 +5,7 @@ import {InfoText} from '../../../../const';
 
 const LoadingPage = () => {
   return (
-    <InfoPage messageText={InfoText.LOADING} />
+    <InfoPage infoText={InfoText.LOADING} />
   );
 };
 

@@ -5,7 +5,7 @@ import {InfoText} from '../../../../const';
 
 const ErrorPage = () => {
   return (
-    <InfoPage messageText={InfoText.LOADING_ERROR} />
+    <InfoPage infoText={InfoText.LOADING_ERROR} />
   );
 };
 
