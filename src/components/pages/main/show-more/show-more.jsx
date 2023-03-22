@@ -4,20 +4,13 @@ import {useSelector, useDispatch} from 'react-redux';
 import {changeFilmsCount} from '../../../../store/action';
 import {FilmsCount} from '../../../../const';
 
-export const getNewCount = (prevCount, maxCount) => {
-  const nextCount = prevCount + FilmsCount.MAIN;
-  const newCount = nextCount > maxCount ? maxCount : nextCount;
-
-  return newCount;
-};
-
 const ShowMore = () => {
   const {count} = useSelector((state) => state.FILMS_LIST_ACTIONS);
-  const {filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
+  const {films} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
 
   const handleShowMoreClick = () => {
-    const newCount = getNewCount(count, filmsList.length);
+    const newCount = Math.min(count + FilmsCount.MAIN, films.length);
     dispatch(changeFilmsCount(newCount));
   };
 

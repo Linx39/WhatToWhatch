@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {filmProp} from '../../../../props-types';
 import {getTimeInHoursMinutes} from '../../../../utils';
+import {filmProp} from '../../../../props-types';
 
 const getTimeTemplate = (time) => {
   const {hours, minutes} = getTimeInHoursMinutes(time);

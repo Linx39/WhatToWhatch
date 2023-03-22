@@ -28,7 +28,6 @@ it(`Main should render correctly`, () => {
     },
     FILMS_LIST_ACTIONS: {
       count: 10,
-      filmsList: films
     },
   });
   const history = createMemoryHistory();

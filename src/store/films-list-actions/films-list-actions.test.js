@@ -8,7 +8,7 @@ describe(`Reducers work correctly`, () => {
   });
 
   it(`Reducer should change genre by a given value`, () => {
-    const state = {activeGenre: `drama`, count: 3, filmsList: []};
+    const state = {activeGenre: `drama`, count: 3};
 
     const changeActiveGenreAction = {
       type: ActionType.CHANGE_GENRE,
@@ -16,11 +16,11 @@ describe(`Reducers work correctly`, () => {
     };
 
     expect(filmsListAction(state, changeActiveGenreAction))
-      .toEqual({activeGenre: `comedy`, count: 3, filmsList: []});
+      .toEqual({activeGenre: `comedy`, count: 3});
   });
 
   it(`Reducer should change films count by a given value`, () => {
-    const state = {activeGenre: `drama`, count: 3, filmsList: []};
+    const state = {activeGenre: `drama`, count: 3};
 
     const changeFilmsCountAction = {
       type: ActionType.CHANGE_FILMS_COUNT,
@@ -28,21 +28,7 @@ describe(`Reducers work correctly`, () => {
     };
 
     expect(filmsListAction(state, changeFilmsCountAction))
-      .toEqual({activeGenre: `drama`, count: 10, filmsList: []});
-  });
-
-  it(`Reducer should change films list by a given value`, () => {
-    const state = {activeGenre: `drama`, count: 3, filmsList: []};
-
-    const films = [{id: 1, name: ``}, {id: 2, name: ``}];
-
-    const changeFilmsListAction = {
-      type: ActionType.CHANGE_FILMS_LIST,
-      payload: films,
-    };
-
-    expect(filmsListAction(state, changeFilmsListAction))
-      .toEqual({activeGenre: `drama`, count: 3, filmsList: films});
+      .toEqual({activeGenre: `drama`, count: 10});
   });
 
   it(`Reducer should return default`, () => {
@@ -51,9 +37,7 @@ describe(`Reducers work correctly`, () => {
       payload: null,
     };
 
-    const films = [{id: 1, name: ``}, {id: 2, name: ``}];
-
-    expect(filmsListAction({activeGenre: `drama`, count: 4, filmsList: films}, resetFilmsListAction))
+    expect(filmsListAction({activeGenre: `drama`, count: 4}, resetFilmsListAction))
       .toEqual(initialState);
   });
 });

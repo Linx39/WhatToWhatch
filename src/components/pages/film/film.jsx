@@ -77,7 +77,6 @@ const Film = () => {
   }
 
   const {name, backgroundImage, genre} = film;
-
   const filmsLikeThis = films.slice().filter((item) => item.genre === genre && item.id !== id);
 
   return (
@@ -93,7 +92,12 @@ const Film = () => {
           <MovieCardDesc film={film} authorizationStatus={authorizationStatus}/>
         </div>
 
-        <MovieCardInfo film={film} comments={comments} activeNavItem={activeNavItem} onClick={handleChangeActiveNavItem}/>
+        <MovieCardInfo
+          film={film}
+          comments={comments}
+          activeNavItem={activeNavItem}
+          onClick={handleChangeActiveNavItem}
+        />
       </section>
 
       <div className="page-content">

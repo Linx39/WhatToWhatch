@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {commentProp} from '../../../../props-types';
 import {formatDateInMMMMDDYYYY} from '../../../../utils';
+import {commentProp} from '../../../../props-types';
 
 const Review = ({filmComment}) => {
   const {user, rating, comment, date} = filmComment;

@@ -41,7 +41,6 @@ const SignInForm = ({onFetchingError}) => {
     dispatch(login({login: loginValue, password: passwordValue}))
     .catch(() => {
       onFetchingError(true);
-      return;
     });
   };
 

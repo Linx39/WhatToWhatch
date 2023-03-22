@@ -1,7 +1,6 @@
 import {
   changeGenre,
   changeFilmsCount,
-  changeFilmsList,
   resetOnDefaultFilmsList,
   changeActiveNavItem,
   resetOnDefaultFilmInfo,
@@ -25,26 +24,6 @@ describe(`Action creators work correctly`, () => {
     };
 
     expect(changeFilmsCount(5)).toEqual(expectedAction);
-  });
-
-  it(`Action creator for change films list returns correct action`, () => {
-    const films = [
-      {
-        id: 1,
-        name: `Fantastic Beasts: The Crimes of Grindelwald`,
-      },
-      {
-        id: 2,
-        name: `Bohemian Rhapsody`,
-      },
-    ];
-
-    const expectedAction = {
-      type: ActionType.CHANGE_FILMS_LIST,
-      payload: films,
-    };
-
-    expect(changeFilmsList(films)).toEqual(expectedAction);
   });
 
   it(`Action creator for reset on default films list returns correct action`, () => {

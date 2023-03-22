@@ -28,7 +28,7 @@ Header.propTypes = {
   additionalClassName: PropTypes.string.isRequired,
   isLogoClickable: PropTypes.bool.isRequired,
   isUserBlock: PropTypes.bool.isRequired,
-  children: PropTypes.element, // isRequired???
+  children: PropTypes.element,
 };
 
 export default Header;

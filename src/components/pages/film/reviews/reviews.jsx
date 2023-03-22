@@ -18,7 +18,6 @@ const Reviews = ({comments}) => {
         return (
           <div key={`col-${index}`} className="movie-card__reviews-col" data-testid={`test-col-${index}`}>
             {filmComments.map((filmComment) => {
-
               return (
                 <Review
                   key={filmComment.id}

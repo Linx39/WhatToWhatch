@@ -17,9 +17,10 @@ const AddReview = () => {
   const {id} = useParams();
   const {film, isFilmLoaded} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
-  const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
   const [isNotFoundPage, setIsNotFoundPage] = useState(false);
   const [isFetchingError, setIsFetchingError] = useState(false);
+
+  const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
 
   useEffect(() => {
     if (!isFilmLoaded) {

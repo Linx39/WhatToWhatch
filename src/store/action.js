@@ -3,7 +3,6 @@ import {createAction} from '@reduxjs/toolkit';
 export const ActionType = {
   CHANGE_GENRE: `filmsList/changeGenre`,
   CHANGE_FILMS_COUNT: `filmsList/changeFilmsCount`,
-  CHANGE_FILMS_LIST: `filmsList/changeFilmsList`,
   RESET_ON_DEFAULT_FILMS_LIST: `filmsList/resetOnDefaultFilmsList`,
   CHANGE_ACTIVE_NAV_ITEM: `filmInfo/changeActiveNavItem`,
   RESET_ON_DEFAULT_FILM_INFO: `filmInfo/resetOnDefaultFilmInfo`,
@@ -28,12 +27,6 @@ export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {
 export const changeFilmsCount = createAction(ActionType.CHANGE_FILMS_COUNT, (count) => {
   return {
     payload: count,
-  };
-});
-
-export const changeFilmsList = createAction(ActionType.CHANGE_FILMS_LIST, (films) => {
-  return {
-    payload: films,
   };
 });
 

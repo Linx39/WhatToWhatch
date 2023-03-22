@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import {AdditionalClassName} from '../../../const';
 
-const Footer = ({isLogoClickable = true}) => {
+const Footer = ({isLogoClickable}) => {
   return (
     <footer className="page-footer">
       <Logo

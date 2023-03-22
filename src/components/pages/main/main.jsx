@@ -10,12 +10,18 @@ import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
-import {changeFilmsList} from '../../../store/action';
 import {fetchFilms, fetchPromoFilm} from '../../../store/api-actions';
+import {GENRE_DEFAULT} from '../../../const';
+
+const filterFilmsByGenre = (genre, films) => {
+  return genre === GENRE_DEFAULT
+    ? films
+    : films.filter((film) => film.genre === genre);
+};
 
 const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
-  const {count, filmsList} = useSelector((state) => state.FILMS_LIST_ACTIONS);
+  const {count, activeGenre} = useSelector((state) => state.FILMS_LIST_ACTIONS);
   const dispatch = useDispatch();
   const [isFetchingError, setIsFetchingError] = useState(false);
 
@@ -35,10 +41,6 @@ const Main = () => {
         return;
       });
     }
-
-    if (isFilmsLoaded) {
-      dispatch(changeFilmsList(films));
-    }
   }, [isFilmsLoaded && isPromoFilmLoaded]);
 
   if ((!isFilmsLoaded || !isPromoFilmLoaded) && !isFetchingError) {
@@ -54,6 +56,8 @@ const Main = () => {
   }
 
   const {name, backgroundImage} = promoFilm;
+
+  const filmsList = filterFilmsByGenre(activeGenre, films);
 
   return (
     <>

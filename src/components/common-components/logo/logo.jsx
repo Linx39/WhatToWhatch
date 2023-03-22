@@ -9,7 +9,6 @@ import {Patch} from '../../../const';
 
 const Logo = ({additionalClassName, isLogoClickable}) => {
   const dispatch = useDispatch();
-
   const className = `logo__link ${additionalClassName}`;
 
   const handleLogoClick = () => {

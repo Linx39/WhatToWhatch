@@ -2,26 +2,27 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 import Stars from '../stars/stars';
-import {filmProp} from '../../../../props-types';
 import {fetchAddComment} from '../../../../store/api-actions';
 import {redirectToRoute} from '../../../../store/action';
+import {filmProp} from '../../../../props-types';
 import {ReviewTextLength, Patch} from '../../../../const';
 
 const AddReviewForm = ({film}) => {
   const {id} = film;
   const dispatch = useDispatch();
-
-  const [userForm, setUserForm] = useState({rating: null, comment: ``});
+  const [userForm, setUserForm] = useState(
+      {rating: null, comment: ``}
+  );
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
 
-  const handleRatingChange = (evt) => {
-    setUserForm({...userForm, rating: evt.target.value});
-  };
+  const handleRatingChange = (evt) => setUserForm(
+      {...userForm, rating: evt.target.value}
+  );
 
-  const handleCommentChange = (evt) => {
-    setUserForm({...userForm, comment: evt.target.value});
-  };
+  const handleCommentChange = (evt) => setUserForm(
+      {...userForm, comment: evt.target.value}
+  );
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -81,7 +82,7 @@ const AddReviewForm = ({film}) => {
 
         {isErrorSubmiting &&
           <div>
-            <p>Ошибка отправки, повторите попытку</p>
+            <p>Comment was not added, please try again</p>
           </div>
         }
       </form>

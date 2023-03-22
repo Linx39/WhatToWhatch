@@ -31,7 +31,6 @@ describe(`Test routing`, () => {
       },
       FILMS_LIST_ACTIONS: {
         count: FilmsCount.MAIN,
-        filmsList: films
       },
     });
 

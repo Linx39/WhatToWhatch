@@ -7,8 +7,8 @@ const MAX_PROGRESS = 100;
 
 const getProgressValue = (durationVideo, currentTime) => {
   const progressValue = (durationVideo && currentTime)
-    ? currentTime * 100 / durationVideo
-    : `0`;
+    ? currentTime * MAX_PROGRESS / durationVideo
+    : ``;
 
   return progressValue;
 };
