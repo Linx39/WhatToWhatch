@@ -16,7 +16,7 @@ it(`GenresList should render correctly`, () => {
     DATA: {
       films,
     },
-    FILMS_LIST_ACTIONS: {
+    FILMS_ACTIONS: {
       activeGenre: GENRE_DEFAULT,
     },
   });

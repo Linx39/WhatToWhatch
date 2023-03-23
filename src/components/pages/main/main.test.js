@@ -26,7 +26,7 @@ it(`Main should render correctly`, () => {
       promoFilm: film,
       isPromoFilmLoaded: true
     },
-    FILMS_LIST_ACTIONS: {
+    FILMS_ACTIONS: {
       count: 10,
     },
   });

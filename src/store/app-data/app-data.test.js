@@ -116,12 +116,12 @@ describe(`Reducer 'appData' should work correctly`, () => {
 
   it(`Reducer should update films by load films`, () => {
     const state = {films: [], isFilmsLoaded: false};
-    const loadFilmsAction = {
+    const loadfilmsActions = {
       type: ActionType.LOAD_FILMS,
       payload: films
     };
 
-    expect(appData(state, loadFilmsAction))
+    expect(appData(state, loadfilmsActions))
       .toEqual({films, isFilmsLoaded: true});
   });
 
@@ -160,12 +160,12 @@ describe(`Reducer 'appData' should work correctly`, () => {
 
   it(`Reducer should update favoriteFilms by load favoriteFilms`, () => {
     const state = {favoriteFilms: [], isFavoriteFilmsLoaded: false};
-    const loadFavoriteFilmsAction = {
+    const loadFavoritefilmsActions = {
       type: ActionType.LOAD_FAVORITE_FILMS,
       payload: films
     };
 
-    expect(appData(state, loadFavoriteFilmsAction))
+    expect(appData(state, loadFavoritefilmsActions))
       .toEqual({favoriteFilms: films, isFavoriteFilmsLoaded: true});
   });
 });

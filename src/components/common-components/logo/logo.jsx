@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
 import LogoLetters from './logo-letters';
-import {resetOnDefaultFilmsList, redirectToRoute} from '../../../store/action';
+import {resetOnDefaultMainPage, redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 
 const Logo = ({additionalClassName, isLogoClickable}) => {
@@ -12,7 +12,7 @@ const Logo = ({additionalClassName, isLogoClickable}) => {
   const className = `logo__link ${additionalClassName}`;
 
   const handleLogoClick = () => {
-    dispatch(resetOnDefaultFilmsList());
+    dispatch(resetOnDefaultMainPage());
     dispatch(redirectToRoute((Patch.MAIN)));
   };
 

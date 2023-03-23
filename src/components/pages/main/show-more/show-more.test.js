@@ -13,7 +13,7 @@ it(`ShowMore should render correctly`, () => {
     DATA: {
       films,
     },
-    FILMS_LIST_ACTIONS: {
+    FILMS_ACTIONS: {
       count: 12,
     },
   });

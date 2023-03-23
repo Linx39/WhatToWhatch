@@ -1,9 +1,9 @@
 import {
   changeGenre,
   changeFilmsCount,
-  resetOnDefaultFilmsList,
+  resetOnDefaultMainPage,
   changeActiveNavItem,
-  resetOnDefaultFilmInfo,
+  resetOnDefaultFilmPage,
   ActionType,
 } from './action';
 
@@ -31,7 +31,7 @@ describe(`Action creators work correctly`, () => {
       type: ActionType.RESET_ON_DEFAULT_FILMS_LIST,
     };
 
-    expect(resetOnDefaultFilmsList()).toEqual(expectedAction);
+    expect(resetOnDefaultMainPage()).toEqual(expectedAction);
   });
 
   it(`Action creator for change active item returns correct action`, () => {
@@ -48,6 +48,6 @@ describe(`Action creators work correctly`, () => {
       type: ActionType.RESET_ON_DEFAULT_FILM_INFO,
     };
 
-    expect(resetOnDefaultFilmInfo()).toEqual(expectedAction);
+    expect(resetOnDefaultFilmPage()).toEqual(expectedAction);
   });
 });

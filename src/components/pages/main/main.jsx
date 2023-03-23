@@ -21,7 +21,7 @@ const filterFilmsByGenre = (genre, films) => {
 
 const Main = () => {
   const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
-  const {count, activeGenre} = useSelector((state) => state.FILMS_LIST_ACTIONS);
+  const {count, activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
   const dispatch = useDispatch();
   const [isFetchingError, setIsFetchingError] = useState(false);
 

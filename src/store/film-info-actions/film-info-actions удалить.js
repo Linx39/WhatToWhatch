@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {changeActiveNavItem, resetOnDefaultFilmInfo} from '../action';
+import {changeActiveNavItem, resetOnDefaultFilmPage} from '../action';
 import {NavItem} from '../../const';
 
 const initialState = {
@@ -11,7 +11,7 @@ const filmInfoAction = createReducer(initialState, (builder) => {
   builder.addCase(changeActiveNavItem, (state, action) => {
     state.activeNavItem = action.payload;
   });
-  builder.addCase(resetOnDefaultFilmInfo, (state) => {
+  builder.addCase(resetOnDefaultFilmPage, (state) => {
     state.activeNavItem = NavItem.OVERVIEW;
   });
 });

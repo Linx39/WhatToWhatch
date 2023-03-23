@@ -29,7 +29,7 @@ describe(`Test routing`, () => {
         promoFilm: film,
         isPromoFilmLoaded: true
       },
-      FILMS_LIST_ACTIONS: {
+      FILMS_ACTIONS: {
         count: FilmsCount.MAIN,
       },
     });
@@ -101,7 +101,7 @@ describe(`Test routing`, () => {
         comments,
         isCommentsLoaded: true
       },
-      FILM_INFO_ACTIONS: {activeNavItem: NavItem.OVERVIEW}
+      FILMS_ACTIONS: {activeNavItem: NavItem.OVERVIEW}
     });
 
     const history = createMemoryHistory();

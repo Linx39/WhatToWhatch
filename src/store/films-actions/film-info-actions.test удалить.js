@@ -20,12 +20,12 @@ describe(`Reducers work correctly`, () => {
   });
 
   it(`Reducer should return default`, () => {
-    const resetFilmsListAction = {
+    const resetfilmsActions = {
       type: ActionType.RESET_ON_DEFAULT_FILM_INFO,
       payload: null,
     };
 
-    expect(filmInfoAction({activeNavItem: `Reviews`}, resetFilmsListAction))
+    expect(filmInfoAction({activeNavItem: `Reviews`}, resetfilmsActions))
       .toEqual(initialState);
   });
 });

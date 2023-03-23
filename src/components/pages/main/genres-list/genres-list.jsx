@@ -12,7 +12,7 @@ const getUniqueGenres = (films) => {
 };
 
 const GenresList = () => {
-  const {activeGenre} = useSelector((state) => state.FILMS_LIST_ACTIONS);
+  const {activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
   const {films} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
 

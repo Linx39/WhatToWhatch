@@ -18,7 +18,7 @@ import {FilmsCount, AdditionalClassName, HttpCode} from '../../../const';
 const Film = () => {
   const {id} = useParams();
   const {films, isFilmsLoaded, film, isFilmLoaded, comments, isCommentsLoaded} = useSelector((state) => state.DATA);
-  const {activeNavItem} = useSelector((state) => state.FILM_INFO_ACTIONS);
+  const {activeNavItem} = useSelector((state) => state.FILMS_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
   const [isNotFoundPage, setIsNotFoundPage] = useState(false);
