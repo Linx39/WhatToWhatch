@@ -1,12 +1,14 @@
 import React from 'react';
 
 import PlayButton from '../../../common-components/play-button/play-button';
-import AddFavoriteButton from '../../../common-components/add-favorite-button/add-favorite-button';
+import FavoriteButton from '../../../common-components/favorite-button/favorite-button';
+import {loadPromoFilm} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
-import {AddFavoriteFetchType} from '../../../../const';
 
 const PromoFilm = ({film}) => {
   const {name, posterImage, genre, released} = film;
+
+  const handleLoadPromoFilm = (data) => loadPromoFilm(data);
 
   return (
     <div className='movie-card__wrap'>
@@ -25,7 +27,7 @@ const PromoFilm = ({film}) => {
           <div className='movie-card__buttons'>
             <PlayButton film={film}/>
 
-            <AddFavoriteButton film={film} fetchType={AddFavoriteFetchType.PROMO_FILM} />
+            <FavoriteButton film={film} onLoadData={handleLoadPromoFilm} />
           </div>
         </div>
       </div>

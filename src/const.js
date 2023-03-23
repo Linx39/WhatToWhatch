@@ -43,11 +43,6 @@ export const ReviewTextLength = {
   MAX: 400
 };
 
-export const AddFavoriteFetchType = {
-  FILM: `FILM`,
-  PROMO_FILM: `PROMO_FILM`,
-};
-
 export const InfoText = {
   ERROR_404: `Error 404. Page not found.`,
   LOADING: `Loading ... Please wait...`,

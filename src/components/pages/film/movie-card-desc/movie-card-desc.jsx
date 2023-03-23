@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 
 import AddReviewButton from '../add-review-button/add-review-button';
 import PlayButton from '../../../common-components/play-button/play-button';
-import AddFavoriteButton from '../../../common-components/add-favorite-button/add-favorite-button';
+import FavoriteButton from '../../../common-components/favorite-button/favorite-button';
+import {loadFilm} from '../../../../store/action';
 import {filmProp} from "../../../../props-types";
-import {AuthorizationStatus, AddFavoriteFetchType} from '../../../../const';
+import {AuthorizationStatus} from '../../../../const';
 
 const MovieCardDesc = ({film, authorizationStatus}) => {
   const {name, genre, released} = film;
+
+  const handleLoadFilm = (data) => loadFilm(data);
 
   return (
     <div className="movie-card__wrap">
@@ -22,7 +25,7 @@ const MovieCardDesc = ({film, authorizationStatus}) => {
         <div className="movie-card__buttons">
           <PlayButton film={film}/>
 
-          <AddFavoriteButton film={film} fetchType={AddFavoriteFetchType.FILM} />
+          <FavoriteButton film={film} onLoadData={handleLoadFilm} />
 
           {
             authorizationStatus === AuthorizationStatus.AUTH

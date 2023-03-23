@@ -2,28 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {fetchAddFavoriteFilm} from '../../../store/api-actions';
+import {fetchChangeFilmStatus} from '../../../store/api-actions';
 import {redirectToRoute, resetLoadedFavoriteFilms} from '../../../store/action';
 import {AuthorizationStatus, Patch} from '../../../const';
 import {filmProp} from '../../../props-types';
 
-const AddFavoriteButton = ({film, fetchType}) => {
+const FavoriteButton = ({film, onLoadData}) => {
   const {id, isFavorite} = film;
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
 
-  const handleAddFavoriteFilm = () => {
+  const handleChangeFilmStatus = () => {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
       dispatch(redirectToRoute((Patch.LOGIN)));
       return;
     }
 
-    dispatch(fetchAddFavoriteFilm(id, Number(!isFavorite), fetchType));
-    dispatch(resetLoadedFavoriteFilms());
+    dispatch(fetchChangeFilmStatus(id, Number(!isFavorite)))
+    .then((data) => dispatch(onLoadData(data)))
+    .then(() => dispatch(resetLoadedFavoriteFilms()));
   };
 
   return (
-    <button onClick={handleAddFavoriteFilm} className='btn btn--list movie-card__button' type='button'>
+    <button onClick={handleChangeFilmStatus} className='btn btn--list movie-card__button' type='button'>
       <svg viewBox='0 0 19 20' width='19' height='20'>
         {isFavorite
           ? <use xlinkHref="#in-list"></use>
@@ -35,9 +36,9 @@ const AddFavoriteButton = ({film, fetchType}) => {
   );
 };
 
-AddFavoriteButton.propTypes = {
+FavoriteButton.propTypes = {
   film: filmProp,
-  fetchType: PropTypes.string.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
-export default AddFavoriteButton;
+export default FavoriteButton;

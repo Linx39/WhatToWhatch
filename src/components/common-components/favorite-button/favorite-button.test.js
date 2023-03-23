@@ -5,13 +5,13 @@ import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import AddFavoriteButton from './add-favorite-button';
+import FavoriteButton from './favorite-button';
 import films from '../../../mock/films';
 import user from '../../../mock/user';
 
 const mockStore = configureStore({});
 
-it(`AddFavoriteButton should render correctly`, () => {
+it(`FavoriteButton should render correctly`, () => {
   const film = films[8];
   const store = mockStore({
     USER: {user},
@@ -22,7 +22,7 @@ it(`AddFavoriteButton should render correctly`, () => {
   render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <AddFavoriteButton film={film} isPromo={false}/>
+          <FavoriteButton film={film} isPromo={false}/>
         </Router>
       </redux.Provider>
   );

@@ -9,7 +9,7 @@ import {
   fetchComments,
   fetchAddComment,
   fetchFavoriteFilms,
-  fetchAddFavoriteFilm
+  fetchChangeFilmStatus
 } from '../api-actions';
 import {AdditionalUrl} from '../../const';
 
@@ -296,7 +296,7 @@ describe(`Async operation work correctly`, () => {
     const id = 18;
     const status = 1;
     const isPromo = true; // для false
-    const addFavoriteFilmLoader = fetchAddFavoriteFilm(id, status, isPromo);
+    const addFavoriteFilmLoader = fetchChangeFilmStatus(id, status, isPromo);
 
     apiMock
       .onPost(`${AdditionalUrl.FAVORITE}/${id}/${status}`)

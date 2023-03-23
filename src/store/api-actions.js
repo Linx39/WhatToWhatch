@@ -8,7 +8,7 @@ import {
   loadUserData,
 } from './action';
 import {adaptFilmToClient, adaptUserToClient} from './adapter';
-import {AuthorizationStatus, AdditionalUrl, AddFavoriteFetchType} from '../const';
+import {AuthorizationStatus, AdditionalUrl} from '../const';
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.FILMS)
@@ -56,24 +56,9 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
     })
 );
 
-export const fetchAddFavoriteFilm = (id, status, fetchType) => (dispatch, _getState, api) => (
+export const fetchChangeFilmStatus = (id, status) => (dispatch, _getState, api) => (
   api.post(`${AdditionalUrl.FAVORITE}/${id}/${status}`)
-    .then(({data}) => {
-      const film = adaptFilmToClient(data);
-
-      switch (fetchType) {
-        case AddFavoriteFetchType.FILM:
-          dispatch(loadFilm(film));
-          break;
-
-        case AddFavoriteFetchType.PROMO_FILM:
-          dispatch(loadPromoFilm(film));
-          break;
-
-        default:
-          throw new Error(`Unknown switch case expression: '${fetchType}'!`);
-      }
-    })
+    .then(({data}) => adaptFilmToClient(data))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
