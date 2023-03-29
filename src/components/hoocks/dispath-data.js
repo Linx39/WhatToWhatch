@@ -1,10 +1,9 @@
-import {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 
 import {HttpCode} from '../../const';
 
-
-export const dispatchData = (fetchData, isDataLoaded, isLoaded, setIsLoaded, setIsNotFoundPage, setIsFetchingError, id) => {
+export const dispatchData = (fetchData, isDataLoaded, setisNotFoundError, setIsFetchingError, id) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -12,12 +11,11 @@ export const dispatchData = (fetchData, isDataLoaded, isLoaded, setIsLoaded, set
       dispatch(fetchData(id))
       .catch((err) => {
         if (err === HttpCode.PAGE_NOT_FOUND) {
-          setIsNotFoundPage(true);
+          setisNotFoundError(true);
         }
         setIsFetchingError(true);
         return;
-      })
-      .finally(() => setIsLoaded(isLoaded && isDataLoaded));
+      });
     }
   }, [isDataLoaded]);
 };

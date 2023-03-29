@@ -19,35 +19,34 @@ export const useFetchData = ({fetchFilms, fetchPromoFilm, fetchFilm, fetchCommen
     favoriteFilms,
     isFavoriteFilmsLoaded
   } = useSelector((state) => state.DATA);
-  const [isLoaded, setIsLoaded] = useState(true);
-  const [isNotFoundPage, setIsNotFoundPage] = useState(false);
+  const [isNotFoundError, setisNotFoundError] = useState(false);
   const [isFetchingError, setIsFetchingError] = useState(false);
 
-  // let isLoaded = true;
+  let isDataLoaded = true;
 
   if (fetchFilms) {
-    dispatchData(fetchFilms, isFilmsLoaded, isLoaded, setIsLoaded, setIsNotFoundPage, setIsFetchingError);
-    // isLoaded = isLoaded && isFilmLoaded;
+    dispatchData(fetchFilms, isFilmsLoaded, setisNotFoundError, setIsFetchingError);
+    isDataLoaded = isDataLoaded && isFilmsLoaded;
   }
 
   if (fetchPromoFilm) {
-    dispatchData(fetchPromoFilm, isPromoFilmLoaded, isLoaded, setIsLoaded, setIsNotFoundPage, setIsFetchingError);
-    // isLoaded = isLoaded && isPromoFilmLoaded;
+    dispatchData(fetchPromoFilm, isPromoFilmLoaded, setisNotFoundError, setIsFetchingError);
+    isDataLoaded = isDataLoaded && isPromoFilmLoaded;
   }
 
   if (fetchFilm) {
-    dispatchData(fetchFilm, isFilmLoaded, isLoaded, setIsLoaded, setIsNotFoundPage, setIsFetchingError, id);
-    // isLoaded = isLoaded && isFilmLoaded;
+    dispatchData(fetchFilm, isFilmLoaded, setisNotFoundError, setIsFetchingError, id);
+    isDataLoaded = isDataLoaded && isFilmLoaded;
   }
 
   if (fetchComments) {
-    dispatchData(fetchComments, isCommentsLoaded, isLoaded, setIsLoaded, setIsNotFoundPage, setIsFetchingError, id);
-    // isLoaded = isLoaded && isCommentsLoaded;
+    dispatchData(fetchComments, isCommentsLoaded, setisNotFoundError, setIsFetchingError, id);
+    isDataLoaded = isDataLoaded && isCommentsLoaded;
   }
 
   if (fetchFavoriteFilms) {
-    dispatchData(fetchFavoriteFilms, isFavoriteFilmsLoaded, isLoaded, setIsLoaded, setIsNotFoundPage, setIsFetchingError);
-    // isLoaded = isLoaded && isFavoriteFilmsLoaded;
+    dispatchData(fetchFavoriteFilms, isFavoriteFilmsLoaded, setisNotFoundError, setIsFetchingError);
+    isDataLoaded = isDataLoaded && isFavoriteFilmsLoaded;
   }
 
   return [
@@ -58,8 +57,10 @@ export const useFetchData = ({fetchFilms, fetchPromoFilm, fetchFilm, fetchCommen
       comments,
       favoriteFilms,
     },
-    isLoaded,
-    isFetchingError,
-    isNotFoundPage
+    {
+      isDataLoaded,
+      isFetchingError,
+      isNotFoundError,
+    },
   ];
 };

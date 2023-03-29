@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useParams} from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import MovieCardBig from '../../common-components/movie-card-big/movie-card-big';
 import Header from '../../common-components/header/header';
@@ -11,42 +11,31 @@ import ErrorPage from '../info-page/error-page/error-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import {fetchFilm} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch, HttpCode} from '../../../const';
+import {useFetchData} from '../../hoocks/use-fetch-data';
+import {Patch} from '../../../const';
 
 const AddReview = () => {
   const {id} = useParams();
-  const {film, isFilmLoaded} = useSelector((state) => state.DATA);
+  const [data, result] = useFetchData({fetchFilm, id});
+  const {film} = data;
+  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
   const dispatch = useDispatch();
-  const [isNotFoundPage, setIsNotFoundPage] = useState(false);
-  const [isFetchingError, setIsFetchingError] = useState(false);
 
   const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
 
-  useEffect(() => {
-    if (!isFilmLoaded) {
-      dispatch(fetchFilm(id))
-      .catch((err) => {
-        if (err === HttpCode.PAGE_NOT_FOUND) {
-          setIsNotFoundPage(true);
-        }
-        setIsFetchingError(true);
-      });
-    }
-  }, [isFilmLoaded]);
-
-  if (!isFilmLoaded && !isFetchingError) {
+  if (!isDataLoaded && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isFetchingError && !isNotFoundPage) {
+  if (isFetchingError && !isNotFoundError) {
     return (
       <ErrorPage />
     );
   }
 
-  if (isNotFoundPage) {
+  if (isNotFoundError) {
     return (
       <NotFoundPage />
     );

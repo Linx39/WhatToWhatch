@@ -20,25 +20,26 @@ const Film = () => {
   const {id} = useParams();
   const {activeNavItem} = useSelector((state) => state.FILMS_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
-  const dispatch = useDispatch();
-  const [data, isLoaded, isFetchingError, isNotFoundPage] = useFetchData({fetchFilms, fetchFilm, fetchComments, id});
+  const [data, result] = useFetchData({fetchFilms, fetchFilm, fetchComments, id});
   const {films, film, comments} = data;
+  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
+  const dispatch = useDispatch();
 
   const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
-  if (!isLoaded && !isFetchingError) {
+  if (!isDataLoaded && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isFetchingError && !isNotFoundPage) {
+  if (isFetchingError && !isNotFoundError) {
     return (
       <ErrorPage />
     );
   }
 
-  if (isNotFoundPage) {
+  if (isNotFoundError) {
     return (
       <NotFoundPage />
     );

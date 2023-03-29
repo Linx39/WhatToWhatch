@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
 
 import Header from '../../common-components/header/header';
 import MoviesList from '../../common-components/movies-list/movies-list';
@@ -7,33 +6,31 @@ import Footer from '../../common-components/footer/footer';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFavoriteFilms} from '../../../store/api-actions';
+import {useFetchData} from '../../hoocks/use-fetch-data';
 import {AdditionalClassName} from '../../../const';
 
 const MyList = () => {
-  const {favoriteFilms, isFavoriteFilmsLoaded} = useSelector((state) => state.DATA);
-  const dispatch = useDispatch();
-  const [isFetchingError, setIsFetchingError] = useState(false);
+  const [data, result] = useFetchData({fetchFavoriteFilms});
+  const {favoriteFilms} = data;
+  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
 
-  useEffect(() => {
-    if (!isFavoriteFilmsLoaded) {
-      dispatch(fetchFavoriteFilms())
-      .catch(() => {
-        setIsFetchingError(true);
-      });
-    }
-  }, [isFavoriteFilmsLoaded]);
-
-  if (!isFavoriteFilmsLoaded && !isFetchingError) {
+  if (!isDataLoaded && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isFetchingError) {
+  if (isFetchingError && !isNotFoundError) {
     return (
       <ErrorPage />
     );
   }
+
+  // if (isNotFoundError) {
+  //   return (
+  //     <NotFoundPage />
+  //   );
+  // }
 
   return (
     <div className="user-page">

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
+import {useSelector} from 'react-redux';
 
 import MovieCardBig from '../../common-components/movie-card-big/movie-card-big';
 import Header from '../../common-components/header/header';
@@ -11,6 +11,7 @@ import ShowMore from './show-more/show-more';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilms, fetchPromoFilm} from '../../../store/api-actions';
+import {useFetchData} from '../../hoocks/use-fetch-data';
 import {GENRE_DEFAULT} from '../../../const';
 
 const filterFilmsByGenre = (genre, films) => {
@@ -20,40 +21,28 @@ const filterFilmsByGenre = (genre, films) => {
 };
 
 const Main = () => {
-  const {films, isFilmsLoaded, promoFilm, isPromoFilmLoaded} = useSelector((state) => state.DATA);
   const {count, activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
-  const dispatch = useDispatch();
-  const [isFetchingError, setIsFetchingError] = useState(false);
+  const [data, result] = useFetchData({fetchFilms, fetchPromoFilm});
+  const {films, promoFilm} = data;
+  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
 
-  useEffect(() => {
-    if (!isFilmsLoaded) {
-      dispatch(fetchFilms())
-      .catch(() => {
-        setIsFetchingError(true);
-        return;
-      });
-    }
-
-    if (!isPromoFilmLoaded) {
-      dispatch(fetchPromoFilm())
-      .catch(() => {
-        setIsFetchingError(true);
-        return;
-      });
-    }
-  }, [isFilmsLoaded && isPromoFilmLoaded]);
-
-  if ((!isFilmsLoaded || !isPromoFilmLoaded) && !isFetchingError) {
+  if (!isDataLoaded && !isFetchingError) {
     return (
       <LoadingPage />
     );
   }
 
-  if (isFetchingError) {
+  if (isFetchingError && !isNotFoundError) {
     return (
       <ErrorPage />
     );
   }
+
+  // if (isNotFoundError) {
+  //   return (
+  //     <NotFoundPage />
+  //   );
+  // }
 
   const {name, backgroundImage} = promoFilm;
 
