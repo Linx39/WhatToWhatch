@@ -16,9 +16,10 @@ import {Patch} from '../../../const';
 
 const AddReview = () => {
   const {id} = useParams();
-  const [data, result] = useFetchData({fetchFilm, id});
-  const {film} = data;
-  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
+  const [
+    {film},
+    {isDataLoaded, isFetchingError, isNotFoundError}
+  ] = useFetchData({fetchFilm, id});
   const dispatch = useDispatch();
 
   const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));

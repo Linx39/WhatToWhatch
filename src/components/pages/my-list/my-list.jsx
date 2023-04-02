@@ -10,9 +10,10 @@ import {useFetchData} from '../../hoocks/use-fetch-data';
 import {AdditionalClassName} from '../../../const';
 
 const MyList = () => {
-  const [data, result] = useFetchData({fetchFavoriteFilms});
-  const {favoriteFilms} = data;
-  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
+  const [
+    {favoriteFilms},
+    {isDataLoaded, isFetchingError, isNotFoundError}
+  ] = useFetchData({fetchFavoriteFilms});
 
   if (!isDataLoaded && !isFetchingError) {
     return (

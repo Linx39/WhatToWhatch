@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -16,18 +16,49 @@ import {changeActiveNavItem} from '../../../store/action';
 import {useFetchData} from '../../hoocks/use-fetch-data';
 import {FilmsCount, AdditionalClassName} from '../../../const';
 
+const renderInfoPage = (isDataLoaded, isFetchingError, isNotFoundError) => {
+  if (!isDataLoaded && !isFetchingError) {
+    return (
+      <LoadingPage />
+    );
+  }
+
+  if (isFetchingError && !isNotFoundError) {
+    return (
+      <ErrorPage />
+    );
+  }
+
+  if (isNotFoundError) {
+    return (
+      <NotFoundPage />
+    );
+  }
+
+  return null;
+};
+
 const Film = () => {
   const {id} = useParams();
   const {activeNavItem} = useSelector((state) => state.FILMS_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
-  const [data, result] = useFetchData({fetchFilms, fetchFilm, fetchComments, id});
-  const {films, film, comments} = data;
-  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
+  const [
+    {films, film, comments},
+    {isFetching, isFetchingError, isNotFoundError}
+  ] = useFetchData({fetchFilms, fetchFilm, fetchComments, id});
   const dispatch = useDispatch();
 
   const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
-  if (!isDataLoaded && !isFetchingError) {
+  // useEffect(() => {
+    // if (isFetching || isFetchingError || isNotFoundError) {
+    //   renderInfoPage(isFetching, isFetchingError, isNotFoundError);
+    // }
+
+  // }, [isDataLoaded, isFetchingError, isNotFoundError]);
+
+
+  if (isFetching && !isFetchingError) {
     return (
       <LoadingPage />
     );

@@ -14,9 +14,10 @@ import {Patch} from '../../../const';
 
 const Player = () => {
   const {id} = useParams();
-  const [data, result] = useFetchData({fetchFilm, id});
-  const {film} = data;
-  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
+  const [
+    {film},
+    {isDataLoaded, isFetchingError, isNotFoundError}
+  ] = useFetchData({fetchFilm, id});
   const dispatch = useDispatch();
 
   const videoRef = useRef();

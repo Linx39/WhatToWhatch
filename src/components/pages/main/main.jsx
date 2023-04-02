@@ -22,9 +22,10 @@ const filterFilmsByGenre = (genre, films) => {
 
 const Main = () => {
   const {count, activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
-  const [data, result] = useFetchData({fetchFilms, fetchPromoFilm});
-  const {films, promoFilm} = data;
-  const {isDataLoaded, isFetchingError, isNotFoundError} = result;
+  const [
+    {films, promoFilm},
+    {isDataLoaded, isFetchingError, isNotFoundError}
+  ] = useFetchData({fetchFilms, fetchPromoFilm});
 
   if (!isDataLoaded && !isFetchingError) {
     return (
