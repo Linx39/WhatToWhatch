@@ -44,37 +44,37 @@ const Film = () => {
   const {authorizationStatus} = useSelector((state) => state.USER);
   const [
     {films, film, comments},
-    {isFetching, isFetchingError, isNotFoundError}
+    {isDataLoaded, isFetchingError, isNotFoundError}
   ] = useFetchData({fetchFilms, fetchFilm, fetchComments, id});
   const dispatch = useDispatch();
 
   const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
   // useEffect(() => {
-    // if (isFetching || isFetchingError || isNotFoundError) {
-    //   renderInfoPage(isFetching, isFetchingError, isNotFoundError);
+    // if (isDataLoaded || isFetchingError || isNotFoundError) {
+      renderInfoPage(isDataLoaded, isFetchingError, isNotFoundError);
     // }
 
-  // }, [isDataLoaded, isFetchingError, isNotFoundError]);
+  // });
 
 
-  if (isFetching && !isFetchingError) {
-    return (
-      <LoadingPage />
-    );
-  }
+  // if (!isDataLoaded && !isFetchingError) {
+  //   return (
+  //     <LoadingPage />
+  //   );
+  // }
 
-  if (isFetchingError && !isNotFoundError) {
-    return (
-      <ErrorPage />
-    );
-  }
+  // if (isFetchingError && !isNotFoundError) {
+  //   return (
+  //     <ErrorPage />
+  //   );
+  // }
 
-  if (isNotFoundError) {
-    return (
-      <NotFoundPage />
-    );
-  }
+  // if (isNotFoundError) {
+  //   return (
+  //     <NotFoundPage />
+  //   );
+  // }
 
   const {name, backgroundImage, genre} = film;
   const filmsLikeThis = films.slice().filter((item) => item.genre === genre && item.id !== id);

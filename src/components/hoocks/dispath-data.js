@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 
 import {HttpCode} from '../../const';
 
-export const dispatchData = (fetchData, isDataLoaded, setIsFetching, setisNotFoundError, setIsFetchingError, id) => {
+export const dispatchData = (fetchData, isDataLoaded, setisNotFoundError, setIsFetchingError, id) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,8 +15,7 @@ export const dispatchData = (fetchData, isDataLoaded, setIsFetching, setisNotFou
         }
         setIsFetchingError(true);
         return;
-      })
-      .finally(() => setIsFetching(false));
+      });
     }
   }, [isDataLoaded]);
 };
