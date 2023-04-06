@@ -1,46 +1,31 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Header from '../../common-components/header/header';
-import Footer from '../../common-components/footer/footer';
+import Loading from './loading/loading';
+import Error from './error/error';
+import NotFound from './not-found/not-found';
 
-const InfoPage = ({infoText, linkTo, linkText}) => {
+const InfoPage = ({isDataLoaded, isFetchingError, isNotFoundError}) => {
   return (
     <>
-      <section className="movie-card">
-        <h1 className="visually-hidden">WTW</h1>
+      {(!isDataLoaded && !isFetchingError) &&
+        <Loading />
+      }
 
-        <Header isUserBlock={false} />
-      </section>
+      {(isFetchingError && !isNotFoundError) &&
+        <Error />
+      }
 
-      <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title">{infoText}</h2>
-
-          {linkTo !== `` &&
-            <h2 className="catalog__title">
-              <Link to={linkTo}>{linkText}</Link>
-            </h2>
-          }
-        </section>
-
-        <Footer />
-      </div>
+      {isNotFoundError &&
+        <NotFound />
+      }
     </>
   );
 };
 
-InfoPage.defaultProps = {
-  infoText: ``,
-  linkTo: ``,
-  linkText: ``,
-};
-
 InfoPage.propTypes = {
-  infoText: PropTypes.string.isRequired,
-  linkTo: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
+  isFetchingError: PropTypes.bool.isRequired,
+  isNotFoundError: PropTypes.bool.isRequired,
 };
-
 export default InfoPage;

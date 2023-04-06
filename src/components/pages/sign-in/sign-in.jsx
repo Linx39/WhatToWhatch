@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import Header from '../../common-components/header/header';
 import Footer from '../../common-components/footer/footer';
-import ErrorPage from '../info-page/error-page/error-page';
+import Error from '../info-page/error/error';
 import SignInForm from './sign-in-form/sign-in-form';
 
 import {redirectToRoute} from '../../../store/action';
@@ -24,7 +24,7 @@ const SignIn = () => {
 
   if (isFetchingError) {
     return (
-      <ErrorPage />
+      <Error />
     );
   }
 

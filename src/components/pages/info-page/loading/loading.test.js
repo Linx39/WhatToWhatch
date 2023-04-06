@@ -5,17 +5,17 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import ErrorPage from './error-page';
+import Loading from './loading';
 
 const mockStore = configureStore({});
 
-it(`ErrorPage should render correctly`, () => {
+it(`Loading should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <ErrorPage />
+          <Loading />
         </Router>
       </Provider>
   );

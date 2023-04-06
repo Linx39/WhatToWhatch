@@ -1,9 +1,6 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import LoadingPage from '../pages/info-page/loading-page/loading-page';
-import ErrorPage from '../pages/info-page/error-page/error-page';
-import NotFoundPage from '../pages/info-page/not-found-page/not-found-page';
 import {dispatchData} from './dispath-data';
 
 export const useFetchData = ({fetchFilms, fetchPromoFilm, fetchFilm, fetchComments, fetchFavoriteFilms, id}) => {
@@ -61,6 +58,6 @@ export const useFetchData = ({fetchFilms, fetchPromoFilm, fetchFilm, fetchCommen
       isDataLoaded,
       isFetchingError,
       isNotFoundError,
-    },
+    }
   ];
 };
