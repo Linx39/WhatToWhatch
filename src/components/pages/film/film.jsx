@@ -22,7 +22,6 @@ const Film = () => {
           comments={comments}
         />
         : <InfoPage
-          isDataLoaded={isDataLoaded}
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}
         />

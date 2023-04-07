@@ -8,7 +8,6 @@ import {Patch} from '../../../../const';
 const UserBlockAvatar = () => {
   const {user} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
-
   const handleLogout = () => dispatch(logout());
   const handleOnAvatarClick = () => dispatch(redirectToRoute((Patch.MY_LIST)));
 

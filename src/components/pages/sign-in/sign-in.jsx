@@ -11,10 +11,8 @@ import {AuthorizationStatus, Patch, AdditionalClassName} from '../../../const';
 
 const SignIn = () => {
   const {authorizationStatus} = useSelector((state) => state.USER);
-  const dispatch = useDispatch();
   const [isFetchingError, setIsFetchingError] = useState(false);
-
-  const handleFetchingError = (value) => setIsFetchingError(value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
@@ -34,7 +32,7 @@ const SignIn = () => {
         <h1 className="page-title user-page__title">Sign in</h1>
       </Header>
 
-      <SignInForm onFetchingError={handleFetchingError}/>
+      <SignInForm onFetchingError={setIsFetchingError}/>
 
       <Footer />
     </div>

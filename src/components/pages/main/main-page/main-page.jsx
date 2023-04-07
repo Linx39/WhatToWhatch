@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 
@@ -21,7 +21,7 @@ const getFilmsByGenre = (genre, films) => {
 const MainPage = ({films, promoFilm}) => {
   const {count, activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
   const {name, backgroundImage} = promoFilm;
-  const filmsList = getFilmsByGenre(activeGenre, films);
+  const filmsList = useMemo(() => getFilmsByGenre(activeGenre, films));
 
   return (
     <>

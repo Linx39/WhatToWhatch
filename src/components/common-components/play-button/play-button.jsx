@@ -8,7 +8,6 @@ import {filmProp} from '../../../props-types';
 const PlayButton = ({film}) => {
   const {id} = film;
   const dispatch = useDispatch();
-
   const handlePlayButtonClick = () => dispatch(redirectToRoute((`${Patch.PLAYER}/${id}`)));
 
   return (

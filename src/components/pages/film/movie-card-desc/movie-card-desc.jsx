@@ -11,8 +11,6 @@ import {AuthorizationStatus} from '../../../../const';
 const MovieCardDesc = ({film, authorizationStatus}) => {
   const {name, genre, released} = film;
 
-  const handleLoadFilm = (data) => loadFilm(data);
-
   return (
     <div className="movie-card__wrap">
       <div className="movie-card__desc">
@@ -25,10 +23,9 @@ const MovieCardDesc = ({film, authorizationStatus}) => {
         <div className="movie-card__buttons">
           <PlayButton film={film}/>
 
-          <FavoriteButton film={film} onLoadData={handleLoadFilm} />
+          <FavoriteButton film={film} onLoadData={loadFilm} />
 
-          {
-            authorizationStatus === AuthorizationStatus.AUTH
+          {authorizationStatus === AuthorizationStatus.AUTH
             &&
             <AddReviewButton film={film}/>
           }

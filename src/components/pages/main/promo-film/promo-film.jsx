@@ -8,8 +8,6 @@ import {filmProp} from '../../../../props-types';
 const PromoFilm = ({film}) => {
   const {name, posterImage, genre, released} = film;
 
-  const handleLoadPromoFilm = (data) => loadPromoFilm(data);
-
   return (
     <div className='movie-card__wrap'>
       <div className='movie-card__info'>
@@ -27,7 +25,7 @@ const PromoFilm = ({film}) => {
           <div className='movie-card__buttons'>
             <PlayButton film={film}/>
 
-            <FavoriteButton film={film} onLoadData={handleLoadPromoFilm} />
+            <FavoriteButton film={film} onLoadData={loadPromoFilm} />
           </div>
         </div>
       </div>

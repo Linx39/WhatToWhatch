@@ -8,7 +8,6 @@ const ShowMore = () => {
   const {count} = useSelector((state) => state.FILMS_ACTIONS);
   const {films} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
-
   const handleShowMoreClick = () => {
     const newCount = Math.min(count + FilmsCount.MAIN, films.length);
     dispatch(changeFilmsCount(newCount));

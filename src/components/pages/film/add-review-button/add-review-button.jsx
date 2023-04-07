@@ -9,7 +9,6 @@ import {Patch} from '../../../../const';
 const AddReviewButton = ({film}) => {
   const {id} = film;
   const dispatch = useDispatch();
-
   const handleAddReviewClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}/review`)));
 
   return (

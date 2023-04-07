@@ -9,20 +9,12 @@ import {ReviewTextLength, Patch} from '../../../../const';
 
 const AddReviewForm = ({film}) => {
   const {id} = film;
-  const dispatch = useDispatch();
-  const [userForm, setUserForm] = useState(
-      {rating: null, comment: ``}
-  );
+  const [userForm, setUserForm] = useState({rating: null, comment: ``});
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
-
-  const handleRatingChange = (evt) => setUserForm(
-      {...userForm, rating: evt.target.value}
-  );
-
-  const handleCommentChange = (evt) => setUserForm(
-      {...userForm, comment: evt.target.value}
-  );
+  const dispatch = useDispatch();
+  const handleRatingChange = (evt) => setUserForm({...userForm, rating: evt.target.value});
+  const handleCommentChange = (evt) => setUserForm({...userForm, comment: evt.target.value});
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

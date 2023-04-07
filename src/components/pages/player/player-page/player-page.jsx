@@ -1,7 +1,7 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import VideoPlayerWithControls from '../video-player-with-controls/video-player-with-controls';
+import VideoPlayer from '../video-player/video-player';
 import PlayerControls from '../player-controls/player-controls';
 import {redirectToRoute} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
@@ -9,34 +9,28 @@ import {Patch} from '../../../../const';
 
 const PlayerPage = ({film}) => {
   const {id, name, previewImage, videoLink} = film;
-  const dispatch = useDispatch();
-  const videoRef = useRef();
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const dispatch = useDispatch();
   const handleExitButtonClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
-  const handleChangeIsVideoLoaded = (value) => setIsVideoLoaded(value);
-  const handleGetDuration = (time) => setDuration(time);
-  const handleGetCurrentTime = (time) => setCurrentTime(time);
   const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
   const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
 
-
   return (
     <div className="player">
-      <VideoPlayerWithControls
-        videoRef={videoRef}
+      <VideoPlayer
         src={videoLink}
         poster={previewImage}
         isMuted={false}
         isPlaying={isPlaying}
-        isVideoLoaded={isVideoLoaded}
-        onChangeIsVideoLoaded ={handleChangeIsVideoLoaded}
         isFullScreen={isFullScreen}
-        onGetDuration={handleGetDuration}
-        onChangeCurrentTime={handleGetCurrentTime}
+        isVideoLoaded={isVideoLoaded}
+        onChangeIsVideoLoaded ={setIsVideoLoaded}
+        onGetDuration={setDuration}
+        onChangeCurrentTime={setCurrentTime}
         onChangeIsPlaying={setIsPlaying}
       />
 

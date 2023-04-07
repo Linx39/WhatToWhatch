@@ -18,7 +18,6 @@ const MyList = () => {
           favoriteFilms={favoriteFilms}
         />
         : <InfoPage
-          isDataLoaded={isDataLoaded}
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}
         />

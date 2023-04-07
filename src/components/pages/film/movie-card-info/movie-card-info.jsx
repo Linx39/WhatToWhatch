@@ -5,7 +5,7 @@ import NavList from '../nav-list/nav-list';
 import Overview from '../overview/overview';
 import Details from '../details/details';
 import Reviews from '../reviews/reviews';
-import {filmProp, commentProp} from "../../../../props-types";
+import {filmProp, commentProp} from '../../../../props-types';
 import {NavItem} from '../../../../const';
 
 const MovieCardInfo = ({film, comments, activeNavItem, onClick}) => {

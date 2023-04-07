@@ -19,7 +19,6 @@ const Main = () => {
           promoFilm={promoFilm}
         />
         : <InfoPage
-          isDataLoaded={isDataLoaded}
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}
         />

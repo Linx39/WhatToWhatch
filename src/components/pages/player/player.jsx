@@ -20,7 +20,6 @@ const Player = () => {
           film={film}
         />
         : <InfoPage
-          isDataLoaded={isDataLoaded}
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}
         />

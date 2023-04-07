@@ -22,7 +22,8 @@ const CardImage = ({film, onMouseEnter, onMouseLeave, onClick}) => {
       <h3 className="small-movie-card__title">
         <Link to="#" onClick={onClick} className="small-movie-card__link">{name}</Link>
       </h3>
-    </>);
+    </>
+  );
 };
 
 CardImage.propTypes = {

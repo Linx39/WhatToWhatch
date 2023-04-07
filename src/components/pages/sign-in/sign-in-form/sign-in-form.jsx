@@ -6,11 +6,11 @@ import {login} from '../../../../store/api-actions';
 import {isEmailValid} from '../../../../utils';
 
 const SignInForm = ({onFetchingError}) => {
-  const dispatch = useDispatch();
   const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [isEmailCorrect, setIsEmailCorrect] = useState(true);
   const loginRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
 
   const handleInput = (evt) => {
     evt.preventDefault();

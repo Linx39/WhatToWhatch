@@ -15,13 +15,11 @@ const GenresList = () => {
   const {activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
   const {films} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
-
-  const genres = useMemo(() => getUniqueGenres(films).slice(0, GENRE_COUNT));
-
   const handleGenreItemClick = (evt) => {
     const genreItem = evt.target.textContent;
     dispatch(changeGenre((genreItem)));
   };
+  const genres = useMemo(() => getUniqueGenres(films).slice(0, GENRE_COUNT));
 
   return (
     <ul className="catalog__genres-list">
