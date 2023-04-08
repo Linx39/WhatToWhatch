@@ -33,7 +33,6 @@ describe(`Test routing`, () => {
         count: FilmsCount.MAIN,
       },
     });
-
     const history = createMemoryHistory();
 
     render(
@@ -49,11 +48,17 @@ describe(`Test routing`, () => {
   });
 
   it(`Render SignIn when user navigate to '/login' url`, () => {
+    const store = mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        user
+      },
+    });
     const history = createMemoryHistory();
     history.push(Patch.LOGIN);
 
     render(
-        <redux.Provider store={mockStore({})}>
+        <redux.Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
@@ -73,7 +78,6 @@ describe(`Test routing`, () => {
       },
       DATA: {favoriteFilms: films, isFavoriteFilmsLoaded: true}
     });
-
     const history = createMemoryHistory();
     history.push(Patch.MY_LIST);
 
@@ -103,7 +107,6 @@ describe(`Test routing`, () => {
       },
       FILMS_ACTIONS: {activeNavItem: NavItem.OVERVIEW}
     });
-
     const history = createMemoryHistory();
     history.push(`${Patch.FILMS}/:id`);
 
@@ -131,7 +134,6 @@ describe(`Test routing`, () => {
         isFilmLoaded: true,
       },
     });
-
     const history = createMemoryHistory();
     history.push(`${Patch.FILMS}/:id/review`);
 
@@ -151,14 +153,16 @@ describe(`Test routing`, () => {
   it(`Render Player when user navigate to '/player/id' url`, () => {
     window.HTMLMediaElement.prototype.play = jest.fn();
     window.HTMLMediaElement.prototype.pause = jest.fn();
-
     const store = mockStore({
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+        user
+      },
       DATA: {
         film,
         isFilmLoaded: true,
       },
     });
-
     const history = createMemoryHistory();
     history.push(`${Patch.PLAYER}/:id`);
 
@@ -180,7 +184,6 @@ describe(`Test routing`, () => {
         user,
       },
     });
-
     const history = createMemoryHistory();
     history.push(`/non-existent-route`);
 

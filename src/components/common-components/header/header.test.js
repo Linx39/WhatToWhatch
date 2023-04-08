@@ -5,23 +5,27 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import LogoHeader from './logo-header';
+import Header from './header';
 
 const mockStore = configureStore({});
 
-it(`LogoHeader should render correctly`, () => {
+it(`Header should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <LogoHeader isActive={true} />
+          <Header
+            additionalClassName={``}
+            isLogoClickable={true}
+            isUserBlock={false}
+          />
         </Router>
       </Provider>
   );
 
   expect(screen.getByTestId(`test-logo`)).toBeInTheDocument();
-  expect(screen.getAllByText(/W/i)[0]).toBeInTheDocument();
-  expect(screen.getAllByText(/W/i)[1]).toBeInTheDocument();
-  expect(screen.getByText(/T/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/W/)[0]).toBeInTheDocument();
+  expect(screen.getAllByText(/W/)[1]).toBeInTheDocument();
+  expect(screen.getByText(/T/)).toBeInTheDocument();
 });

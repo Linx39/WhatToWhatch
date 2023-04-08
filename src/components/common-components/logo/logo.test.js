@@ -15,13 +15,13 @@ it(`Logo should render correctly`, () => {
   render(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <Logo isActive={true} className={``} />
+          <Logo additionalClassName={``} isLogoClickable={true} />
         </Router>
       </Provider>
   );
 
   expect(screen.getByTestId(`test-logo`)).toBeInTheDocument();
-  expect(screen.getAllByText(/W/i)[0]).toBeInTheDocument();
-  expect(screen.getAllByText(/W/i)[1]).toBeInTheDocument();
-  expect(screen.getByText(/T/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/W/)[0]).toBeInTheDocument();
+  expect(screen.getAllByText(/W/)[1]).toBeInTheDocument();
+  expect(screen.getByText(/T/)).toBeInTheDocument();
 });

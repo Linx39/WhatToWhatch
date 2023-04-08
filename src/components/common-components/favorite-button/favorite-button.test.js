@@ -16,13 +16,12 @@ it(`FavoriteButton should render correctly`, () => {
   const store = mockStore({
     USER: {user},
   });
-
   const history = createMemoryHistory();
 
   render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <FavoriteButton film={film} isPromo={false}/>
+          <FavoriteButton film={film} onLoadData={jest.fn()}/>
         </Router>
       </redux.Provider>
   );
