@@ -4,7 +4,7 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
 import NavList from './nav-list';
-import {NavItem} from '../../../const';
+import {NavItem} from '../../../../const';
 
 const history = createMemoryHistory();
 

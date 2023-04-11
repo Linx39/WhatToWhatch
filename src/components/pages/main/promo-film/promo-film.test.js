@@ -4,12 +4,12 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import PromoFilm from './promo-film';
-import {AuthorizationStatus} from '../../../const';
-import films from '../../../mock/films';
+import {AuthorizationStatus} from '../../../../const';
+import films from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
-it(`'PromoFilm' should render correctly`, () => {
+it(`PromoFilm should render correctly`, () => {
   const film = films[3];
   const {name, genre, released} = film;
   const store = mockStore({

@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import Review from './review';
-import filmComments from '../../../mock/comments';
+import filmComments from '../../../../mock/comments';
 
 it(`Review should render correctly`, () => {
   const filmComment = filmComments[0];

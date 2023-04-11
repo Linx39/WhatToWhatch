@@ -10,7 +10,7 @@ import films from '../../../mock/films';
 import {Patch} from '../../../const';
 
 const mockStore = configureStore({});
-jest.mock(`../video-player/video-player-with-utils`, () => {
+jest.mock(`../player/video-player/video-player`, () => {
   const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
   mockVideoPlayer.displayName = `MockVideoPlayer`;
   return {

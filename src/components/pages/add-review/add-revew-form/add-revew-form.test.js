@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import AddReviewForm from './add-revew-form';
-import films from '../../../mock/films';
+import films from '../../../../mock/films';
 
 const mockStore = configureStore({});
 

@@ -1,30 +1,26 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 
-import VideoPlayer from '../../../common-components/video-player/video-player';
-
-window.HTMLMediaElement.prototype.play = () => {};
-window.HTMLMediaElement.prototype.pause = () => {};
+import VideoPlayer from './video-player';
 
 it(`VideoPlayer should render correctly`, () => {
-  const mockVideoRef = {
-    current: null,
-  };
+  window.HTMLMediaElement.prototype.play = jest.fn();
+  window.HTMLMediaElement.prototype.pause = jest.fn();
   const mockSrcPath = `mock-src-path`;
   const mockPosterPath = `mock-poster-path`;
 
   render(
       <VideoPlayer
-        videoRef={mockVideoRef}
         src={mockSrcPath}
         poster={mockPosterPath}
-        isVideoLoaded={true}
+        isMuted={false}
         isPlaying={true}
         isFullScreen={false}
-        isMuted={false}
-        onChangeIsLoaded ={jest.fn()}
+        isVideoLoaded={true}
+        onChangeIsVideoLoaded ={jest.fn()}
         onGetDuration={jest.fn()}
         onChangeCurrentTime={jest.fn()}
+        onChangeIsPlaying={jest.fn()}
       />
   );
 

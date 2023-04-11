@@ -4,11 +4,12 @@ import {render, screen, fireEvent} from '@testing-library/react';
 import Stars from './stars';
 
 describe(`Test Stars`, () => {
-  it(`'Stars' should render correctly`, () => {
+  it(`Stars should render correctly`, () => {
     render(
         <Stars
           ratingValue={6}
           onChange={jest.fn()}
+          isSubmiting={false}
         />
     );
 
@@ -23,6 +24,7 @@ describe(`Test Stars`, () => {
         <Stars
           ratingValue={2}
           onChange={onChange}
+          isSubmiting={false}
         />
     );
 
@@ -36,6 +38,7 @@ describe(`Test Stars`, () => {
         <Stars
           ratingValue={3}
           onChange={jest.fn()}
+          isSubmiting={false}
         />
     );
 

@@ -6,9 +6,9 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import Main from './main';
-import {AuthorizationStatus} from '../../const';
-import films from '../../mock/films';
-import user from '../../mock/user';
+import {AuthorizationStatus} from '../../../const';
+import films from '../../../mock/films';
+import user from '../../../mock/user';
 
 const mockStore = configureStore({});
 

@@ -5,39 +5,43 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import AddReview from './add-review';
-import {AuthorizationStatus} from '../../../const';
-import films from '../../../mock/films';
-import user from '../../../mock/user';
+import MovieCardInfo from './movie-card-info';
+import {NavItem} from '../../../../const';
+import films from '../../../../mock/films';
+import comments from '../../../../mock/comments';
 
 const mockStore = configureStore({});
 
-it(`AddReview should render correctly`, () => {
-  const film = films[7];
+it(`MovieCardInfo should render correctly`, () => {
+  const film = films[4];
   const {name} = film;
-
   const store = mockStore({
-    USER: {
-      authorizationStatus: AuthorizationStatus.AUTH,
-      user,
-    },
     DATA: {
       film,
       isFilmLoaded: true,
+      comments,
+      isCommentsLoaded: true,
     },
+    FILMS_ACTIONS: {
+      activeNavItem: NavItem.OVERVIEW,
+    }
   });
-
   const history = createMemoryHistory();
 
   render(
       <Provider store={store}>
         <Router history={history}>
-          <AddReview />
+          <MovieCardInfo
+            film={film}
+            comments={comments}
+            activeNavItem={NavItem.REVIEWS}
+            onClick={jest.fn()}
+          />
         </Router>
       </Provider>
   );
 
-  expect(screen.getByText(new RegExp(`${name}`, `i`))).toBeInTheDocument();
   expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();
-  expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${NavItem.REVIEWS}`, `i`))).toBeInTheDocument();
 });
+

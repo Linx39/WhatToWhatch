@@ -10,10 +10,10 @@ describe(`Test PlayerControls`, () => {
     render(
         <PlayerControls
           name={name}
-          durationVideo={50}
-          currentTime={15}
-          isVideoLoaded={true}
           isPlaying={true}
+          isVideoLoaded={true}
+          duration={50}
+          currentTime={15}
           onPlayPauseButtonClick={jest.fn()}
           onFullScreenButtonClick={jest.fn()}
         />
@@ -31,17 +31,16 @@ describe(`Test PlayerControls`, () => {
     render(
         <PlayerControls
           name={name}
-          durationVideo={50}
-          currentTime={15}
-          isVideoLoaded={true}
           isPlaying={true}
+          isVideoLoaded={true}
+          duration={50}
+          currentTime={15}
           onPlayPauseButtonClick={onPlayPauseButtonClick}
           onFullScreenButtonClick={jest.fn()}
         />
     );
 
     const playPauseButton = screen.getByText((/Pause/i));
-
     fireEvent.click(playPauseButton);
     expect(onPlayPauseButtonClick).toBeCalled();
   });
@@ -54,7 +53,7 @@ describe(`Test PlayerControls`, () => {
           name={name}
           isPlaying={true}
           isVideoLoaded={true}
-          durationVideo={50}
+          duration={50}
           currentTime={15}
           onPlayPauseButtonClick={jest.fn()}
           onFullScreenButtonClick={onFullScreenButtonClick}
@@ -62,7 +61,6 @@ describe(`Test PlayerControls`, () => {
     );
 
     const fullScreenButton = screen.getByText((/Full screen/i));
-
     fireEvent.click(fullScreenButton);
     expect(onFullScreenButtonClick).toBeCalled();
   });

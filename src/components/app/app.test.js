@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import * as redux from 'react-redux';
+import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import {AuthorizationStatus, Patch, NavItem, FilmsCount} from '../../const';
@@ -36,11 +36,11 @@ describe(`Test routing`, () => {
     const history = createMemoryHistory();
 
     render(
-        <redux.Provider store={store}>
+        <Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
-        </redux.Provider>
+        </Provider>
     );
 
     expect(screen.getAllByAltText(new RegExp(`${name}`, `i`))[0]).toBeInTheDocument();
@@ -58,11 +58,11 @@ describe(`Test routing`, () => {
     history.push(Patch.LOGIN);
 
     render(
-        <redux.Provider store={store}>
+        <Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
-        </redux.Provider>
+        </Provider>
     );
 
     expect(screen.getAllByText(/Sign in/i)[0]).toBeInTheDocument();
@@ -82,11 +82,11 @@ describe(`Test routing`, () => {
     history.push(Patch.MY_LIST);
 
     render(
-        <redux.Provider store={store}>
+        <Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
-        </redux.Provider>
+        </Provider>
     );
 
     expect(screen.getByText(/My list/i)).toBeInTheDocument();
@@ -111,11 +111,11 @@ describe(`Test routing`, () => {
     history.push(`${Patch.FILMS}/:id`);
 
     render(
-        <redux.Provider store={store}>
+        <Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
-        </redux.Provider>
+        </Provider>
     );
 
     expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();
@@ -138,11 +138,11 @@ describe(`Test routing`, () => {
     history.push(`${Patch.FILMS}/:id/review`);
 
     render(
-        <redux.Provider store={store}>
+        <Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
-        </redux.Provider>
+        </Provider>
     );
 
     expect(screen.getByText(new RegExp(`${name}`, `i`))).toBeInTheDocument();
@@ -167,11 +167,11 @@ describe(`Test routing`, () => {
     history.push(`${Patch.PLAYER}/:id`);
 
     render(
-        <redux.Provider store={store}>
+        <Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
-        </redux.Provider>
+        </Provider>
     );
 
     expect(screen.getByText(/Exit/i)).toBeInTheDocument();
@@ -188,11 +188,11 @@ describe(`Test routing`, () => {
     history.push(`/non-existent-route`);
 
     render(
-        <redux.Provider store={store}>
+        <Provider store={store}>
           <Router history={history}>
             <App />
           </Router>
-        </redux.Provider>
+        </Provider>
     );
 
     expect(screen.getByText(/404. Page not found/i)).toBeInTheDocument();

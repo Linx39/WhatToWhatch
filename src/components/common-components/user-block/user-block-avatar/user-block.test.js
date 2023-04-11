@@ -3,19 +3,19 @@ import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import UserBlock from './user-block';
+import UserBlockAvatar from './user-block-avatar';
 import user from '../../../../mock/user';
 
 const mockStore = configureStore({});
 
-it(`UserBlock should render correctly`, () => {
+it(`UserBlockAvatar should render correctly`, () => {
   const store = mockStore({
     USER: {user},
   });
 
   render(
       <Provider store={store}>
-        <UserBlock />
+        <UserBlockAvatar />
       </Provider>
   );
 

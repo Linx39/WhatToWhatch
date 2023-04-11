@@ -3,14 +3,14 @@ import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
-import UserBlockNoSign from './user-block-no-sign';
+import UserBlockSignIn from './user-block-sign-in';
 
-it(`UserBlockNoSign should render correctly`, () => {
+it(`UserBlockSignIn should render correctly`, () => {
   const history = createMemoryHistory();
 
   render(
       <Router history={history}>
-        <UserBlockNoSign />
+        <UserBlockSignIn />
       </Router>
   );
 

@@ -5,39 +5,35 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import AddReview from './add-review';
-import {AuthorizationStatus} from '../../../const';
-import films from '../../../mock/films';
-import user from '../../../mock/user';
+import MovieCardDesc from './movie-card-desc';
+import {AuthorizationStatus} from '../../../../const';
+import films from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
-it(`AddReview should render correctly`, () => {
-  const film = films[7];
-  const {name} = film;
-
+it(`MovieCardDesc should render correctly`, () => {
+  const film = films[4];
+  const {name, genre, released} = film;
   const store = mockStore({
     USER: {
       authorizationStatus: AuthorizationStatus.AUTH,
-      user,
     },
     DATA: {
       film,
       isFilmLoaded: true,
     },
   });
-
   const history = createMemoryHistory();
 
   render(
       <Provider store={store}>
         <Router history={history}>
-          <AddReview />
+          <MovieCardDesc film={film} authorizationStatus={AuthorizationStatus.AUTH} />
         </Router>
       </Provider>
   );
 
   expect(screen.getByText(new RegExp(`${name}`, `i`))).toBeInTheDocument();
-  expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();
-  expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${genre}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${released}`, `i`))).toBeInTheDocument();
 });

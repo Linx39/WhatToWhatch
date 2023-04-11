@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import Error from './error';
+import {InfoText} from '../../../../const';
 
 const mockStore = configureStore({});
 
@@ -20,5 +21,5 @@ it(`Error should render correctly`, () => {
       </Provider>
   );
 
-  expect(screen.getByText(/Loading .../i)).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${InfoText.LOADING_ERROR}`, `i`))).toBeInTheDocument();
 });

@@ -5,7 +5,7 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import MoviesList from './films-list';
+import MoviesList from './movies-list';
 import films from '../../../mock/films';
 
 const mockStore = configureStore({});
