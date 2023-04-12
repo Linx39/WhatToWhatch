@@ -30,6 +30,7 @@ const MyList = () => {
 
           <Footer />
         </div>
+        
         : <InfoPage
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}

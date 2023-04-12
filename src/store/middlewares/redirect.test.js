@@ -1,6 +1,5 @@
 import {redirect} from './redirect';
 import {redirectToRoute} from '../action';
-
 import {Patch} from '../../const';
 
 const mockRedux = () => {

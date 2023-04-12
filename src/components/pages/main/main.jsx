@@ -57,6 +57,7 @@ const Main = () => {
             <Footer isLogoClickable={false}/>
           </div>
         </>
+        
         : <InfoPage
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}

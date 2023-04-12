@@ -1,4 +1,4 @@
 export default {
   email: `fake-email@test.ru`,
-  password: `1239`,
+  password: `4321`,
 };

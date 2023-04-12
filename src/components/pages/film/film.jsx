@@ -64,6 +64,7 @@ const Film = () => {
             <Footer />
           </div>
         </>
+        
         : <InfoPage
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}

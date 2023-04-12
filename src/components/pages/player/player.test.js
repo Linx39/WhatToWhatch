@@ -7,7 +7,6 @@ import configureStore from 'redux-mock-store';
 
 import Player from './player';
 import films from '../../../mock/films';
-import {Patch} from '../../../const';
 
 const mockStore = configureStore({});
 jest.mock(`../player/video-player/video-player`, () => {
@@ -31,31 +30,24 @@ jest.mock(`../player/player-controls/player-controls`, () => {
   };
 });
 
-let history;
-let store;
-
-describe(`Test Player`, () => {
+it(`Player should render correctly`, () => {
   const film = films[6];
-  beforeAll(() => {
-    history = createMemoryHistory();
-    history.push(Patch.PLAYER);
-    store = mockStore({
-      DATA: {
-        film,
-        isFilmLoaded: true,
-      },
-    });
+  const history = createMemoryHistory();
+  const store = mockStore({
+    DATA: {
+      film,
+      isFilmLoaded: true,
+    },
   });
 
-  it(`Player should render correctly`, () => {
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <Player />
-          </Router>
-        </Provider>
-    );
+  render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Player />
+        </Router>
+      </Provider>
+  );
 
-    expect(screen.getByText(/Exit/i)).toBeInTheDocument();
-  });
+  expect(screen.getByText(/Exit/i)).toBeInTheDocument();
 });
+

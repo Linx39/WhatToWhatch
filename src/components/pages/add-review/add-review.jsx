@@ -42,6 +42,7 @@ const AddReview = () => {
 
           <AddReviewForm film={film} />
         </section>
+        
         : <InfoPage
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}

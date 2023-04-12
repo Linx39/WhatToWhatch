@@ -10,7 +10,7 @@ export const ActionType = {
   LOAD_PROMO_FILM: `data/loadPromoFilm`,
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
-  LOAD_FAVORITES_FILMS: `data/loadFavoriteFilms`,
+  LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
   RESET_LOADED_FILM: `data/resetLoadedFilm`,
   RESET_LOADED_FAVORITE_FILMS: `data/resetLoadedFavoriteFilms`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
@@ -64,7 +64,7 @@ export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) =>
   };
 });
 
-export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITES_FILMS, (films) => {
+export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (films) => {
   return {
     payload: films,
   };

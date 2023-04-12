@@ -1,23 +1,4 @@
 export default [
-  // {
-  //   id: 0,
-  //   name: `Fantastic Beasts: The Crimes of Grindelwald`,
-  //   posterImage: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
-  //   previewImage: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
-  //   backgroundImage: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
-  //   backgroundColor: `#ffffff`,
-  //   videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
-  //   previewVideoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
-  //   description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
-  //   rating: 8.9,
-  //   scoresCount: 240,
-  //   director: `Wes Andreson`,
-  //   starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
-  //   runTime: 101,
-  //   genre: `Comedy`,
-  //   released: 2012,
-  //   isFavorite: false
-  // },
   {
     id: 1,
     name: `War of the Worlds`,

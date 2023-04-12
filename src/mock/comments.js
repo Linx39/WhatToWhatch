@@ -12,7 +12,7 @@ export default [
   {
     id: 2,
     user: {
-      id: 1,
+      id: 2,
       name: `Bill Goodykoontz`
     },
     rating: 8.0,
@@ -20,9 +20,9 @@ export default [
     date: `2015-11-18`
   },
   {
-    id: 3,
+    id: 2,
     user: {
-      id: 1,
+      id: 3,
       name: `Amanda Greever`
     },
     rating: 8.0,
@@ -30,9 +30,9 @@ export default [
     date: `2015-11-18`
   },
   {
-    id: 4,
+    id: 3,
     user: {
-      id: 1,
+      id: 4,
       name: `Matthew Lickona`
     },
     rating: 7.2,
@@ -40,9 +40,9 @@ export default [
     date: `2016-12-20`
   },
   {
-    id: 5,
+    id: 3,
     user: {
-      id: 1,
+      id: 5,
       name: `Paula Fleri-Soler`
     },
     rating: 7.6,
@@ -50,9 +50,9 @@ export default [
     date: `2016-12-20`
   },
   {
-    id: 6,
+    id: 4,
     user: {
-      id: 2,
+      id: 5,
       name: `Paula Fleri-Soler`
     },
     rating: 7.0,

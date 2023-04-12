@@ -44,7 +44,13 @@ const Player = () => {
             onChangeIsPlaying={setIsPlaying}
           />
 
-          <button type="button" className="player__exit" onClick={handleExitButtonClick}>Exit</button>
+          <button
+            type="button"
+            className="player__exit"
+            onClick={handleExitButtonClick}
+          >
+            Exit
+          </button>
 
           <PlayerControls
             name={name}
@@ -56,6 +62,7 @@ const Player = () => {
             onFullScreenButtonClick={handleFullScreenButtonClick}
           />
         </div>
+
         : <InfoPage
           isFetchingError={isFetchingError}
           isNotFoundError={isNotFoundError}

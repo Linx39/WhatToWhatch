@@ -3,7 +3,8 @@ import {createAPI} from '../../services/api';
 import {initialState, userData} from './user-data';
 import {ActionType} from '../action';
 import {checkAuth, login, logout} from '../api-actions';
-import {AdditionalUrl, Patch, AuthorizationStatus} from '../../const';
+import {AdditionalUrl, AuthorizationStatus} from '../../const';
+import user from '../../mock/user';
 
 const api = createAPI(() => {});
 
@@ -24,30 +25,47 @@ describe(`Reducer 'user' should work correctly`, () => {
       .toEqual({authorizationStatus: AuthorizationStatus.AUTH, user: {}});
   });
 
+  it(`Reducer should update user data`, () => {
+    const state = {authorizationStatus: AuthorizationStatus.AUTH, user: {}};
+    const loadUserDataAction = {
+      type: ActionType.LOAD_USER_DATA,
+      payload: {fake: true}
+    };
+
+    expect(userData(state, loadUserDataAction))
+      .toEqual({authorizationStatus: AuthorizationStatus.AUTH, user: {fake: true}});
+  });
 });
 
 describe(`Async operation work correctly`, () => {
+
   it(`Should make a correct API call for get to /login`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const checkAuthLoader = checkAuth();
+    const authInfo = {
+      id: 1,
+      email: `fake-email@test.ru`,
+      name: `fake-name`,
+      avatarUrl: `fake-url`,
+    };
 
     apiMock
       .onGet(AdditionalUrl.LOGIN)
-      .reply(200, {fake: true});
+      .reply(200, authInfo);
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_USER_DATA,
-          payload: {fake: true},
+          type: ActionType.REQUIRE_AUTHORIZATION,
+          payload: AuthorizationStatus.AUTH,
         });
 
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.REQUIRE_AUTHORIZATION,
-          payload: AuthorizationStatus.AUTH,
+          type: ActionType.LOAD_USER_DATA,
+          payload: authInfo,
         });
       });
   });
@@ -64,21 +82,16 @@ describe(`Async operation work correctly`, () => {
 
     return loginLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
-
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_USER_DATA,
-          payload: {fake: true},
-        });
+        expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.REQUIRE_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
 
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
-          type: ActionType.REDIRECT_TO_ROUTE,
-          payload: Patch.MAIN,
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.LOAD_USER_DATA,
+          payload: {fake: true},
         });
       });
   });

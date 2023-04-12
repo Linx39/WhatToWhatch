@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react';
 import VideoPlayer from './video-player';
 
 it(`VideoPlayer should render correctly`, () => {
-  window.HTMLMediaElement.prototype.play = jest.fn();
+  window.HTMLMediaElement.prototype.play = jest.fn(() => ({catch: () => {}}));
   window.HTMLMediaElement.prototype.pause = jest.fn();
   const mockSrcPath = `mock-src-path`;
   const mockPosterPath = `mock-poster-path`;

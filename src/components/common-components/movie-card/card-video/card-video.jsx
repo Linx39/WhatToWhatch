@@ -4,6 +4,7 @@ import {filmProp} from '../../../../props-types';
 
 const CardVideo = ({film}) => {
   const {id, previewVideoLink, previewImage} = film;
+
   return (
     <div className="small-movie-card__image" data-testid={`test-card-video-${id}`}>
       <video

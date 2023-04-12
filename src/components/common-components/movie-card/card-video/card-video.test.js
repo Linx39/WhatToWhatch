@@ -19,6 +19,8 @@ const film = films[8];
 const {id} = film;
 
 it(`CardVideo should render correctly`, () => {
+  // window.HTMLMediaElement.prototype.muted = jest.fn();
+
   render(
       <CardVideo film={film} />
   );

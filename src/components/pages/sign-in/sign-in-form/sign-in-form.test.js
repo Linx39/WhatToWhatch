@@ -1,0 +1,21 @@
+import React from 'react';
+import {render, screen} from '@testing-library/react';
+import {Provider} from 'react-redux';
+import configureStore from 'redux-mock-store';
+
+import SignInForm from './sign-in-form';
+
+it(`SignInForm should render correctly`, () => {
+  const mockStore = configureStore({});
+  render(
+      <Provider store={mockStore({})}>
+        <SignInForm
+          onFetchingError={jest.fn()}
+        />
+      </Provider>
+  );
+
+  expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+});
