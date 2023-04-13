@@ -6,18 +6,18 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import AddReviewButton from './add-review-button';
-import films from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`AddReviewButton should render correctly`, () => {
-  const film = films[6];
+  const mockFilm = mockFilms[6];
   const history = createMemoryHistory();
 
   render(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <AddReviewButton film={film}/>
+          <AddReviewButton film={mockFilm}/>
         </Router>
       </Provider>
   );

@@ -7,14 +7,14 @@ import configureStore from 'redux-mock-store';
 
 import AddReview from './add-review';
 import {AuthorizationStatus} from '../../../const';
-import films from '../../../mock/films';
-import user from '../../../mock/user';
+import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`AddReview should render correctly`, () => {
-  const film = films[7];
-  const {name} = film;
+  const user = {fake: true};
+  const mockFilm = mockFilms[7];
+  const {name} = mockFilm;
 
   const store = mockStore({
     USER: {
@@ -22,7 +22,7 @@ it(`AddReview should render correctly`, () => {
       user,
     },
     DATA: {
-      film,
+      film: mockFilm,
       isFilmLoaded: true,
     },
   });

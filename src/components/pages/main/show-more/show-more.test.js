@@ -4,17 +4,16 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import ShowMore from './show-more';
-import films from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`ShowMore should render correctly`, () => {
   const store = mockStore({
     DATA: {
-      films,
+      films: {},
     },
     FILMS_ACTIONS: {
-      count: 12,
+      count: 9,
     },
   });
 

@@ -6,18 +6,18 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
 import CardImage from './card-image';
-import films from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/films';
 
 const history = createMemoryHistory();
 
 describe(`Test CardImage`, () => {
-  const film = films[5];
-  const {name} = film;
+  const mockFilm = mockFilms[5];
+  const {name} = mockFilm;
   it(`CardImage should render correctly`, () => {
     render(
         <Router history={history}>
           <CardImage
-            film={film}
+            film={mockFilm}
             onMouseEnter={jest.fn()}
             onMouseLeave={jest.fn()}
             onClick={jest.fn()}
@@ -35,7 +35,7 @@ describe(`Test CardImage`, () => {
     render(
         <Router history={history}>
           <CardImage
-            film={film}
+            film={mockFilm}
             onMouseEnter={jest.fn()}
             onMouseLeave={jest.fn()}
             onClick={onClick}
@@ -59,7 +59,7 @@ describe(`Test CardImage`, () => {
     render(
         <Router history={history}>
           <CardImage
-            film={film}
+            film={mockFilm}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             onClick={jest.fn()}

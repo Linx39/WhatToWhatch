@@ -4,16 +4,16 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import AddReviewForm from './add-revew-form';
-import films from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`AddReviewForm should render correctly`, () => {
-  const film = films[5];
+  const mockFilm = mockFilms[5];
 
   render(
       <Provider store={mockStore({})}>
-        <AddReviewForm film={film}/>
+        <AddReviewForm film={mockFilm}/>
       </Provider>
   );
 

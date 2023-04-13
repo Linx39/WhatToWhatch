@@ -4,7 +4,6 @@ export const Patch = {
   MY_LIST: `/mylist`,
   FILMS: `/films`,
   PLAYER: `/player`,
-  // NOT_FOUND: `/404`,
 };
 
 export const FilmsCount = {

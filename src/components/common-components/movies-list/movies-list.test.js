@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import MoviesList from './movies-list';
-import films from '../../../mock/films';
+import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 
@@ -16,7 +16,7 @@ it(`MoviesList should render correctly`, () => {
   render(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <MoviesList films={films} count={10}/>
+          <MoviesList films={mockFilms} count={10}/>
         </Router>
       </Provider>
   );

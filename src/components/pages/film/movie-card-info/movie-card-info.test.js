@@ -7,19 +7,18 @@ import configureStore from 'redux-mock-store';
 
 import MovieCardInfo from './movie-card-info';
 import {NavItem} from '../../../../const';
-import films from '../../../../mock/films';
-import comments from '../../../../mock/comments';
+import {mockFilms} from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`MovieCardInfo should render correctly`, () => {
-  const film = films[4];
-  const {name} = film;
+  const mockFilm = mockFilms[4];
+  const {name} = mockFilm;
   const store = mockStore({
     DATA: {
-      film,
+      film: mockFilm,
       isFilmLoaded: true,
-      comments,
+      comments: [],
       isCommentsLoaded: true,
     },
     FILMS_ACTIONS: {
@@ -32,8 +31,8 @@ it(`MovieCardInfo should render correctly`, () => {
       <Provider store={store}>
         <Router history={history}>
           <MovieCardInfo
-            film={film}
-            comments={comments}
+            film={mockFilm}
+            comments={[]}
             activeNavItem={NavItem.REVIEWS}
             onClick={jest.fn()}
           />

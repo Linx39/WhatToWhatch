@@ -7,19 +7,19 @@ import configureStore from 'redux-mock-store';
 
 import MovieCardDesc from './movie-card-desc';
 import {AuthorizationStatus} from '../../../../const';
-import films from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`MovieCardDesc should render correctly`, () => {
-  const film = films[4];
-  const {name, genre, released} = film;
+  const mockFilm = mockFilms[4];
+  const {name, genre, released} = mockFilm;
   const store = mockStore({
     USER: {
       authorizationStatus: AuthorizationStatus.AUTH,
     },
     DATA: {
-      film,
+      film: mockFilm,
       isFilmLoaded: true,
     },
   });
@@ -28,7 +28,7 @@ it(`MovieCardDesc should render correctly`, () => {
   render(
       <Provider store={store}>
         <Router history={history}>
-          <MovieCardDesc film={film} authorizationStatus={AuthorizationStatus.AUTH} />
+          <MovieCardDesc film={mockFilm} authorizationStatus={AuthorizationStatus.AUTH} />
         </Router>
       </Provider>
   );

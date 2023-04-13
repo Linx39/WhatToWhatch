@@ -12,13 +12,12 @@ import {
   fetchChangeFilmStatus
 } from '../api-actions';
 import {AdditionalUrl} from '../../const';
-import films from '../../mock/films';
-import comments from '../../mock/comments';
 
 const api = createAPI(() => {});
 
 describe(`Reducer 'appData' should work correctly`, () => {
-  const film = films[8];
+  const mockFilms = [{fake: `fake-film-1`}, {fake: `fake-film-2`}];
+  const mockFilm = {fake: `fake-film`};
 
   it(`Reducer without additional parameters should return initial state`, () => {
     expect(appData(undefined, {}))
@@ -29,36 +28,37 @@ describe(`Reducer 'appData' should work correctly`, () => {
     const state = {films: [], isFilmsLoaded: false};
     const loadfilmsActions = {
       type: ActionType.LOAD_FILMS,
-      payload: films
+      payload: mockFilms
     };
 
     expect(appData(state, loadfilmsActions))
-      .toEqual({films, isFilmsLoaded: true});
+      .toEqual({films: mockFilms, isFilmsLoaded: true});
   });
 
   it(`Reducer should update promoFilm by load promoFilm`, () => {
     const state = {promoFilm: {}, isPromoFilmLoaded: false};
     const loadPromoFilmAction = {
       type: ActionType.LOAD_PROMO_FILM,
-      payload: film
+      payload: mockFilm
     };
 
     expect(appData(state, loadPromoFilmAction))
-      .toEqual({promoFilm: film, isPromoFilmLoaded: true});
+      .toEqual({promoFilm: mockFilm, isPromoFilmLoaded: true});
   });
 
   it(`Reducer should update film by load film`, () => {
     const state = {film: {}, isFilmLoaded: false};
     const loadFilmAction = {
       type: ActionType.LOAD_FILM,
-      payload: film
+      payload: mockFilm
     };
 
     expect(appData(state, loadFilmAction))
-      .toEqual({film, isFilmLoaded: true});
+      .toEqual({film: mockFilm, isFilmLoaded: true});
   });
 
   it(`Reducer should update comments by load comments`, () => {
+    const comments = [`fake-comment-1`, `fake-comment-2`];
     const state = {comments: [], isCommentsLoaded: false};
     const loadCommentsAction = {
       type: ActionType.LOAD_COMMENTS,
@@ -73,11 +73,11 @@ describe(`Reducer 'appData' should work correctly`, () => {
     const state = {favoriteFilms: [], isFavoriteFilmsLoaded: false};
     const loadFavoritefilmsActions = {
       type: ActionType.LOAD_FAVORITE_FILMS,
-      payload: films
+      payload: mockFilms
     };
 
     expect(appData(state, loadFavoritefilmsActions))
-      .toEqual({favoriteFilms: films, isFavoriteFilmsLoaded: true});
+      .toEqual({favoriteFilms: mockFilms, isFavoriteFilmsLoaded: true});
   });
 });
 
@@ -206,20 +206,15 @@ describe(`Async operation work correctly`, () => {
     const dispatch = jest.fn();
     const id = 18;
     const status = 1;
-    const addFavoriteFilmLoader = fetchChangeFilmStatus(id, status);
+    const changeFilmStatusLoader = fetchChangeFilmStatus(id, status);
 
     apiMock
       .onPost(`${AdditionalUrl.FAVORITE}/${id}/${status}`)
       .reply(200, {fake: true});
 
-    return addFavoriteFilmLoader(dispatch, () => {}, api)
+    return changeFilmStatusLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(0);
-        // expect(dispatch).toHaveBeenCalledTimes(1);
-        // expect(dispatch).toHaveBeenNthCalledWith(1, {
-        //   type: ActionType.LOAD_PROMO_FILM,
-        //   payload: {fake: true},
-        // });
       });
   });
 

@@ -6,13 +6,13 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import FavoriteButton from './favorite-button';
-import films from '../../../mock/films';
-import user from '../../../mock/user';
+import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`FavoriteButton should render correctly`, () => {
-  const film = films[8];
+  const mockFilm = mockFilms[8];
+  const user = {fake: true};
   const store = mockStore({
     USER: {user},
   });
@@ -21,7 +21,7 @@ it(`FavoriteButton should render correctly`, () => {
   render(
       <Provider store={store}>
         <Router history={history}>
-          <FavoriteButton film={film} onLoadData={jest.fn()}/>
+          <FavoriteButton film={mockFilm} onLoadData={jest.fn()}/>
         </Router>
       </Provider>
   );

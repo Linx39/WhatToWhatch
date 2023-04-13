@@ -4,16 +4,16 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import PlayButton from './play-button';
-import films from '../../../mock/films';
+import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 
 it(`PlayButton should render correctly`, () => {
-  const film = films[6];
+  const mockFilm = mockFilms[6];
 
   render(
       <Provider store={mockStore({})}>
-        <PlayButton film={film} />
+        <PlayButton film={mockFilm} />
       </Provider>
   );
 

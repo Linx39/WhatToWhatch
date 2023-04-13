@@ -2,10 +2,15 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import Review from './review';
-import filmComments from '../../../../mock/comments';
 
 it(`Review should render correctly`, () => {
-  const filmComment = filmComments[0];
+  const filmComment =
+    {id: 1,
+      user: {id: 1, name: `fake-user-1`},
+      rating: 8.9,
+      comment: `fake-comment-1`,
+      date: `2016-12-24`
+    };
   const {comment, user, rating} = filmComment;
   render(
       <Review filmComment={filmComment}/>

@@ -6,18 +6,18 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import MyList from './my-list';
-import films from '../../../mock/films';
-import user from '../../../mock/user';
+import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 
-it(`'MyList' should render correctly`, () => {
+it(`MyList should render correctly`, () => {
+  const user = {fake: true};
   const store = mockStore({
     USER: {
       user
     },
     DATA: {
-      favoriteFilms: films,
+      favoriteFilms: mockFilms,
       isFavoriteFilmsLoaded: true,
     }
   });

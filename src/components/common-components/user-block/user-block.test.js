@@ -6,12 +6,13 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import UserBlock from './user-block';
-import user from '../../../mock/user';
 import {AuthorizationStatus} from '../../../const';
 
 const mockStore = configureStore({});
 
 describe(`Test UserBlock`, () => {
+  const user = {fake: true};
+
   it(`If user authorized should render 'UserBlockAvatar'`, () => {
     const store = mockStore({
       USER: {

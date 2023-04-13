@@ -5,8 +5,10 @@ import configureStore from 'redux-mock-store';
 
 import SignInForm from './sign-in-form';
 
+
+const mockStore = configureStore({});
+
 it(`SignInForm should render correctly`, () => {
-  const mockStore = configureStore({});
   render(
       <Provider store={mockStore({})}>
         <SignInForm

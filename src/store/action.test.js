@@ -9,43 +9,46 @@ import {
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for change genre returns correct action`, () => {
+    const genre = `comedy`;
     const expectedAction = {
       type: ActionType.CHANGE_GENRE,
-      payload: `comedy`,
+      payload: genre,
     };
 
-    expect(changeGenre(`comedy`)).toEqual(expectedAction);
+    expect(changeGenre(genre)).toEqual(expectedAction);
   });
 
   it(`Action creator for change films count returns correct action`, () => {
+    const count = 5;
     const expectedAction = {
       type: ActionType.CHANGE_FILMS_COUNT,
-      payload: 5,
+      payload: count,
     };
 
-    expect(changeFilmsCount(5)).toEqual(expectedAction);
+    expect(changeFilmsCount(count)).toEqual(expectedAction);
   });
 
   it(`Action creator for reset on default films list returns correct action`, () => {
     const expectedAction = {
-      type: ActionType.RESET_ON_DEFAULT_FILMS_LIST,
+      type: ActionType.RESET_ON_DEFAULT_MAIN_PAGE,
     };
 
     expect(resetOnDefaultMainPage()).toEqual(expectedAction);
   });
 
   it(`Action creator for change active item returns correct action`, () => {
+    const item = `Details`;
     const expectedAction = {
       type: ActionType.CHANGE_ACTIVE_NAV_ITEM,
-      payload: `Details`,
+      payload: item,
     };
 
-    expect(changeActiveNavItem(`Details`)).toEqual(expectedAction);
+    expect(changeActiveNavItem(item)).toEqual(expectedAction);
   });
 
   it(`Action creator for reset on default films info returns correct action`, () => {
     const expectedAction = {
-      type: ActionType.RESET_ON_DEFAULT_FILM_INFO,
+      type: ActionType.RESET_ON_DEFAULT_FILM_PAGE,
     };
 
     expect(resetOnDefaultFilmPage()).toEqual(expectedAction);

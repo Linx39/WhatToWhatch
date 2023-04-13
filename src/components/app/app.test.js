@@ -7,26 +7,25 @@ import configureStore from 'redux-mock-store';
 
 import {AuthorizationStatus, Patch, NavItem, FilmsCount} from '../../const';
 import App from './app';
-import films from '../../mock/films';
-import comments from '../../mock/comments';
-import user from '../../mock/user';
+import {mockFilms} from '../../mock/films';
 
 const mockStore = configureStore({});
 
 describe(`Test routing`, () => {
-  const film = films[9];
+  const mockFilm = mockFilms[9];
+  const user = {fake: true};
 
   it(`Render Main when user navigate to '/' url`, () => {
-    const {name} = film;
+    const {name} = mockFilm;
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
         user
       },
       DATA: {
-        films,
+        films: mockFilms,
         isFilmsLoaded: true,
-        promoFilm: film,
+        promoFilm: mockFilm,
         isPromoFilmLoaded: true
       },
       FILMS_ACTIONS: {
@@ -76,7 +75,7 @@ describe(`Test routing`, () => {
         authorizationStatus: AuthorizationStatus.AUTH,
         user
       },
-      DATA: {favoriteFilms: films, isFavoriteFilmsLoaded: true}
+      DATA: {favoriteFilms: mockFilms, isFavoriteFilmsLoaded: true}
     });
     const history = createMemoryHistory();
     history.push(Patch.MY_LIST);
@@ -94,15 +93,15 @@ describe(`Test routing`, () => {
   });
 
   it(`Render Film when user navigate to '/film/id' url`, () => {
-    const {name} = film;
+    const {name} = mockFilm;
     const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.AUTH, user},
       DATA: {
-        films,
+        films: mockFilms,
         isFilmsLoaded: true,
-        film,
+        film: mockFilm,
         isFilmLoaded: true,
-        comments,
+        comments: [],
         isCommentsLoaded: true
       },
       FILMS_ACTIONS: {activeNavItem: NavItem.OVERVIEW}
@@ -123,14 +122,14 @@ describe(`Test routing`, () => {
   });
 
   it(`Render AddReview when user navigate to '/film/id/review' url`, () => {
-    const {name} = film;
+    const {name} = mockFilm;
     const store = mockStore({
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
         user
       },
       DATA: {
-        film,
+        film: mockFilm,
         isFilmLoaded: true,
       },
     });
@@ -159,7 +158,7 @@ describe(`Test routing`, () => {
         user
       },
       DATA: {
-        film,
+        film: mockFilm,
         isFilmLoaded: true,
       },
     });

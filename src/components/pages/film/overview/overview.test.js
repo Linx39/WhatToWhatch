@@ -2,14 +2,14 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import Overview from './overview';
-import films from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/films';
 
 it(`Overview should render correctly`, () => {
-  const film = films[9];
-  const {scoresCount, director, starring} = film;
+  const mockFilm = mockFilms[9];
+  const {scoresCount, director, starring} = mockFilm;
 
   render(
-      <Overview film={film}/>
+      <Overview film={mockFilm}/>
   );
 
   expect(screen.getByText(new RegExp(`${scoresCount} ratings`, `i`))).toBeInTheDocument();

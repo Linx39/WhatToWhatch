@@ -4,7 +4,6 @@ import {initialState, userData} from './user-data';
 import {ActionType} from '../action';
 import {checkAuth, login, logout} from '../api-actions';
 import {AdditionalUrl, AuthorizationStatus} from '../../const';
-import user from '../../mock/user';
 
 const api = createAPI(() => {});
 
@@ -43,16 +42,10 @@ describe(`Async operation work correctly`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const checkAuthLoader = checkAuth();
-    const authInfo = {
-      id: 1,
-      email: `fake-email@test.ru`,
-      name: `fake-name`,
-      avatarUrl: `fake-url`,
-    };
 
     apiMock
       .onGet(AdditionalUrl.LOGIN)
-      .reply(200, authInfo);
+      .reply(200, {fake: true});
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
@@ -65,7 +58,7 @@ describe(`Async operation work correctly`, () => {
 
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_USER_DATA,
-          payload: authInfo,
+          payload: {fake: true},
         });
       });
   });
@@ -73,7 +66,7 @@ describe(`Async operation work correctly`, () => {
   it(`Should make a correct API call for post to /login`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const fakeUser = {email: `test@test.ru`, password: `123456`};
+    const fakeUser = {email: `fake@fake.ru`, password: `12345`};
     const loginLoader = login(fakeUser);
 
     apiMock
@@ -84,12 +77,12 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
 
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REQUIRE_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
 
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_USER_DATA,
           payload: {fake: true},
         });
@@ -110,13 +103,13 @@ describe(`Async operation work correctly`, () => {
         expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_USER_DATA,
-          payload: {},
+          type: ActionType.REQUIRE_AUTHORIZATION,
+          payload: AuthorizationStatus.NO_AUTH,
         });
 
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.REQUIRE_AUTHORIZATION,
-          payload: AuthorizationStatus.NO_AUTH,
+          type: ActionType.LOAD_USER_DATA,
+          payload: {},
         });
       });
   });
