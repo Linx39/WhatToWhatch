@@ -22,7 +22,8 @@ const getFilmsByGenre = (genre, films) => {
 const Main = () => {
   const [
     {films, promoFilm},
-    {isDataLoaded, isFetchingError, isNotFoundError}
+    isDataLoaded,
+    fetchingStatus
   ] = useFetchData({fetchFilms, fetchPromoFilm});
   const {count, activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
   const {name, backgroundImage} = promoFilm;
@@ -57,10 +58,8 @@ const Main = () => {
             <Footer isLogoClickable={false}/>
           </div>
         </>
-        
-        : <InfoPage
-          isFetchingError={isFetchingError}
-          isNotFoundError={isNotFoundError}
+
+        : <InfoPage fetchingStatus={fetchingStatus}
         />
       }
     </>

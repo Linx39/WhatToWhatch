@@ -14,7 +14,8 @@ const Player = () => {
   const {id} = useParams();
   const [
     {film},
-    {isDataLoaded, isFetchingError, isNotFoundError}
+    isDataLoaded,
+    fetchingStatus
   ] = useFetchData({fetchFilm, id});
   const {name, previewImage, videoLink} = film;
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -63,10 +64,7 @@ const Player = () => {
           />
         </div>
 
-        : <InfoPage
-          isFetchingError={isFetchingError}
-          isNotFoundError={isNotFoundError}
-        />
+        : <InfoPage fetchingStatus={fetchingStatus} />
       }
     </>
   );

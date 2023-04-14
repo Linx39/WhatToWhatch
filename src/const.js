@@ -42,12 +42,6 @@ export const ReviewTextLength = {
   MAX: 400
 };
 
-export const InfoText = {
-  ERROR_404: `Error 404. Page not found.`,
-  LOADING: `Loading ... Please wait...`,
-  LOADING_ERROR: `Loading error. Please reload the page.`,
-};
-
 export const AdditionalClassName = {
   HEADER: {
     MOVIE_CARD: `movie-card__head`,
@@ -61,4 +55,16 @@ export const AdditionalClassName = {
 export const HttpCode = {
   UNAUTHORIZED: 401,
   PAGE_NOT_FOUND: 404,
+};
+
+export const FetchingStatus = {
+  LOADING: `Loading`,
+  PAGE_NOT_FOUND: `Page Not Found`,
+  SERVER_ERROR: `Server Error`,
+};
+
+export const InfoText = {
+  LOADING: `Loading ... Please wait...`,
+  ERROR_404: `Error 404. Page not found.`,
+  LOADING_ERROR: `Loading error. Please reload the page.`,
 };

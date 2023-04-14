@@ -4,22 +4,22 @@ import PropTypes from 'prop-types';
 import Loading from './loading/loading';
 import Error from './error/error';
 import NotFound from './not-found/not-found';
+import {FetchingStatus} from '../../../const';
 
-const InfoPage = ({isFetchingError, isNotFoundError}) => {
+const InfoPage = ({fetchingStatus}) => {
   return (
     <>
-      {!isFetchingError && <Loading />}
+      {fetchingStatus === FetchingStatus.LOADING && <Loading />}
 
-      {(isFetchingError && !isNotFoundError) && <Error />}
+      {fetchingStatus === FetchingStatus.PAGE_NOT_FOUND && <NotFound /> }
 
-      {isNotFoundError && <NotFound /> }
+      {fetchingStatus === FetchingStatus.SERVER_ERROR && <Error />}
     </>
   );
 };
 
 InfoPage.propTypes = {
-  isFetchingError: PropTypes.bool.isRequired,
-  isNotFoundError: PropTypes.bool.isRequired,
+  fetchingStatus: PropTypes.string.isRequired,
 };
 
 export default InfoPage;

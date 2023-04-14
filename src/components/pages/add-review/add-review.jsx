@@ -16,7 +16,8 @@ const AddReview = () => {
   const {id} = useParams();
   const [
     {film},
-    {isDataLoaded, isFetchingError, isNotFoundError}
+    isDataLoaded,
+    fetchingStatus
   ] = useFetchData({fetchFilm, id});
   const {name, posterImage, backgroundImage} = film;
   const dispatch = useDispatch();
@@ -42,11 +43,8 @@ const AddReview = () => {
 
           <AddReviewForm film={film} />
         </section>
-        
-        : <InfoPage
-          isFetchingError={isFetchingError}
-          isNotFoundError={isNotFoundError}
-        />
+
+        : <InfoPage fetchingStatus={fetchingStatus} />
       }
     </>
   );

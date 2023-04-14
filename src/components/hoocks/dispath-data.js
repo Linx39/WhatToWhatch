@@ -1,9 +1,9 @@
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {HttpCode} from '../../const';
+import {HttpCode, FetchingStatus} from '../../const';
 
-export const dispatchData = (fetchData, isDataLoaded, setisNotFoundError, setIsFetchingError, id) => {
+export const dispatchData = (fetchData, isDataLoaded, setFetchingStatus, id) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -11,10 +11,10 @@ export const dispatchData = (fetchData, isDataLoaded, setisNotFoundError, setIsF
       dispatch(fetchData(id))
       .catch((err) => {
         if (err === HttpCode.PAGE_NOT_FOUND) {
-          setisNotFoundError(true);
+          setFetchingStatus(FetchingStatus.PAGE_NOT_FOUND);
+          return;
         }
-        setIsFetchingError(true);
-        return;
+        setFetchingStatus(FetchingStatus.SERVER_ERROR);
       });
     }
   }, [isDataLoaded]);

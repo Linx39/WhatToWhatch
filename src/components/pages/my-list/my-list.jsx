@@ -11,7 +11,8 @@ import {AdditionalClassName} from '../../../const';
 const MyList = () => {
   const [
     {favoriteFilms},
-    {isDataLoaded, isFetchingError, isNotFoundError}
+    isDataLoaded,
+    fetchingStatus
   ] = useFetchData({fetchFavoriteFilms});
 
   return (
@@ -30,11 +31,8 @@ const MyList = () => {
 
           <Footer />
         </div>
-        
-        : <InfoPage
-          isFetchingError={isFetchingError}
-          isNotFoundError={isNotFoundError}
-        />
+
+        : <InfoPage fetchingStatus={fetchingStatus} />
       }
     </>
   );

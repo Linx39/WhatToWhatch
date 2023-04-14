@@ -22,7 +22,8 @@ const Film = () => {
   const {id} = useParams();
   const [
     {films, film, comments},
-    {isDataLoaded, isFetchingError, isNotFoundError}
+    isDataLoaded,
+    fetchingStatus
   ] = useFetchData({fetchFilms, fetchFilm, fetchComments, id});
   const {activeNavItem} = useSelector((state) => state.FILMS_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
@@ -64,11 +65,8 @@ const Film = () => {
             <Footer />
           </div>
         </>
-        
-        : <InfoPage
-          isFetchingError={isFetchingError}
-          isNotFoundError={isNotFoundError}
-        />
+
+        : <InfoPage fetchingStatus={fetchingStatus} />
       }
     </>
   );
