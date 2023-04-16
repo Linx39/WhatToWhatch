@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {changeGenre, changeFilmsCount, resetOnDefaultMainPage, changeActiveNavItem, resetOnDefaultFilmPage} from '../action';
-import {FilmsCount, GENRE_DEFAULT, NavItem} from '../../const';
+import {changeGenre, changeFilmsCount, changeActiveNavItem, resetOnDefaultMainPage, resetOnDefaultFilmPage} from '../action';
+import {GENRE_DEFAULT, FilmsCount, NavItem} from '../../const';
 
 const initialState = {
   activeGenre: GENRE_DEFAULT,
@@ -16,12 +16,12 @@ const filmsActions = createReducer(initialState, (builder) => {
   builder.addCase(changeFilmsCount, (state, action) => {
     state.count = action.payload;
   });
+  builder.addCase(changeActiveNavItem, (state, action) => {
+    state.activeNavItem = action.payload;
+  });
   builder.addCase(resetOnDefaultMainPage, (state) => {
     state.activeGenre = GENRE_DEFAULT;
     state.count = FilmsCount.MAIN;
-  });
-  builder.addCase(changeActiveNavItem, (state, action) => {
-    state.activeNavItem = action.payload;
   });
   builder.addCase(resetOnDefaultFilmPage, (state) => {
     state.activeNavItem = NavItem.OVERVIEW;

@@ -1,50 +1,71 @@
 import {createReducer} from '@reduxjs/toolkit';
 
-import {loadFilms, loadPromoFilm, loadFilm, loadComments, loadFavoriteFilms, resetLoadedFilm, resetLoadedFavoriteFilms} from '../action';
+import {
+  loadFilms,
+  loadPromoFilm,
+  loadFilm,
+  loadComments,
+  loadFavoriteFilms,
+  resetLoadedFilms,
+  resetLoadedPromoFilm,
+  resetLoadedFilm,
+  resetLoadedComments,
+  resetLoadedFavoriteFilms
+} from '../action';
 
 const initialState = {
   films: [],
-  isFilmsLoaded: false,
+  isFilmsLoading: true,
   promoFilm: {},
-  isPromoFilmLoaded: false,
+  isPromoFilmLoading: true,
   film: {},
-  isFilmLoaded: false,
+  isFilmLoading: true,
   comments: [],
-  isCommentsLoaded: false,
+  isCommentsLoading: true,
   favoriteFilms: [],
-  isFavoriteFilmsLoaded: false,
+  isFavoriteFilmsLoading: true,
 };
 
 const appData = createReducer(initialState, (builder) => {
   builder.addCase(loadFilms, (state, action) => {
     state.films = action.payload;
-    state.isFilmsLoaded = true;
+    state.isFilmsLoading = false;
   });
   builder.addCase(loadPromoFilm, (state, action) => {
     state.promoFilm = action.payload;
-    state.isPromoFilmLoaded = true;
+    state.isPromoFilmLoading = false;
   });
   builder.addCase(loadFilm, (state, action) => {
     state.film = action.payload;
-    state.isFilmLoaded = true;
+    state.isFilmLoading = false;
   });
   builder.addCase(loadComments, (state, action) => {
     state.comments = action.payload;
-    state.isCommentsLoaded = true;
+    state.isCommentsLoading = false;
   });
   builder.addCase(loadFavoriteFilms, (state, action) => {
     state.favoriteFilms = action.payload;
-    state.isFavoriteFilmsLoaded = true;
+    state.isFavoriteFilmsLoading = false;
+  });
+  builder.addCase(resetLoadedFilms, (state) => {
+    state.films = [];
+    state.isFilmsLoading = true;
+  });
+  builder.addCase(resetLoadedPromoFilm, (state) => {
+    state.promoFilm = {};
+    state.isPromoFilmLoading = true;
   });
   builder.addCase(resetLoadedFilm, (state) => {
     state.film = {};
-    state.isFilmLoaded = false;
+    state.isFilmLoading = true;
+  });
+  builder.addCase(resetLoadedComments, (state) => {
     state.comments = [];
-    state.isCommentsLoaded = false;
+    state.isCommentsLoading = true;
   });
   builder.addCase(resetLoadedFavoriteFilms, (state) => {
     state.favoriteFilms = [];
-    state.isFavoriteFilmsLoaded = false;
+    state.isFavoriteFilmsLoading = true;
   });
 });
 

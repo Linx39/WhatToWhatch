@@ -34,8 +34,10 @@ const Film = () => {
 
   return (
     <>
-      {isDataLoaded
-        ? <>
+      {!isDataLoaded
+        ? <InfoPage fetchingStatus={fetchingStatus} />
+
+        : <>
           <section className="movie-card movie-card--full">
             <div className="movie-card__hero">
               <MovieCardBig src={backgroundImage} alt={name} />
@@ -65,8 +67,6 @@ const Film = () => {
             <Footer />
           </div>
         </>
-
-        : <InfoPage fetchingStatus={fetchingStatus} />
       }
     </>
   );

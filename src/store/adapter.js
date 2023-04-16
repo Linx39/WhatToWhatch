@@ -1,39 +1,26 @@
-export const adaptFilmToClient = (film) => {
-  const adaptedProperties = {
-    posterImage: film.poster_image,
-    previewImage: film.preview_image,
-    backgroundImage: film.background_image,
-    backgroundColor: film.background_color,
-    videoLink: film.video_link,
-    previewVideoLink: film.preview_video_link,
-    scoresCount: film.scores_count,
-    runTime: film.run_time,
-    isFavorite: film.is_favorite
-  };
+export const adaptFilmToClient = (film) => ({
+  id: film.id,
+  name: film.name,
+  posterImage: film.poster_image,
+  previewImage: film.preview_image,
+  backgroundImage: film.background_image,
+  backgroundColor: film.background_color,
+  videoLink: film.video_link,
+  previewVideoLink: film.preview_video_link,
+  description: film.description,
+  rating: film.rating,
+  scoresCount: film.scores_count,
+  director: film.director,
+  starring: film.starring,
+  runTime: film.run_time,
+  genre: film.genre,
+  released: film.released,
+  isFavorite: film.is_favorite,
+});
 
-  const adaptedFilm = {...film, ...adaptedProperties};
-
-  delete adaptedFilm.poster_image;
-  delete adaptedFilm.preview_image;
-  delete adaptedFilm.background_image;
-  delete adaptedFilm.background_color;
-  delete adaptedFilm.video_link;
-  delete adaptedFilm.preview_video_link;
-  delete adaptedFilm.scores_count;
-  delete adaptedFilm.run_time;
-  delete adaptedFilm.is_favorite;
-
-  return adaptedFilm;
-};
-
-export const adaptUserToClient = (user) => {
-  const adaptedProperties = {
-    avatarUrl: user.avatar_url,
-  };
-
-  const adaptedUser = {...user, ...adaptedProperties};
-
-  delete adaptedUser.avatar_url;
-
-  return adaptedUser;
-};
+export const adaptUserToClient = (user) => ({
+  id: user.id,
+  email: user.email,
+  name: user.name,
+  avatar: user.avatar_url,
+});

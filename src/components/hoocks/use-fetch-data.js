@@ -7,43 +7,43 @@ import {FetchingStatus} from '../../const';
 export const useFetchData = ({fetchFilms, fetchPromoFilm, fetchFilm, fetchComments, fetchFavoriteFilms, id}) => {
   const {
     films,
-    isFilmsLoaded,
+    isFilmsLoading,
     promoFilm,
-    isPromoFilmLoaded,
+    isPromoFilmLoading,
     film,
-    isFilmLoaded,
+    isFilmLoading,
     comments,
-    isCommentsLoaded,
+    isCommentsLoading,
     favoriteFilms,
-    isFavoriteFilmsLoaded
+    isFavoriteFilmsLoading
   } = useSelector((state) => state.DATA);
   const [fetchingStatus, setFetchingStatus] = useState(FetchingStatus.LOADING);
 
   let isDataLoaded = true;
 
   if (fetchFilms) {
-    dispatchData(fetchFilms, isFilmsLoaded, setFetchingStatus);
-    isDataLoaded = isDataLoaded && isFilmsLoaded;
+    dispatchData(fetchFilms, setFetchingStatus);
+    isDataLoaded = isDataLoaded && !isFilmsLoading;
   }
 
   if (fetchPromoFilm) {
-    dispatchData(fetchPromoFilm, isPromoFilmLoaded, setFetchingStatus);
-    isDataLoaded = isDataLoaded && isPromoFilmLoaded;
+    dispatchData(fetchPromoFilm, setFetchingStatus);
+    isDataLoaded = isDataLoaded && !isPromoFilmLoading;
   }
 
   if (fetchFilm) {
-    dispatchData(fetchFilm, isFilmLoaded, setFetchingStatus, id);
-    isDataLoaded = isDataLoaded && isFilmLoaded;
+    dispatchData(fetchFilm, setFetchingStatus, id);
+    isDataLoaded = isDataLoaded && !isFilmLoading;
   }
 
   if (fetchComments) {
-    dispatchData(fetchComments, isCommentsLoaded, setFetchingStatus, id);
-    isDataLoaded = isDataLoaded && isCommentsLoaded;
+    dispatchData(fetchComments, setFetchingStatus, id);
+    isDataLoaded = isDataLoaded && !isCommentsLoading;
   }
 
   if (fetchFavoriteFilms) {
-    dispatchData(fetchFavoriteFilms, isFavoriteFilmsLoaded, setFetchingStatus);
-    isDataLoaded = isDataLoaded && isFavoriteFilmsLoaded;
+    dispatchData(fetchFavoriteFilms, setFetchingStatus);
+    isDataLoaded = isDataLoaded && !isFavoriteFilmsLoading;
   }
 
   return [

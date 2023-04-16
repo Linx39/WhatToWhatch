@@ -31,9 +31,10 @@ const Main = () => {
 
   return (
     <>
-      {isDataLoaded
-        ?
-        <>
+      {!isDataLoaded
+        ? <InfoPage fetchingStatus={fetchingStatus} />
+
+        : <>
           <section className='movie-card'>
             <MovieCardBig src={backgroundImage} alt={name} />
 
@@ -58,9 +59,6 @@ const Main = () => {
             <Footer isLogoClickable={false}/>
           </div>
         </>
-
-        : <InfoPage fetchingStatus={fetchingStatus}
-        />
       }
     </>
   );
