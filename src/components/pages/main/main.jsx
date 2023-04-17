@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 
 import MovieCardBig from '../../common-components/movie-card-big/movie-card-big';
 import Header from '../../common-components/header/header';
@@ -9,9 +9,8 @@ import PromoFilm from './promo-film/promo-film';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
 import InfoPage from '../info-page/info-page';
-import {useFetchData} from '../../hoocks/use-fetch-data';
 import {fetchFilms, fetchPromoFilm} from '../../../store/api-actions';
-import {GENRE_DEFAULT} from '../../../const';
+import {GENRE_DEFAULT, FetchingStatus} from '../../../const';
 
 const getFilmsByGenre = (genre, films) => {
   return genre === GENRE_DEFAULT
@@ -20,46 +19,52 @@ const getFilmsByGenre = (genre, films) => {
 };
 
 const Main = () => {
-  const [
-    {films, promoFilm},
-    isDataLoaded,
-    fetchingStatus
-  ] = useFetchData({fetchFilms, fetchPromoFilm});
+  const {films, isFilmsLoading, promoFilm, isPromoFilmLoading} = useSelector((state) => state.DATA);
   const {count, activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (films.length === 0) {
+      dispatch(fetchFilms());
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchPromoFilm());
+  }, [dispatch]);
+
+  if (isFilmsLoading || isPromoFilmLoading) {
+    return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+  }
+
   const {name, backgroundImage} = promoFilm;
-  const filmsList = useMemo(() => getFilmsByGenre(activeGenre, films));
+  const filmsList = getFilmsByGenre(activeGenre, films);
 
   return (
     <>
-      {!isDataLoaded
-        ? <InfoPage fetchingStatus={fetchingStatus} />
+      <section className='movie-card'>
+        <MovieCardBig src={backgroundImage} alt={name} />
 
-        : <>
-          <section className='movie-card'>
-            <MovieCardBig src={backgroundImage} alt={name} />
+        <h1 className="visually-hidden">WTW</h1>
 
-            <h1 className="visually-hidden">WTW</h1>
+        <Header isLogoClickable={false} />
 
-            <Header isLogoClickable={false} />
+        <PromoFilm film={promoFilm} />
+      </section>
 
-            <PromoFilm film={promoFilm} />
-          </section>
+      <div className='page-content'>
+        <section className='catalog'>
+          <h2 className='catalog__title visually-hidden'>Catalog</h2>
 
-          <div className='page-content'>
-            <section className='catalog'>
-              <h2 className='catalog__title visually-hidden'>Catalog</h2>
+          <GenresList />
 
-              <GenresList />
+          <MoviesList films={filmsList} count={count} />
 
-              <MoviesList films={filmsList} count={count} />
+          {(count < filmsList.length) && <ShowMore />}
+        </section>
 
-              {(count < filmsList.length) && <ShowMore />}
-            </section>
-
-            <Footer isLogoClickable={false}/>
-          </div>
-        </>
-      }
+        <Footer isLogoClickable={false}/>
+      </div>
     </>
   );
 };

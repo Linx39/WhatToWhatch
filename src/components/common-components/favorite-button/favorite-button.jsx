@@ -21,9 +21,9 @@ const FavoriteButton = ({film, onLoadData}) => {
     dispatch(fetchChangeFilmStatus(id, Number(!isFavorite)))
     .then((data) => dispatch(onLoadData(data)))
     .then(() => {
-      dispatch(resetLoadedFilms());
-      dispatch(resetLoadedPromoFilm());
-      dispatch(resetLoadedFavoriteFilms());
+      // dispatch(resetLoadedFilms());
+      // dispatch(resetLoadedPromoFilm());
+      // dispatch(resetLoadedFavoriteFilms());
     });
   };
 

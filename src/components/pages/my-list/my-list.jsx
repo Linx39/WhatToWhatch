@@ -1,40 +1,39 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 
 import InfoPage from '../info-page/info-page';
 import Header from '../../common-components/header/header';
 import MoviesList from '../../common-components/movies-list/movies-list';
 import Footer from '../../common-components/footer/footer';
-import {useFetchData} from '../../hoocks/use-fetch-data';
 import {fetchFavoriteFilms} from '../../../store/api-actions';
-import {AdditionalClassName} from '../../../const';
+import {AdditionalClassName, FetchingStatus} from '../../../const';
 
 const MyList = () => {
-  const [
-    {favoriteFilms},
-    isDataLoaded,
-    fetchingStatus
-  ] = useFetchData({fetchFavoriteFilms});
+  const {favoriteFilms, isFavoriteFilmsLoading} = useSelector((state) => state.DATA);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilms());
+  }, [dispatch]);
+
+  if (isFavoriteFilmsLoading) {
+    return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+  }
 
   return (
-    <>
-      {isDataLoaded
-        ? <div className="user-page">
-          <Header additionalClassName={AdditionalClassName.HEADER.USER_PAGE}>
-            <h1 className="page-title user-page__title">My list</h1>
-          </Header>
+    <div className="user-page">
+      <Header additionalClassName={AdditionalClassName.HEADER.USER_PAGE}>
+        <h1 className="page-title user-page__title">My list</h1>
+      </Header>
 
-          <section className="catalog">
-            <h2 className="catalog__title visually-hidden">Catalog</h2>
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-            <MoviesList films={favoriteFilms} count={favoriteFilms.length} />
-          </section>
+        <MoviesList films={favoriteFilms} count={favoriteFilms.length} />
+      </section>
 
-          <Footer />
-        </div>
-
-        : <InfoPage fetchingStatus={fetchingStatus} />
-      }
-    </>
+      <Footer />
+    </div>
   );
 };
 

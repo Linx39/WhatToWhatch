@@ -24,7 +24,7 @@ const MovieCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   };
 
   const handleMouseClick = () => {
-    dispatch(resetLoadedFilm());
+    // dispatch(resetLoadedFilm());
     dispatch(resetOnDefaultFilmPage());
     dispatch(redirectToRoute((`${Patch.FILMS}/${film.id}`)));
   };

@@ -6,19 +6,19 @@ import {
   loadFilm,
   loadComments,
   loadFavoriteFilms,
-  resetLoadedFilms,
-  resetLoadedPromoFilm,
-  resetLoadedFilm,
-  resetLoadedComments,
-  resetLoadedFavoriteFilms
+  // resetLoadedFilms,
+  // resetLoadedPromoFilm,
+  // resetLoadedFilm,
+  // resetLoadedComments,
+  // resetLoadedFavoriteFilms
 } from '../action';
 
 const initialState = {
   films: [],
   isFilmsLoading: true,
-  promoFilm: {},
+  promoFilm: null,
   isPromoFilmLoading: true,
-  film: {},
+  film: null,
   isFilmLoading: true,
   comments: [],
   isCommentsLoading: true,
@@ -47,26 +47,26 @@ const appData = createReducer(initialState, (builder) => {
     state.favoriteFilms = action.payload;
     state.isFavoriteFilmsLoading = false;
   });
-  builder.addCase(resetLoadedFilms, (state) => {
-    state.films = [];
-    state.isFilmsLoading = true;
-  });
-  builder.addCase(resetLoadedPromoFilm, (state) => {
-    state.promoFilm = {};
-    state.isPromoFilmLoading = true;
-  });
-  builder.addCase(resetLoadedFilm, (state) => {
-    state.film = {};
-    state.isFilmLoading = true;
-  });
-  builder.addCase(resetLoadedComments, (state) => {
-    state.comments = [];
-    state.isCommentsLoading = true;
-  });
-  builder.addCase(resetLoadedFavoriteFilms, (state) => {
-    state.favoriteFilms = [];
-    state.isFavoriteFilmsLoading = true;
-  });
+  // builder.addCase(resetLoadedFilms, (state) => {
+  //   state.films = [];
+  //   state.isFilmsLoading = true;
+  // });
+  // builder.addCase(resetLoadedPromoFilm, (state) => {
+  //   state.promoFilm = {};
+  //   state.isPromoFilmLoading = true;
+  // });
+  // builder.addCase(resetLoadedFilm, (state) => {
+  //   state.film = {};
+  //   state.isFilmLoading = true;
+  // });
+  // builder.addCase(resetLoadedComments, (state) => {
+  //   state.comments = [];
+  //   state.isCommentsLoading = true;
+  // });
+  // builder.addCase(resetLoadedFavoriteFilms, (state) => {
+  //   state.favoriteFilms = [];
+  //   state.isFavoriteFilmsLoading = true;
+  // });
 });
 
 export {initialState, appData};

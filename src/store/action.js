@@ -11,11 +11,11 @@ export const ActionType = {
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
-  RESET_LOADED_FILMS: `data/resetLoadedFilms`,
-  RESET_LOADED_PROMO_FILM: `data/resetLoadedPromoFilm`,
-  RESET_LOADED_FILM: `data/resetLoadedFilm`,
-  RESET_LOADED_COMMENTS: `data/resetLoadedComments`,
-  RESET_LOADED_FAVORITE_FILMS: `data/resetLoadedFavoriteFilms`,
+  // RESET_LOADED_FILMS: `data/resetLoadedFilms`,
+  // RESET_LOADED_PROMO_FILM: `data/resetLoadedPromoFilm`,
+  // RESET_LOADED_FILM: `data/resetLoadedFilm`,
+  // RESET_LOADED_COMMENTS: `data/resetLoadedComments`,
+  // RESET_LOADED_FAVORITE_FILMS: `data/resetLoadedFavoriteFilms`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
   LOAD_USER_DATA: `user/loadUserData`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
@@ -73,15 +73,15 @@ export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (f
   };
 });
 
-export const resetLoadedFilms = createAction(ActionType.RESET_LOADED_FILMS);
+// export const resetLoadedFilms = createAction(ActionType.RESET_LOADED_FILMS);
 
-export const resetLoadedPromoFilm = createAction(ActionType.RESET_LOADED_PROMO_FILM);
+// export const resetLoadedPromoFilm = createAction(ActionType.RESET_LOADED_PROMO_FILM);
 
-export const resetLoadedFilm = createAction(ActionType.RESET_LOADED_FILM);
+// export const resetLoadedFilm = createAction(ActionType.RESET_LOADED_FILM);
 
-export const resetLoadedComments = createAction(ActionType.RESET_LOADED_COMMENTS);
+// export const resetLoadedComments = createAction(ActionType.RESET_LOADED_COMMENTS);
 
-export const resetLoadedFavoriteFilms = createAction(ActionType.RESET_LOADED_FAVORITE_FILMS);
+// export const resetLoadedFavoriteFilms = createAction(ActionType.RESET_LOADED_FAVORITE_FILMS);
 
 export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATION, (status) => {
   return {

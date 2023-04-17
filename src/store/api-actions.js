@@ -32,12 +32,18 @@ export const fetchFilm = (id) => (dispatch, _getState, api) => (
       const film = adaptFilmToClient(data);
       dispatch(loadFilm(film));
     })
+    .catch(() => {
+      dispatch(loadFilm(null));
+    })
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (
   api.get(`${AdditionalUrl.COMMENTS}/${id}`)
     .then(({data}) => {
       dispatch(loadComments(data));
+    })
+    .catch(() => {
+      dispatch(loadComments([]));
     })
 );
 
