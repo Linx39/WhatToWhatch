@@ -11,7 +11,7 @@ import MovieCardInfo from './movie-card-info/movie-card-info';
 import InfoPage from '../info-page/info-page';
 import {fetchFilms, fetchFilm, fetchComments} from '../../../store/api-actions';
 import {changeActiveNavItem} from '../../../store/action';
-import {FilmsCount, AdditionalClassName, FetchingStatus} from '../../../const';
+import {FilmsCount, AdditionalClassName, FetchingStatus, ServerResponse} from '../../../const';
 
 const getFilmsLikeThis = (id, genre, films) => {
   return films.slice().filter((film) => film.genre === genre && film.id !== id);
@@ -19,8 +19,11 @@ const getFilmsLikeThis = (id, genre, films) => {
 
 const Film = () => {
   const {id} = useParams();
-  const {films, isFilmsLoading, film, isFilmLoading, comments, isCommentsLoading} = useSelector((state) => state.DATA);
-  const {activeNavItem} = useSelector((state) => state.FILMS_ACTIONS);
+  const {filmsData, filmData, commentsData} = useSelector((state) => state.DATA);
+  const {data: films, isLoading: isFilmsLoading, error: filmsError} = filmsData;
+  const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
+  const {data: comments, isLoading: isCommentsLoading, error: commentsError} = commentsData;
+  const {activeNavItem} = useSelector((state) => state.APP_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
   const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
@@ -43,8 +46,12 @@ const Film = () => {
     return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
   }
 
-  if (!film) {
+  if (filmError === ServerResponse.PAGE_NOT_FOUND) {
     return <InfoPage fetchingStatus={FetchingStatus.PAGE_NOT_FOUND} />;
+  }
+
+  if ((filmsError || filmError || commentsError) && filmError !== FetchingStatus.PAGE_NOT_FOUND) {
+    return <InfoPage fetchingStatus={FetchingStatus.SERVER_ERROR} />;
   }
 
   const {name, backgroundImage, genre} = film;

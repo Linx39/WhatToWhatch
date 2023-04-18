@@ -1,10 +1,10 @@
-import {initialState, filmsActions} from './films-actions';
+import {initialState, appActions} from './app-actions';
 import {ActionType} from '../action';
 import {NavItem} from '../../const';
 
 describe(`Reducers work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
-    expect(filmsActions(undefined, {}))
+    expect(appActions(undefined, {}))
       .toEqual(initialState);
   });
 
@@ -16,7 +16,7 @@ describe(`Reducers work correctly`, () => {
       payload: `comedy`,
     };
 
-    expect(filmsActions(state, changeActiveGenreAction))
+    expect(appActions(state, changeActiveGenreAction))
       .toEqual({activeGenre: `comedy`, count: 3, activeNavItem: NavItem.DETAILS});
   });
 
@@ -28,7 +28,7 @@ describe(`Reducers work correctly`, () => {
       payload: 10,
     };
 
-    expect(filmsActions(state, changeFilmsCountAction))
+    expect(appActions(state, changeFilmsCountAction))
       .toEqual({activeGenre: `drama`, count: 10, activeNavItem: NavItem.DETAILS});
   });
 
@@ -40,36 +40,36 @@ describe(`Reducers work correctly`, () => {
       payload: NavItem.REVIEWS,
     };
 
-    expect(filmsActions(state, changeActiveItemAction))
+    expect(appActions(state, changeActiveItemAction))
       .toEqual({activeGenre: `drama`, count: 3, activeNavItem: NavItem.REVIEWS});
   });
 
   it(`Reducer should return default Main Page`, () => {
     const state = {activeGenre: `drama`, count: 4, activeNavItem: NavItem.REVIEWS};
 
-    const resetfilmsActions = {
+    const resetAppActions = {
       type: ActionType.RESET_ON_DEFAULT_MAIN_PAGE,
       payload: null,
     };
 
-    expect(filmsActions(state, resetfilmsActions))
+    expect(appActions(state, resetAppActions))
       .toEqual({...initialState, activeNavItem: NavItem.REVIEWS});
   });
 
   it(`Reducer should return default Film Page`, () => {
     const state = {activeGenre: `drama`, count: 4, activeNavItem: NavItem.REVIEWS};
 
-    const resetfilmsActions = {
+    const resetAppActions = {
       type: ActionType.RESET_ON_DEFAULT_FILM_PAGE,
       payload: null,
     };
 
-    expect(filmsActions(state, resetfilmsActions))
+    expect(appActions(state, resetAppActions))
       .toEqual({...initialState, activeGenre: `drama`, count: 4});
   });
 
   it(`Reducer without additional parameters should return initial state`, () => {
-    expect(filmsActions(undefined, {}))
+    expect(appActions(undefined, {}))
       .toEqual(initialState);
   });
 });

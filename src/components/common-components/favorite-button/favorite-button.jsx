@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {fetchChangeFilmStatus} from '../../../store/api-actions';
-import {redirectToRoute, resetLoadedFilms, resetLoadedPromoFilm, resetLoadedFavoriteFilms} from '../../../store/action';
+import {redirectToRoute} from '../../../store/action';
 import {AuthorizationStatus, Patch} from '../../../const';
 import {filmProp} from '../../../props-types';
 
@@ -19,12 +19,7 @@ const FavoriteButton = ({film, onLoadData}) => {
     }
 
     dispatch(fetchChangeFilmStatus(id, Number(!isFavorite)))
-    .then((data) => dispatch(onLoadData(data)))
-    .then(() => {
-      // dispatch(resetLoadedFilms());
-      // dispatch(resetLoadedPromoFilm());
-      // dispatch(resetLoadedFavoriteFilms());
-    });
+    .then((data) => dispatch(onLoadData(data)));
   };
 
   return (

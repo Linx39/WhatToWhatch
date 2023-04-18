@@ -5,7 +5,7 @@ import {changeFilmsCount} from '../../../../store/action';
 import {FilmsCount} from '../../../../const';
 
 const ShowMore = () => {
-  const {count} = useSelector((state) => state.FILMS_ACTIONS);
+  const {count} = useSelector((state) => state.APP_ACTIONS);
   const {films} = useSelector((state) => state.DATA);
   const dispatch = useDispatch();
   const handleShowMoreClick = () => {

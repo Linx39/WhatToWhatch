@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 
 import CardImage from './card-image/card-image';
 import CardVideo from './card-video/card-video';
-import {resetOnDefaultFilmPage, resetLoadedFilm, redirectToRoute} from '../../../store/action';
+import {resetOnDefaultFilmPage, redirectToRoute} from '../../../store/action';
 import {filmProp} from '../../../props-types';
 import {Patch} from '../../../const';
 
@@ -24,7 +24,6 @@ const MovieCard = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
   };
 
   const handleMouseClick = () => {
-    // dispatch(resetLoadedFilm());
     dispatch(resetOnDefaultFilmPage());
     dispatch(redirectToRoute((`${Patch.FILMS}/${film.id}`)));
   };

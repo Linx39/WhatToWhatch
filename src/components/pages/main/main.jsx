@@ -19,22 +19,25 @@ const getFilmsByGenre = (genre, films) => {
 };
 
 const Main = () => {
-  const {films, isFilmsLoading, promoFilm, isPromoFilmLoading} = useSelector((state) => state.DATA);
-  const {count, activeGenre} = useSelector((state) => state.FILMS_ACTIONS);
+  const {filmsData, promoFilmData} = useSelector((state) => state.DATA);
+  const {data: films, isLoading: isFilmsLoading, error: filmsError} = filmsData;
+  const {data: promoFilm, isLoading: isPromoFilmLoading, error: promoFilmError} = promoFilmData;
+  const {count, activeGenre} = useSelector((state) => state.APP_ACTIONS);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (films.length === 0) {
       dispatch(fetchFilms());
     }
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchPromoFilm());
   }, [dispatch]);
 
   if (isFilmsLoading || isPromoFilmLoading) {
     return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+  }
+
+  if (filmsError || promoFilmError) {
+    return <InfoPage fetchingStatus={FetchingStatus.SERVER_ERROR} />;
   }
 
   const {name, backgroundImage} = promoFilm;

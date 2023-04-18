@@ -26,7 +26,7 @@ it(`Main should render correctly`, () => {
       promoFilm: mockFilm,
       isPromoFilmLoaded: true
     },
-    FILMS_ACTIONS: {
+    APP_ACTIONS: {
       count: 10,
     },
   });

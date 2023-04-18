@@ -6,67 +6,50 @@ import {
   loadFilm,
   loadComments,
   loadFavoriteFilms,
-  // resetLoadedFilms,
-  // resetLoadedPromoFilm,
-  // resetLoadedFilm,
-  // resetLoadedComments,
-  // resetLoadedFavoriteFilms
 } from '../action';
 
+const FILMS_DATA_DEFAULT = {
+  data: [],
+  isLoading: true,
+  error: null,
+};
+
+const FILM_DATA_DEFAULT = {
+  data: {},
+  isLoading: true,
+  error: null,
+};
+
+const COMMENTS_DATA_DEFAULT = {
+  data: [],
+  isLoading: true,
+  error: null,
+};
+
 const initialState = {
-  films: [],
-  isFilmsLoading: true,
-  promoFilm: null,
-  isPromoFilmLoading: true,
-  film: null,
-  isFilmLoading: true,
-  comments: [],
-  isCommentsLoading: true,
-  favoriteFilms: [],
-  isFavoriteFilmsLoading: true,
+  filmsData: FILMS_DATA_DEFAULT,
+  promoFilmData: FILM_DATA_DEFAULT,
+  filmData: FILM_DATA_DEFAULT,
+  commentsData: COMMENTS_DATA_DEFAULT,
+  favoriteFilmsData: FILMS_DATA_DEFAULT,
 };
 
 const appData = createReducer(initialState, (builder) => {
   builder.addCase(loadFilms, (state, action) => {
-    state.films = action.payload;
-    state.isFilmsLoading = false;
+    state.filmsData = action.payload;
   });
   builder.addCase(loadPromoFilm, (state, action) => {
-    state.promoFilm = action.payload;
-    state.isPromoFilmLoading = false;
+    state.promoFilmData = action.payload;
   });
   builder.addCase(loadFilm, (state, action) => {
-    state.film = action.payload;
-    state.isFilmLoading = false;
+    state.filmData = action.payload;
   });
   builder.addCase(loadComments, (state, action) => {
-    state.comments = action.payload;
-    state.isCommentsLoading = false;
+    state.commentsData = action.payload;
   });
   builder.addCase(loadFavoriteFilms, (state, action) => {
-    state.favoriteFilms = action.payload;
-    state.isFavoriteFilmsLoading = false;
+    state.favoriteFilmsData = action.payload;
   });
-  // builder.addCase(resetLoadedFilms, (state) => {
-  //   state.films = [];
-  //   state.isFilmsLoading = true;
-  // });
-  // builder.addCase(resetLoadedPromoFilm, (state) => {
-  //   state.promoFilm = {};
-  //   state.isPromoFilmLoading = true;
-  // });
-  // builder.addCase(resetLoadedFilm, (state) => {
-  //   state.film = {};
-  //   state.isFilmLoading = true;
-  // });
-  // builder.addCase(resetLoadedComments, (state) => {
-  //   state.comments = [];
-  //   state.isCommentsLoading = true;
-  // });
-  // builder.addCase(resetLoadedFavoriteFilms, (state) => {
-  //   state.favoriteFilms = [];
-  //   state.isFavoriteFilmsLoading = true;
-  // });
 });
 
-export {initialState, appData};
+export {initialState, appData, FILMS_DATA_DEFAULT, FILM_DATA_DEFAULT, COMMENTS_DATA_DEFAULT};

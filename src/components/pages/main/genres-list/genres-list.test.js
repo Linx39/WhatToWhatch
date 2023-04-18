@@ -16,7 +16,7 @@ it(`GenresList should render correctly`, () => {
     DATA: {
       films: mockFilms,
     },
-    FILMS_ACTIONS: {
+    APP_ACTIONS: {
       activeGenre: GENRE_DEFAULT,
     },
   });

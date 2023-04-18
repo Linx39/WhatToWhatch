@@ -9,7 +9,7 @@ const initialState = {
   activeNavItem: NavItem.OVERVIEW,
 };
 
-const filmsActions = createReducer(initialState, (builder) => {
+const appActions = createReducer(initialState, (builder) => {
   builder.addCase(changeGenre, (state, action) => {
     state.activeGenre = action.payload;
   });
@@ -28,4 +28,4 @@ const filmsActions = createReducer(initialState, (builder) => {
   });
 });
 
-export {initialState, filmsActions};
+export {initialState, appActions};

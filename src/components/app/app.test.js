@@ -28,7 +28,7 @@ describe(`Test routing`, () => {
         promoFilm: mockFilm,
         isPromoFilmLoaded: true
       },
-      FILMS_ACTIONS: {
+      APP_ACTIONS: {
         count: FilmsCount.MAIN,
       },
     });
@@ -104,7 +104,7 @@ describe(`Test routing`, () => {
         comments: [],
         isCommentsLoaded: true
       },
-      FILMS_ACTIONS: {activeNavItem: NavItem.OVERVIEW}
+      APP_ACTIONS: {activeNavItem: NavItem.OVERVIEW}
     });
     const history = createMemoryHistory();
     history.push(`${Patch.FILMS}/:id`);

@@ -28,7 +28,7 @@ it(`Film should render correctly`, () => {
       comments: [],
       isCommentsLoaded: true,
     },
-    FILMS_ACTIONS: {
+    APP_ACTIONS: {
       activeNavItem: NavItem.OVERVIEW,
     }
   });

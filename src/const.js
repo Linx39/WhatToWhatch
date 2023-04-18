@@ -52,9 +52,11 @@ export const AdditionalClassName = {
   },
 };
 
-export const HttpCode = {
+export const ServerResponse = {
+  BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   PAGE_NOT_FOUND: 404,
+  NOT_RESPONSE: `NOT_RESPONSE`,
 };
 
 export const FetchingStatus = {
