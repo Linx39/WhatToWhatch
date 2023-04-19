@@ -43,7 +43,7 @@ describe(`Test InfoPage`, () => {
     expect(screen.getByText(new RegExp(`${InfoText.LOADING_ERROR}`, `i`))).toBeInTheDocument();
   });
 
-  it(`if error 404 should be render 'NotFound'`, () => {
+  it(`if error 404 should be render 'NotFoundPage'`, () => {
     render(
         <Provider store={store}>
           <Router history={history}>

@@ -1,15 +1,17 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import InfoPage from '../info-page/info-page';
 import Header from '../../common-components/header/header';
 import MoviesList from '../../common-components/movies-list/movies-list';
 import Footer from '../../common-components/footer/footer';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFavoriteFilms} from '../../../store/api-actions';
-import {AdditionalClassName, FetchingStatus} from '../../../const';
+import {AdditionalClassName} from '../../../const';
 
 const MyList = () => {
-  const {favoriteFilms, isFavoriteFilmsLoading} = useSelector((state) => state.DATA);
+  const {favoriteFilmsData} = useSelector((state) => state.DATA);
+  const {data: favoriteFilms, isLoading: isFavoriteFilmsLoading, error: favoriteFilmsError} = favoriteFilmsData;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,7 +19,11 @@ const MyList = () => {
   }, [dispatch]);
 
   if (isFavoriteFilmsLoading) {
-    return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+    return <LoadingPage />;
+  }
+
+  if (favoriteFilmsError) {
+    return <ErrorPage />;
   }
 
   return (

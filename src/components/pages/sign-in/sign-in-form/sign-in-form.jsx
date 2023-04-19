@@ -2,12 +2,22 @@ import React, {useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 
+import SignInMessage from '../sign-in-message/sign-in-message';
 import {login} from '../../../../store/api-actions';
 import {isEmailValid} from '../../../../utils';
 
-const SignInForm = ({onFetchingError}) => {
+const MessageText = {
+  NOT_EMAIL_CORRECT: `Please enter a valid email address`,
+  NOT_EMAIL_VALID: `We can\’t recognize this email <br /> and password combination. Please try again.`,
+  FETCHING: `Loading...`,
+  FETCHING_ERROR: `Error authorization!`,
+};
+
+const SignInForm = () => {
   const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [isEmailCorrect, setIsEmailCorrect] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
+  const [isFetchingError, setIsFetchingError] = useState(false);
   const loginRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
@@ -38,25 +48,42 @@ const SignInForm = ({onFetchingError}) => {
       return;
     }
 
+    setIsFetching(true);
+    console.log(isFetching);
     dispatch(login({login: loginValue, password: passwordValue}))
     .catch(() => {
-      onFetchingError(true);
+      setIsFetchingError(true);
     });
+    setIsFetching(false);
+    console.log(isFetching);
   };
 
   return (
     <div className="sign-in user-page__content">
       <form onSubmit={handleSubmit} action="#" className="sign-in__form">
+        {/* {!isEmailCorrect && <SignInMessage text={MessageText.NOT_EMAIL_CORRECT} />}
+        {!isFormCorrect && <SignInMessage text={MessageText.NOT_FORM_CORRECT} />}
+        {isFetching && <SignInMessage text={MessageText.FETCHING} />}
+        {isFetchingError && <SignInMessage text={MessageText.FETCHING_ERROR} />} */}
         {!isEmailCorrect &&
-            <div className="sign-in__message">
-              <p>Please enter a valid email address</p>
-            </div>
+          <div className="sign-in__message">
+            <p>Please enter a valid email address</p>
+          </div>
         }
-
         {!isFormCorrect &&
-            <div className="sign-in__message">
-              <p>We can\’t recognize this email <br /> and password combination. Please try again.</p>
-            </div>
+          <div className="sign-in__message">
+            <p>We can\’t recognize this email <br /> and password combination. Please try again.</p>
+          </div>
+        }
+        {isFetching &&
+          <div className="sign-in__message">
+            <p>Loading...</p>
+          </div>
+        }
+        {isFetchingError &&
+          <div className="sign-in__message">
+            <p>Error authorization!</p>
+          </div>
         }
 
         <div className="sign-in__fields">
@@ -94,10 +121,6 @@ const SignInForm = ({onFetchingError}) => {
       </form>
     </div>
   );
-};
-
-SignInForm.propTypes = {
-  onFetchingError: PropTypes.func.isRequired,
 };
 
 export default SignInForm;

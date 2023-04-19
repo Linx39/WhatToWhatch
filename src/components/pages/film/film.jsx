@@ -8,10 +8,12 @@ import MoviesList from '../../common-components/movies-list/movies-list';
 import Footer from '../../common-components/footer/footer';
 import MovieCardDesc from './movie-card-desc/movie-card-desc';
 import MovieCardInfo from './movie-card-info/movie-card-info';
-import InfoPage from '../info-page/info-page';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import NotFoundPage from '../info-page/not-found-page/not-found-page';
+import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilms, fetchFilm, fetchComments} from '../../../store/api-actions';
 import {changeActiveNavItem} from '../../../store/action';
-import {FilmsCount, AdditionalClassName, FetchingStatus, ServerResponse} from '../../../const';
+import {FilmsCount, AdditionalClassName, ResponseStatus} from '../../../const';
 
 const getFilmsLikeThis = (id, genre, films) => {
   return films.slice().filter((film) => film.genre === genre && film.id !== id);
@@ -32,26 +34,20 @@ const Film = () => {
     if (films.length === 0) {
       dispatch(fetchFilms());
     }
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchFilm(id));
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchComments(id));
   }, [dispatch]);
 
   if (isFilmsLoading || isFilmLoading || isCommentsLoading) {
-    return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+    return <LoadingPage />;
   }
 
-  if (filmError === ServerResponse.PAGE_NOT_FOUND) {
-    return <InfoPage fetchingStatus={FetchingStatus.PAGE_NOT_FOUND} />;
+  if (filmError === ResponseStatus.PAGE_NOT_FOUND) {
+    return <NotFoundPage />;
   }
 
-  if ((filmsError || filmError || commentsError) && filmError !== FetchingStatus.PAGE_NOT_FOUND) {
-    return <InfoPage fetchingStatus={FetchingStatus.SERVER_ERROR} />;
+  if ((filmsError || filmError || commentsError) && filmError !== ResponseStatus.PAGE_NOT_FOUND) {
+    return <ErrorPage />;
   }
 
   const {name, backgroundImage, genre} = film;

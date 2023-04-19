@@ -8,6 +8,8 @@ import {
   loadFavoriteFilms,
 } from '../action';
 
+const loadData = (dataDefault, payload) => ({...dataDefault, ...payload, isLoading: false});
+
 const FILMS_DATA_DEFAULT = {
   data: [],
   isLoading: true,
@@ -36,20 +38,20 @@ const initialState = {
 
 const appData = createReducer(initialState, (builder) => {
   builder.addCase(loadFilms, (state, action) => {
-    state.filmsData = action.payload;
+    state.filmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadPromoFilm, (state, action) => {
-    state.promoFilmData = action.payload;
+    state.promoFilmData = loadData(FILM_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadFilm, (state, action) => {
-    state.filmData = action.payload;
+    state.filmData = loadData(FILM_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadComments, (state, action) => {
-    state.commentsData = action.payload;
+    state.commentsData = loadData(COMMENTS_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadFavoriteFilms, (state, action) => {
-    state.favoriteFilmsData = action.payload;
+    state.favoriteFilmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
   });
 });
 
-export {initialState, appData, FILMS_DATA_DEFAULT, FILM_DATA_DEFAULT, COMMENTS_DATA_DEFAULT};
+export {initialState, appData};

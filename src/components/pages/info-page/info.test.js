@@ -5,7 +5,7 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import Info from './info';
+import Info from './info/info';
 
 const mockStore = configureStore({});
 

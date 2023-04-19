@@ -8,8 +8,8 @@ import MyList from '../pages/my-list/my-list';
 import Film from '../pages/film/film';
 import AddReview from '../pages/add-review/add-review';
 import Player from '../pages/player/player';
-import NotFound from '../pages/info-page/not-found/not-found';
-import Loading from '../pages/info-page/loading/loading';
+import NotFoundPage from '../pages/info-page/not-found-page/not-found-page';
+import LoadingPage from '../pages/info-page/loading-page/loading-page';
 import PrivateRoute from '../private-router/private-route';
 import {Patch, AuthorizationStatus} from '../../const';
 
@@ -18,7 +18,7 @@ const App = () => {
 
   if (authorizationStatus === AuthorizationStatus.UNKNOW) {
     return (
-      <Loading />
+      <LoadingPage />
     );
   }
 
@@ -51,7 +51,7 @@ const App = () => {
       </Route>
 
       <Route>
-        <NotFound />
+        <NotFoundPage />
       </Route>
     </Switch>
   );

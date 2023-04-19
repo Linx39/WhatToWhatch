@@ -2,16 +2,20 @@ import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-import InfoPage from '../info-page/info-page';
 import VideoPlayer from './video-player/video-player';
 import PlayerControls from './player-controls/player-controls';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import NotFoundPage from '../info-page/not-found-page/not-found-page';
+import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilm} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch, FetchingStatus} from '../../../const';
+import {Patch, ResponseStatus} from '../../../const';
 
 const Player = () => {
   const {id} = useParams();
-  const {film, isFilmLoading} = useSelector((state) => state.DATA);
+  const {filmData} = useSelector((state) => state.DATA);
+  const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
+
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -28,11 +32,15 @@ const Player = () => {
   }, [dispatch]);
 
   if (isFilmLoading) {
-    return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+    return <LoadingPage />;
   }
 
-  if (!film) {
-    return <InfoPage fetchingStatus={FetchingStatus.PAGE_NOT_FOUND} />;
+  if (filmError === ResponseStatus.PAGE_NOT_FOUND) {
+    return <NotFoundPage />;
+  }
+
+  if (filmError && filmError !== ResponseStatus.PAGE_NOT_FOUND) {
+    return <ErrorPage />;
   }
 
   const {name, previewImage, videoLink} = film;

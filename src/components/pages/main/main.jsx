@@ -8,9 +8,10 @@ import MoviesList from '../../common-components/movies-list/movies-list';
 import PromoFilm from './promo-film/promo-film';
 import GenresList from './genres-list/genres-list';
 import ShowMore from './show-more/show-more';
-import InfoPage from '../info-page/info-page';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilms, fetchPromoFilm} from '../../../store/api-actions';
-import {GENRE_DEFAULT, FetchingStatus} from '../../../const';
+import {GENRE_DEFAULT} from '../../../const';
 
 const getFilmsByGenre = (genre, films) => {
   return genre === GENRE_DEFAULT
@@ -33,11 +34,11 @@ const Main = () => {
   }, [dispatch]);
 
   if (isFilmsLoading || isPromoFilmLoading) {
-    return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+    return <LoadingPage />;
   }
 
   if (filmsError || promoFilmError) {
-    return <InfoPage fetchingStatus={FetchingStatus.SERVER_ERROR} />;
+    return <ErrorPage />;
   }
 
   const {name, backgroundImage} = promoFilm;

@@ -5,24 +5,21 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import NotFound from './not-found';
+import ErrorPage from './error-page';
 import {InfoText} from '../../../../const';
 
 const mockStore = configureStore({});
 
-it(`NotFound should render correctly`, () => {
-  const store = mockStore({});
+it(`ErrorPage should render correctly`, () => {
   const history = createMemoryHistory();
-  const linkText = `Вернуться на главную`;
 
   render(
-      <Provider store={store}>
+      <Provider store={mockStore({})}>
         <Router history={history}>
-          <NotFound />
+          <ErrorPage />
         </Router>
       </Provider>
   );
 
-  expect(screen.getByText(new RegExp(`${InfoText.ERROR_404}`, `i`))).toBeInTheDocument();
-  expect(screen.getByText(new RegExp(`${linkText}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${InfoText.LOADING_ERROR}`, `i`))).toBeInTheDocument();
 });

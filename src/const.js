@@ -52,21 +52,15 @@ export const AdditionalClassName = {
   },
 };
 
-export const ServerResponse = {
+export const ResponseStatus = {
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   PAGE_NOT_FOUND: 404,
-  NOT_RESPONSE: `NOT_RESPONSE`,
-};
-
-export const FetchingStatus = {
-  LOADING: `Loading`,
-  PAGE_NOT_FOUND: `Page Not Found`,
-  SERVER_ERROR: `Server Error`,
+  SERVER_ERROR: `SERVER_ERROR`,
 };
 
 export const InfoText = {
   LOADING: `Loading ... Please wait...`,
-  ERROR_404: `Error 404. Page not found.`,
-  LOADING_ERROR: `Loading error. Please reload the page.`,
+  PAGE_NOT_FOUND: `Error 404. Page not found.`,
+  SERVER_ERROR: `Server error. Please reload the page.`,
 };

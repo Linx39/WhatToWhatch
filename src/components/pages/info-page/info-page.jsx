@@ -1,25 +1,45 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Loading from './loading/loading';
-import Error from './error/error';
-import NotFound from './not-found/not-found';
-import {FetchingStatus} from '../../../const';
+import Header from '../../common-components/header/header';
+import Footer from '../../common-components/footer/footer';
 
-const InfoPage = ({fetchingStatus}) => {
+const InfoPage = ({infoText, linkTo, linkText}) => {
   return (
     <>
-      {fetchingStatus === FetchingStatus.LOADING && <Loading />}
+      <section className="movie-card">
+        <h1 className="visually-hidden">WTW</h1>
 
-      {fetchingStatus === FetchingStatus.PAGE_NOT_FOUND && <NotFound /> }
+        <Header isUserBlock={false} />
+      </section>
 
-      {fetchingStatus === FetchingStatus.SERVER_ERROR && <Error />}
+      <div className="page-content">
+        <section className="catalog">
+          <h2 className="catalog__title">{infoText}</h2>
+
+          {linkTo !== `` &&
+            <h2 className="catalog__title">
+              <Link to={linkTo}>{linkText}</Link>
+            </h2>
+          }
+        </section>
+
+        <Footer />
+      </div>
     </>
   );
 };
 
+InfoPage.defaultProps = {
+  linkTo: ``,
+  linkText: ``,
+};
+
 InfoPage.propTypes = {
-  fetchingStatus: PropTypes.string.isRequired,
+  infoText: PropTypes.string.isRequired,
+  linkTo: PropTypes.string.isRequired,
+  linkText: PropTypes.string.isRequired,
 };
 
 export default InfoPage;

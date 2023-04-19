@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {ServerResponse} from '../const';
+import {ResponseStatus} from '../const';
 
 const BASE_URL = `https://6.react.pages.academy/wtw`;
 const REQUEST_TIMEOUT = 5000;
@@ -17,11 +17,7 @@ export const createAPI = (onUnauthorized) => {
   const onFail = (err) => {
     const {response} = err;
 
-    if (!response) {
-      throw err;
-    }
-
-    if (response.status === ServerResponse.UNAUTHORIZED) {
+    if (response.status === ResponseStatus.UNAUTHORIZED) {
       onUnauthorized();
       throw err;
     }

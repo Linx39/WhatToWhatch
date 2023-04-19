@@ -6,14 +6,17 @@ import MovieCardBig from '../../common-components/movie-card-big/movie-card-big'
 import Header from '../../common-components/header/header';
 import BreadCrumbs from './breadcrumbs/breadcrumbs';
 import AddReviewForm from './add-revew-form/add-revew-form';
-import InfoPage from '../info-page/info-page';
+import LoadingPage from '../info-page/loading-page/loading-page';
+import NotFoundPage from '../info-page/not-found-page/not-found-page';
+import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilm} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch, FetchingStatus} from '../../../const';
+import {Patch, ResponseStatus} from '../../../const';
 
 const AddReview = () => {
   const {id} = useParams();
-  const {film, isFilmLoading} = useSelector((state) => state.DATA);
+  const {filmData} = useSelector((state) => state.DATA);
+  const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
   const dispatch = useDispatch();
   const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
 
@@ -22,11 +25,15 @@ const AddReview = () => {
   }, [dispatch]);
 
   if (isFilmLoading) {
-    return <InfoPage fetchingStatus={FetchingStatus.LOADING} />;
+    return <LoadingPage />;
   }
 
-  if (!film) {
-    return <InfoPage fetchingStatus={FetchingStatus.PAGE_NOT_FOUND} />;
+  if (filmError === ResponseStatus.PAGE_NOT_FOUND) {
+    return <NotFoundPage />;
+  }
+
+  if (filmError && filmError !== ResponseStatus.PAGE_NOT_FOUND) {
+    return <ErrorPage />;
   }
 
   const {name, posterImage, backgroundImage} = film;
