@@ -1,33 +1,50 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 
-import Review from "../review/review";
-import {commentProp} from '../../../../props-types';
+import Review from '../review/review';
+import InfoMessage from '../../../common-components/info-message/info-message';
+import {fetchComments} from '../../../../store/api-actions';
+import {filmProp} from '../../../../props-types';
+import {InfoText} from '../../../../const';
 
 const COLUMNS_COUNT = 2;
 
-const Reviews = ({comments}) => {
+const Reviews = ({film}) => {
+  const {id} = film;
+  const {commentsData} = useSelector((state) => state.DATA);
+  const {data: comments, isLoading: isCommentsLoading, error: commentsError} = commentsData;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchComments(id));
+  }, [dispatch]);
+
   const length = comments.length;
   const commentsCount = Math.ceil(length / COLUMNS_COUNT);
 
   return (
     <div className="movie-card__reviews movie-card__row">
-      {new Array(COLUMNS_COUNT).fill(null).map((value, index) => {
-        const filmComments = comments.slice(commentsCount * index, commentsCount * (index + 1));
+      {isCommentsLoading && <InfoMessage text={InfoText.LOADING} />}
 
-        return (
-          <div key={`col-${index}`} className="movie-card__reviews-col" data-testid={`test-col-${index}`}>
-            {filmComments.map((filmComment) => {
-              return (
-                <Review
-                  key={filmComment.id}
-                  filmComment={filmComment}
-                />
-              );
-            })}
-          </div>
-        );
-      })
+      {commentsError && <InfoMessage text={InfoText.SERVER_ERROR} />}
+
+      {(!isCommentsLoading && !commentsError) &&
+        new Array(COLUMNS_COUNT).fill(null).map((value, index) => {
+          const filmComments = comments.slice(commentsCount * index, commentsCount * (index + 1));
+
+          return (
+            <div key={`col-${index}`} className="movie-card__reviews-col" data-testid={`test-col-${index}`}>
+              {filmComments.map((filmComment) => {
+                return (
+                  <Review
+                    key={filmComment.id}
+                    filmComment={filmComment}
+                  />
+                );
+              })}
+            </div>
+          );
+        })
       }
     </div>
   );
@@ -35,7 +52,7 @@ const Reviews = ({comments}) => {
 };
 
 Reviews.propTypes = {
-  comments: PropTypes.arrayOf(commentProp).isRequired,
+  film: filmProp,
 };
 
 export default Reviews;

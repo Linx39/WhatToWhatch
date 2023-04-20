@@ -6,7 +6,8 @@ import {FilmsCount} from '../../../../const';
 
 const ShowMore = () => {
   const {count} = useSelector((state) => state.APP_ACTIONS);
-  const {films} = useSelector((state) => state.DATA);
+  const {filmsData} = useSelector((state) => state.DATA);
+  const {data: films} = filmsData;
   const dispatch = useDispatch();
   const handleShowMoreClick = () => {
     const newCount = Math.min(count + FilmsCount.MAIN, films.length);

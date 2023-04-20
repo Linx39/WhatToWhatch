@@ -11,9 +11,10 @@ import MovieCardInfo from './movie-card-info/movie-card-info';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
-import {fetchFilms, fetchFilm, fetchComments} from '../../../store/api-actions';
+import InfoMessage from '../../common-components/info-message/info-message';
+import {fetchFilms, fetchFilm} from '../../../store/api-actions';
 import {changeActiveNavItem} from '../../../store/action';
-import {FilmsCount, AdditionalClassName, ResponseStatus} from '../../../const';
+import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText} from '../../../const';
 
 const getFilmsLikeThis = (id, genre, films) => {
   return films.slice().filter((film) => film.genre === genre && film.id !== id);
@@ -21,10 +22,9 @@ const getFilmsLikeThis = (id, genre, films) => {
 
 const Film = () => {
   const {id} = useParams();
-  const {filmsData, filmData, commentsData} = useSelector((state) => state.DATA);
+  const {filmsData, filmData} = useSelector((state) => state.DATA);
   const {data: films, isLoading: isFilmsLoading, error: filmsError} = filmsData;
   const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
-  const {data: comments, isLoading: isCommentsLoading, error: commentsError} = commentsData;
   const {activeNavItem} = useSelector((state) => state.APP_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
@@ -35,10 +35,9 @@ const Film = () => {
       dispatch(fetchFilms());
     }
     dispatch(fetchFilm(id));
-    dispatch(fetchComments(id));
   }, [dispatch]);
 
-  if (isFilmsLoading || isFilmLoading || isCommentsLoading) {
+  if (isFilmsLoading || isFilmLoading) {
     return <LoadingPage />;
   }
 
@@ -46,7 +45,7 @@ const Film = () => {
     return <NotFoundPage />;
   }
 
-  if ((filmsError || filmError || commentsError) && filmError !== ResponseStatus.PAGE_NOT_FOUND) {
+  if ((filmError) && filmError !== ResponseStatus.PAGE_NOT_FOUND) {
     return <ErrorPage />;
   }
 
@@ -68,7 +67,6 @@ const Film = () => {
 
         <MovieCardInfo
           film={film}
-          comments={comments}
           activeNavItem={activeNavItem}
           onClick={handleChangeActiveNavItem}
         />
@@ -78,7 +76,10 @@ const Film = () => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesList films={filmsLikeThis} count={FilmsCount.FILMS_LIKE_THIS} />
+          {filmsError
+            ? <InfoMessage text={InfoText.SERVER_ERROR} />
+            : <MoviesList films={filmsLikeThis} count={FilmsCount.FILMS_LIKE_THIS} />
+          }
         </section>
 
         <Footer />

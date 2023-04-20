@@ -5,10 +5,10 @@ import NavList from '../nav-list/nav-list';
 import Overview from '../overview/overview';
 import Details from '../details/details';
 import Reviews from '../reviews/reviews';
-import {filmProp, commentProp} from '../../../../props-types';
+import {filmProp} from '../../../../props-types';
 import {NavItem} from '../../../../const';
 
-const MovieCardInfo = ({film, comments, activeNavItem, onClick}) => {
+const MovieCardInfo = ({film, activeNavItem, onClick}) => {
   const {name, posterImage} = film;
 
   const getActiveComponent = (item) => {
@@ -18,7 +18,7 @@ const MovieCardInfo = ({film, comments, activeNavItem, onClick}) => {
       case NavItem.DETAILS:
         return <Details film={film} />;
       case NavItem.REVIEWS:
-        return <Reviews comments={comments} />;
+        return <Reviews film={film} />;
       default:
         throw new Error(`Unknown switch case expression: '${item}'!`);
     }
@@ -46,7 +46,6 @@ const MovieCardInfo = ({film, comments, activeNavItem, onClick}) => {
 
 MovieCardInfo.propTypes = {
   film: filmProp,
-  comments: PropTypes.arrayOf(commentProp).isRequired,
   activeNavItem: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
