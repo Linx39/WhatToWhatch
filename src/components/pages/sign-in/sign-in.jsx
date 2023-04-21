@@ -12,11 +12,11 @@ const SignIn = () => {
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
+  useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       dispatch(redirectToRoute((Patch.MAIN)));
     }
-  // }, [authorizationStatus]);
+  }, [authorizationStatus]);
 
   return (
     <div className="user-page">

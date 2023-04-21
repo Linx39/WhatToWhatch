@@ -15,7 +15,7 @@ const MessageText = {
 };
 
 const SignInForm = () => {
-  const [isEmailCorrect, setIsEmailCorrect] = useState(true);
+  const [isLoginCorrect, setIsLoginCorrect] = useState(true);
   const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
@@ -23,47 +23,50 @@ const SignInForm = () => {
   const passwordRef = useRef();
   const dispatch = useDispatch();
 
-  const isEmailValid = () => EMAIL_REGEXP.test(loginRef.current.value);
-  const isFormValid = () => (loginRef.current.value === `` || passwordRef.current.value === ``);
+  const checkIsLoginCorrect = (loginValue) => (EMAIL_REGEXP.test(loginValue) || loginValue === ``);
+  const checkIsFormCorrect = (loginValue, passwordValue) => (loginValue !== `` && passwordValue !== ``);
 
-  const handleInput = (evt) => {
+  const handleLoginInput = (evt) => {
+    evt.preventDefault();
+    setIsFormCorrect(true);
+
+    const loginValue = loginRef.current.value;
+
+    if (!checkIsLoginCorrect(loginValue)) {
+      setIsLoginCorrect(false);
+      return;
+    }
+
+    setIsLoginCorrect(true);
+  };
+
+  const handlePasswordInput = (evt) => {
+    evt.preventDefault();
+    setIsFormCorrect(true);
+  };
+
+  const handleSubmit = (evt) => {
     evt.preventDefault();
 
     const loginValue = loginRef.current.value;
     const passwordValue = passwordRef.current.value;
 
-    if (!isEmailValid() && loginValue !== ``) {
-      setIsEmailCorrect(false);
-      return;
-    }
-
-    // if (loginValue === `` || passwordValue === ``) {
-    //   setIsFormCorrect(true);
-    //   return;
-    // }
-
-    setIsEmailCorrect(true);
-  };
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    setIsSubmiting(true);
-
-    if (isFormValid()) {
+    if (!checkIsFormCorrect(loginValue, passwordValue) || !checkIsLoginCorrect(loginValue)) {
       setIsFormCorrect(false);
       return;
     }
 
-    if (!isEmailValid(loginValue)) {
-      return;
-    }
+    setIsErrorSubmiting(false);
+    setIsSubmiting(true);
 
-    console.log ('sign');
     dispatch(login({email: loginValue, password: passwordValue}))
       .catch(() => {
         setIsSubmiting(false);
         setIsErrorSubmiting(true);
       });
+      // .finally(() => {
+      //   setIsSubmiting(false);
+      // });
   };
 
   return (
@@ -73,7 +76,7 @@ const SignInForm = () => {
         {!isFormCorrect && <SignInMessage text={MessageText.NOT_FORM_CORRECT} />}
         {isFetching && <SignInMessage text={MessageText.FETCHING} />}
         {isFetchingError && <SignInMessage text={MessageText.FETCHING_ERROR} />} */}
-        {!isEmailCorrect &&
+        {!isLoginCorrect &&
           <div className="sign-in__message">
             <p>Please enter a valid email address</p>
           </div>
@@ -85,7 +88,7 @@ const SignInForm = () => {
         }
         {isSubmiting &&
           <div className="sign-in__message">
-            <p>Loading...</p>
+            <p>Submiting...</p>
           </div>
         }
         {isErrorSubmiting &&
@@ -95,16 +98,16 @@ const SignInForm = () => {
         }
 
         <div className="sign-in__fields">
-          <div className={isEmailCorrect ? `sign-in__field` : `sign-in__field--error`}>
+          <div className={isLoginCorrect ? `sign-in__field` : `sign-in__field--error`}>
             <input
               ref={loginRef}
               disabled={isSubmiting}
+              onInput={handleLoginInput}
               className="sign-in__input"
               type="email"
               placeholder="Email address"
               name="user-email"
               id="user-email"
-              onInput={handleInput}
             />
             <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
           </div>
@@ -112,6 +115,7 @@ const SignInForm = () => {
             <input
               ref={passwordRef}
               disabled={isSubmiting}
+              onInput={handlePasswordInput}
               className="sign-in__input"
               type="password"
               placeholder="Password"
@@ -123,7 +127,7 @@ const SignInForm = () => {
         </div>
         <div className="sign-in__submit">
           <button
-            disabled={!isFormCorrect || !isEmailCorrect || isSubmiting}
+            disabled={isSubmiting || !isLoginCorrect}
             className="sign-in__btn"
             type="submit"
           >

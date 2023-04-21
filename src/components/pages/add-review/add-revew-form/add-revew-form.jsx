@@ -14,6 +14,9 @@ const AddReviewForm = ({film}) => {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
   const dispatch = useDispatch();
+
+  // const checkIsLoginCorrect = (loginValue) => (EMAIL_REGEXP.test(loginValue) || loginValue === ``);
+
   const handleRatingChange = (evt) => setUserForm({...userForm, rating: evt.target.value});
   const handleCommentChange = (evt) => setUserForm({...userForm, comment: evt.target.value});
 
@@ -26,12 +29,12 @@ const AddReviewForm = ({film}) => {
         dispatch(redirectToRoute(`${Patch.FILMS}/${id}`));
       })
       .catch(() => {
-        // setIsSubmiting(false);
-        setIsErrorSubmiting(true);
-      })
-      .finally(() =>{
         setIsSubmiting(false);
+        setIsErrorSubmiting(true);
       });
+      // .finally(() =>{
+      //   setIsSubmiting(false);
+      // });
   };
 
   const {rating, comment} = userForm;
