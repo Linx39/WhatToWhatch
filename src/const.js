@@ -6,6 +6,33 @@ export const Patch = {
   PLAYER: `/player`,
 };
 
+export const AdditionalUrl = {
+  FILMS: `/films`,
+  COMMENTS: `/comments`,
+  LOGIN: `/login`,
+  LOGOUT: `/logout`,
+  FAVORITE: `/favorite`,
+};
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+  UNKNOW: `UNKNOW`,
+};
+
+export const ResponseStatus = {
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  PAGE_NOT_FOUND: 404,
+  SERVER_ERROR: `SERVER_ERROR`,
+};
+
+export const InfoText = {
+  LOADING: `Loading ... Please wait...`,
+  PAGE_NOT_FOUND: `Error 404. Page not found.`,
+  SERVER_ERROR: `Server error. Please reload the page.`,
+};
+
 export const FilmsCount = {
   MAIN: 8,
   FILMS_LIKE_THIS: 4,
@@ -20,20 +47,6 @@ export const NavItem = {
 export const GENRE_DEFAULT = `All genres`;
 
 export const GENRE_COUNT = 10;
-
-export const AuthorizationStatus = {
-  AUTH: `AUTH`,
-  NO_AUTH: `NO_AUTH`,
-  UNKNOW: `UNKNOW`,
-};
-
-export const AdditionalUrl = {
-  FILMS: `/films`,
-  COMMENTS: `/comments`,
-  LOGIN: `/login`,
-  LOGOUT: `/logout`,
-  FAVORITE: `/favorite`,
-};
 
 export const RATING_MAX = 10;
 
@@ -52,15 +65,5 @@ export const AdditionalClassName = {
   },
 };
 
-export const ResponseStatus = {
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  PAGE_NOT_FOUND: 404,
-  SERVER_ERROR: `SERVER_ERROR`,
-};
 
-export const InfoText = {
-  LOADING: `Loading ... Please wait...`,
-  PAGE_NOT_FOUND: `Error 404. Page not found.`,
-  SERVER_ERROR: `Server error. Please reload the page.`,
-};
+export const EMAIL_REGEXP = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;

@@ -8,8 +8,6 @@ import {
   loadFavoriteFilms,
 } from '../action';
 
-const loadData = (dataDefault, payload) => ({...dataDefault, ...payload, isLoading: false});
-
 const FILMS_DATA_DEFAULT = {
   data: [],
   isLoading: true,
@@ -35,6 +33,8 @@ const initialState = {
   commentsData: COMMENTS_DATA_DEFAULT,
   favoriteFilmsData: FILMS_DATA_DEFAULT,
 };
+
+const loadData = (dataDefault, payload) => ({...dataDefault, ...payload, isLoading: false});
 
 const appData = createReducer(initialState, (builder) => {
   builder.addCase(loadFilms, (state, action) => {

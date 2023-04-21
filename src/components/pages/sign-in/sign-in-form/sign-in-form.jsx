@@ -4,7 +4,8 @@ import {useDispatch} from 'react-redux';
 
 import SignInMessage from '../sign-in-message/sign-in-message';
 import {login} from '../../../../store/api-actions';
-import {isEmailValid} from '../../../../utils';
+// import {isEmailValid} from '../../../../utils';
+import {EMAIL_REGEXP} from '../../../../const';
 
 const MessageText = {
   NOT_EMAIL_CORRECT: `Please enter a valid email address`,
@@ -14,32 +15,41 @@ const MessageText = {
 };
 
 const SignInForm = () => {
-  const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [isEmailCorrect, setIsEmailCorrect] = useState(true);
-  const [isFetching, setIsFetching] = useState(false);
-  const [isFetchingError, setIsFetchingError] = useState(false);
+  const [isFormCorrect, setIsFormCorrect] = useState(true);
+  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
   const loginRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
 
+  const isEmailValid = () => EMAIL_REGEXP.test(loginRef.current.value);
+  const isFormValid = () => (loginRef.current.value === `` || passwordRef.current.value === ``);
+
   const handleInput = (evt) => {
     evt.preventDefault();
 
-    if (!isEmailValid(loginRef.current.value)) {
+    const loginValue = loginRef.current.value;
+    const passwordValue = passwordRef.current.value;
+
+    if (!isEmailValid() && loginValue !== ``) {
       setIsEmailCorrect(false);
       return;
     }
+
+    // if (loginValue === `` || passwordValue === ``) {
+    //   setIsFormCorrect(true);
+    //   return;
+    // }
 
     setIsEmailCorrect(true);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsSubmiting(true);
 
-    const loginValue = loginRef.current.value;
-    const passwordValue = passwordRef.current.value;
-
-    if (loginValue === `` || passwordValue === ``) {
+    if (isFormValid()) {
       setIsFormCorrect(false);
       return;
     }
@@ -48,14 +58,12 @@ const SignInForm = () => {
       return;
     }
 
-    setIsFetching(true);
-    console.log(isFetching);
-    dispatch(login({login: loginValue, password: passwordValue}))
-    .catch(() => {
-      setIsFetchingError(true);
-    });
-    setIsFetching(false);
-    console.log(isFetching);
+    console.log ('sign');
+    dispatch(login({email: loginValue, password: passwordValue}))
+      .catch(() => {
+        setIsSubmiting(false);
+        setIsErrorSubmiting(true);
+      });
   };
 
   return (
@@ -75,12 +83,12 @@ const SignInForm = () => {
             <p>We can\’t recognize this email <br /> and password combination. Please try again.</p>
           </div>
         }
-        {isFetching &&
+        {isSubmiting &&
           <div className="sign-in__message">
             <p>Loading...</p>
           </div>
         }
-        {isFetchingError &&
+        {isErrorSubmiting &&
           <div className="sign-in__message">
             <p>Error authorization!</p>
           </div>
@@ -90,6 +98,7 @@ const SignInForm = () => {
           <div className={isEmailCorrect ? `sign-in__field` : `sign-in__field--error`}>
             <input
               ref={loginRef}
+              disabled={isSubmiting}
               className="sign-in__input"
               type="email"
               placeholder="Email address"
@@ -102,6 +111,7 @@ const SignInForm = () => {
           <div className="sign-in__field">
             <input
               ref={passwordRef}
+              disabled={isSubmiting}
               className="sign-in__input"
               type="password"
               placeholder="Password"
@@ -113,8 +123,10 @@ const SignInForm = () => {
         </div>
         <div className="sign-in__submit">
           <button
+            disabled={!isFormCorrect || !isEmailCorrect || isSubmiting}
             className="sign-in__btn"
-            type="submit">
+            type="submit"
+          >
               Sign in
           </button>
         </div>

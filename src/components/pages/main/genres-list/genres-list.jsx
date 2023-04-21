@@ -3,13 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {changeGenre} from '../../../../store/action';
-import {GENRE_DEFAULT, GENRE_COUNT} from '../../../../const';
-
-const getUniqueGenres = (films) => {
-  const genres = new Set(films.map(({genre}) => genre));
-
-  return [GENRE_DEFAULT, ...genres];
-};
+import {getUniqueGenres} from '../../../../utils';
 
 const GenresList = () => {
   const {activeGenre} = useSelector((state) => state.APP_ACTIONS);
@@ -20,7 +14,7 @@ const GenresList = () => {
     const genreItem = evt.target.textContent;
     dispatch(changeGenre((genreItem)));
   };
-  const genres = useMemo(() => getUniqueGenres(films).slice(0, GENRE_COUNT));
+  const genres = useMemo(() => getUniqueGenres(films));
 
   return (
     <ul className="catalog__genres-list">

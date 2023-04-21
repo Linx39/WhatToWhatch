@@ -1,10 +1,21 @@
 import dayjs from 'dayjs';
 
+import {GENRE_DEFAULT, GENRE_COUNT} from './const';
+
 const MINUTES_IN_HOUR = 60;
 const SECONDS_IN_MINUTE = 60;
-const EMAIL_REGEXP = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-export const isEmailValid = (value) => EMAIL_REGEXP.test(value);
+export const getFilmsByGenre = (genre, films) => {
+  return genre === GENRE_DEFAULT
+    ? films
+    : films.filter((film) => film.genre === genre);
+};
+
+export const getUniqueGenres = (films) => {
+  const genres = new Set(films.map(({genre}) => genre));
+
+  return [GENRE_DEFAULT, ...genres].slice(0, GENRE_COUNT);
+};
 
 export const getTimeInHoursMinutesSeconds = (time) => {
   const secondsInHour = MINUTES_IN_HOUR * SECONDS_IN_MINUTE;

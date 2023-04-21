@@ -10,6 +10,7 @@ import {ReviewTextLength, Patch} from '../../../../const';
 const AddReviewForm = ({film}) => {
   const {id} = film;
   const [userForm, setUserForm] = useState({rating: null, comment: ``});
+
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
   const dispatch = useDispatch();
@@ -25,8 +26,11 @@ const AddReviewForm = ({film}) => {
         dispatch(redirectToRoute(`${Patch.FILMS}/${id}`));
       })
       .catch(() => {
-        setIsSubmiting(false);
+        // setIsSubmiting(false);
         setIsErrorSubmiting(true);
+      })
+      .finally(() =>{
+        setIsSubmiting(false);
       });
   };
 

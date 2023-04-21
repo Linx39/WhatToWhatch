@@ -13,6 +13,7 @@ export const ActionType = {
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
   LOAD_USER_DATA: `user/loadUserData`,
+  SET_ERROR_AUTHORIZATION: `user/setErrorAuthorization`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
 };
 
@@ -38,33 +39,33 @@ export const resetOnDefaultMainPage = createAction(ActionType.RESET_ON_DEFAULT_M
 
 export const resetOnDefaultFilmPage = createAction(ActionType.RESET_ON_DEFAULT_FILM_PAGE);
 
-export const loadFilms = createAction(ActionType.LOAD_FILMS, (films) => {
+export const loadFilms = createAction(ActionType.LOAD_FILMS, (filmsData) => {
   return {
-    payload: films,
+    payload: filmsData,
   };
 });
 
-export const loadPromoFilm = createAction(ActionType.LOAD_PROMO_FILM, (film) => {
+export const loadPromoFilm = createAction(ActionType.LOAD_PROMO_FILM, (filmData) => {
   return {
-    payload: film,
+    payload: filmData,
   };
 });
 
-export const loadFilm = createAction(ActionType.LOAD_FILM, (film) => {
+export const loadFilm = createAction(ActionType.LOAD_FILM, (filmData) => {
   return {
-    payload: film,
+    payload: filmData,
   };
 });
 
-export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => {
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (commentsData) => {
   return {
-    payload: comments,
+    payload: commentsData,
   };
 });
 
-export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (films) => {
+export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (filmsData) => {
   return {
-    payload: films,
+    payload: filmsData,
   };
 });
 
@@ -77,6 +78,12 @@ export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATIO
 export const loadUserData = createAction(ActionType.LOAD_USER_DATA, (data) => {
   return {
     payload: data,
+  };
+});
+
+export const setErrorAuthorization = createAction(ActionType.SET_ERROR_AUTHORIZATION, (err) => {
+  return {
+    payload: err,
   };
 });
 

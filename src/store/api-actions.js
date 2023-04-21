@@ -6,6 +6,7 @@ import {
   loadFavoriteFilms,
   requireAuthorization,
   loadUserData,
+  setErrorAuthorization,
 } from './action';
 import {adaptFilmToClient, adaptUserToClient} from './adapter';
 import {AuthorizationStatus, AdditionalUrl, ResponseStatus} from '../const';
@@ -82,21 +83,22 @@ export const fetchChangeFilmStatus = (id, status, loadData) => (dispatch, _getSt
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGIN)
     .then(({data}) => {
-      const user = adaptUserToClient(data);
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(loadUserData(user));
+      dispatch(loadUserData(adaptUserToClient(data)));
     })
     .catch(() => {
       dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
     })
 );
 
-export const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.post(AdditionalUrl.LOGIN, {email, password})
+export const login = (user) => (dispatch, _getState, api) => (
+  api.post(AdditionalUrl.LOGIN, user)
     .then(({data}) => {
-      const user = adaptUserToClient(data);
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(loadUserData(user));
+      dispatch(loadUserData(adaptUserToClient(data)));
+    })
+    .catch(() => {
+      dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
     })
 );
 
@@ -104,5 +106,6 @@ export const logout = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.LOGOUT)
     .then(() => {
       dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
+      dispatch(loadUserData({}));
     })
 );

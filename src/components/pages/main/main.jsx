@@ -10,13 +10,8 @@ import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import InfoMessage from '../../common-components/info-message/info-message';
 import {fetchFilms, fetchPromoFilm} from '../../../store/api-actions';
-import {GENRE_DEFAULT, InfoText} from '../../../const';
-
-const getFilmsByGenre = (genre, films) => {
-  return genre === GENRE_DEFAULT
-    ? films
-    : films.filter((film) => film.genre === genre);
-};
+import {getFilmsByGenre} from '../../../utils';
+import {InfoText} from '../../../const';
 
 const Main = () => {
   const {filmsData, promoFilmData} = useSelector((state) => state.DATA);
