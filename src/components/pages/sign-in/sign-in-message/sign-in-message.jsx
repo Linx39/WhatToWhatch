@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const SignInMessage = (text) => {
   return (
-    <div className="sign-in__message" key={text}>
+    <div className="sign-in__message" key={`${text}`}>
       <p>{text}</p>
     </div>
   );

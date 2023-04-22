@@ -4,45 +4,66 @@ import {useDispatch} from 'react-redux';
 
 import SignInMessage from '../sign-in-message/sign-in-message';
 import {login} from '../../../../store/api-actions';
-// import {isEmailValid} from '../../../../utils';
 import {EMAIL_REGEXP} from '../../../../const';
 
 const MessageText = {
-  NOT_EMAIL_CORRECT: `Please enter a valid email address`,
-  NOT_EMAIL_VALID: `We can\’t recognize this email <br /> and password combination. Please try again.`,
-  FETCHING: `Loading...`,
-  FETCHING_ERROR: `Error authorization!`,
+  NOT_VALID_LOGIN: `Please enter a valid email address`,
+  NOT_CORRECT_FORM: `We can\’t recognize this email <br /> and password combination. Please try again.`,
+  SUBMITING: `Submiting...`,
+  SUBMITING_ERROR: `Error authorization!`,
 };
 
 const SignInForm = () => {
-  const [isLoginCorrect, setIsLoginCorrect] = useState(true);
+  const [isLoginValid, setIsLoginValid] = useState(true);
   const [isFormCorrect, setIsFormCorrect] = useState(true);
   const [isSubmiting, setIsSubmiting] = useState(false);
-  const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
+  const [isSubmitingError, setIsSubmitingError] = useState(false);
   const loginRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
 
-  const checkIsLoginCorrect = (loginValue) => (EMAIL_REGEXP.test(loginValue) || loginValue === ``);
+  const checkIsLoginValid = (loginValue) => (EMAIL_REGEXP.test(loginValue) || loginValue === ``);
   const checkIsFormCorrect = (loginValue, passwordValue) => (loginValue !== `` && passwordValue !== ``);
+
+  const getSignInMessage = () => {
+    if (!isLoginValid) {
+      return <SignInMessage text={MessageText.NOT_VALID_LOGIN} />;
+    }
+
+    if (!isFormCorrect) {
+      return <SignInMessage text={MessageText.NOT_CORRECT_FORM} />;
+    }
+
+    if (isSubmiting) {
+      return <SignInMessage text={MessageText.SUBMITING} />;
+    }
+
+    if (isSubmitingError) {
+      return <SignInMessage text={MessageText.SUBMITING_ERROR} />;
+    }
+
+    return null;
+  };
 
   const handleLoginInput = (evt) => {
     evt.preventDefault();
     setIsFormCorrect(true);
+    setIsSubmitingError(false);
 
     const loginValue = loginRef.current.value;
 
-    if (!checkIsLoginCorrect(loginValue)) {
-      setIsLoginCorrect(false);
+    if (!checkIsLoginValid(loginValue)) {
+      setIsLoginValid(false);
       return;
     }
 
-    setIsLoginCorrect(true);
+    setIsLoginValid(true);
   };
 
   const handlePasswordInput = (evt) => {
     evt.preventDefault();
     setIsFormCorrect(true);
+    setIsSubmitingError(false);
   };
 
   const handleSubmit = (evt) => {
@@ -51,32 +72,30 @@ const SignInForm = () => {
     const loginValue = loginRef.current.value;
     const passwordValue = passwordRef.current.value;
 
-    if (!checkIsFormCorrect(loginValue, passwordValue) || !checkIsLoginCorrect(loginValue)) {
+    if (!checkIsFormCorrect(loginValue, passwordValue) || !checkIsLoginValid(loginValue)) {
       setIsFormCorrect(false);
       return;
     }
 
-    setIsErrorSubmiting(false);
     setIsSubmiting(true);
+    setIsSubmitingError(false);
 
     dispatch(login({email: loginValue, password: passwordValue}))
       .catch(() => {
         setIsSubmiting(false);
-        setIsErrorSubmiting(true);
+        setIsSubmitingError(true);
       });
-      // .finally(() => {
-      //   setIsSubmiting(false);
-      // });
   };
 
   return (
     <div className="sign-in user-page__content">
       <form onSubmit={handleSubmit} action="#" className="sign-in__form">
-        {/* {!isEmailCorrect && <SignInMessage text={MessageText.NOT_EMAIL_CORRECT} />}
+        {getSignInMessage()};
+        {/* {!isLoginValid && <SignInMessage text={MessageText.NOT_CORRECT_EMAIL} />}
         {!isFormCorrect && <SignInMessage text={MessageText.NOT_FORM_CORRECT} />}
-        {isFetching && <SignInMessage text={MessageText.FETCHING} />}
-        {isFetchingError && <SignInMessage text={MessageText.FETCHING_ERROR} />} */}
-        {!isLoginCorrect &&
+        {isSubmiting && <SignInMessage text={MessageText.Submiting} />}
+        {isSubmitingError && <SignInMessage text={MessageText.Submiting_ERROR} />} */}
+        {/* {!isLoginValid &&
           <div className="sign-in__message">
             <p>Please enter a valid email address</p>
           </div>
@@ -95,10 +114,10 @@ const SignInForm = () => {
           <div className="sign-in__message">
             <p>Error authorization!</p>
           </div>
-        }
+        } */}
 
         <div className="sign-in__fields">
-          <div className={isLoginCorrect ? `sign-in__field` : `sign-in__field--error`}>
+          <div className={isLoginValid ? `sign-in__field` : `sign-in__field--error`}>
             <input
               ref={loginRef}
               disabled={isSubmiting}
@@ -127,7 +146,7 @@ const SignInForm = () => {
         </div>
         <div className="sign-in__submit">
           <button
-            disabled={isSubmiting || !isLoginCorrect}
+            disabled={isSubmiting || !isLoginValid}
             className="sign-in__btn"
             type="submit"
           >
