@@ -38,9 +38,31 @@ const getSignInMessage = (formState) => {
     default:
       throw new Error(`Unknown switch case expression: '${formState}'!`);
   }
+
+  // if (!isLoginValid) {
+  //   return <SignInMessage text={MessageText.NOT_VALID_LOGIN} />;
+  // }
+
+  // if (!isFormCorrect) {
+  //   return <SignInMessage text={MessageText.NOT_CORRECT_FORM} />;
+  // }
+
+  // if (isSubmiting) {
+  //   return <SignInMessage text={MessageText.SUBMITING} />;
+  // }
+
+  // if (isSubmitingError) {
+  //   return <SignInMessage text={MessageText.SUBMITING_ERROR} />;
+  // }
+
+  // return null;
 };
 
 const SignInForm = () => {
+  // const [isLoginValid, setIsLoginValid] = useState(true);
+  // const [isFormCorrect, setIsFormCorrect] = useState(true);
+  // const [isSubmiting, setIsSubmiting] = useState(false);
+  // const [isSubmitingError, setIsSubmitingError] = useState(false);
   const [formState, setFormState] = useState(FormState.BASE);
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -51,6 +73,9 @@ const SignInForm = () => {
 
   const handleLoginInput = (evt) => {
     evt.preventDefault();
+    // setIsFormCorrect(true);
+    // setIsSubmitingError(false);
+    // setFormState(FormState.BASE);
 
     const loginValue = loginRef.current.value;
 
@@ -59,10 +84,34 @@ const SignInForm = () => {
       : FormState.NOT_VALID_LOGIN;
 
     setFormState(state);
+
+    // if (!checkIsLoginValid(loginValue)) {
+    //   setFormState(FormState.NOT_VALID_LOGIN);
+    //   // setIsLoginValid(false);
+    //   return;
+    // }
+
+    // setFormState(FormState.BASE);
+    // setIsLoginValid(true);
   };
 
   const handlePasswordInput = (evt) => {
     evt.preventDefault();
+
+    // const loginValue = loginRef.current.value;
+
+    // const state = checkIsLoginValid(loginValue)
+    //   ? FormState.BASE
+    //   : FormState.NOT_VALID_LOGIN;
+
+    // setFormState(state);
+    // if (!checkIsLoginValid(loginValue)) {
+    //   setFormState(FormState.NOT_VALID_LOGIN);
+    //   return;
+    // }
+    // setFormState(FormState.BASE);
+    // setIsFormCorrect(true);
+    // setIsSubmitingError(false);
   };
 
   const handleSubmit = (evt) => {
@@ -73,19 +122,26 @@ const SignInForm = () => {
 
     if (!checkIsFormCorrect(loginValue, passwordValue) || !checkIsLoginValid(loginValue)) {
       setFormState(FormState.NOT_CORRECT_FORM);
+      // setIsFormCorrect(false);
       return;
     }
 
+    // setIsSubmiting(true);
+    // setIsSubmitingError(false);
     setFormState(FormState.SUBMITING);
     dispatch(login({email: loginValue, password: passwordValue}))
       .catch(() => {
+        // const prevFormState = formState;
         setFormState(FormState.SUBMITING_ERROR);
+        // const loginValue = loginRef.current.value;
 
         const state = checkIsLoginValid(loginValue)
           ? FormState.BASE
           : FormState.NOT_VALID_LOGIN;
 
         setTimeout(() => setFormState(state), TIME_OUT);
+        // setIsSubmiting(false);
+        // setIsSubmitingError(true);
       });
   };
 
@@ -93,6 +149,30 @@ const SignInForm = () => {
     <div className="sign-in user-page__content">
       <form onSubmit={handleSubmit} action="#" className="sign-in__form">
         {getSignInMessage(formState)}
+        {/* {!isLoginValid && <SignInMessage text={MessageText.NOT_CORRECT_EMAIL} />}
+        {!isFormCorrect && <SignInMessage text={MessageText.NOT_FORM_CORRECT} />}
+        {isSubmiting && <SignInMessage text={MessageText.Submiting} />}
+        {isSubmitingError && <SignInMessage text={MessageText.Submiting_ERROR} />} */}
+        {/* {!isLoginValid &&
+          <div className="sign-in__message">
+            <p>Please enter a valid email address</p>
+          </div>
+        }
+        {!isFormCorrect &&
+          <div className="sign-in__message">
+            <p>We can\’t recognize this email <br /> and password combination. Please try again.</p>
+          </div>
+        }
+        {isSubmiting &&
+          <div className="sign-in__message">
+            <p>Submiting...</p>
+          </div>
+        }
+        {isErrorSubmiting &&
+          <div className="sign-in__message">
+            <p>Error authorization!</p>
+          </div>
+        } */}
 
         <div className="sign-in__fields">
           {/* <div className={isLoginValid ? `sign-in__field` : `sign-in__field--error`}> */}

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SignInMessage = (text) => {
+const SignInMessage = ({text}) => {
   return (
-    <div className="sign-in__message" key={`${text}`}>
+    <div className="sign-in__message">
       <p>{text}</p>
     </div>
   );
