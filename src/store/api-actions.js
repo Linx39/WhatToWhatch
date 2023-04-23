@@ -6,7 +6,6 @@ import {
   loadFavoriteFilms,
   requireAuthorization,
   loadUserData,
-  setErrorAuthorization,
 } from './action';
 import {adaptFilmToClient, adaptUserToClient} from './adapter';
 import {AuthorizationStatus, AdditionalUrl, ResponseStatus} from '../const';
@@ -97,9 +96,7 @@ export const login = (user) => (dispatch, _getState, api) => (
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(adaptUserToClient(data)));
     })
-    // .catch(() => {
-    //   dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
-    // })
+    .catch((err) => getErrorStatus(err))
 );
 
 export const logout = () => (dispatch, _getState, api) => (

@@ -13,7 +13,6 @@ export const ActionType = {
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
   LOAD_USER_DATA: `user/loadUserData`,
-  SET_ERROR_AUTHORIZATION: `user/setErrorAuthorization`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
 };
 
@@ -78,12 +77,6 @@ export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATIO
 export const loadUserData = createAction(ActionType.LOAD_USER_DATA, (data) => {
   return {
     payload: data,
-  };
-});
-
-export const setErrorAuthorization = createAction(ActionType.SET_ERROR_AUTHORIZATION, (err) => {
-  return {
-    payload: err,
   };
 });
 

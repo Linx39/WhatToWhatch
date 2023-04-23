@@ -1,47 +1,34 @@
 import React, {useState, useRef} from 'react';
-import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 
 import SignInMessage from '../sign-in-message/sign-in-message';
 import {login} from '../../../../store/api-actions';
-import {EMAIL_REGEXP} from '../../../../const';
+import {redirectToRoute} from '../../../../store/action';
+import {Patch, ResponseStatus, EMAIL_REGEXP} from '../../../../const';
 
-const TIME_OUT = 5000;
-
-const MessageText = {
-  NOT_VALID_LOGIN: `Please enter a valid email address`,
-  NOT_CORRECT_FORM: `We can\’t recognize this email <br /> and password combination. Please try again.`,
-  SUBMITING: `Submiting...`,
-  SUBMITING_ERROR: `Error authorization!`,
-};
+const TIME_OUT = 2000;
 
 const FormState = {
-  BASE: `BASE`,
-  NOT_VALID_LOGIN: `NOT_VALID_LOGIN`,
-  NOT_CORRECT_FORM: `NOT_CORRECT_FORM`,
-  SUBMITING: `SUBMITING`,
-  SUBMITING_ERROR: `SUBMITING_ERROR`,
+  DEFAULT: `Default`,
+  NOT_VALID_LOGIN: `Not valid login`,
+  NOT_CORRECT_FORM: `Not correct form`,
+  SUBMITING: `Submiting`,
+  SUBMITING_SUCCESS: `Submiting Success`,
+  AUTHORIZATION_ERROR: `Authorization error`,
+  SERVER_ERROR: `Server error. Please reload the page.`,
 };
 
-const getSignInMessage = (formState) => {
-  switch (formState) {
-    case FormState.BASE:
-      return null;
-    case FormState.NOT_VALID_LOGIN:
-      return <SignInMessage text={MessageText.NOT_VALID_LOGIN} />;
-    case FormState.NOT_CORRECT_FORM:
-      return <SignInMessage text={MessageText.NOT_CORRECT_FORM} />;
-    case FormState.SUBMITING:
-      return <SignInMessage text={MessageText.SUBMITING} />;
-    case FormState.SUBMITING_ERROR:
-      return <SignInMessage text={MessageText.SUBMITING_ERROR} />;
-    default:
-      throw new Error(`Unknown switch case expression: '${formState}'!`);
-  }
+const MessageText = {
+  [FormState.NOT_VALID_LOGIN]: `Please enter a valid email address`,
+  [FormState.NOT_CORRECT_FORM]: `We can\’t recognize this email\n and password combination. Please try again.`,
+  [FormState.SUBMITING]: `Authorization process, please wait...`,
+  [FormState.SUBMITING_SUCCESS]: `Authorization successful!`,
+  [FormState.AUTHORIZATION_ERROR]: `Authorization error!`,
+  [FormState.SERVER_ERROR]: `Server error!`,
 };
 
 const SignInForm = () => {
-  const [formState, setFormState] = useState(FormState.BASE);
+  const [formState, setFormState] = useState(FormState.DEFAULT);
   const loginRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
@@ -53,16 +40,9 @@ const SignInForm = () => {
     evt.preventDefault();
 
     const loginValue = loginRef.current.value;
-
-    const state = checkIsLoginValid(loginValue)
-      ? FormState.BASE
-      : FormState.NOT_VALID_LOGIN;
+    const state = checkIsLoginValid(loginValue) ? FormState.DEFAULT : FormState.NOT_VALID_LOGIN;
 
     setFormState(state);
-  };
-
-  const handlePasswordInput = (evt) => {
-    evt.preventDefault();
   };
 
   const handleSubmit = (evt) => {
@@ -71,35 +51,37 @@ const SignInForm = () => {
     const loginValue = loginRef.current.value;
     const passwordValue = passwordRef.current.value;
 
-    if (!checkIsFormCorrect(loginValue, passwordValue) || !checkIsLoginValid(loginValue)) {
+    if (!checkIsFormCorrect(loginValue, passwordValue)) {
       setFormState(FormState.NOT_CORRECT_FORM);
       return;
     }
 
+    const prevFormState = formState;
     setFormState(FormState.SUBMITING);
+
     dispatch(login({email: loginValue, password: passwordValue}))
-      .catch(() => {
-        setFormState(FormState.SUBMITING_ERROR);
+    .then((error) => {
+      if (!error) {
+        setFormState(FormState.SUBMITING_SUCCESS);
+        setTimeout(() => dispatch(redirectToRoute((Patch.MAIN))), TIME_OUT);
+        return;
+      }
 
-        const state = checkIsLoginValid(loginValue)
-          ? FormState.BASE
-          : FormState.NOT_VALID_LOGIN;
-
-        setTimeout(() => setFormState(state), TIME_OUT);
-      });
+      const errorState = error === ResponseStatus.UNAUTHORIZED ? FormState.AUTHORIZATION_ERROR : FormState.SERVER_ERROR;
+      setFormState(errorState);
+      setTimeout(() => setFormState(prevFormState), TIME_OUT);
+    });
   };
 
   return (
     <div className="sign-in user-page__content">
       <form onSubmit={handleSubmit} action="#" className="sign-in__form">
-        {getSignInMessage(formState)}
+        {formState !== FormState.DEFAULT && <SignInMessage text={MessageText[formState]} />}
 
         <div className="sign-in__fields">
-          {/* <div className={isLoginValid ? `sign-in__field` : `sign-in__field--error`}> */}
           <div className={formState === FormState.NOT_VALID_LOGIN ? `sign-in__field--error` : `sign-in__field`}>
             <input
               ref={loginRef}
-              // disabled={isSubmiting}
               disabled={formState === FormState.SUBMITING}
               onInput={handleLoginInput}
               className="sign-in__input"
@@ -113,9 +95,7 @@ const SignInForm = () => {
           <div className="sign-in__field">
             <input
               ref={passwordRef}
-              // disabled={isSubmiting}
               disabled={formState === FormState.SUBMITING}
-              onInput={handlePasswordInput}
               className="sign-in__input"
               type="password"
               placeholder="Password"
@@ -127,7 +107,6 @@ const SignInForm = () => {
         </div>
         <div className="sign-in__submit">
           <button
-            // disabled={isSubmiting || !isLoginValid}
             disabled={formState === FormState.SUBMITING || formState === FormState.NOT_VALID_LOGIN}
             className="sign-in__btn"
             type="submit"

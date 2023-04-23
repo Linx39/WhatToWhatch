@@ -16,7 +16,7 @@ const SignIn = () => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       dispatch(redirectToRoute((Patch.MAIN)));
     }
-  }, [authorizationStatus]);
+  }, []);
 
   return (
     <div className="user-page">
