@@ -7,15 +7,17 @@ import {redirectToRoute} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
 import {ReviewTextLength, Patch} from '../../../../const';
 
+const MessageText = {
+  ERROR_SUBMITING: `Comment was not added, please try again`,
+  SUBMITING: `Submiting...`
+};
+
 const AddReviewForm = ({film}) => {
   const {id} = film;
   const [userForm, setUserForm] = useState({rating: null, comment: ``});
-
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
   const dispatch = useDispatch();
-
-  // const checkIsLoginCorrect = (loginValue) => (EMAIL_REGEXP.test(loginValue) || loginValue === ``);
 
   const handleRatingChange = (evt) => setUserForm({...userForm, rating: evt.target.value});
   const handleCommentChange = (evt) => setUserForm({...userForm, comment: evt.target.value});
@@ -25,19 +27,24 @@ const AddReviewForm = ({film}) => {
     setIsSubmiting(true);
 
     dispatch(fetchAddComment(id, userForm))
-      .then(() => {
+      .then((errorResponseStatus) => {
+        if (errorResponseStatus) {
+          setIsSubmiting(false);
+          setIsErrorSubmiting(true);
+          return;
+        }
+
         dispatch(redirectToRoute(`${Patch.FILMS}/${id}`));
-      })
-      .catch(() => {
-        setIsSubmiting(false);
-        setIsErrorSubmiting(true);
       });
-      // .finally(() =>{
-      //   setIsSubmiting(false);
-      // });
   };
 
   const {rating, comment} = userForm;
+
+  const isAddReviewButtonDisabled =
+    !rating ||
+    comment.length < ReviewTextLength.MIN ||
+    comment.length > ReviewTextLength.MAX ||
+    isSubmiting;
 
   return (
     <div className="add-review">
@@ -67,23 +74,16 @@ const AddReviewForm = ({film}) => {
             <button
               className="add-review__btn"
               type="submit"
-              disabled={
-                !rating ||
-                comment.length < ReviewTextLength.MIN ||
-                comment.length > ReviewTextLength.MAX ||
-                isSubmiting
-              }
+              disabled={isAddReviewButtonDisabled}
             >
               Post
             </button>
           </div>
         </div>
 
-        {isErrorSubmiting &&
-          <div>
-            <p>Comment was not added, please try again</p>
-          </div>
-        }
+        {isSubmiting && <p className="add-review__textarea">{MessageText.SUBMITING}</p>}
+
+        {isErrorSubmiting && <p className="add-review__textarea">{MessageText.ERROR_SUBMITING}</p>}
       </form>
     </div>
   );

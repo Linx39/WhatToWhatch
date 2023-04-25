@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {useDispatch} from 'react-redux';
 
-import SignInMessage from '../sign-in-message/sign-in-message';
+import SignInFormMessage from '../sign-in-message/sign-in-message';
 import {login} from '../../../../store/api-actions';
 import {redirectToRoute} from '../../../../store/action';
 import {Patch, ResponseStatus, EMAIL_REGEXP} from '../../../../const';
@@ -10,21 +10,21 @@ const TIME_OUT = 2000;
 
 const FormState = {
   DEFAULT: `Default`,
-  NOT_VALID_LOGIN: `Not valid login`,
-  NOT_CORRECT_FORM: `Not correct form`,
+  INVALID_LOGIN: `Invalid login`,
+  INCORRECT_FORM: `Incorrect form`,
   SUBMITING: `Submiting`,
-  SUBMITING_SUCCESS: `Submiting Success`,
+  SUBMITING_SUCCESS: `Submiting success`,
   AUTHORIZATION_ERROR: `Authorization error`,
-  SERVER_ERROR: `Server error. Please reload the page.`,
+  SERVER_ERROR: `Server error`,
 };
 
 const MessageText = {
-  [FormState.NOT_VALID_LOGIN]: `Please enter a valid email address`,
-  [FormState.NOT_CORRECT_FORM]: `We can\’t recognize this email\n and password combination. Please try again.`,
+  [FormState.INVALID_LOGIN]: `Please enter a valid email address`,
+  [FormState.INCORRECT_FORM]: `Login and password can\’t be empty`,
   [FormState.SUBMITING]: `Authorization process, please wait...`,
   [FormState.SUBMITING_SUCCESS]: `Authorization successful!`,
-  [FormState.AUTHORIZATION_ERROR]: `Authorization error!`,
-  [FormState.SERVER_ERROR]: `Server error!`,
+  [FormState.AUTHORIZATION_ERROR]: `We can\’t recognize this email\n and password combination. Please try again.`,
+  [FormState.SERVER_ERROR]: `Server error!  Please reload the page!`,
 };
 
 const SignInForm = () => {
@@ -33,14 +33,16 @@ const SignInForm = () => {
   const passwordRef = useRef();
   const dispatch = useDispatch();
 
-  const checkIsLoginValid = (loginValue) => (EMAIL_REGEXP.test(loginValue) || loginValue === ``);
-  const checkIsFormCorrect = (loginValue, passwordValue) => (loginValue !== `` && passwordValue !== ``);
+  const isLoginValid = (loginValue) => (EMAIL_REGEXP.test(loginValue) || loginValue === ``);
+  const isFormCorrect = (loginValue, passwordValue) => (loginValue !== `` && passwordValue !== ``);
 
-  const handleLoginInput = (evt) => {
+  const handleInput = (evt) => {
     evt.preventDefault();
 
     const loginValue = loginRef.current.value;
-    const state = checkIsLoginValid(loginValue) ? FormState.DEFAULT : FormState.NOT_VALID_LOGIN;
+    const state = isLoginValid(loginValue)
+      ? FormState.DEFAULT
+      : FormState.INVALID_LOGIN;
 
     setFormState(state);
   };
@@ -51,39 +53,51 @@ const SignInForm = () => {
     const loginValue = loginRef.current.value;
     const passwordValue = passwordRef.current.value;
 
-    if (!checkIsFormCorrect(loginValue, passwordValue)) {
-      setFormState(FormState.NOT_CORRECT_FORM);
+    if (!isFormCorrect(loginValue, passwordValue)) {
+      setFormState(FormState.INCORRECT_FORM);
       return;
     }
 
-    const prevFormState = formState;
     setFormState(FormState.SUBMITING);
 
     dispatch(login({email: loginValue, password: passwordValue}))
-    .then((error) => {
-      if (!error) {
-        setFormState(FormState.SUBMITING_SUCCESS);
-        setTimeout(() => dispatch(redirectToRoute((Patch.MAIN))), TIME_OUT);
+    .then((errorResponseStatus) => {
+      if (errorResponseStatus) {
+        const errorFormState = errorResponseStatus === ResponseStatus.BAD_REQUEST
+          ? FormState.AUTHORIZATION_ERROR
+          : FormState.SERVER_ERROR;
+
+        setFormState(errorFormState);
+        setTimeout(() => setFormState(FormState.DEFAULT), TIME_OUT);
+
         return;
       }
 
-      const errorState = error === ResponseStatus.UNAUTHORIZED ? FormState.AUTHORIZATION_ERROR : FormState.SERVER_ERROR;
-      setFormState(errorState);
-      setTimeout(() => setFormState(prevFormState), TIME_OUT);
+      setFormState(FormState.SUBMITING_SUCCESS);
+      setTimeout(() => dispatch(redirectToRoute((Patch.MAIN))), TIME_OUT);
     });
   };
+
+  const isInputDisabled =
+    formState === FormState.SUBMITING ||
+    formState === FormState.SUBMITING_SUCCESS ||
+    formState === FormState.AUTHORIZATION_ERROR ||
+    formState === FormState.SERVER_ERROR;
+
+  const isSignInButtonDisabled =
+    formState === FormState.INVALID_LOGIN || isInputDisabled;
 
   return (
     <div className="sign-in user-page__content">
       <form onSubmit={handleSubmit} action="#" className="sign-in__form">
-        {formState !== FormState.DEFAULT && <SignInMessage text={MessageText[formState]} />}
+        {formState !== FormState.DEFAULT && <SignInFormMessage text={MessageText[formState]} />}
 
         <div className="sign-in__fields">
-          <div className={formState === FormState.NOT_VALID_LOGIN ? `sign-in__field--error` : `sign-in__field`}>
+          <div className={formState === FormState.INVALID_LOGIN ? `sign-in__field--error` : `sign-in__field`}>
             <input
               ref={loginRef}
-              disabled={formState === FormState.SUBMITING}
-              onInput={handleLoginInput}
+              disabled={isInputDisabled}
+              onInput={handleInput}
               className="sign-in__input"
               type="email"
               placeholder="Email address"
@@ -95,7 +109,8 @@ const SignInForm = () => {
           <div className="sign-in__field">
             <input
               ref={passwordRef}
-              disabled={formState === FormState.SUBMITING}
+              disabled={isInputDisabled}
+              onInput={handleInput}
               className="sign-in__input"
               type="password"
               placeholder="Password"
@@ -107,7 +122,7 @@ const SignInForm = () => {
         </div>
         <div className="sign-in__submit">
           <button
-            disabled={formState === FormState.SUBMITING || formState === FormState.NOT_VALID_LOGIN}
+            disabled={isSignInButtonDisabled}
             className="sign-in__btn"
             type="submit"
           >

@@ -23,8 +23,8 @@ const Main = () => {
   useEffect(() => {
     if (films.length === 0) {
       dispatch(fetchFilms());
-      dispatch(fetchPromoFilm());
     }
+    dispatch(fetchPromoFilm());
   }, [dispatch]);
 
   if (isFilmsLoading || isPromoFilmLoading) {

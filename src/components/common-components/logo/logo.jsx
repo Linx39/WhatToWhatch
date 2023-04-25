@@ -12,7 +12,7 @@ const Logo = ({additionalClassName, isLogoClickable}) => {
   const className = `logo__link ${additionalClassName}`;
   const handleLogoClick = () => {
     dispatch(resetOnDefaultMainPage());
-    dispatch(redirectToRoute((Patch.MAIN)));
+    dispatch(redirectToRoute(Patch.MAIN));
   };
 
   return (

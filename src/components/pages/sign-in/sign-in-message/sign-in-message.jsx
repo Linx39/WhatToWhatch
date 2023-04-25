@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SignInMessage = ({text}) => {
+const SignInFormMessage = ({text}) => {
   return (
     <div className="sign-in__message">
       <p>{text}</p>
@@ -9,8 +9,8 @@ const SignInMessage = ({text}) => {
   );
 };
 
-SignInMessage.propTypes = {
+SignInFormMessage.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-export default SignInMessage;
+export default SignInFormMessage;

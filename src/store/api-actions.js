@@ -10,7 +10,7 @@ import {
 import {adaptFilmToClient, adaptUserToClient} from './adapter';
 import {AuthorizationStatus, AdditionalUrl, ResponseStatus} from '../const';
 
-const getErrorStatus = (err) => err.response ? err.response.status : ResponseStatus.SERVER_ERROR;
+const getErrorResponseStatus = (err) => err.response ? err.response.status : ResponseStatus.SERVER_ERROR;
 
 const adaptFilmsToClient = (data) => data.map((item) => adaptFilmToClient(item));
 
@@ -20,7 +20,7 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
       dispatch(loadFilms({data: adaptFilmsToClient(data)}));
     })
     .catch((err) => {
-      dispatch(loadFilms({error: getErrorStatus(err)}));
+      dispatch(loadFilms({error: getErrorResponseStatus(err)}));
     })
 );
 
@@ -30,7 +30,7 @@ export const fetchPromoFilm = () => (dispatch, _getState, api) => (
       dispatch(loadPromoFilm({data: adaptFilmToClient(data)}));
     })
     .catch((err) => {
-      dispatch(loadPromoFilm({error: getErrorStatus(err)}));
+      dispatch(loadPromoFilm({error: getErrorResponseStatus(err)}));
     })
 );
 
@@ -40,7 +40,7 @@ export const fetchFilm = (id) => (dispatch, _getState, api) => (
       dispatch(loadFilm({data: adaptFilmToClient(data)}));
     })
     .catch((err) => {
-      dispatch(loadFilm({error: getErrorStatus(err)}));
+      dispatch(loadFilm({error: getErrorResponseStatus(err)}));
     })
 );
 
@@ -50,7 +50,7 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
       dispatch(loadComments({data}));
     })
     .catch((err) => {
-      dispatch(loadComments({error: getErrorStatus(err)}));
+      dispatch(loadComments({error: getErrorResponseStatus(err)}));
     })
 );
 
@@ -59,6 +59,7 @@ export const fetchAddComment = (id, {rating, comment}) => (dispatch, _getState, 
     .then(({data}) => {
       dispatch(loadComments({data}));
     })
+    .catch((err) => getErrorResponseStatus(err))
 );
 
 export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
@@ -67,7 +68,7 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
       dispatch(loadFavoriteFilms({data: adaptFilmsToClient(data)}));
     })
     .catch((err) => {
-      dispatch(loadFavoriteFilms({error: getErrorStatus(err)}));
+      dispatch(loadFavoriteFilms({error: getErrorResponseStatus(err)}));
     })
 );
 
@@ -96,7 +97,7 @@ export const login = (user) => (dispatch, _getState, api) => (
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(adaptUserToClient(data)));
     })
-    .catch((err) => getErrorStatus(err))
+    .catch((err) => getErrorResponseStatus(err))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
