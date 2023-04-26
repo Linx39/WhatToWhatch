@@ -18,7 +18,7 @@ const FavoriteButton = ({film, onLoadData}) => {
       return;
     }
 
-    dispatch(fetchChangeFilmStatus(id, Number(!isFavorite), onLoadData));
+    dispatch(fetchChangeFilmStatus(id, +!isFavorite, onLoadData));
   };
 
   return (

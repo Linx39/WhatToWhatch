@@ -7,6 +7,7 @@ import Footer from '../../common-components/footer/footer';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFavoriteFilms} from '../../../store/api-actions';
+import { resetLoadedFavoriteFilms } from '../../../store/action';
 import {AdditionalClassName} from '../../../const';
 
 const MyList = () => {
@@ -16,6 +17,10 @@ const MyList = () => {
 
   useEffect(() => {
     dispatch(fetchFavoriteFilms());
+
+    return () => {
+      dispatch(resetLoadedFavoriteFilms());
+    };
   }, [dispatch]);
 
   if (isFavoriteFilmsLoading) {

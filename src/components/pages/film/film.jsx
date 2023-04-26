@@ -13,10 +13,10 @@ import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import InfoMessage from '../../common-components/info-message/info-message';
 import {fetchFilms, fetchFilm} from '../../../store/api-actions';
-import {changeActiveNavItem} from '../../../store/action';
+import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, resetLoadedComments} from '../../../store/action';
 import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText} from '../../../const';
 
-const getFilmsLikeThis = (id, genre, films) => {
+const getFilmsByGenre = (id, genre, films) => {
   return films.slice().filter((film) => film.genre === genre && film.id !== id);
 };
 
@@ -34,7 +34,16 @@ const Film = () => {
     if (films.length === 0) {
       dispatch(fetchFilms());
     }
-    dispatch(fetchFilm(id));
+
+    if (film.id !== +id) {
+      dispatch(resetLoadedFilm());
+      dispatch(resetLoadedComments());
+      dispatch(fetchFilm(id));
+    }
+
+    return () => {
+      dispatch(resetOnDefaultFilmPage());
+    };
   }, [dispatch]);
 
   if (isFilmsLoading || isFilmLoading) {
@@ -50,7 +59,7 @@ const Film = () => {
   }
 
   const {name, backgroundImage, genre} = film;
-  const filmsLikeThis = getFilmsLikeThis(id, genre, films);
+  const filmsLikeThis = getFilmsByGenre(id, genre, films);
 
   return (
     <>

@@ -1,16 +1,20 @@
 import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
-  CHANGE_GENRE: `appAction/changeGenre`,
-  CHANGE_FILMS_COUNT: `appAction/changeFilmsCount`,
-  CHANGE_ACTIVE_NAV_ITEM: `appAction/changeActiveNavItem`,
-  RESET_ON_DEFAULT_MAIN_PAGE: `appAction/resetOnDefaultMainPage`,
-  RESET_ON_DEFAULT_FILM_PAGE: `appAction/resetOnDefaultFilmPage`,
+  CHANGE_GENRE: `app/changeGenre`,
+  CHANGE_FILMS_COUNT: `app/changeFilmsCount`,
+  CHANGE_ACTIVE_NAV_ITEM: `app/changeActiveNavItem`,
+  RESET_ON_DEFAULT_MAIN_PAGE: `app/resetOnDefaultMainPage`,
+  RESET_ON_DEFAULT_FILM_PAGE: `app/resetOnDefaultFilmPage`,
   LOAD_FILMS: `data/loadFilms`,
   LOAD_PROMO_FILM: `data/loadPromoFilm`,
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
+  RESET_LOADED_PROMO_FILM: `data/resetLoadedPromoFilm`,
+  RESET_LOADED_FILM: `data/resetLoadedFilm`,
+  RESET_LOADED_COMMENTS: `data/resetLoadedComments`,
+  RESET_LOADED_FAVORITE_FILMS: `data/resetLoadedFavoriteFilms`,
   REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
   LOAD_USER_DATA: `user/loadUserData`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
@@ -67,6 +71,14 @@ export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (f
     payload: filmsData,
   };
 });
+
+export const resetLoadedPromoFilm = createAction(ActionType.RESET_LOADED_PROMO_FILM);
+
+export const resetLoadedFilm = createAction(ActionType.RESET_LOADED_FILM);
+
+export const resetLoadedComments = createAction(ActionType.RESET_LOADED_COMMENTS);
+
+export const resetLoadedFavoriteFilms = createAction(ActionType.RESET_LOADED_FAVORITE_FILMS);
 
 export const requireAuthorization = createAction(ActionType.REQUIRE_AUTHORIZATION, (status) => {
   return {

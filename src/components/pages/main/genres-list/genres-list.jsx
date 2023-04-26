@@ -2,8 +2,9 @@ import React, {useMemo} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {changeGenre} from '../../../../store/action';
+import {changeGenre, resetOnDefaultMainPage} from '../../../../store/action';
 import {getUniqueGenres} from '../../../../utils';
+import {GENRE_DEFAULT} from '../../../../const';
 
 const GenresList = () => {
   const {activeGenre} = useSelector((state) => state.APP_ACTIONS);
@@ -13,6 +14,10 @@ const GenresList = () => {
   const handleGenreItemClick = (evt) => {
     const genreItem = evt.target.textContent;
     dispatch(changeGenre((genreItem)));
+
+    if (genreItem === GENRE_DEFAULT) {
+      dispatch(resetOnDefaultMainPage());
+    }
   };
   const genres = useMemo(() => getUniqueGenres(films));
 

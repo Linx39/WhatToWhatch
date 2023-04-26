@@ -51,7 +51,7 @@ const AddReviewForm = ({film}) => {
       <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
           <Stars
-            ratingValue={Number(rating)}
+            ratingValue={+rating}
             onChange={handleRatingChange}
             isSubmiting={isSubmiting}
           />

@@ -23,7 +23,7 @@ const MessageText = {
   [FormState.INCORRECT_FORM]: `Login and password can\’t be empty`,
   [FormState.SUBMITING]: `Authorization process, please wait...`,
   [FormState.SUBMITING_SUCCESS]: `Authorization successful!`,
-  [FormState.AUTHORIZATION_ERROR]: `We can\’t recognize this email\n and password combination. Please try again.`,
+  [FormState.AUTHORIZATION_ERROR]: `We can\’t recognize this email \n and password combination. Please try again.`,
   [FormState.SERVER_ERROR]: `Server error!  Please reload the page!`,
 };
 
@@ -68,7 +68,7 @@ const SignInForm = () => {
           : FormState.SERVER_ERROR;
 
         setFormState(errorFormState);
-        setTimeout(() => setFormState(FormState.DEFAULT), TIME_OUT);
+        // setTimeout(() => setFormState(FormState.DEFAULT), TIME_OUT);
 
         return;
       }

@@ -6,6 +6,10 @@ import {
   loadFilm,
   loadComments,
   loadFavoriteFilms,
+  resetLoadedPromoFilm,
+  resetLoadedFilm,
+  resetLoadedComments,
+  resetLoadedFavoriteFilms,
 } from '../action';
 
 const FILMS_DATA_DEFAULT = {
@@ -51,6 +55,18 @@ const appData = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadFavoriteFilms, (state, action) => {
     state.favoriteFilmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
+  });
+  builder.addCase(resetLoadedPromoFilm, (state) => {
+    state.promoFilmData = FILM_DATA_DEFAULT;
+  });
+  builder.addCase(resetLoadedFilm, (state) => {
+    state.filmData = FILM_DATA_DEFAULT;
+  });
+  builder.addCase(resetLoadedComments, (state) => {
+    state.commentsData = COMMENTS_DATA_DEFAULT;
+  });
+  builder.addCase(resetLoadedFavoriteFilms, (state) => {
+    state.favoriteFilmsData = FILMS_DATA_DEFAULT;
   });
 });
 

@@ -28,7 +28,9 @@ const Player = () => {
   const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
 
   useEffect(() => {
-    dispatch(fetchFilm(id));
+    if (film.id !== +id) {
+      dispatch(fetchFilm(id));
+    }
   }, [dispatch]);
 
   if (isFilmLoading) {

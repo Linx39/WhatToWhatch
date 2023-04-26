@@ -10,6 +10,7 @@ import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import InfoMessage from '../../common-components/info-message/info-message';
 import {fetchFilms, fetchPromoFilm} from '../../../store/api-actions';
+import {resetOnDefaultMainPage, resetLoadedPromoFilm} from '../../../store/action';
 import {getFilmsByGenre} from '../../../utils';
 import {InfoText} from '../../../const';
 
@@ -25,6 +26,11 @@ const Main = () => {
       dispatch(fetchFilms());
     }
     dispatch(fetchPromoFilm());
+
+    return () => {
+      dispatch(resetOnDefaultMainPage());
+      dispatch(resetLoadedPromoFilm());
+    };
   }, [dispatch]);
 
   if (isFilmsLoading || isPromoFilmLoading) {

@@ -4,16 +4,13 @@ import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
 import LogoLetters from './logo-letters';
-import {resetOnDefaultMainPage, redirectToRoute} from '../../../store/action';
+import {redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 
 const Logo = ({additionalClassName, isLogoClickable}) => {
   const dispatch = useDispatch();
   const className = `logo__link ${additionalClassName}`;
-  const handleLogoClick = () => {
-    dispatch(resetOnDefaultMainPage());
-    dispatch(redirectToRoute(Patch.MAIN));
-  };
+  const handleLogoClick = () => dispatch(redirectToRoute(Patch.MAIN));
 
   return (
     <div className="logo" data-testid={`test-logo`}>

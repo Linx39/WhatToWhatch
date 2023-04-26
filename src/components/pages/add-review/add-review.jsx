@@ -18,10 +18,13 @@ const AddReview = () => {
   const {filmData} = useSelector((state) => state.DATA);
   const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
   const dispatch = useDispatch();
+
   const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
 
   useEffect(() => {
-    dispatch(fetchFilm(id));
+    if (film.id !== +id) {
+      dispatch(fetchFilm(id));
+    }
   }, [dispatch]);
 
   if (isFilmLoading) {
