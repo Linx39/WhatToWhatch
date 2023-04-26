@@ -3,6 +3,8 @@ import React from 'react';
 import {getTimeInHoursMinutes} from '../../../../utils';
 import {filmProp} from '../../../../props-types';
 
+import './details.css';
+
 const getTimeTemplate = (time) => {
   const {hours, minutes} = getTimeInHoursMinutes(time);
 
@@ -33,9 +35,8 @@ const Details = ({film}) => {
           <span className="movie-card__details-value">
             {starring.map((actor, index) => {
               return (
-                <React.Fragment key={`star-${index}`}>
-                  {index !== starring.length - 1 ? `${actor},` : `${actor}`}
-                  {index !== starring.length - 1 ? <br /> : ``}
+                <React.Fragment key={`actor-${index}`}>
+                  {index < starring.length - 1 ? `${actor}, \n` : `${actor}`}
                 </React.Fragment>
               );
             })}
