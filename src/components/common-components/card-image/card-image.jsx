@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
-import {filmProp} from '../../../../props-types';
+import {filmProp} from '../../../props-types';
 
 const CardImage = ({film, onMouseEnter, onMouseLeave, onClick}) => {
   const {name, previewImage} = film;

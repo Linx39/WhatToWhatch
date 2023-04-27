@@ -1,17 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const MovieCardBig = ({src, alt}) => {
+import {filmProp} from '../../../props-types';
+
+const MovieCardBig = ({film}) => {
+  const {backgroundImage, name} = film;
+
   return (
     <div className="movie-card__bg">
-      <img src={src} alt={alt} />
+      <img src={backgroundImage} alt={name} />
     </div>
   );
 };
 
 MovieCardBig.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  film: filmProp,
 };
 
 export default MovieCardBig;

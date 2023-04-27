@@ -1,9 +1,9 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {logout} from '../../../../store/api-actions';
-import {redirectToRoute} from '../../../../store/action';
-import {Patch} from '../../../../const';
+import {logout} from '../../../store/api-actions';
+import {redirectToRoute} from '../../../store/action';
+import {Patch} from '../../../const';
 
 const UserBlockAvatar = () => {
   const {user} = useSelector((state) => state.USER);

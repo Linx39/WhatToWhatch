@@ -2,7 +2,7 @@ import {initialState, appActions} from './app-actions';
 import {ActionType} from '../action';
 import {NavItem} from '../../const';
 
-describe(`Reducers work correctly`, () => {
+describe(`Reducer 'appActions' work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
     expect(appActions(undefined, {}))
       .toEqual(initialState);
@@ -25,11 +25,10 @@ describe(`Reducers work correctly`, () => {
 
     const changeFilmsCountAction = {
       type: ActionType.CHANGE_FILMS_COUNT,
-      payload: 10,
     };
 
     expect(appActions(state, changeFilmsCountAction))
-      .toEqual({activeGenre: `drama`, count: 10, activeNavItem: NavItem.DETAILS});
+      .toEqual({activeGenre: `drama`, count: 11, activeNavItem: NavItem.DETAILS});
   });
 
   it(`Reducer should change active item by a given value`, () => {
@@ -44,24 +43,22 @@ describe(`Reducers work correctly`, () => {
       .toEqual({activeGenre: `drama`, count: 3, activeNavItem: NavItem.REVIEWS});
   });
 
-  it(`Reducer should return default Main Page`, () => {
+  it(`Reducer should return default MainPage`, () => {
     const state = {activeGenre: `drama`, count: 4, activeNavItem: NavItem.REVIEWS};
 
     const resetAppActions = {
       type: ActionType.RESET_ON_DEFAULT_MAIN_PAGE,
-      payload: null,
     };
 
     expect(appActions(state, resetAppActions))
       .toEqual({...initialState, activeNavItem: NavItem.REVIEWS});
   });
 
-  it(`Reducer should return default Film Page`, () => {
+  it(`Reducer should return default FilmPage`, () => {
     const state = {activeGenre: `drama`, count: 4, activeNavItem: NavItem.REVIEWS};
 
     const resetAppActions = {
       type: ActionType.RESET_ON_DEFAULT_FILM_PAGE,
-      payload: null,
     };
 
     expect(appActions(state, resetAppActions))

@@ -6,8 +6,8 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import MovieCardDesc from './movie-card-desc';
-import {AuthorizationStatus} from '../../../../const';
-import {mockFilms} from '../../../../mock/films';
+import {AuthorizationStatus} from '../../../const';
+import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 

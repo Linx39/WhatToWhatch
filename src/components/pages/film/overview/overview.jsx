@@ -1,17 +1,7 @@
 import React from 'react';
 
+import {getRatingTitle} from '../../../../utils';
 import {filmProp} from '../../../../props-types';
-
-const RatingLevel = [
-  {title: `Awesome`, rating: 10},
-  {title: `Very good`, rating: 8},
-  {title: `Good`, rating: 5},
-  {title: `Normal`, rating: 3},
-  {title: `Bad`, rating: 0},
-];
-
-const getRatingTitle = (value) => RatingLevel
-  .find(({rating}) => rating <= value).title;
 
 const Overview = ({film}) => {
   const {

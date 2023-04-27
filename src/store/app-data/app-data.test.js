@@ -25,59 +25,69 @@ describe(`Reducer 'appData' should work correctly`, () => {
   });
 
   it(`Reducer should update films by load films`, () => {
-    const state = {films: [], isFilmsLoaded: false};
+    const state = initialState;
     const loadfilmsActions = {
       type: ActionType.LOAD_FILMS,
       payload: mockFilms
     };
 
     expect(appData(state, loadfilmsActions))
-      .toEqual({films: mockFilms, isFilmsLoaded: true});
+      .toEqual(...initialState, {films: mockFilms, isLoading: false, error: null});
   });
 
   it(`Reducer should update promoFilm by load promoFilm`, () => {
-    const state = {promoFilm: {}, isPromoFilmLoaded: false};
+    const state = {promoFilm: {}, isLoading: true, error: null};
     const loadPromoFilmAction = {
       type: ActionType.LOAD_PROMO_FILM,
       payload: mockFilm
     };
 
     expect(appData(state, loadPromoFilmAction))
-      .toEqual({promoFilm: mockFilm, isPromoFilmLoaded: true});
+      .toEqual({promoFilm: mockFilm, isLoading: false, error: null});
   });
 
   it(`Reducer should update film by load film`, () => {
-    const state = {film: {}, isFilmLoaded: false};
+    const state = {film: {}, isLoading: true, error: null};
     const loadFilmAction = {
       type: ActionType.LOAD_FILM,
       payload: mockFilm
     };
 
     expect(appData(state, loadFilmAction))
-      .toEqual({film: mockFilm, isFilmLoaded: true});
+      .toEqual({film: mockFilm, isLoading: false, error: null});
   });
 
   it(`Reducer should update comments by load comments`, () => {
     const comments = [`fake-comment-1`, `fake-comment-2`];
-    const state = {comments: [], isCommentsLoaded: false};
+    const state = {comments: [], isLoading: true, error: null};
     const loadCommentsAction = {
       type: ActionType.LOAD_COMMENTS,
       payload: comments
     };
 
     expect(appData(state, loadCommentsAction))
-      .toEqual({comments, isCommentsLoaded: true});
+      .toEqual({comments, isLoading: false, error: null});
   });
 
   it(`Reducer should update favoriteFilms by load favoriteFilms`, () => {
-    const state = {favoriteFilms: [], isFavoriteFilmsLoaded: false};
+    const state = {favoriteFilms: [], isLoading: true, error: null};
     const loadFavoritefilmsActions = {
       type: ActionType.LOAD_FAVORITE_FILMS,
       payload: mockFilms
     };
 
     expect(appData(state, loadFavoritefilmsActions))
-      .toEqual({favoriteFilms: mockFilms, isFavoriteFilmsLoaded: true});
+      .toEqual({favoriteFilms: mockFilms, isLoading: false, error: null});
+  });
+
+  it(`Reducer should reset loaded PromoFilm`, () => {
+    const state = {promoFilm: mockFilm, isPromoFilmLoaded: false};
+    const loadPromoFilmAction = {
+      type: ActionType.RESET_LOADED_PROMO_FILM,
+    };
+
+    expect(appData(state, loadPromoFilmAction))
+      .toEqual(initialState.promoFilmData);
   });
 });
 

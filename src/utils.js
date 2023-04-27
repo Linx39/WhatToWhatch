@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import {GENRE_DEFAULT, GENRE_COUNT} from './const';
+import {GENRE_DEFAULT, GENRE_COUNT, RatingLevel} from './const';
 
 const MINUTES_IN_HOUR = 60;
 const SECONDS_IN_MINUTE = 60;
@@ -18,8 +18,11 @@ export const getUniqueGenres = (films) => {
 };
 
 export const getFilmsLikeThis = (id, genre, films) => {
-  return films.slice().filter((film) => film.genre === genre && film.id !== id);
+  return films.filter((film) => film.genre === genre && film.id !== id);
 };
+
+export const getRatingTitle = (value) => RatingLevel
+  .find(({rating}) => rating <= value).title;
 
 export const getTimeInHoursMinutesSeconds = (time) => {
   const secondsInHour = MINUTES_IN_HOUR * SECONDS_IN_MINUTE;

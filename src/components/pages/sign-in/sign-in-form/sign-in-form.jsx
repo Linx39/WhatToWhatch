@@ -68,7 +68,6 @@ const SignInForm = () => {
           : FormState.SERVER_ERROR;
 
         setFormState(errorFormState);
-        // setTimeout(() => setFormState(FormState.DEFAULT), TIME_OUT);
 
         return;
       }
@@ -81,8 +80,6 @@ const SignInForm = () => {
   const isInputDisabled =
     formState === FormState.SUBMITING ||
     formState === FormState.SUBMITING_SUCCESS;
-    // formState === FormState.AUTHORIZATION_ERROR ||
-    // formState === FormState.SERVER_ERROR;
 
   const isSignInButtonDisabled =
     formState === FormState.INVALID_LOGIN || isInputDisabled;

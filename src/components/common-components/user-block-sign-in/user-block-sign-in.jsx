@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {Patch} from '../../../../const';
+import {Patch} from '../../../const';
 
 const UserBlockSignIn = () => {
   return (

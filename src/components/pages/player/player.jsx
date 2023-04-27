@@ -23,6 +23,7 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState(0);
 
   const dispatch = useDispatch();
+
   const handleExitButtonClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
   const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
   const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);

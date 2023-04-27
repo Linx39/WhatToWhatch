@@ -50,8 +50,16 @@ export const GENRE_COUNT = 10;
 
 export const RATING_MAX = 10;
 
+export const RatingLevel = [
+  {title: `Awesome`, rating: 10},
+  {title: `Very good`, rating: 8},
+  {title: `Good`, rating: 5},
+  {title: `Normal`, rating: 3},
+  {title: `Bad`, rating: 0},
+];
+
 export const ReviewTextLength = {
-  MIN: 10, // не забыть исправить на 50
+  MIN: 10,
   MAX: 400
 };
 
@@ -62,6 +70,10 @@ export const AdditionalClassName = {
   },
   LOGO: {
     LIGHT: `logo__link--light`,
+  },
+  MOVIE_CARD_POSTER: {
+    BIG: `movie-card__poster--big`,
+    SMALL: `movie-card__poster--small`,
   },
 };
 

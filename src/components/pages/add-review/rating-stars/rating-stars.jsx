@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {RATING_MAX} from '../../../../const';
 
-const Stars = ({ratingValue, onChange, isSubmiting}) => {
+const RatingStars = ({ratingValue, onChange, isSubmiting}) => {
   return (
     <div className="rating__stars">
       {new Array(RATING_MAX)
@@ -38,10 +38,10 @@ const Stars = ({ratingValue, onChange, isSubmiting}) => {
   );
 };
 
-Stars.propTypes = {
+RatingStars.propTypes = {
   ratingValue: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   isSubmiting: PropTypes.bool.isRequired,
 };
 
-export default Stars;
+export default RatingStars;

@@ -6,7 +6,7 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
 import CardImage from './card-image';
-import {mockFilms} from '../../../../mock/films';
+import {mockFilms} from '../../../mock/films';
 
 const history = createMemoryHistory();
 

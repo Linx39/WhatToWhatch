@@ -1,8 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
-const BreadCrumbs = ({name, onClick}) => {
+import {filmProp} from '../../../../props-types';
+
+const BreadCrumbs = ({film, onClick}) => {
+  const {name} = film;
+
   return (
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">
@@ -18,7 +22,7 @@ const BreadCrumbs = ({name, onClick}) => {
 };
 
 BreadCrumbs.propTypes = {
-  name: PropTypes.string.isRequired,
+  film: filmProp,
   onClick: PropTypes.func.isRequired,
 };
 

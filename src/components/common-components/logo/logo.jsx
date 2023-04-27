@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
-import LogoLetters from './logo-letters';
+import LogoLetters from '../logo-letters/logo-letters';
 import {redirectToRoute} from '../../../store/action';
 import {Patch} from '../../../const';
 

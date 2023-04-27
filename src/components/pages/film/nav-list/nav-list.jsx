@@ -10,15 +10,15 @@ const NavList = ({activeNavItem, onClick}) => {
   return (
     <nav className="movie-nav movie-card__nav">
       <ul className="movie-nav__list">
-        {Object.values(NavItem).map((navItem, index) => {
+        {Object.values(NavItem).map((item, index) => {
           return (
-            <li key={`navItem-${index}`}
-              className={`movie-nav__item ${navItem === activeNavItem ? `movie-nav__item--active` : ``}`}>
+            <li key={`item-${index}`}
+              className={`movie-nav__item ${item === activeNavItem ? `movie-nav__item--active` : ``}`}>
               <Link to="#"
                 className="movie-nav__link"
                 onClick={handleNavItemClick}
               >
-                {navItem}
+                {item}
               </Link>
             </li>
           );

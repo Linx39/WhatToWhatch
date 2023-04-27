@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import Stars from '../stars/stars';
+import RatingStars from '../rating-stars/rating-stars';
 import {fetchAddComment} from '../../../../store/api-actions';
 import {redirectToRoute} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
@@ -48,7 +48,7 @@ const AddReviewForm = ({film}) => {
     <div className="add-review">
       <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
-          <Stars
+          <RatingStars
             ratingValue={+rating}
             onChange={handleRatingChange}
             isSubmiting={isSubmiting}

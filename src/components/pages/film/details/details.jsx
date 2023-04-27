@@ -30,6 +30,7 @@ const Details = ({film}) => {
           <strong className="movie-card__details-name">Director</strong>
           <span className="movie-card__details-value">{director}</span>
         </p>
+
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Starring</strong>
           <span className="movie-card__details-value">
@@ -49,10 +50,12 @@ const Details = ({film}) => {
           <strong className="movie-card__details-name">Run Time</strong>
           <span className="movie-card__details-value">{getTimeTemplate(runTime)}</span>
         </p>
+
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Genre</strong>
           <span className="movie-card__details-value">{genre}</span>
         </p>
+        
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Released</strong>
           <span className="movie-card__details-value">{released}</span>

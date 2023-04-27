@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {filmProp} from '../../../../props-types';
+import {filmProp} from '../../../props-types';
 
 const CardVideo = ({film}) => {
   const {id, previewVideoLink, previewImage} = film;

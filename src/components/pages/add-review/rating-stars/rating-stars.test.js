@@ -1,12 +1,12 @@
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
 
-import Stars from './stars';
+import RatingStars from './rating-stars';
 
-describe(`Test Stars`, () => {
-  it(`Stars should render correctly`, () => {
+describe(`Test RatingStars`, () => {
+  it(`RatingStars should render correctly`, () => {
     render(
-        <Stars
+        <RatingStars
           ratingValue={6}
           onChange={jest.fn()}
           isSubmiting={false}
@@ -21,7 +21,7 @@ describe(`Test Stars`, () => {
     const onChange = jest.fn();
 
     render(
-        <Stars
+        <RatingStars
           ratingValue={2}
           onChange={onChange}
           isSubmiting={false}
@@ -35,7 +35,7 @@ describe(`Test Stars`, () => {
 
   it(`'Star' should checked when user choose`, () => {
     render(
-        <Stars
+        <RatingStars
           ratingValue={3}
           onChange={jest.fn()}
           isSubmiting={false}

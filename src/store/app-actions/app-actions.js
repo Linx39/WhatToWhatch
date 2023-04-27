@@ -20,11 +20,11 @@ const appActions = createReducer(initialState, (builder) => {
     state.activeNavItem = action.payload;
   });
   builder.addCase(resetOnDefaultMainPage, (state) => {
-    state.activeGenre = GENRE_DEFAULT;
-    state.count = FilmsCount.MAIN;
+    state.activeGenre = initialState.activeGenre;
+    state.count = initialState.count;
   });
   builder.addCase(resetOnDefaultFilmPage, (state) => {
-    state.activeNavItem = NavItem.OVERVIEW;
+    state.activeNavItem = initialState.activeNavItem;
   });
 });
 

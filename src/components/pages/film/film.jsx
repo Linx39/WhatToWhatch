@@ -2,20 +2,23 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-import MovieCardBig from '../../common-components/movie-card-big/movie-card-big';
-import Header from '../../common-components/header/header';
-import MoviesList from '../../common-components/movies-list/movies-list';
-import Footer from '../../common-components/footer/footer';
-import MovieCardDesc from './movie-card-desc/movie-card-desc';
 import MovieCardInfo from './movie-card-info/movie-card-info';
+import AddReviewButton from './add-review-button/add-review-button';
+import Footer from '../../common-components/footer/footer';
+import Header from '../../common-components/header/header';
+import MovieCardBig from '../../common-components/movie-card-big/movie-card-big';
+import MoviesList from '../../common-components/movies-list/movies-list';
+import MovieCardMeta from '../../common-components/movie-card-meta/movie-card-meta';
+import PlayButton from '../../common-components/play-button/play-button';
+import FavoriteButton from '../../common-components/favorite-button/favorite-button';
+import InfoMessage from '../../common-components/info-message/info-message';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
-import InfoMessage from '../../common-components/info-message/info-message';
 import {fetchFilms, fetchFilm} from '../../../store/api-actions';
-import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, resetLoadedComments} from '../../../store/action';
+import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, resetLoadedComments, loadFilm} from '../../../store/action';
 import {getFilmsLikeThis} from '../../../utils';
-import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText} from '../../../const';
+import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText, AuthorizationStatus} from '../../../const';
 
 const Film = () => {
   const {id} = useParams();
@@ -25,6 +28,7 @@ const Film = () => {
   const {activeNavItem} = useSelector((state) => state.APP_ACTIONS);
   const {authorizationStatus} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
+
   const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));
 
   useEffect(() => {
@@ -55,20 +59,33 @@ const Film = () => {
     return <ErrorPage />;
   }
 
-  const {name, backgroundImage, genre} = film;
-  const filmsLikeThis = getFilmsLikeThis(id, genre, films);
+  const {genre} = film;
+  const filmsLikeThis = getFilmsLikeThis(+id, genre, films).slice(0, FilmsCount.FILMS_LIKE_THIS);
 
   return (
     <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
-          <MovieCardBig src={backgroundImage} alt={name} />
+          <MovieCardBig film={film} />
 
           <h1 className="visually-hidden">WTW</h1>
 
           <Header additionalClassName={AdditionalClassName.HEADER.MOVIE_CARD} />
 
-          <MovieCardDesc film={film} authorizationStatus={authorizationStatus}/>
+          <div className="movie-card__wrap">
+            <div className="movie-card__desc">
+              <MovieCardMeta film={film} />
+
+              <div className="movie-card__buttons">
+                <PlayButton film={film}/>
+
+                <FavoriteButton film={film} onLoadData={loadFilm} />
+
+                {authorizationStatus === AuthorizationStatus.AUTH && <AddReviewButton film={film}/> }
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <MovieCardInfo
@@ -84,7 +101,7 @@ const Film = () => {
 
           {filmsError
             ? <InfoMessage text={InfoText.SERVER_ERROR} />
-            : <MoviesList films={filmsLikeThis} count={FilmsCount.FILMS_LIKE_THIS} />
+            : <MoviesList films={filmsLikeThis} />
           }
         </section>
 
