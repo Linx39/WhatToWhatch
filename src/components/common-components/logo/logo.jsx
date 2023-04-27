@@ -9,8 +9,8 @@ import {Patch} from '../../../const';
 
 const Logo = ({additionalClassName, isLogoClickable}) => {
   const dispatch = useDispatch();
-  const className = `logo__link ${additionalClassName}`;
   const handleLogoClick = () => dispatch(redirectToRoute(Patch.MAIN));
+  const className = `logo__link ${additionalClassName}`;
 
   return (
     <div className="logo" data-testid={`test-logo`}>

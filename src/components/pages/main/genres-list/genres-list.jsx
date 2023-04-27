@@ -11,6 +11,7 @@ const GenresList = () => {
   const {filmsData} = useSelector((state) => state.DATA);
   const {data: films} = filmsData;
   const dispatch = useDispatch();
+
   const handleGenreItemClick = (evt) => {
     const genreItem = evt.target.textContent;
     dispatch(changeGenre((genreItem)));
@@ -19,6 +20,7 @@ const GenresList = () => {
       dispatch(resetOnDefaultMainPage());
     }
   };
+
   const genres = useMemo(() => getUniqueGenres(films));
 
   return (

@@ -8,7 +8,7 @@ import {filmProp} from '../../../../props-types';
 import {ReviewTextLength, Patch} from '../../../../const';
 
 const MessageText = {
-  ERROR_SUBMITING: `Comment was not added, please try again`,
+  ERROR_SUBMITING: `Comment was\’t added, please try again`,
   SUBMITING: `Submiting...`
 };
 
@@ -40,11 +40,9 @@ const AddReviewForm = ({film}) => {
 
   const {rating, comment} = userForm;
 
-  const isAddReviewButtonDisabled =
-    !rating ||
-    comment.length < ReviewTextLength.MIN ||
-    comment.length > ReviewTextLength.MAX ||
-    isSubmiting;
+  const isCommentCorrect = comment.length >= ReviewTextLength.MIN && comment.length <= ReviewTextLength.MAX;
+
+  const isAddReviewButtonDisabled = !rating || !isCommentCorrect || isSubmiting;
 
   return (
     <div className="add-review">

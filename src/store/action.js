@@ -26,11 +26,7 @@ export const changeGenre = createAction(ActionType.CHANGE_GENRE, (genre) => {
   };
 });
 
-export const changeFilmsCount = createAction(ActionType.CHANGE_FILMS_COUNT, (count) => {
-  return {
-    payload: count,
-  };
-});
+export const changeFilmsCount = createAction(ActionType.CHANGE_FILMS_COUNT);
 
 export const changeActiveNavItem = createAction(ActionType.CHANGE_ACTIVE_NAV_ITEM, (item) => {
   return {

@@ -13,8 +13,8 @@ const appActions = createReducer(initialState, (builder) => {
   builder.addCase(changeGenre, (state, action) => {
     state.activeGenre = action.payload;
   });
-  builder.addCase(changeFilmsCount, (state, action) => {
-    state.count = action.payload;
+  builder.addCase(changeFilmsCount, (state) => {
+    state.count += FilmsCount.MAIN;
   });
   builder.addCase(changeActiveNavItem, (state, action) => {
     state.activeNavItem = action.payload;

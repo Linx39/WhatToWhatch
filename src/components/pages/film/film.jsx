@@ -14,11 +14,8 @@ import ErrorPage from '../info-page/error-page/error-page';
 import InfoMessage from '../../common-components/info-message/info-message';
 import {fetchFilms, fetchFilm} from '../../../store/api-actions';
 import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, resetLoadedComments} from '../../../store/action';
+import {getFilmsLikeThis} from '../../../utils';
 import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText} from '../../../const';
-
-const getFilmsByGenre = (id, genre, films) => {
-  return films.slice().filter((film) => film.genre === genre && film.id !== id);
-};
 
 const Film = () => {
   const {id} = useParams();
@@ -59,7 +56,7 @@ const Film = () => {
   }
 
   const {name, backgroundImage, genre} = film;
-  const filmsLikeThis = getFilmsByGenre(id, genre, films);
+  const filmsLikeThis = getFilmsLikeThis(id, genre, films);
 
   return (
     <>

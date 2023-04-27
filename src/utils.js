@@ -17,6 +17,10 @@ export const getUniqueGenres = (films) => {
   return [GENRE_DEFAULT, ...genres].slice(0, GENRE_COUNT);
 };
 
+export const getFilmsLikeThis = (id, genre, films) => {
+  return films.slice().filter((film) => film.genre === genre && film.id !== id);
+};
+
 export const getTimeInHoursMinutesSeconds = (time) => {
   const secondsInHour = MINUTES_IN_HOUR * SECONDS_IN_MINUTE;
 
