@@ -11,6 +11,11 @@ import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 
+jest.mock(`react-redux`, () => ({
+  ...jest.requireActual(`react-redux`),
+  useDispatch: jest.fn(() => () => {})
+}));
+
 it(`AddReview should render correctly`, () => {
   const user = {fake: true};
   const mockFilm = mockFilms[7];
@@ -22,8 +27,7 @@ it(`AddReview should render correctly`, () => {
       user,
     },
     DATA: {
-      film: mockFilm,
-      isFilmLoaded: true,
+      filmData: {data: mockFilm, isLoading: false, error: null},
     },
   });
 

@@ -9,8 +9,8 @@ const UserBlockAvatar = () => {
   const {user} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
 
-  const handleLogout = () => dispatch(logout());
   const handleOnAvatarClick = () => dispatch(redirectToRoute((Patch.MY_LIST)));
+  const handleLogout = () => dispatch(logout());
 
   const {avatarUrl} = user;
 
@@ -21,7 +21,7 @@ const UserBlockAvatar = () => {
       </div>
 
       <div>
-        <span onClick={handleLogout}>Logout</span>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );

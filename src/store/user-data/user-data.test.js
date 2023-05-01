@@ -4,6 +4,7 @@ import {initialState, userData} from './user-data';
 import {ActionType} from '../action';
 import {checkAuth, login, logout} from '../api-actions';
 import {AdditionalUrl, AuthorizationStatus} from '../../const';
+import {adaptUserToClient} from '../adapter';
 
 const api = createAPI(() => {});
 
@@ -37,28 +38,29 @@ describe(`Reducer 'user' should work correctly`, () => {
 });
 
 describe(`Async operation work correctly`, () => {
+  const fakeResponse = {fake: true};
+  const fakeAdaptUserToClient = jest.fn((data) => adaptUserToClient(data));
 
   it(`Should make a correct API call for get to /login`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const checkAuthLoader = checkAuth();
 
+
     apiMock
       .onGet(AdditionalUrl.LOGIN)
-      .reply(200, {fake: true});
+      .reply(200, fakeResponse);
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
-
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REQUIRE_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
-
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_USER_DATA,
-          payload: {fake: true},
+          payload: fakeAdaptUserToClient(fakeResponse),
         });
       });
   });
@@ -76,15 +78,13 @@ describe(`Async operation work correctly`, () => {
     return loginLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
-
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REQUIRE_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
-
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_USER_DATA,
-          payload: {fake: true},
+          payload: fakeAdaptUserToClient(fakeResponse),
         });
       });
   });
@@ -101,12 +101,10 @@ describe(`Async operation work correctly`, () => {
     return logoutLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
-
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REQUIRE_AUTHORIZATION,
           payload: AuthorizationStatus.NO_AUTH,
         });
-
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_USER_DATA,
           payload: {},

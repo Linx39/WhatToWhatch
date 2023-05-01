@@ -6,6 +6,7 @@ import {
   loadFilm,
   loadComments,
   loadFavoriteFilms,
+  resetLoadedFilms,
   resetLoadedPromoFilm,
   resetLoadedFilm,
   resetLoadedComments,
@@ -42,10 +43,10 @@ const loadData = (dataDefault, payload) => ({...dataDefault, ...payload, isLoadi
 
 const appData = createReducer(initialState, (builder) => {
   builder.addCase(loadFilms, (state, action) => {
-    state.filmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
+    loadData(FILMS_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadPromoFilm, (state, action) => {
-    state.promoFilmData = loadData(FILM_DATA_DEFAULT, action.payload);
+    loadData(FILM_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadFilm, (state, action) => {
     state.filmData = loadData(FILM_DATA_DEFAULT, action.payload);
@@ -55,6 +56,9 @@ const appData = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadFavoriteFilms, (state, action) => {
     state.favoriteFilmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
+  });
+  builder.addCase(resetLoadedFilms, (state) => {
+    state.filmsData = FILMS_DATA_DEFAULT;
   });
   builder.addCase(resetLoadedPromoFilm, (state) => {
     state.promoFilmData = FILM_DATA_DEFAULT;

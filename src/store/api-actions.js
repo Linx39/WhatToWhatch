@@ -7,12 +7,10 @@ import {
   requireAuthorization,
   loadUserData,
 } from './action';
-import {adaptFilmToClient, adaptUserToClient} from './adapter';
+import {adaptFilmToClient, adaptFilmsToClient, adaptUserToClient} from './adapter';
 import {AuthorizationStatus, AdditionalUrl, ResponseStatus} from '../const';
 
 const getErrorResponseStatus = (err) => err.response ? err.response.status : ResponseStatus.SERVER_ERROR;
-
-const adaptFilmsToClient = (data) => data.map((item) => adaptFilmToClient(item));
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
   api.get(AdditionalUrl.FILMS)

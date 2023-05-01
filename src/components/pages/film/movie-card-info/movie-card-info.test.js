@@ -11,15 +11,18 @@ import {mockFilms} from '../../../../mock/films';
 
 const mockStore = configureStore({});
 
+jest.mock(`react-redux`, () => ({
+  ...jest.requireActual(`react-redux`),
+  useDispatch: jest.fn(() => () => {})
+}));
+
 it(`MovieCardInfo should render correctly`, () => {
   const mockFilm = mockFilms[4];
   const {name} = mockFilm;
   const store = mockStore({
     DATA: {
-      film: mockFilm,
-      isFilmLoaded: true,
-      comments: [],
-      isCommentsLoaded: true,
+      filmData: {data: mockFilm, isLoading: false, error: null},
+      commentsData: {data: [], isLoading: false, error: null},
     },
     APP_ACTIONS: {
       activeNavItem: NavItem.OVERVIEW,

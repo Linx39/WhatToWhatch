@@ -1,7 +1,5 @@
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {act} from 'react-dom/test-utils';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
@@ -51,8 +49,6 @@ describe(`Test CardImage`, () => {
   });
 
   it(`onMouseEnter and onMouseLeave should called when user enter or leave 'Card'`, () => {
-    // jest.useFakeTimers();
-    // jest.spyOn(global, `setTimeout`);
     const onMouseEnter = jest.fn();
     const onMouseLeave = jest.fn();
 
@@ -68,14 +64,8 @@ describe(`Test CardImage`, () => {
     );
 
     const cardDiv = screen.getByTestId(`test-card`);
-
-    // act(() => {
-    //   fireEvent(cardDiv, new Event(`setTimeout`));
-    // });
     fireEvent.mouseEnter(cardDiv);
     expect(onMouseEnter).toBeCalled();
-    // expect(setTimeout).toBeCalledTimes(2);
-    // expect(setTimeout).lastCalledWith(expect.any(Function), 1000);
 
     fireEvent.mouseLeave(cardDiv);
     expect(onMouseLeave).toBeCalled();

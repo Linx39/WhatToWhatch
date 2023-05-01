@@ -2,13 +2,14 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import MovieCardBig from './movie-card-big';
+import {mockFilms} from '../../../mock/films';
 
 it(`MovieCardBig should render correctly`, () => {
-  const alt = `picture`;
+  const film = mockFilms[5];
 
   render(
-      <MovieCardBig src={``} alt={alt}/>
+      <MovieCardBig film={film}/>
   );
 
-  expect(screen.getByAltText(new RegExp(`${alt}`, `i`))).toBeInTheDocument();
+  expect(screen.getByAltText(new RegExp(`${film.name}`, `i`))).toBeInTheDocument();
 });

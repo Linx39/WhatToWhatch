@@ -10,25 +10,23 @@ import {mockFilms} from '../../../mock/films';
 
 const mockStore = configureStore({});
 
-describe(`Test MovieCardSmall`, () => {
+it(`MovieCardSmall should render correctly`, () => {
   const history = createMemoryHistory();
   const mockFilm = mockFilms[3];
   const {id} = mockFilm;
 
-  it(`MovieCardSmall should render correctly`, () => {
-    render(
-        <Provider store={mockStore({})}>
-          <Router history={history}>
-            <MovieCardSmall
-              film={mockFilm}
-              isVideoMode={false}
-              onMouseEnter={jest.fn()}
-              onMouseLeave={jest.fn()}
-            />
-          </Router>
-        </Provider>
-    );
+  render(
+      <Provider store={mockStore({})}>
+        <Router history={history}>
+          <MovieCardSmall
+            film={mockFilm}
+            isVideoMode={false}
+            onMouseEnter={jest.fn()}
+            onMouseLeave={jest.fn()}
+          />
+        </Router>
+      </Provider>
+  );
 
-    expect(screen.getByTestId(new RegExp(`test-film-card-${id}`, `i`))).toBeInTheDocument();
-  });
+  expect(screen.getByTestId(new RegExp(`test-film-card-${id}`, `i`))).toBeInTheDocument();
 });

@@ -18,6 +18,8 @@ export const adaptFilmToClient = (film) => ({
   isFavorite: film.is_favorite,
 });
 
+export const adaptFilmsToClient = (films) => films.map((film) => adaptFilmToClient(film));
+
 export const adaptUserToClient = (user) => ({
   id: user.id,
   email: user.email,

@@ -11,6 +11,7 @@ export const ActionType = {
   LOAD_FILM: `data/loadFilm`,
   LOAD_COMMENTS: `data/loadComments`,
   LOAD_FAVORITE_FILMS: `data/loadFavoriteFilms`,
+  RESET_LOADED_FILMS: `data/resetLoadedFilms`,
   RESET_LOADED_PROMO_FILM: `data/resetLoadedPromoFilm`,
   RESET_LOADED_FILM: `data/resetLoadedFilm`,
   RESET_LOADED_COMMENTS: `data/resetLoadedComments`,
@@ -67,6 +68,8 @@ export const loadFavoriteFilms = createAction(ActionType.LOAD_FAVORITE_FILMS, (f
     payload: filmsData,
   };
 });
+
+export const resetLoadedFilms = createAction(ActionType.RESET_LOADED_FILMS);
 
 export const resetLoadedPromoFilm = createAction(ActionType.RESET_LOADED_PROMO_FILM);
 

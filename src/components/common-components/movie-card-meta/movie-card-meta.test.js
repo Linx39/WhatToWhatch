@@ -1,36 +1,15 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
 
-import MovieCardDesc from './movie-card-desc';
-import {AuthorizationStatus} from '../../../const';
+import MovieCardMeta from './movie-card-meta';
 import {mockFilms} from '../../../mock/films';
 
-const mockStore = configureStore({});
-
-it(`MovieCardDesc should render correctly`, () => {
+it(`MovieCardMeta should render correctly`, () => {
   const mockFilm = mockFilms[4];
   const {name, genre, released} = mockFilm;
-  const store = mockStore({
-    USER: {
-      authorizationStatus: AuthorizationStatus.AUTH,
-    },
-    DATA: {
-      film: mockFilm,
-      isFilmLoaded: true,
-    },
-  });
-  const history = createMemoryHistory();
 
   render(
-      <Provider store={store}>
-        <Router history={history}>
-          <MovieCardDesc film={mockFilm} authorizationStatus={AuthorizationStatus.AUTH} />
-        </Router>
-      </Provider>
+      <MovieCardMeta film={mockFilm} />
   );
 
   expect(screen.getByText(new RegExp(`${name}`, `i`))).toBeInTheDocument();

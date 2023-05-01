@@ -4,14 +4,17 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
 import BreadCrumbs from './breadcrumbs';
+import {mockFilms} from '../../../../mock/films';
 
 describe(`Test BreadCrumbs`, () => {
+  const mockFilm = mockFilms[1];
   const history = createMemoryHistory();
-  const name = `test-name`;
+  const {name} = mockFilm;
+
   it(`BreadCrumbs should render correctly`, () => {
     render(
         <Router history={history}>
-          <BreadCrumbs name={name} onClick={jest.fn()}/>
+          <BreadCrumbs film={mockFilm} onClick={jest.fn()}/>
         </Router>
     );
 
@@ -24,7 +27,7 @@ describe(`Test BreadCrumbs`, () => {
 
     render(
         <Router history={history}>
-          <BreadCrumbs name={name} onClick={onClick} />
+          <BreadCrumbs film={mockFilm} onClick={onClick} />
         </Router>
     );
 
