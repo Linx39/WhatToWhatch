@@ -12,6 +12,7 @@ it(`Review should render correctly`, () => {
       date: `2016-12-24`
     };
   const {comment, user, rating} = filmComment;
+
   render(
       <Review filmComment={filmComment}/>
   );

@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import MoviesList from './movies-list';
-import {mockFilms} from '../../../mock/films';
+import {mockFilms} from '../../../mock/mock-films';
 
 const mockStore = configureStore({});
 

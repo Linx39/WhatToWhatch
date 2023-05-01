@@ -21,5 +21,5 @@ it(`ErrorPage should render correctly`, () => {
       </Provider>
   );
 
-  expect(screen.getByText(new RegExp(`${InfoText.LOADING_ERROR}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${InfoText.SERVER_ERROR}`, `i`))).toBeInTheDocument();
 });

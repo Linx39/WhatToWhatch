@@ -43,10 +43,10 @@ const loadData = (dataDefault, payload) => ({...dataDefault, ...payload, isLoadi
 
 const appData = createReducer(initialState, (builder) => {
   builder.addCase(loadFilms, (state, action) => {
-    loadData(FILMS_DATA_DEFAULT, action.payload);
+    state.filmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadPromoFilm, (state, action) => {
-    loadData(FILM_DATA_DEFAULT, action.payload);
+    state.promoFilmData = loadData(FILM_DATA_DEFAULT, action.payload);
   });
   builder.addCase(loadFilm, (state, action) => {
     state.filmData = loadData(FILM_DATA_DEFAULT, action.payload);

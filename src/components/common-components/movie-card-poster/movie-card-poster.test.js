@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import MovieCardPoster from './movie-card-poster';
-import {mockFilms} from '../../../mock/films';
+import {mockFilms} from '../../../mock/mock-films';
 
 it(`MovieCardPoster should render correctly`, () => {
   const mockFilm = mockFilms[4];

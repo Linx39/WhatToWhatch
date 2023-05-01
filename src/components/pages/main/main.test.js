@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 
 import Main from './main';
 import {AuthorizationStatus, GENRE_DEFAULT} from '../../../const';
-import {mockFilms} from '../../../mock/films';
+import {mockFilms} from '../../../mock/mock-films';
 
 const mockStore = configureStore({});
 

@@ -6,55 +6,27 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import InfoPage from './info-page';
-import {InfoText} from '../../../const';
 
 const mockStore = configureStore({});
 
-describe(`Test InfoPage`, () => {
-  const store = mockStore({});
+it(`InfoPage should render correctly`, () => {
   const history = createMemoryHistory();
-  it(`if not fetching error should be render 'Loading'`, () => {
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <InfoPage
-              isFetchingError={false}
-              isNotFoundError={false}
-            />
-          </Router>
-        </Provider>
-    );
+  const infoText = `mock-infoText`;
+  const linkTo = `mock-Path`;
+  const linkText = `mock-linkText`;
 
-    expect(screen.getByText(new RegExp(`${InfoText.LOADING}`, `i`))).toBeInTheDocument();
-  });
+  render(
+      <Provider store={mockStore({})}>
+        <Router history={history}>
+          <InfoPage
+            infoText={infoText}
+            linkTo={linkTo}
+            linkText={linkText}
+          />
+        </Router>
+      </Provider>
+  );
 
-  it(`if fetching error should be render 'Error'`, () => {
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <InfoPage
-              isFetchingError={true}
-              isNotFoundError={false}
-            />
-          </Router>
-        </Provider>
-    );
-
-    expect(screen.getByText(new RegExp(`${InfoText.LOADING_ERROR}`, `i`))).toBeInTheDocument();
-  });
-
-  it(`if error 404 should be render 'NotFoundPage'`, () => {
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <InfoPage
-              isFetchingError={true}
-              isNotFoundError={true}
-            />
-          </Router>
-        </Provider>
-    );
-
-    expect(screen.getByText(new RegExp(`${InfoText.ERROR_404}`, `i`))).toBeInTheDocument();
-  });
+  expect(screen.getByText(new RegExp(`${infoText}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${linkText}`, `i`))).toBeInTheDocument();
 });

@@ -55,7 +55,7 @@ const Details = ({film}) => {
           <strong className="movie-card__details-name">Genre</strong>
           <span className="movie-card__details-value">{genre}</span>
         </p>
-        
+
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Released</strong>
           <span className="movie-card__details-value">{released}</span>

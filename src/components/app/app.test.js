@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 
 import {AuthorizationStatus, Patch, NavItem, GENRE_DEFAULT} from '../../const';
 import App from './app';
-import {mockFilms} from '../../mock/films';
+import {mockFilms} from '../../mock/mock-films';
 
 const mockFilm = mockFilms[9];
 const user = {fake: true};

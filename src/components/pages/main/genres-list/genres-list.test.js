@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import GenresList from './genres-list';
-import {mockFilms} from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/mock-films';
 import {GENRE_DEFAULT} from '../../../../const';
 
 const mockStore = configureStore({});
@@ -14,7 +14,7 @@ const mockStore = configureStore({});
 it(`GenresList should render correctly`, () => {
   const store = mockStore({
     DATA: {
-      films: mockFilms,
+      filmsData: {data: mockFilms, isLoading: false, error: null},
     },
     APP_ACTIONS: {
       activeGenre: GENRE_DEFAULT,

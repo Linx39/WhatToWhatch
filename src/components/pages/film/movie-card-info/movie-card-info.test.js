@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 
 import MovieCardInfo from './movie-card-info';
 import {NavItem} from '../../../../const';
-import {mockFilms} from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/mock-films';
 
 const mockStore = configureStore({});
 

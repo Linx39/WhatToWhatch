@@ -7,9 +7,9 @@ import {getUniqueGenres} from '../../../../utils';
 import {GENRE_DEFAULT} from '../../../../const';
 
 const GenresList = () => {
-  const {activeGenre} = useSelector((state) => state.APP_ACTIONS);
   const {filmsData} = useSelector((state) => state.DATA);
   const {data: films} = filmsData;
+  const {activeGenre} = useSelector((state) => state.APP_ACTIONS);
   const dispatch = useDispatch();
 
   const handleGenreItemClick = (evt) => {

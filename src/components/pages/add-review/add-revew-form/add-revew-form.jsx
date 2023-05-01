@@ -8,7 +8,7 @@ import {filmProp} from '../../../../props-types';
 import {ReviewTextLength, Patch} from '../../../../const';
 
 const MessageText = {
-  ERROR_SUBMITING: `Comment was\’t added, please try again`,
+  ERROR_SUBMITING: `Comment was not added, please try again`,
   SUBMITING: `Submiting...`
 };
 

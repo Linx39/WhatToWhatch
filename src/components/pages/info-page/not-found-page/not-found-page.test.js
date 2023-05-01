@@ -11,18 +11,17 @@ import {InfoText} from '../../../../const';
 const mockStore = configureStore({});
 
 it(`NotFoundPage should render correctly`, () => {
-  const store = mockStore({});
   const history = createMemoryHistory();
   const linkText = `Вернуться на главную`;
 
   render(
-      <Provider store={store}>
+      <Provider store={mockStore({})}>
         <Router history={history}>
           <NotFoundPage />
         </Router>
       </Provider>
   );
 
-  expect(screen.getByText(new RegExp(`${InfoText.ERROR_404}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${InfoText.PAGE_NOT_FOUND}`, `i`))).toBeInTheDocument();
   expect(screen.getByText(new RegExp(`${linkText}`, `i`))).toBeInTheDocument();
 });

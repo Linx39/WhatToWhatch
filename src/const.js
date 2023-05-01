@@ -59,7 +59,7 @@ export const RatingLevel = [
 ];
 
 export const ReviewTextLength = {
-  MIN: 10,
+  MIN: 50,
   MAX: 400
 };
 

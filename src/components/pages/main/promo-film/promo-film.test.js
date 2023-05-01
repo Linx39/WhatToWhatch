@@ -5,16 +5,18 @@ import configureStore from 'redux-mock-store';
 
 import PromoFilm from './promo-film';
 import {AuthorizationStatus} from '../../../../const';
-import {mockFilms} from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/mock-films';
 
 const mockStore = configureStore({});
 
 it(`PromoFilm should render correctly`, () => {
   const mockFilm = mockFilms[3];
   const {name, genre, released} = mockFilm;
+  const user = {fake: true};
   const store = mockStore({
     USER: {
       authorizationStatus: AuthorizationStatus.AUTH,
+      user,
     },
   });
 

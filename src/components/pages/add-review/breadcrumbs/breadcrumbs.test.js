@@ -4,7 +4,7 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
 import BreadCrumbs from './breadcrumbs';
-import {mockFilms} from '../../../../mock/films';
+import {mockFilms} from '../../../../mock/mock-films';
 
 describe(`Test BreadCrumbs`, () => {
   const mockFilm = mockFilms[1];

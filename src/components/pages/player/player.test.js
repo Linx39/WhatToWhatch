@@ -6,9 +6,14 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import Player from './player';
-import {mockFilms} from '../../../mock/films';
+import {mockFilms} from '../../../mock/mock-films';
 
 const mockStore = configureStore({});
+
+jest.mock(`react-redux`, () => ({
+  ...jest.requireActual(`react-redux`),
+  useDispatch: jest.fn(() => () => {})
+}));
 
 jest.mock(`../player/video-player/video-player`, () => {
   const mockVideoPlayer = () => <>This is mock VideoPlayer</>;
@@ -37,8 +42,7 @@ it(`Player should render correctly`, () => {
   const history = createMemoryHistory();
   const store = mockStore({
     DATA: {
-      film: mockFilm,
-      isFilmLoaded: true,
+      filmData: {data: mockFilm, isLoading: false, error: null},
     },
   });
 

@@ -20,9 +20,7 @@ const UserBlockAvatar = () => {
         <img src={avatarUrl} alt="User avatar" width="63" height="63"/>
       </div>
 
-      <div>
-        <button onClick={handleLogout}>Logout</button>
-      </div>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

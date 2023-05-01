@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import MovieCardBig from './movie-card-big';
-import {mockFilms} from '../../../mock/films';
+import {mockFilms} from '../../../mock/mock-films';
 
 it(`MovieCardBig should render correctly`, () => {
   const film = mockFilms[5];

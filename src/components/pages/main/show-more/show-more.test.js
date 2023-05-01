@@ -8,17 +8,9 @@ import ShowMore from './show-more';
 const mockStore = configureStore({});
 
 it(`ShowMore should render correctly`, () => {
-  const store = mockStore({
-    DATA: {
-      films: {},
-    },
-    APP_ACTIONS: {
-      count: 9,
-    },
-  });
 
   render(
-      <Provider store={store}>
+      <Provider store={mockStore({})}>
         <ShowMore />
       </Provider>
   );
