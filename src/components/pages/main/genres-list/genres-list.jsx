@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 import {changeGenre, resetOnDefaultMainPage} from '../../../../store/action';
 import {getUniqueGenres} from '../../../../utils';
-import {GENRE_DEFAULT} from '../../../../const';
+import {Genre} from '../../../../const';
 
 const GenresList = () => {
   const {filmsData} = useSelector((state) => state.DATA);
@@ -16,7 +16,7 @@ const GenresList = () => {
     const genreItem = evt.target.textContent;
     dispatch(changeGenre((genreItem)));
 
-    if (genreItem === GENRE_DEFAULT) {
+    if (genreItem === Genre.DEFAULT) {
       dispatch(resetOnDefaultMainPage());
     }
   };

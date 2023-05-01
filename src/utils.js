@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 
-import {GENRE_DEFAULT, GENRE_COUNT, RatingLevel} from './const';
+import {Genre, RatingLevel} from './const';
 
 const MINUTES_IN_HOUR = 60;
 const SECONDS_IN_MINUTE = 60;
 
 export const getFilmsByGenre = (genre, films) => {
-  return genre === GENRE_DEFAULT
+  return genre === Genre.DEFAULT
     ? films
     : films.filter((film) => film.genre === genre);
 };
@@ -14,11 +14,11 @@ export const getFilmsByGenre = (genre, films) => {
 export const getUniqueGenres = (films) => {
   const genres = new Set(films.map(({genre}) => genre));
 
-  return [GENRE_DEFAULT, ...genres].slice(0, GENRE_COUNT);
+  return [Genre.DEFAULT, ...genres].slice(0, Genre.COUNT);
 };
 
-export const getFilmsLikeThis = (id, genre, films) => {
-  return films.filter((film) => film.genre === genre && film.id !== id);
+export const getFilmsLikeThis = ({id, genre}, films) => {
+  return films.filter((item) => item.genre === genre && item.id !== id);
 };
 
 export const getRatingTitle = (value) => RatingLevel

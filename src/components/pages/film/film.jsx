@@ -16,7 +16,7 @@ import LoadingPage from '../info-page/loading-page/loading-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilms, fetchFilm} from '../../../store/api-actions';
-import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, resetLoadedComments, loadFilm} from '../../../store/action';
+import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, loadFilm} from '../../../store/action';
 import {getFilmsLikeThis} from '../../../utils';
 import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText, AuthorizationStatus} from '../../../const';
 
@@ -38,14 +38,13 @@ const Film = () => {
 
     if (film.id !== +id) {
       dispatch(resetLoadedFilm());
-      dispatch(resetLoadedComments());
       dispatch(fetchFilm(id));
     }
 
     return () => {
       dispatch(resetOnDefaultFilmPage());
     };
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   if (isFilmsLoading || isFilmLoading) {
     return <LoadingPage />;
@@ -59,8 +58,7 @@ const Film = () => {
     return <ErrorPage />;
   }
 
-  const {genre} = film;
-  const filmsLikeThis = getFilmsLikeThis(+id, genre, films).slice(0, FilmsCount.FILMS_LIKE_THIS);
+  const filmsLikeThis = getFilmsLikeThis(film, films).slice(0, FilmsCount.FILMS_LIKE_THIS);
 
   return (
     <>

@@ -1,10 +1,10 @@
 import {createReducer} from '@reduxjs/toolkit';
 
 import {changeGenre, changeFilmsCount, changeActiveNavItem, resetOnDefaultMainPage, resetOnDefaultFilmPage} from '../action';
-import {GENRE_DEFAULT, FilmsCount, NavItem} from '../../const';
+import {Genre, FilmsCount, NavItem} from '../../const';
 
 const initialState = {
-  activeGenre: GENRE_DEFAULT,
+  activeGenre: Genre.DEFAULT,
   count: FilmsCount.MAIN,
   activeNavItem: NavItem.OVERVIEW,
 };

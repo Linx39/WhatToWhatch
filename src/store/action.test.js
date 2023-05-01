@@ -1,8 +1,8 @@
 import {
   changeGenre,
   changeFilmsCount,
-  resetOnDefaultMainPage,
   changeActiveNavItem,
+  resetOnDefaultMainPage,
   resetOnDefaultFilmPage,
   ActionType,
 } from './action';
@@ -28,14 +28,6 @@ describe(`Action creators work correctly`, () => {
     expect(changeFilmsCount(count)).toEqual(expectedAction);
   });
 
-  it(`Action creator for reset on default films list returns correct action`, () => {
-    const expectedAction = {
-      type: ActionType.RESET_ON_DEFAULT_MAIN_PAGE,
-    };
-
-    expect(resetOnDefaultMainPage()).toEqual(expectedAction);
-  });
-
   it(`Action creator for change active item returns correct action`, () => {
     const item = `Details`;
     const expectedAction = {
@@ -45,6 +37,15 @@ describe(`Action creators work correctly`, () => {
 
     expect(changeActiveNavItem(item)).toEqual(expectedAction);
   });
+
+  it(`Action creator for reset on default films list returns correct action`, () => {
+    const expectedAction = {
+      type: ActionType.RESET_ON_DEFAULT_MAIN_PAGE,
+    };
+
+    expect(resetOnDefaultMainPage()).toEqual(expectedAction);
+  });
+
 
   it(`Action creator for reset on default films info returns correct action`, () => {
     const expectedAction = {

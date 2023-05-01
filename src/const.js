@@ -44,9 +44,10 @@ export const NavItem = {
   REVIEWS: `Reviews`,
 };
 
-export const GENRE_DEFAULT = `All genres`;
-
-export const GENRE_COUNT = 10;
+export const Genre = {
+  DEFAULT: `All genres`,
+  COUNT: 10,
+};
 
 export const RATING_MAX = 10;
 

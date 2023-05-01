@@ -13,7 +13,9 @@ export const filmProp = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   scoresCount: PropTypes.number.isRequired,
   director: PropTypes.string.isRequired,
-  starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  starring: PropTypes.arrayOf(
+      PropTypes.string.isRequired
+  ).isRequired,
   runTime: PropTypes.number.isRequired,
   genre: PropTypes.string.isRequired,
   released: PropTypes.number.isRequired,
@@ -25,7 +27,7 @@ export const commentProp = PropTypes.shape({
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired
-  }),
+  }).isRequired,
   rating: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired

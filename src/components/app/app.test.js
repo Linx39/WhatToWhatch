@@ -5,7 +5,7 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import {AuthorizationStatus, Patch, NavItem, GENRE_DEFAULT} from '../../const';
+import {AuthorizationStatus, Patch, NavItem, Genre} from '../../const';
 import App from './app';
 import {mockFilms} from '../../mock/mock-films';
 
@@ -26,7 +26,7 @@ const store = mockStore({
     favoriteFilmsData: {data: mockFilms, isLoading: false, error: null}
   },
   APP_ACTIONS: {
-    activeGenre: GENRE_DEFAULT,
+    activeGenre: Genre.DEFAULT,
     count: 10,
     activeNavItem: NavItem.OVERVIEW,
   },

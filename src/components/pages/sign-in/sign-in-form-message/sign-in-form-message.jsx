@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './sign-in-message.css';
+import './sign-in-form-message.css';
 
 const SignInFormMessage = ({text}) => {
   return (

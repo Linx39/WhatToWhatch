@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import Main from './main';
-import {AuthorizationStatus, GENRE_DEFAULT} from '../../../const';
+import {AuthorizationStatus, Genre} from '../../../const';
 import {mockFilms} from '../../../mock/mock-films';
 
 const mockStore = configureStore({});
@@ -30,7 +30,7 @@ it(`Main should render correctly`, () => {
       promoFilmData: {data: mockFilm, isLoading: false, error: null},
     },
     APP_ACTIONS: {
-      activeGenre: GENRE_DEFAULT,
+      activeGenre: Genre.DEFAULT,
       count: 10,
     },
   });
@@ -46,5 +46,5 @@ it(`Main should render correctly`, () => {
 
   expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();
   expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
-  expect(screen.getByText(new RegExp(`${GENRE_DEFAULT}`, `i`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`${Genre.DEFAULT}`, `i`))).toBeInTheDocument();
 });

@@ -1,12 +1,12 @@
 import React, {useState, useRef} from 'react';
 import {useDispatch} from 'react-redux';
 
-import SignInFormMessage from '../sign-in-message/sign-in-message';
+import SignInFormMessage from '../sign-in-form-message/sign-in-form-message';
 import {login} from '../../../../store/api-actions';
 import {redirectToRoute} from '../../../../store/action';
 import {Patch, ResponseStatus, EMAIL_REGEXP} from '../../../../const';
 
-const TIME_OUT = 2000;
+const TIME_OUT = 1000;
 
 const FormState = {
   DEFAULT: `Default`,

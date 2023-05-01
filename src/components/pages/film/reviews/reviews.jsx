@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Review from '../review/review';
 import InfoMessage from '../../../common-components/info-message/info-message';
 import {fetchComments} from '../../../../store/api-actions';
+import {resetLoadedComments} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
 import {InfoText} from '../../../../const';
 
@@ -17,6 +18,10 @@ const Reviews = ({film}) => {
 
   useEffect(() => {
     dispatch(fetchComments(id));
+
+    return () => {
+      dispatch(resetLoadedComments());
+    };
   }, [dispatch]);
 
   const length = comments.length;
