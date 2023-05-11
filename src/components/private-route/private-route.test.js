@@ -5,14 +5,14 @@ import {render, screen} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 
-import {AuthorizationStatus, Patch} from '../../const';
+import {AuthorizationStatus, AppRoute} from '../../const';
 import PrivateRoute from './private-route';
 
 const mockStore = configureStore({});
 let history;
 const privateRoute = `/private`;
 
-describe(`Test PrivateRouter`, () => {
+describe(`Test PrivateRoute`, () => {
   beforeEach(() => {
     history = createMemoryHistory();
     history.push(privateRoute);
@@ -26,7 +26,7 @@ describe(`Test PrivateRouter`, () => {
     render(
         <Provider store={store}>
           <Router history={history}>
-            <Route exact path={Patch.LOGIN}><h1>Public Route</h1></Route>
+            <Route exact path={AppRoute.LOGIN}><h1>Public Route</h1></Route>
             <PrivateRoute
               exact
               path={privateRoute}

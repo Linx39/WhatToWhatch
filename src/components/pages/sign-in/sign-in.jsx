@@ -6,7 +6,7 @@ import Footer from '../../common-components/footer/footer';
 import SignInForm from './sign-in-form/sign-in-form';
 
 import {redirectToRoute} from '../../../store/action';
-import {AuthorizationStatus, Patch, AdditionalClassName} from '../../../const';
+import {AuthorizationStatus, AppRoute, AdditionalClassName} from '../../../const';
 
 const SignIn = () => {
   const {authorizationStatus} = useSelector((state) => state.USER);
@@ -14,7 +14,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
-      dispatch(redirectToRoute((Patch.MAIN)));
+      dispatch(redirectToRoute((AppRoute.MAIN)));
     }
   }, []);
 

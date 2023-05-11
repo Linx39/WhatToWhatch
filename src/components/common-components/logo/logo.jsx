@@ -5,11 +5,11 @@ import {useDispatch} from 'react-redux';
 
 import LogoLetters from '../logo-letters/logo-letters';
 import {redirectToRoute} from '../../../store/action';
-import {Patch} from '../../../const';
+import {AppRoute} from '../../../const';
 
 const Logo = ({additionalClassName, isLogoClickable}) => {
   const dispatch = useDispatch();
-  const handleLogoClick = () => dispatch(redirectToRoute(Patch.MAIN));
+  const handleLogoClick = () => dispatch(redirectToRoute(AppRoute.MAIN));
   const className = `logo__link ${additionalClassName}`;
 
   return (

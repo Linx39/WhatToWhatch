@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {fetchChangeFilmStatus} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {AuthorizationStatus, Patch} from '../../../const';
+import {AuthorizationStatus, AppRoute} from '../../../const';
 import {filmProp} from '../../../props-types';
 
 const FavoriteButton = ({film, onLoadData}) => {
@@ -14,7 +14,7 @@ const FavoriteButton = ({film, onLoadData}) => {
 
   const handleChangeFilmStatus = () => {
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      dispatch(redirectToRoute((Patch.LOGIN)));
+      dispatch(redirectToRoute((AppRoute.LOGIN)));
       return;
     }
 

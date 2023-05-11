@@ -9,7 +9,7 @@ import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilm} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch, ResponseStatus} from '../../../const';
+import {AppRoute, ResponseStatus} from '../../../const';
 
 const Player = () => {
   const {id} = useParams();
@@ -24,7 +24,7 @@ const Player = () => {
 
   const dispatch = useDispatch();
 
-  const handleExitButtonClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
+  const handleExitButtonClick = () => dispatch(redirectToRoute((`${AppRoute.FILMS}/${id}`)));
   const handlePlayPauseButtonClick = () => setIsPlaying(!isPlaying);
   const handleFullScreenButtonClick = () => setIsFullScreen(!isFullScreen);
 

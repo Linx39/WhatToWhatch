@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {RATING_MAX} from '../../../../const';
+import {ReviewSetting} from '../../../../const';
 
 const RatingStars = ({ratingValue, onChange, isSubmiting}) => {
   return (
     <div className="rating__stars">
-      {new Array(RATING_MAX)
+      {new Array(ReviewSetting.RATING.MAX)
         .fill(null)
         .map((item, index) => {
           const value = index + 1;

@@ -5,7 +5,7 @@ import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import {AuthorizationStatus, Patch, NavItem, Genre} from '../../const';
+import {AuthorizationStatus, AppRoute, NavItem, Genre} from '../../const';
 import App from './app';
 import {mockFilms} from '../../mock/mock-films';
 
@@ -56,7 +56,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render SignIn when user navigate to '/login' url`, () => {
-    history.push(Patch.LOGIN);
+    history.push(AppRoute.LOGIN);
 
     render(fakeApp);
 
@@ -66,7 +66,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render MY_LIST when user navigate to '/favorite' url`, () => {
-    history.push(Patch.MY_LIST);
+    history.push(AppRoute.MY_LIST);
 
     render(fakeApp);
 
@@ -75,7 +75,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render Film when user navigate to '/film/id' url`, () => {
-    history.push(`${Patch.FILMS}/:id`);
+    history.push(`${AppRoute.FILMS}/:id`);
 
     render(fakeApp);
 
@@ -84,7 +84,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render AddReview when user navigate to '/film/id/review' url`, () => {
-    history.push(`${Patch.FILMS}/:id/review`);
+    history.push(`${AppRoute.FILMS}/:id/review`);
 
     render(fakeApp);
 
@@ -97,7 +97,7 @@ describe(`Test routing`, () => {
     window.HTMLMediaElement.prototype.play = jest.fn();
     window.HTMLMediaElement.prototype.pause = jest.fn();
 
-    history.push(`${Patch.PLAYER}/:id`);
+    history.push(`${AppRoute.PLAYER}/:id`);
 
     render(fakeApp);
 

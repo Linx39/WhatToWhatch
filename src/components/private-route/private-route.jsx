@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
-import {AuthorizationStatus, Patch} from '../../const';
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 const PrivateRoute = ({path, exact, render}) => {
   const {authorizationStatus} = useSelector((state) => state.USER);
@@ -16,7 +16,7 @@ const PrivateRoute = ({path, exact, render}) => {
         return (
           authorizationStatus === AuthorizationStatus.AUTH
             ? render(routeProps)
-            : <Redirect to={Patch.LOGIN} />
+            : <Redirect to={AppRoute.LOGIN} />
         );
       }}
     />

@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import SignInFormMessage from '../sign-in-form-message/sign-in-form-message';
 import {login} from '../../../../store/api-actions';
 import {redirectToRoute} from '../../../../store/action';
-import {Patch, ResponseStatus, EMAIL_REGEXP} from '../../../../const';
+import {AppRoute, ResponseStatus, EMAIL_REGEXP} from '../../../../const';
 
 const TIME_OUT = 1000;
 
@@ -73,7 +73,7 @@ const SignInForm = () => {
       }
 
       setFormState(FormState.SUBMITING_SUCCESS);
-      setTimeout(() => dispatch(redirectToRoute((Patch.MAIN))), TIME_OUT);
+      setTimeout(() => dispatch(redirectToRoute((AppRoute.MAIN))), TIME_OUT);
     });
   };
 

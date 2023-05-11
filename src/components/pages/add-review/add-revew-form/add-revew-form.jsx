@@ -5,7 +5,7 @@ import RatingStars from '../rating-stars/rating-stars';
 import {fetchAddComment} from '../../../../store/api-actions';
 import {redirectToRoute} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
-import {ReviewTextLength, Patch} from '../../../../const';
+import {ReviewSetting, AppRoute} from '../../../../const';
 
 const MessageText = {
   ERROR_SUBMITING: `Comment was not added, please try again`,
@@ -14,7 +14,7 @@ const MessageText = {
 
 const AddReviewForm = ({film}) => {
   const {id} = film;
-  const [userForm, setUserForm] = useState({rating: null, comment: ``});
+  const [userForm, setUserForm] = useState({rating: ReviewSetting.RATING.DEFAULT, comment: ``});
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [isErrorSubmiting, setIsErrorSubmiting] = useState(false);
   const dispatch = useDispatch();
@@ -34,13 +34,13 @@ const AddReviewForm = ({film}) => {
           return;
         }
 
-        dispatch(redirectToRoute(`${Patch.FILMS}/${id}`));
+        dispatch(redirectToRoute(`${AppRoute.FILMS}/${id}`));
       });
   };
 
   const {rating, comment} = userForm;
 
-  const isCommentCorrect = comment.length >= ReviewTextLength.MIN && comment.length <= ReviewTextLength.MAX;
+  const isCommentCorrect = comment.length >= ReviewSetting.TEXT_LENGTH.MIN && comment.length <= ReviewSetting.TEXT_LENGTH.MAX;
 
   const isAddReviewButtonDisabled = !rating || !isCommentCorrect || isSubmiting;
 

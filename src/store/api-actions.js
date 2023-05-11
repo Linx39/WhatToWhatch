@@ -8,12 +8,12 @@ import {
   loadUserData,
 } from './action';
 import {adaptFilmToClient, adaptFilmsToClient, adaptUserToClient} from './adapter';
-import {AuthorizationStatus, AdditionalUrl, ResponseStatus} from '../const';
+import {AuthorizationStatus, ApiPath, ResponseStatus} from '../const';
 
 const getErrorResponseStatus = (err) => err.response ? err.response.status : ResponseStatus.SERVER_ERROR;
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
-  api.get(AdditionalUrl.FILMS)
+  api.get(ApiPath.FILMS)
     .then(({data}) => {
       dispatch(loadFilms({data: adaptFilmsToClient(data)}));
     })
@@ -23,7 +23,7 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
-  api.get(`${AdditionalUrl.FILMS}/promo`)
+  api.get(`${ApiPath.FILMS}/promo`)
     .then(({data}) => {
       dispatch(loadPromoFilm({data: adaptFilmToClient(data)}));
     })
@@ -33,7 +33,7 @@ export const fetchPromoFilm = () => (dispatch, _getState, api) => (
 );
 
 export const fetchFilm = (id) => (dispatch, _getState, api) => (
-  api.get(`${AdditionalUrl.FILMS}/${id}`)
+  api.get(`${ApiPath.FILMS}/${id}`)
     .then(({data}) => {
       dispatch(loadFilm({data: adaptFilmToClient(data)}));
     })
@@ -43,7 +43,7 @@ export const fetchFilm = (id) => (dispatch, _getState, api) => (
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (
-  api.get(`${AdditionalUrl.COMMENTS}/${id}`)
+  api.get(`${ApiPath.COMMENTS}/${id}`)
     .then(({data}) => {
       dispatch(loadComments({data}));
     })
@@ -53,7 +53,7 @@ export const fetchComments = (id) => (dispatch, _getState, api) => (
 );
 
 export const fetchAddComment = (id, {rating, comment}) => (dispatch, _getState, api) => (
-  api.post(`${AdditionalUrl.COMMENTS}/${id}`, {rating, comment})
+  api.post(`${ApiPath.COMMENTS}/${id}`, {rating, comment})
     .then(({data}) => {
       dispatch(loadComments({data}));
     })
@@ -61,7 +61,7 @@ export const fetchAddComment = (id, {rating, comment}) => (dispatch, _getState, 
 );
 
 export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
-  api.get(AdditionalUrl.FAVORITE)
+  api.get(ApiPath.FAVORITE)
     .then(({data}) => {
       dispatch(loadFavoriteFilms({data: adaptFilmsToClient(data)}));
     })
@@ -71,7 +71,7 @@ export const fetchFavoriteFilms = () => (dispatch, _getState, api) => (
 );
 
 export const fetchChangeFilmStatus = (id, status, loadData) => (dispatch, _getState, api) => (
-  api.post(`${AdditionalUrl.FAVORITE}/${id}/${status}`)
+  api.post(`${ApiPath.FAVORITE}/${id}/${status}`)
     .then(({data}) => {
       dispatch(loadData({data: adaptFilmToClient(data)}));
     })
@@ -79,7 +79,7 @@ export const fetchChangeFilmStatus = (id, status, loadData) => (dispatch, _getSt
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
-  api.get(AdditionalUrl.LOGIN)
+  api.get(ApiPath.LOGIN)
     .then(({data}) => {
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(adaptUserToClient(data)));
@@ -90,7 +90,7 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 );
 
 export const login = (user) => (dispatch, _getState, api) => (
-  api.post(AdditionalUrl.LOGIN, user)
+  api.post(ApiPath.LOGIN, user)
     .then(({data}) => {
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(loadUserData(adaptUserToClient(data)));
@@ -99,7 +99,7 @@ export const login = (user) => (dispatch, _getState, api) => (
 );
 
 export const logout = () => (dispatch, _getState, api) => (
-  api.get(AdditionalUrl.LOGOUT)
+  api.get(ApiPath.LOGOUT)
     .then(() => {
       dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
       dispatch(loadUserData({}));

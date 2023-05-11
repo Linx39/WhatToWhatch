@@ -6,7 +6,7 @@ import CardImage from '../card-image/card-image';
 import CardVideo from '../card-video/card-video';
 import {redirectToRoute} from '../../../store/action';
 import {filmProp} from '../../../props-types';
-import {Patch} from '../../../const';
+import {AppRoute} from '../../../const';
 
 const TIME_OUT = 1000;
 
@@ -23,7 +23,7 @@ const MovieCardSmall = ({film, isVideoMode, onMouseEnter, onMouseLeave}) => {
     clearTimeout(timerRef.current);
   };
 
-  const handleMouseClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${film.id}`)));
+  const handleMouseClick = () => dispatch(redirectToRoute((`${AppRoute.FILMS}/${film.id}`)));
 
   useEffect(() => {
     return () => {

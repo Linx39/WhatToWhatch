@@ -3,7 +3,7 @@ import {createAPI} from '../../services/api';
 import {initialState, userData} from './user-data';
 import {ActionType} from '../action';
 import {checkAuth, login, logout} from '../api-actions';
-import {AdditionalUrl, AuthorizationStatus} from '../../const';
+import {ApiPath, AuthorizationStatus} from '../../const';
 import {adaptUserToClient} from '../adapter';
 
 const api = createAPI(() => {});
@@ -48,7 +48,7 @@ describe(`Async operation work correctly`, () => {
 
 
     apiMock
-      .onGet(AdditionalUrl.LOGIN)
+      .onGet(ApiPath.LOGIN)
       .reply(200, fakeResponse);
 
     return checkAuthLoader(dispatch, () => {}, api)
@@ -72,7 +72,7 @@ describe(`Async operation work correctly`, () => {
     const loginLoader = login(fakeUser);
 
     apiMock
-      .onPost(AdditionalUrl.LOGIN)
+      .onPost(ApiPath.LOGIN)
       .reply(200, {fake: true});
 
     return loginLoader(dispatch, () => {}, api)
@@ -95,7 +95,7 @@ describe(`Async operation work correctly`, () => {
     const logoutLoader = logout();
 
     apiMock
-      .onGet(AdditionalUrl.LOGOUT)
+      .onGet(ApiPath.LOGOUT)
       .reply(200);
 
     return logoutLoader(dispatch, () => {}, api)

@@ -4,12 +4,12 @@ import {Link} from 'react-router-dom';
 
 import {redirectToRoute} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
-import {Patch} from '../../../../const';
+import {AppRoute} from '../../../../const';
 
 const AddReviewButton = ({film}) => {
   const {id} = film;
   const dispatch = useDispatch();
-  const handleAddReviewClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}/review`)));
+  const handleAddReviewClick = () => dispatch(redirectToRoute((`${AppRoute.FILMS}/${id}/review`)));
 
   return (
     <Link to="#"

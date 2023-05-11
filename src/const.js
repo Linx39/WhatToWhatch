@@ -1,4 +1,4 @@
-export const Patch = {
+export const AppRoute = {
   MAIN: `/`,
   LOGIN: `/login`,
   MY_LIST: `/mylist`,
@@ -6,7 +6,7 @@ export const Patch = {
   PLAYER: `/player`,
 };
 
-export const AdditionalUrl = {
+export const ApiPath = {
   FILMS: `/films`,
   COMMENTS: `/comments`,
   LOGIN: `/login`,
@@ -17,7 +17,7 @@ export const AdditionalUrl = {
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
-  UNKNOW: `UNKNOW`,
+  UNKNOWN: `UNKNOWN`,
 };
 
 export const ResponseStatus = {
@@ -49,8 +49,6 @@ export const Genre = {
   COUNT: 10,
 };
 
-export const RATING_MAX = 10;
-
 export const RatingLevel = [
   {title: `Awesome`, rating: 10},
   {title: `Very good`, rating: 8},
@@ -59,9 +57,15 @@ export const RatingLevel = [
   {title: `Bad`, rating: 0},
 ];
 
-export const ReviewTextLength = {
-  MIN: 50,
-  MAX: 400
+export const ReviewSetting = {
+  TEXT_LENGTH: {
+    MIN: 50,
+    MAX: 400,
+  },
+  RATING: {
+    DEFAULT: 6,
+    MAX: 10,
+  },
 };
 
 export const AdditionalClassName = {

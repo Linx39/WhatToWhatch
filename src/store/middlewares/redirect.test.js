@@ -1,6 +1,6 @@
 import {redirect} from './redirect';
 import {redirectToRoute} from '../action';
-import {Patch} from '../../const';
+import {AppRoute} from '../../const';
 
 const mockRedux = () => {
   const store = {
@@ -25,15 +25,15 @@ jest.mock(`../../browser-history`, () => fakeHistory);
 describe(`Custom middleware works correctly`, () => {
   it(`Action passes to next middleware`, () => {
     const {invoke, next} = mockRedux();
-    const action = redirectToRoute(Patch.MAIN);
+    const action = redirectToRoute(AppRoute.MAIN);
     invoke(action);
     expect(next).toHaveBeenCalledWith(action);
   });
 
   it(`Redirect route should be added to fakeHistory`, () => {
     const {invoke} = mockRedux();
-    const actionOne = redirectToRoute(Patch.LOGIN);
-    const actionTwo = redirectToRoute(Patch.MY_LIST);
+    const actionOne = redirectToRoute(AppRoute.LOGIN);
+    const actionTwo = redirectToRoute(AppRoute.MY_LIST);
 
     invoke(redirectToRoute(actionOne));
     expect(fakeHistory.location.pathname).toBe(actionOne);

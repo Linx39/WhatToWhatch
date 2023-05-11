@@ -12,7 +12,7 @@ import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilm} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch, ResponseStatus, AdditionalClassName} from '../../../const';
+import {AppRoute, ResponseStatus, AdditionalClassName} from '../../../const';
 
 const AddReview = () => {
   const {id} = useParams();
@@ -20,7 +20,7 @@ const AddReview = () => {
   const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
   const dispatch = useDispatch();
 
-  const handleFilmNameClick = () => dispatch(redirectToRoute((`${Patch.FILMS}/${id}`)));
+  const handleFilmNameClick = () => dispatch(redirectToRoute((`${AppRoute.FILMS}/${id}`)));
 
   useEffect(() => {
     if (film.id !== +id) {

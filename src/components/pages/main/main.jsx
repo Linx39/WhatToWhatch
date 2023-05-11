@@ -41,7 +41,8 @@ const Main = () => {
     return <ErrorPage />;
   }
 
-  const filmsList = getFilmsByGenre(activeGenre, films).slice(0, count);
+  const filmsByGenre = getFilmsByGenre(activeGenre, films);
+  const filmsList = filmsByGenre.slice(0, count);
 
   return (
     <>
@@ -58,7 +59,7 @@ const Main = () => {
 
           <MoviesList films={filmsList} />
 
-          {(count < films.length) && <ShowMore />}
+          {(count < filmsByGenre.length) && <ShowMore />}
         </section>
 
         <Footer isLogoClickable={false}/>

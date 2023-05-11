@@ -11,7 +11,7 @@ import {
   fetchFavoriteFilms,
   fetchChangeFilmStatus
 } from '../api-actions';
-import {AdditionalUrl} from '../../const';
+import {ApiPath} from '../../const';
 import {adaptFilmToClient, adaptFilmsToClient} from '../adapter';
 
 const api = createAPI(() => {});
@@ -205,7 +205,7 @@ describe(`Async operation work correctly`, () => {
     const filmsLoader = fetchFilms();
 
     apiMock
-      .onGet(AdditionalUrl.FILMS)
+      .onGet(ApiPath.FILMS)
       .reply(200, [fakeResponse]);
 
     return filmsLoader(dispatch, () => {}, api)
@@ -224,7 +224,7 @@ describe(`Async operation work correctly`, () => {
     const promoFilmLoader = fetchPromoFilm();
 
     apiMock
-      .onGet(`${AdditionalUrl.FILMS}/promo`)
+      .onGet(`${ApiPath.FILMS}/promo`)
       .reply(200, fakeResponse);
 
     return promoFilmLoader(dispatch, () => {}, api)
@@ -244,7 +244,7 @@ describe(`Async operation work correctly`, () => {
     const filmsLoader = fetchFilm(id);
 
     apiMock
-      .onGet(`${AdditionalUrl.FILMS}/${id}`)
+      .onGet(`${ApiPath.FILMS}/${id}`)
       .reply(200, fakeResponse);
 
     return filmsLoader(dispatch, () => {}, api)
@@ -264,7 +264,7 @@ describe(`Async operation work correctly`, () => {
     const commentsLoader = fetchComments(id);
 
     apiMock
-      .onGet(`${AdditionalUrl.COMMENTS}/${id}`)
+      .onGet(`${ApiPath.COMMENTS}/${id}`)
       .reply(200, [fakeResponse]);
 
     return commentsLoader(dispatch, () => {}, api)
@@ -286,7 +286,7 @@ describe(`Async operation work correctly`, () => {
     const commentsLoader = fetchAddComment(id, {rating, comment});
 
     apiMock
-      .onPost(`${AdditionalUrl.COMMENTS}/${id}`)
+      .onPost(`${ApiPath.COMMENTS}/${id}`)
       .reply(200, [fakeResponse]);
 
     return commentsLoader(dispatch, () => {}, api)
@@ -305,7 +305,7 @@ describe(`Async operation work correctly`, () => {
     const favoriteFilmsLoader = fetchFavoriteFilms();
 
     apiMock
-      .onGet(AdditionalUrl.FAVORITE)
+      .onGet(ApiPath.FAVORITE)
       .reply(200, [fakeResponse]);
 
     return favoriteFilmsLoader(dispatch, () => {}, api)
@@ -327,7 +327,7 @@ describe(`Async operation work correctly`, () => {
     const changeFilmStatusLoader = fetchChangeFilmStatus(id, status, loadData);
 
     apiMock
-      .onPost(`${AdditionalUrl.FAVORITE}/${id}/${status}`)
+      .onPost(`${ApiPath.FAVORITE}/${id}/${status}`)
       .reply(200, fakeResponse);
 
     return changeFilmStatusLoader(dispatch, () => {}, api)

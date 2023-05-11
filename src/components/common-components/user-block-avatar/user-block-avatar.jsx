@@ -3,13 +3,13 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {logout} from '../../../store/api-actions';
 import {redirectToRoute} from '../../../store/action';
-import {Patch} from '../../../const';
+import {AppRoute} from '../../../const';
 
 const UserBlockAvatar = () => {
   const {user} = useSelector((state) => state.USER);
   const dispatch = useDispatch();
 
-  const handleOnAvatarClick = () => dispatch(redirectToRoute((Patch.MY_LIST)));
+  const handleOnAvatarClick = () => dispatch(redirectToRoute((AppRoute.MY_LIST)));
   const handleLogout = () => dispatch(logout());
 
   const {avatarUrl} = user;

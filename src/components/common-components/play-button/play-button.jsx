@@ -2,14 +2,14 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 
 import {redirectToRoute} from '../../../store/action';
-import {Patch} from '../../../const';
+import {AppRoute} from '../../../const';
 import {filmProp} from '../../../props-types';
 
 const PlayButton = ({film}) => {
   const {id} = film;
   const dispatch = useDispatch();
 
-  const handlePlayButtonClick = () => dispatch(redirectToRoute((`${Patch.PLAYER}/${id}`)));
+  const handlePlayButtonClick = () => dispatch(redirectToRoute((`${AppRoute.PLAYER}/${id}`)));
 
   return (
     <button onClick={handlePlayButtonClick} className='btn btn--play movie-card__button' type='button'>
