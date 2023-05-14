@@ -1,24 +1,13 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import MoviesList from './movies-list';
-import {mockFilms} from '../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockFilms} from '../../../test-utils/test-data';
 
 it(`MoviesList should render correctly`, () => {
-  const history = createMemoryHistory();
-
-  render(
-      <Provider store={mockStore({})}>
-        <Router history={history}>
-          <MoviesList films={mockFilms} count={10}/>
-        </Router>
-      </Provider>
+  renderWithProviders(
+      <MoviesList films={mockFilms} count={5}/>
   );
 
   expect(screen.getByTestId(`test-film-list`)).toBeInTheDocument();

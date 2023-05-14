@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {fetchChangeFilmStatus} from '../../../store/api-actions';
+import {getAuthorizationStatus} from '../../../store/user-data/selectors';
 import {redirectToRoute} from '../../../store/action';
 import {AuthorizationStatus, AppRoute} from '../../../const';
 import {filmProp} from '../../../props-types';
 
 const FavoriteButton = ({film, onLoadData}) => {
   const {id, isFavorite} = film;
-  const {authorizationStatus} = useSelector((state) => state.USER);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
   const handleChangeFilmStatus = () => {

@@ -1,39 +1,38 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {render, screen} from '@testing-library/react';
-import configureStore from 'redux-mock-store';
-import {Provider} from 'react-redux';
+import {Route} from 'react-router-dom';
+import {screen} from '@testing-library/react';
 
-import {AuthorizationStatus, AppRoute} from '../../const';
 import PrivateRoute from './private-route';
+import {history, renderWithProviders} from '../../test-utils/render-with-providers';
+import {mockStateUserAutch, mockStateUserNoAutch} from '../../test-utils/mock-state';
+import {AppRoute} from '../../const';
 
-const mockStore = configureStore({});
-let history;
 const privateRoute = `/private`;
 
 describe(`Test PrivateRoute`, () => {
-  beforeEach(() => {
-    history = createMemoryHistory();
-    history.push(privateRoute);
-  });
+  const Switch = () => (
+    <>
+      <Route
+        exact
+        path={AppRoute.LOGIN}
+      >
+        <h1>Public Route</h1>
+      </Route>
+
+      <PrivateRoute
+        exact
+        path={privateRoute}
+        render={() => (<h1>Private Route</h1>)}
+      />
+    </>
+  );
 
   it(`Should be render component for public route, when user not authorized`, () => {
-    const store = mockStore({
-      USER: {authorizationStatus: AuthorizationStatus.NO_AUTH}
-    });
+    history.push(privateRoute);
 
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <Route exact path={AppRoute.LOGIN}><h1>Public Route</h1></Route>
-            <PrivateRoute
-              exact
-              path={privateRoute}
-              render={() => (<h1>Private Route</h1>)}
-            />
-          </Router>
-        </Provider>
+    renderWithProviders(
+        <Switch />,
+        mockStateUserNoAutch
     );
 
     expect(screen.getByText(/Public Route/i)).toBeInTheDocument();
@@ -41,21 +40,11 @@ describe(`Test PrivateRoute`, () => {
   });
 
   it(`Should be render component for private route, when user authorized`, () => {
-    const store = mockStore({
-      USER: {authorizationStatus: AuthorizationStatus.AUTH}
-    });
+    history.push(privateRoute);
 
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <Route exact path="/login"><h1>Public Route</h1></Route>
-            <PrivateRoute
-              exact
-              path={privateRoute}
-              render={() => (<h1>Private Route</h1>)}
-            />
-          </Router>
-        </Provider>
+    renderWithProviders(
+        <Switch />,
+        mockStateUserAutch
     );
 
     expect(screen.getByText(/Private Route/i)).toBeInTheDocument();

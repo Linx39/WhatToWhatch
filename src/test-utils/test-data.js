@@ -1,3 +1,5 @@
+export const mockUser = {fake: true};
+
 export const mockFilms = [
   {id: 1,
     name: `War of the Worlds`,
@@ -198,3 +200,31 @@ export const mockFilms = [
     previewVideoLink: `fake-url`
   },
 ];
+
+export const mockPromoFilm = mockFilms[0];
+
+export const mockFilm = mockFilms[1];
+
+export const mockComments = [
+  {id: 1,
+    user: {id: 1, name: `fake-user-1`},
+    rating: 8.9,
+    comment: `fake-comment-1`,
+    date: `2016-12-24`
+  },
+  {id: 2,
+    user: {id: 2, name: `fake-user-2`},
+    rating: 8.0,
+    comment: `fake-comment-2`,
+    date: `2015-11-18`
+  },
+  {id: 3,
+    user: {id: 3,
+      name: `fake-user-3`},
+    rating: 7.1,
+    comment: `fake-comment-3`,
+    date: `2015-11-18`
+  },
+];
+
+export const mockComment = mockComments[0];

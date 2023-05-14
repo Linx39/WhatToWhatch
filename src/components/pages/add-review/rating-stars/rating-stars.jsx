@@ -28,7 +28,7 @@ const RatingStars = ({ratingValue, onChange, isSubmiting}) => {
                 className="rating__label"
                 htmlFor={id}
               >
-                {`Rating ${value}`}
+                Rating {value}
               </label>
             </React.Fragment>
           );

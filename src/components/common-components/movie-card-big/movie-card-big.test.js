@@ -2,14 +2,12 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import MovieCardBig from './movie-card-big';
-import {mockFilms} from '../../../mock/mock-films';
+import {mockFilm} from '../../../test-utils/test-data';
 
 it(`MovieCardBig should render correctly`, () => {
-  const film = mockFilms[5];
-
   render(
-      <MovieCardBig film={film}/>
+      <MovieCardBig film={mockFilm}/>
   );
 
-  expect(screen.getByAltText(new RegExp(`${film.name}`, `i`))).toBeInTheDocument();
+  expect(screen.getByAltText(new RegExp(`${mockFilm.name}`, `i`))).toBeInTheDocument();
 });

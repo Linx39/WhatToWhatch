@@ -1,22 +1,14 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import UserBlockAvatar from './user-block-avatar';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockStateUserAutch} from '../../../test-utils/mock-state';
 
 it(`UserBlockAvatar should render correctly`, () => {
-  const user = {fake: true};
-  const store = mockStore({
-    USER: {user},
-  });
-
-  render(
-      <Provider store={store}>
-        <UserBlockAvatar />
-      </Provider>
+  renderWithProviders(
+      <UserBlockAvatar />,
+      mockStateUserAutch
   );
 
   expect(screen.getByAltText(/User avatar/i)).toBeInTheDocument();

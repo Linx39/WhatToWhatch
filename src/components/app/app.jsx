@@ -11,10 +11,11 @@ import Player from '../pages/player/player';
 import NotFoundPage from '../pages/info-page/not-found-page/not-found-page';
 import LoadingPage from '../pages/info-page/loading-page/loading-page';
 import PrivateRoute from '../private-route/private-route';
+import {getAuthorizationStatus} from '../../store/user-data/selectors';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 const App = () => {
-  const {authorizationStatus} = useSelector((state) => state.USER);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.UNKNOWN) {
     return (

@@ -7,12 +7,18 @@ import MoviesList from '../../common-components/movies-list/movies-list';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFavoriteFilms} from '../../../store/api-actions';
+import {
+  getFavoriteFilms,
+  getIsFavoriteFilmsLoading,
+  getFavoriteFilmsError,
+} from '../../../store/app-data/selectors';
 import {resetLoadedFavoriteFilms} from '../../../store/action';
 import {AdditionalClassName} from '../../../const';
 
 const MyList = () => {
-  const {favoriteFilmsData} = useSelector((state) => state.DATA);
-  const {data: favoriteFilms, isLoading: isFavoriteFilmsLoading, error: favoriteFilmsError} = favoriteFilmsData;
+  const favoriteFilms = useSelector(getFavoriteFilms);
+  const isFavoriteFilmsLoading = useSelector(getIsFavoriteFilmsLoading);
+  const favoriteFilmsError = useSelector(getFavoriteFilmsError);
   const dispatch = useDispatch();
 
   useEffect(() => {

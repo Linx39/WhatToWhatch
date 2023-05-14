@@ -1,15 +1,11 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import Main from './main';
-import {AuthorizationStatus, Genre} from '../../../const';
-import {mockFilms} from '../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {Genre} from '../../../const';
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockState} from '../../../test-utils/mock-state';
+import {mockPromoFilm} from '../../../test-utils/test-data';
 
 jest.mock(`react-redux`, () => ({
   ...jest.requireActual(`react-redux`),
@@ -17,34 +13,9 @@ jest.mock(`react-redux`, () => ({
 }));
 
 it(`Main should render correctly`, () => {
-  const user = {fake: true};
-  const mockFilm = mockFilms[4];
-  const {name} = mockFilm;
-  const store = mockStore({
-    USER: {
-      authorizationStatus: AuthorizationStatus.AUTH,
-      user
-    },
-    DATA: {
-      filmsData: {data: mockFilms, isLoading: false, error: null},
-      promoFilmData: {data: mockFilm, isLoading: false, error: null},
-    },
-    APP_ACTIONS: {
-      activeGenre: Genre.DEFAULT,
-      count: 10,
-    },
-  });
-  const history = createMemoryHistory();
+  renderWithProviders(<Main />, mockState);
 
-  render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Main />
-        </Router>
-      </Provider>
-  );
-
-  expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();
+  expect(screen.getByAltText(new RegExp(`${mockPromoFilm.name} poster`, `i`))).toBeInTheDocument();
   expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
   expect(screen.getByText(new RegExp(`${Genre.DEFAULT}`, `i`))).toBeInTheDocument();
 });

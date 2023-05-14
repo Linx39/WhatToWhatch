@@ -1,15 +1,15 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
+import {getGenresList} from '../../../../store/app-data/selectors';
+import {getActiveGenre} from '../../../../store/app-actions/selectors';
 import {changeGenre, resetOnDefaultMainPage} from '../../../../store/action';
-import {getUniqueGenres} from '../../../../utils';
 import {Genre} from '../../../../const';
 
 const GenresList = () => {
-  const {filmsData} = useSelector((state) => state.DATA);
-  const {data: films} = filmsData;
-  const {activeGenre} = useSelector((state) => state.APP_ACTIONS);
+  const genres = useSelector(getGenresList);
+  const activeGenre = useSelector(getActiveGenre);
   const dispatch = useDispatch();
 
   const handleGenreItemClick = (evt) => {
@@ -20,8 +20,6 @@ const GenresList = () => {
       dispatch(resetOnDefaultMainPage());
     }
   };
-
-  const genres = useMemo(() => getUniqueGenres(films));
 
   return (
     <ul className="catalog__genres-list">

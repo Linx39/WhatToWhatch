@@ -2,19 +2,13 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import Review from './review';
+import {mockComment} from '../../../../test-utils/test-data';
 
 it(`Review should render correctly`, () => {
-  const filmComment =
-    {id: 1,
-      user: {id: 1, name: `fake-user-1`},
-      rating: 8.9,
-      comment: `fake-comment-1`,
-      date: `2016-12-24`
-    };
-  const {comment, user, rating} = filmComment;
+  const {comment, user, rating} = mockComment;
 
   render(
-      <Review filmComment={filmComment}/>
+      <Review filmComment={mockComment}/>
   );
 
   expect(screen.getByText(new RegExp(`${comment}`, `i`))).toBeInTheDocument();

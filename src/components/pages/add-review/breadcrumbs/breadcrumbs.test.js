@@ -1,21 +1,16 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
+import {screen, fireEvent} from '@testing-library/react';
 
 import BreadCrumbs from './breadcrumbs';
-import {mockFilms} from '../../../../mock/mock-films';
+import {renderWithProviders} from '../../../../test-utils/render-with-providers';
+import {mockFilm} from '../../../../test-utils/test-data';
 
 describe(`Test BreadCrumbs`, () => {
-  const mockFilm = mockFilms[1];
-  const history = createMemoryHistory();
   const {name} = mockFilm;
 
   it(`BreadCrumbs should render correctly`, () => {
-    render(
-        <Router history={history}>
-          <BreadCrumbs film={mockFilm} onClick={jest.fn()}/>
-        </Router>
+    renderWithProviders(
+        <BreadCrumbs film={mockFilm} onClick={jest.fn()}/>,
     );
 
     expect(screen.getByText(/Add review/i)).toBeInTheDocument();
@@ -25,10 +20,8 @@ describe(`Test BreadCrumbs`, () => {
   it(`onClick should called when user click 'name'`, () => {
     const onClick = jest.fn();
 
-    render(
-        <Router history={history}>
-          <BreadCrumbs film={mockFilm} onClick={onClick} />
-        </Router>
+    renderWithProviders(
+        <BreadCrumbs film={mockFilm} onClick={onClick} />,
     );
 
     fireEvent.click(screen.getByText(new RegExp(`${name}`, `i`)));

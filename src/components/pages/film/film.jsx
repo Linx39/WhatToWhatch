@@ -16,17 +16,30 @@ import LoadingPage from '../info-page/loading-page/loading-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilms, fetchFilm} from '../../../store/api-actions';
+import {
+  getFilms,
+  getIsFilmsLoading,
+  getFilmsError,
+  getFilm,
+  getFilmError,
+  getIsFilmLoading,
+} from '../../../store/app-data/selectors';
+import {getActiveNavItem} from '../../../store/app-actions/selectors';
+import {getAuthorizationStatus} from '../../../store/user-data/selectors';
 import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, loadFilm} from '../../../store/action';
 import {getFilmsLikeThis} from '../../../utils';
 import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText, AuthorizationStatus} from '../../../const';
 
 const Film = () => {
   const {id} = useParams();
-  const {filmsData, filmData} = useSelector((state) => state.DATA);
-  const {data: films, isLoading: isFilmsLoading, error: filmsError} = filmsData;
-  const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
-  const {activeNavItem} = useSelector((state) => state.APP_ACTIONS);
-  const {authorizationStatus} = useSelector((state) => state.USER);
+  const films = useSelector(getFilms);
+  const isFilmsLoading = useSelector(getIsFilmsLoading);
+  const filmsError = useSelector(getFilmsError);
+  const film = useSelector(getFilm);
+  const isFilmLoading = useSelector(getIsFilmLoading);
+  const filmError = useSelector(getFilmError);
+  const activeNavItem = useSelector(getActiveNavItem);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
   const handleChangeActiveNavItem = (item) => dispatch(changeActiveNavItem(item));

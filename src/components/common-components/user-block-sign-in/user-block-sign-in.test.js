@@ -1,17 +1,12 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
+import {screen} from '@testing-library/react';
 
 import UserBlockSignIn from './user-block-sign-in';
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
 
 it(`UserBlockSignIn should render correctly`, () => {
-  const history = createMemoryHistory();
-
-  render(
-      <Router history={history}>
-        <UserBlockSignIn />
-      </Router>
+  renderWithProviders(
+      <UserBlockSignIn />,
   );
 
   expect(screen.getByText(/Sign in/i)).toBeInTheDocument();

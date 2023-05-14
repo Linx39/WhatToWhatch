@@ -1,30 +1,12 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import SignIn from './sign-in';
-import {AuthorizationStatus} from '../../../const';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockStateUserNoAutch} from '../../../test-utils/mock-state';
 
 it(`SignIn should render correctly`, () => {
-  const store = mockStore({
-    USER: {
-      authorizationStatus: AuthorizationStatus.NO_AUTH,
-    },
-  });
-  const history = createMemoryHistory();
-
-  render(
-      <Provider store={store}>
-        <Router history={history}>
-          <SignIn />
-        </Router>
-      </Provider>
-  );
+  renderWithProviders(<SignIn />, mockStateUserNoAutch);
 
   expect(screen.getAllByText(/Sign in/i)[0]).toBeInTheDocument();
   expect(screen.getAllByText(/Sign in/i)[1]).toBeInTheDocument();

@@ -2,11 +2,12 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {logout} from '../../../store/api-actions';
+import {getUser} from '../../../store/user-data/selectors';
 import {redirectToRoute} from '../../../store/action';
 import {AppRoute} from '../../../const';
 
 const UserBlockAvatar = () => {
-  const {user} = useSelector((state) => state.USER);
+  const user = useSelector(getUser);
   const dispatch = useDispatch();
 
   const handleOnAvatarClick = () => dispatch(redirectToRoute((AppRoute.MY_LIST)));

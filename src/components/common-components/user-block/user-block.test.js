@@ -1,52 +1,25 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import UserBlock from './user-block';
-import {AuthorizationStatus} from '../../../const';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockStateUserAutch, mockStateUserNoAutch} from '../../../test-utils/mock-state';
 
 describe(`Test UserBlock`, () => {
-  const user = {fake: true};
 
   it(`If user authorized should render 'UserBlockAvatar'`, () => {
-    const store = mockStore({
-      USER: {
-        authorizationStatus: AuthorizationStatus.AUTH,
-        user
-      },
-    });
-    const history = createMemoryHistory();
-
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <UserBlock />
-          </Router>
-        </Provider>
+    renderWithProviders(
+        <UserBlock />,
+        mockStateUserAutch
     );
 
     expect(screen.getByAltText(/User avatar/i)).toBeInTheDocument();
   });
 
   it(`If user not authorized should render 'UserBlockSignIn'`, () => {
-    const store = mockStore({
-      USER: {
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
-      },
-    });
-    const history = createMemoryHistory();
-
-    render(
-        <Provider store={store}>
-          <Router history={history}>
-            <UserBlock />
-          </Router>
-        </Provider>
+    renderWithProviders(
+        <UserBlock />,
+        mockStateUserNoAutch
     );
 
     expect(screen.getByText(/Sign in/i)).toBeInTheDocument();

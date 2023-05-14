@@ -1,14 +1,9 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import MyList from './my-list';
-import {mockFilms} from '../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockState} from '../../../test-utils/mock-state';
 
 jest.mock(`react-redux`, () => ({
   ...jest.requireActual(`react-redux`),
@@ -16,24 +11,7 @@ jest.mock(`react-redux`, () => ({
 }));
 
 it(`MyList should render correctly`, () => {
-  const user = {fake: true};
-  const store = mockStore({
-    USER: {
-      user
-    },
-    DATA: {
-      favoriteFilmsData: {data: mockFilms, isLoading: false, error: null}
-    }
-  });
-  const history = createMemoryHistory();
-
-  render(
-      <Provider store={store}>
-        <Router history={history}>
-          <MyList />
-        </Router>
-      </Provider>
-  );
+  renderWithProviders(<MyList />, mockState);
 
   expect(screen.getByText(/My list/i)).toBeInTheDocument();
   expect(screen.getByText(/Catalog/i)).toBeInTheDocument();

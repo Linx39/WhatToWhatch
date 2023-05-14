@@ -1,14 +1,9 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import Player from './player';
-import {mockFilms} from '../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockState} from '../../../test-utils/mock-state';
 
 jest.mock(`react-redux`, () => ({
   ...jest.requireActual(`react-redux`),
@@ -38,21 +33,7 @@ jest.mock(`../player/player-controls/player-controls`, () => {
 });
 
 it(`Player should render correctly`, () => {
-  const mockFilm = mockFilms[6];
-  const history = createMemoryHistory();
-  const store = mockStore({
-    DATA: {
-      filmData: {data: mockFilm, isLoading: false, error: null},
-    },
-  });
-
-  render(
-      <Provider store={store}>
-        <Router history={history}>
-          <Player />
-        </Router>
-      </Provider>
-  );
+  renderWithProviders(<Player />, mockState);
 
   expect(screen.getByText(/Exit/i)).toBeInTheDocument();
 });

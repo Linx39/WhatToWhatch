@@ -1,18 +1,11 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import SignInForm from './sign-in-form';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../../test-utils/render-with-providers';
 
 it(`SignInForm should render correctly`, () => {
-  render(
-      <Provider store={mockStore({})}>
-        <SignInForm />
-      </Provider>
-  );
+  renderWithProviders(<SignInForm />);
 
   expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();

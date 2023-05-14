@@ -5,11 +5,12 @@ import Header from '../../common-components/header/header';
 import Footer from '../../common-components/footer/footer';
 import SignInForm from './sign-in-form/sign-in-form';
 
+import {getAuthorizationStatus} from '../../../store/user-data/selectors';
 import {redirectToRoute} from '../../../store/action';
 import {AuthorizationStatus, AppRoute, AdditionalClassName} from '../../../const';
 
 const SignIn = () => {
-  const {authorizationStatus} = useSelector((state) => state.USER);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {

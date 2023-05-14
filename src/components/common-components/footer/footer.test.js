@@ -1,23 +1,13 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import Footer from './footer';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
 
 it(`Footer should render correctly`, () => {
-  const history = createMemoryHistory();
 
-  render(
-      <Provider store={mockStore({})}>
-        <Router history={history}>
-          <Footer isLogoClickable={true} />
-        </Router>
-      </Provider>
+  renderWithProviders(
+      <Footer isLogoClickable={true} />
   );
 
   expect(screen.getByTestId(`test-logo`)).toBeInTheDocument();

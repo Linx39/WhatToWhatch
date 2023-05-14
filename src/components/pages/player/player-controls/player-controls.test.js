@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {screen, render, fireEvent} from '@testing-library/react';
 
 import PlayerControls from './player-controls';
 

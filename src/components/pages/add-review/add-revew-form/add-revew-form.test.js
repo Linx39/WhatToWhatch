@@ -1,20 +1,13 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import AddReviewForm from './add-revew-form';
-import {mockFilms} from '../../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../../test-utils/render-with-providers';
+import {mockFilm} from '../../../../test-utils/test-data';
 
 it(`AddReviewForm should render correctly`, () => {
-  const mockFilm = mockFilms[5];
-
-  render(
-      <Provider store={mockStore({})}>
-        <AddReviewForm film={mockFilm}/>
-      </Provider>
+  renderWithProviders(
+      <AddReviewForm film={mockFilm}/>,
   );
 
   expect(screen.getByText(/Post/i)).toBeInTheDocument();

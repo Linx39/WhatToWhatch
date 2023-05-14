@@ -1,29 +1,21 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import FavoriteButton from './favorite-button';
-import {mockFilms} from '../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockFilm, mockUser} from '../../../test-utils/test-data';
 
 it(`FavoriteButton should render correctly`, () => {
-  const mockFilm = mockFilms[8];
-  const user = {fake: true};
-  const store = mockStore({
-    USER: {user},
-  });
-  const history = createMemoryHistory();
+  const mockState = {
+    USER: mockUser,
+  };
 
-  render(
-      <Provider store={store}>
-        <Router history={history}>
-          <FavoriteButton film={mockFilm} onLoadData={jest.fn()}/>
-        </Router>
-      </Provider>
+  renderWithProviders(
+      <FavoriteButton
+        film={mockFilm}
+        onLoadData={jest.fn()}
+      />,
+      mockState
   );
 
   expect(screen.getByText(/My list/i)).toBeInTheDocument();

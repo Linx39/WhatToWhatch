@@ -11,13 +11,19 @@ import LoadingPage from '../info-page/loading-page/loading-page';
 import NotFoundPage from '../info-page/not-found-page/not-found-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilm} from '../../../store/api-actions';
+import {
+  getFilm,
+  getFilmError,
+  getIsFilmLoading,
+} from '../../../store/app-data/selectors';
 import {redirectToRoute} from '../../../store/action';
 import {AppRoute, ResponseStatus, AdditionalClassName} from '../../../const';
 
 const AddReview = () => {
   const {id} = useParams();
-  const {filmData} = useSelector((state) => state.DATA);
-  const {data: film, isLoading: isFilmLoading, error: filmError} = filmData;
+  const film = useSelector(getFilm);
+  const isFilmLoading = useSelector(getIsFilmLoading);
+  const filmError = useSelector(getFilmError);
   const dispatch = useDispatch();
 
   const handleFilmNameClick = () => dispatch(redirectToRoute((`${AppRoute.FILMS}/${id}`)));

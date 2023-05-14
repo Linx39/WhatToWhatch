@@ -2,11 +2,9 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import Details from './details';
-import {mockFilms} from '../../../../mock/mock-films';
+import {mockFilm} from '../../../../test-utils/test-data';
 
 it(`Details should render correctly`, () => {
-  const mockFilm = mockFilms[9];
-
   render(
       <Details film={mockFilm}/>
   );

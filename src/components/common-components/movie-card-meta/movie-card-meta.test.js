@@ -2,10 +2,9 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 
 import MovieCardMeta from './movie-card-meta';
-import {mockFilms} from '../../../mock/mock-films';
+import {mockFilm} from '../../../test-utils/test-data';
 
 it(`MovieCardMeta should render correctly`, () => {
-  const mockFilm = mockFilms[4];
   const {name, genre, released} = mockFilm;
 
   render(

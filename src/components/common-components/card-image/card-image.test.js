@@ -1,26 +1,20 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
+import {screen, fireEvent} from '@testing-library/react';
 
 import CardImage from './card-image';
-import {mockFilms} from '../../../mock/mock-films';
-
-const history = createMemoryHistory();
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockFilm} from '../../../test-utils/test-data';
 
 describe(`Test CardImage`, () => {
-  const mockFilm = mockFilms[5];
   const {name} = mockFilm;
   it(`CardImage should render correctly`, () => {
-    render(
-        <Router history={history}>
-          <CardImage
-            film={mockFilm}
-            onMouseEnter={jest.fn()}
-            onMouseLeave={jest.fn()}
-            onClick={jest.fn()}
-          />
-        </Router>
+    renderWithProviders(
+        <CardImage
+          film={mockFilm}
+          onMouseEnter={jest.fn()}
+          onMouseLeave={jest.fn()}
+          onClick={jest.fn()}
+        />
     );
 
     expect(screen.getByAltText(new RegExp(`${name}`, `i`))).toBeInTheDocument();
@@ -30,15 +24,13 @@ describe(`Test CardImage`, () => {
   it(`onClick should called when user click 'Card'`, () => {
     const onClick = jest.fn();
 
-    render(
-        <Router history={history}>
-          <CardImage
-            film={mockFilm}
-            onMouseEnter={jest.fn()}
-            onMouseLeave={jest.fn()}
-            onClick={onClick}
-          />
-        </Router>
+    renderWithProviders(
+        <CardImage
+          film={mockFilm}
+          onMouseEnter={jest.fn()}
+          onMouseLeave={jest.fn()}
+          onClick={onClick}
+        />
     );
 
     fireEvent.click(screen.getByText(new RegExp(`${name}`, `i`)));
@@ -52,15 +44,13 @@ describe(`Test CardImage`, () => {
     const onMouseEnter = jest.fn();
     const onMouseLeave = jest.fn();
 
-    render(
-        <Router history={history}>
-          <CardImage
-            film={mockFilm}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            onClick={jest.fn()}
-          />
-        </Router>
+    renderWithProviders(
+        <CardImage
+          film={mockFilm}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onClick={jest.fn()}
+        />
     );
 
     const cardDiv = screen.getByTestId(`test-card`);

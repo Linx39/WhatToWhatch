@@ -4,6 +4,11 @@ import {useSelector, useDispatch} from 'react-redux';
 import Review from '../review/review';
 import InfoMessage from '../../../common-components/info-message/info-message';
 import {fetchComments} from '../../../../store/api-actions';
+import {
+  getComments,
+  getIsCommentsLoading,
+  getCommentsError,
+} from '../../../../store/app-data/selectors';
 import {resetLoadedComments} from '../../../../store/action';
 import {filmProp} from '../../../../props-types';
 import {InfoText} from '../../../../const';
@@ -12,8 +17,9 @@ const COLUMNS_COUNT = 2;
 
 const Reviews = ({film}) => {
   const {id} = film;
-  const {commentsData} = useSelector((state) => state.DATA);
-  const {data: comments, isLoading: isCommentsLoading, error: commentsError} = commentsData;
+  const comments = useSelector(getComments);
+  const isCommentsLoading = useSelector(getIsCommentsLoading);
+  const commentsError = useSelector(getCommentsError);
   const dispatch = useDispatch();
 
   useEffect(() => {

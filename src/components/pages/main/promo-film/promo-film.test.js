@@ -1,29 +1,17 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import PromoFilm from './promo-film';
-import {AuthorizationStatus} from '../../../../const';
-import {mockFilms} from '../../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../../test-utils/render-with-providers';
+import {mockStateUserAutch} from '../../../../test-utils/mock-state';
+import {mockPromoFilm} from '../../../../test-utils/test-data';
 
 it(`PromoFilm should render correctly`, () => {
-  const mockFilm = mockFilms[3];
-  const {name, genre, released} = mockFilm;
-  const user = {fake: true};
-  const store = mockStore({
-    USER: {
-      authorizationStatus: AuthorizationStatus.AUTH,
-      user,
-    },
-  });
+  const {name, genre, released} = mockPromoFilm;
 
-  render(
-      <Provider store={store}>
-        <PromoFilm film={mockFilm} />
-      </Provider>
+  renderWithProviders(
+      <PromoFilm film={mockPromoFilm} />,
+      mockStateUserAutch
   );
 
   expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();

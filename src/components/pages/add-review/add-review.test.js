@@ -1,15 +1,10 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import AddReview from './add-review';
-import {AuthorizationStatus} from '../../../const';
-import {mockFilms} from '../../../mock/mock-films';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
+import {mockState} from '../../../test-utils/mock-state';
+import {mockFilm} from '../../../test-utils/test-data';
 
 jest.mock(`react-redux`, () => ({
   ...jest.requireActual(`react-redux`),
@@ -17,29 +12,9 @@ jest.mock(`react-redux`, () => ({
 }));
 
 it(`AddReview should render correctly`, () => {
-  const user = {fake: true};
-  const mockFilm = mockFilms[7];
   const {name} = mockFilm;
 
-  const store = mockStore({
-    USER: {
-      authorizationStatus: AuthorizationStatus.AUTH,
-      user,
-    },
-    DATA: {
-      filmData: {data: mockFilm, isLoading: false, error: null},
-    },
-  });
-
-  const history = createMemoryHistory();
-
-  render(
-      <Provider store={store}>
-        <Router history={history}>
-          <AddReview />
-        </Router>
-      </Provider>
-  );
+  renderWithProviders(<AddReview />, mockState);
 
   expect(screen.getByText(new RegExp(`${name}`, `i`))).toBeInTheDocument();
   expect(screen.getByAltText(new RegExp(`${name} poster`, `i`))).toBeInTheDocument();

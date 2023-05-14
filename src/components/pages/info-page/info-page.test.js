@@ -1,31 +1,20 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import InfoPage from './info-page';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../test-utils/render-with-providers';
 
 it(`InfoPage should render correctly`, () => {
-  const history = createMemoryHistory();
   const infoText = `mock-infoText`;
   const linkTo = `mock-Path`;
   const linkText = `mock-linkText`;
 
-  render(
-      <Provider store={mockStore({})}>
-        <Router history={history}>
-          <InfoPage
-            infoText={infoText}
-            linkTo={linkTo}
-            linkText={linkText}
-          />
-        </Router>
-      </Provider>
-  );
+  renderWithProviders(
+      <InfoPage
+        infoText={infoText}
+        linkTo={linkTo}
+        linkText={linkText}
+      />);
 
   expect(screen.getByText(new RegExp(`${infoText}`, `i`))).toBeInTheDocument();
   expect(screen.getByText(new RegExp(`${linkText}`, `i`))).toBeInTheDocument();

@@ -10,15 +10,28 @@ import InfoMessage from '../../common-components/info-message/info-message';
 import LoadingPage from '../info-page/loading-page/loading-page';
 import ErrorPage from '../info-page/error-page/error-page';
 import {fetchFilms, fetchPromoFilm} from '../../../store/api-actions';
+import {
+  getFilms,
+  getIsFilmsLoading,
+  getFilmsError,
+  getPromoFilm,
+  getIsPromoFilmLoading,
+  getPromoFilmError,
+} from '../../../store/app-data/selectors';
+import {getActiveGenre, getCount} from '../../../store/app-actions/selectors';
 import {resetOnDefaultMainPage, resetLoadedPromoFilm} from '../../../store/action';
 import {getFilmsByGenre} from '../../../utils';
 import {InfoText} from '../../../const';
 
 const Main = () => {
-  const {filmsData, promoFilmData} = useSelector((state) => state.DATA);
-  const {data: films, isLoading: isFilmsLoading, error: filmsError} = filmsData;
-  const {data: promoFilm, isLoading: isPromoFilmLoading, error: promoFilmError} = promoFilmData;
-  const {count, activeGenre} = useSelector((state) => state.APP_ACTIONS);
+  const films = useSelector(getFilms);
+  const isFilmsLoading = useSelector(getIsFilmsLoading);
+  const filmsError = useSelector(getFilmsError);
+  const promoFilm = useSelector(getPromoFilm);
+  const isPromoFilmLoading = useSelector(getIsPromoFilmLoading);
+  const promoFilmError = useSelector(getPromoFilmError);
+  const count = useSelector(getCount);
+  const activeGenre = useSelector(getActiveGenre);
   const dispatch = useDispatch();
 
   useEffect(() => {

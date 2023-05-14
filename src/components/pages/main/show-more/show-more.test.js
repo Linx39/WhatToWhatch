@@ -1,19 +1,11 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Provider} from 'react-redux';
-import configureStore from 'redux-mock-store';
+import {screen} from '@testing-library/react';
 
 import ShowMore from './show-more';
-
-const mockStore = configureStore({});
+import {renderWithProviders} from '../../../../test-utils/render-with-providers';
 
 it(`ShowMore should render correctly`, () => {
-
-  render(
-      <Provider store={mockStore({})}>
-        <ShowMore />
-      </Provider>
-  );
+  renderWithProviders(<ShowMore />);
 
   expect(screen.getByText(/Show more/i)).toBeInTheDocument();
 });

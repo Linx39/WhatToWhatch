@@ -5,6 +5,7 @@ import {ActionType} from '../action';
 import {checkAuth, login, logout} from '../api-actions';
 import {ApiPath, AuthorizationStatus} from '../../const';
 import {adaptUserToClient} from '../adapter';
+import {mockUser} from '../../test-utils/test-data';
 
 const api = createAPI(() => {});
 
@@ -29,16 +30,15 @@ describe(`Reducer 'user' should work correctly`, () => {
     const state = {authorizationStatus: AuthorizationStatus.AUTH, user: {}};
     const loadUserDataAction = {
       type: ActionType.LOAD_USER_DATA,
-      payload: {fake: true}
+      payload: mockUser
     };
 
     expect(userData(state, loadUserDataAction))
-      .toEqual({authorizationStatus: AuthorizationStatus.AUTH, user: {fake: true}});
+      .toEqual({authorizationStatus: AuthorizationStatus.AUTH, user: mockUser});
   });
 });
 
 describe(`Async operation work correctly`, () => {
-  const fakeResponse = {fake: true};
   const fakeAdaptUserToClient = jest.fn((data) => adaptUserToClient(data));
 
   it(`Should make a correct API call for get to /login`, () => {
@@ -49,7 +49,7 @@ describe(`Async operation work correctly`, () => {
 
     apiMock
       .onGet(ApiPath.LOGIN)
-      .reply(200, fakeResponse);
+      .reply(200, mockUser);
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
@@ -60,7 +60,7 @@ describe(`Async operation work correctly`, () => {
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_USER_DATA,
-          payload: fakeAdaptUserToClient(fakeResponse),
+          payload: fakeAdaptUserToClient(mockUser),
         });
       });
   });
@@ -84,7 +84,7 @@ describe(`Async operation work correctly`, () => {
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_USER_DATA,
-          payload: fakeAdaptUserToClient(fakeResponse),
+          payload: fakeAdaptUserToClient(mockUser),
         });
       });
   });
