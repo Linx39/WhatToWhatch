@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
+import {clsx} from 'clsx';
 
 import {NavItem} from '../../../../const';
 
@@ -13,7 +14,7 @@ const NavList = ({activeNavItem, onClick}) => {
         {Object.values(NavItem).map((item, index) => {
           return (
             <li key={`item-${index}`}
-              className={`movie-nav__item ${item === activeNavItem ? `movie-nav__item--active` : ``}`}>
+              className={clsx(`movie-nav__item`, item === activeNavItem && `movie-nav__item--active`)}>
               <Link to="#"
                 className="movie-nav__link"
                 onClick={handleNavItemClick}

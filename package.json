@@ -37,6 +37,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "1.9.1",
     "axios": "0.21.4",
+    "clsx": "1.2.1",
     "dayjs": "1.11.7",
     "history": "4.10.1",
     "prop-types": "15.7.2",

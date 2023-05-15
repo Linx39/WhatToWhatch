@@ -1,5 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {useDispatch} from 'react-redux';
+import {clsx} from 'clsx';
 
 import SignInFormMessage from '../sign-in-form-message/sign-in-form-message';
 import {login} from '../../../../store/api-actions';
@@ -77,12 +78,14 @@ const SignInForm = () => {
     });
   };
 
+  const isFieldInvalid = formState === FormState.INVALID_LOGIN;
+
   const isInputDisabled =
     formState === FormState.SUBMITING ||
     formState === FormState.SUBMITING_SUCCESS;
 
   const isSignInButtonDisabled =
-    formState === FormState.INVALID_LOGIN || isInputDisabled;
+    isFieldInvalid || isInputDisabled;
 
   return (
     <div className="sign-in user-page__content">
@@ -90,7 +93,7 @@ const SignInForm = () => {
         {formState !== FormState.DEFAULT && <SignInFormMessage text={MessageText[formState]} />}
 
         <div className="sign-in__fields">
-          <div className={formState === FormState.INVALID_LOGIN ? `sign-in__field--error` : `sign-in__field`}>
+          <div className={clsx(`sign-in__field`, isFieldInvalid && `sign-in__field--error`)}>
             <input
               ref={loginRef}
               disabled={isInputDisabled}

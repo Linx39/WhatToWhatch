@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {clsx} from 'clsx';
 
 import {getGenresList} from '../../../../store/app-data/selectors';
 import {getActiveGenre} from '../../../../store/app-actions/selectors';
@@ -26,7 +27,7 @@ const GenresList = () => {
       {genres.map((genre, index) => {
         return (
           <li key={`genre-${index}`}
-            className={`catalog__genres-item ${activeGenre === genre ? `catalog__genres-item--active` : ``}`}>
+            className={clsx(`catalog__genres-item`, activeGenre === genre && `catalog__genres-item--active`)}>
             <Link to="#"
               className="catalog__genres-link"
               onClick={handleGenreItemClick}
