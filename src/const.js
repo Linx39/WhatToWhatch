@@ -1,3 +1,9 @@
+export const ReducerName = {
+  DATA: `DATA`,
+  APP_ACTIONS: `APP_ACTIONS`,
+  USER: `USER`
+};
+
 export const AppRoute = {
   MAIN: `/`,
   LOGIN: `/login`,

@@ -6,7 +6,7 @@ import MovieCardPoster from '../../../common-components/movie-card-poster/movie-
 import MovieCardMeta from '../../../common-components/movie-card-meta/movie-card-meta';
 import PlayButton from '../../../common-components/play-button/play-button';
 import FavoriteButton from '../../../common-components/favorite-button/favorite-button';
-import {loadPromoFilm} from '../../../../store/action';
+import {loadPromoFilm} from '../../../../store/app-data/app-data';
 import {filmProp} from '../../../../props-types';
 
 const PromoFilm = ({film}) => {

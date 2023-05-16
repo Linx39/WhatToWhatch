@@ -8,7 +8,7 @@ import {createAPI} from './services/api';
 import rootReducer from './store/root-reducer';
 import browserHistory from './browser-history';
 import App from './components/app/app';
-import {requireAuthorization} from './store/action';
+import {requireAuthorization} from './store/user-data/user-data';
 import {checkAuth} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
 import {AuthorizationStatus} from './const';

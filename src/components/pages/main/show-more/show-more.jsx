@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch} from 'react-redux';
 
-import {changeFilmsCount} from '../../../../store/action';
+import {changeFilmsCount} from '../../../../store/app-actions/app-actions';
 
 const ShowMore = () => {
   const dispatch = useDispatch();

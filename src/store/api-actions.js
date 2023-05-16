@@ -4,9 +4,11 @@ import {
   loadPromoFilm,
   loadComments,
   loadFavoriteFilms,
+} from './app-data/app-data';
+import {
   requireAuthorization,
   loadUserData,
-} from './action';
+} from './user-data/user-data';
 import {adaptFilmToClient, adaptFilmsToClient, adaptUserToClient} from './adapter';
 import {AuthorizationStatus, ApiPath, ResponseStatus} from '../const';
 

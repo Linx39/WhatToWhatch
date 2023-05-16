@@ -1,6 +1,6 @@
 import {createSelector} from '@reduxjs/toolkit';
 
-import {ReducerName} from '../root-reducer';
+import {ReducerName} from '../../const';
 import {getUniqueGenres} from '../../utils';
 
 export const getFilms = (state) => state[ReducerName.DATA].filmsData.data;

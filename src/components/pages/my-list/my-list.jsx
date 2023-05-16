@@ -12,7 +12,8 @@ import {
   getIsFavoriteFilmsLoading,
   getFavoriteFilmsError,
 } from '../../../store/app-data/selectors';
-import {resetLoadedFavoriteFilms} from '../../../store/action';
+// import {resetLoadedFavoriteFilms} from '../../../store/action';
+import {resetLoadedFavoriteFilms} from '../../../store/app-data/app-data';
 import {AdditionalClassName} from '../../../const';
 
 const MyList = () => {

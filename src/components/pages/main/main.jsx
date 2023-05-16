@@ -19,7 +19,8 @@ import {
   getPromoFilmError,
 } from '../../../store/app-data/selectors';
 import {getActiveGenre, getCount} from '../../../store/app-actions/selectors';
-import {resetOnDefaultMainPage, resetLoadedPromoFilm} from '../../../store/action';
+import {resetOnDefaultMainPage} from '../../../store/app-actions/app-actions';
+import {resetLoadedPromoFilm} from '../../../store/app-data/app-data';
 import {getFilmsByGenre} from '../../../utils';
 import {InfoText} from '../../../const';
 

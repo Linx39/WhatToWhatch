@@ -1,7 +1,19 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../services/api';
-import {initialState, appData} from './app-data';
-import {ActionType} from '../action';
+import {
+  initialState,
+  appDataReducer,
+  loadFilms,
+  loadPromoFilm,
+  loadFilm,
+  loadComments,
+  loadFavoriteFilms,
+  resetLoadedFilms,
+  resetLoadedPromoFilm,
+  resetLoadedFilm,
+  resetLoadedComments,
+  resetLoadedFavoriteFilms
+} from './app-data';
 import {
   fetchFilms,
   fetchPromoFilm,
@@ -11,19 +23,19 @@ import {
   fetchFavoriteFilms,
   fetchChangeFilmStatus
 } from '../api-actions';
-import {ApiPath} from '../../const';
+import {ApiPath, ReducerName} from '../../const';
 import {adaptFilmToClient, adaptFilmsToClient} from '../adapter';
 
 const api = createAPI(() => {});
 
-describe(`Reducer 'appData' should work correctly`, () => {
+describe(`appDataReducer should work correctly`, () => {
   const mockFilms = [`fake-film-1`, `fake-film-2`];
   const mockFilm = {fake: `fake-film`};
   const mockComments = [`fake-comment-1`, `fake-comment-2`];
   const mockError = `fake-Error`;
 
   it(`Reducer without additional parameters should return initial state`, () => {
-    expect(appData(undefined, {}))
+    expect(appDataReducer(undefined, {}))
       .toEqual(initialState);
   });
 
@@ -31,32 +43,32 @@ describe(`Reducer 'appData' should work correctly`, () => {
   it(`Reducer should update films by load films`, () => {
     const state = {filmsData: initialState.filmsData};
     const loadfilmsActions = {
-      type: ActionType.LOAD_FILMS,
+      type: loadFilms,
       payload: {data: mockFilms}
     };
 
-    expect(appData(state, loadfilmsActions))
+    expect(appDataReducer(state, loadfilmsActions))
       .toEqual({filmsData: {data: mockFilms, isLoading: false, error: null}});
   });
 
   it(`Reducer should update error by unload films`, () => {
     const state = {filmsData: initialState.filmsData};
     const loadfilmsActions = {
-      type: ActionType.LOAD_FILMS,
+      type: loadFilms,
       payload: {error: mockError}
     };
 
-    expect(appData(state, loadfilmsActions))
+    expect(appDataReducer(state, loadfilmsActions))
       .toEqual({filmsData: {data: [], isLoading: false, error: mockError}});
   });
 
   it(`Reducer should reset loaded films`, () => {
     const state = {filmsData: {data: mockFilms, isLoading: false, error: null}};
     const resetLoadedFilmsAction = {
-      type: ActionType.RESET_LOADED_FILMS,
+      type: resetLoadedFilms,
     };
 
-    expect(appData(state, resetLoadedFilmsAction))
+    expect(appDataReducer(state, resetLoadedFilmsAction))
       .toEqual({filmsData: initialState.filmsData});
   });
 
@@ -64,32 +76,32 @@ describe(`Reducer 'appData' should work correctly`, () => {
   it(`Reducer should update promoFilm by load promoFilm`, () => {
     const state = {promoFilmData: initialState.promoFilmData};
     const loadPromoFilmAction = {
-      type: ActionType.LOAD_PROMO_FILM,
+      type: loadPromoFilm,
       payload: {data: mockFilm}
     };
 
-    expect(appData(state, loadPromoFilmAction))
+    expect(appDataReducer(state, loadPromoFilmAction))
       .toEqual({promoFilmData: {data: mockFilm, isLoading: false, error: null}});
   });
 
   it(`Reducer should update error by unload promoFilm`, () => {
     const state = {promoFilmData: initialState.promoFilmData};
     const loadPromoFilmAction = {
-      type: ActionType.LOAD_PROMO_FILM,
+      type: loadPromoFilm,
       payload: {error: mockError}
     };
 
-    expect(appData(state, loadPromoFilmAction))
+    expect(appDataReducer(state, loadPromoFilmAction))
       .toEqual({promoFilmData: {data: {}, isLoading: false, error: mockError}});
   });
 
   it(`Reducer should reset loaded PromoFilm`, () => {
     const state = {promoFilmData: {data: mockFilm, isLoading: false, error: null}};
     const resetLoadedPromoFilmAction = {
-      type: ActionType.RESET_LOADED_PROMO_FILM,
+      type: resetLoadedPromoFilm,
     };
 
-    expect(appData(state, resetLoadedPromoFilmAction))
+    expect(appDataReducer(state, resetLoadedPromoFilmAction))
       .toEqual({promoFilmData: initialState.promoFilmData});
   });
 
@@ -97,32 +109,32 @@ describe(`Reducer 'appData' should work correctly`, () => {
   it(`Reducer should update film by load film`, () => {
     const state = {filmData: {data: {}, isLoading: true, error: null}};
     const loadFilmAction = {
-      type: ActionType.LOAD_FILM,
+      type: loadFilm,
       payload: {data: mockFilm}
     };
 
-    expect(appData(state, loadFilmAction))
+    expect(appDataReducer(state, loadFilmAction))
       .toEqual({filmData: {data: mockFilm, isLoading: false, error: null}});
   });
 
   it(`Reducer should update error by unload film`, () => {
     const state = {filmData: {data: {}, isLoading: true, error: null}};
     const loadFilmAction = {
-      type: ActionType.LOAD_FILM,
+      type: loadFilm,
       payload: {error: mockError}
     };
 
-    expect(appData(state, loadFilmAction))
+    expect(appDataReducer(state, loadFilmAction))
       .toEqual({filmData: {data: {}, isLoading: false, error: mockError}});
   });
 
   it(`Reducer should reset loaded film`, () => {
     const state = {filmData: {data: mockFilm, isLoading: false, error: null}};
     const resetLoadedFilmAction = {
-      type: ActionType.RESET_LOADED_FILM,
+      type: resetLoadedFilm,
     };
 
-    expect(appData(state, resetLoadedFilmAction))
+    expect(appDataReducer(state, resetLoadedFilmAction))
       .toEqual({filmData: initialState.filmData});
   });
 
@@ -130,32 +142,32 @@ describe(`Reducer 'appData' should work correctly`, () => {
   it(`Reducer should update comments by load comments`, () => {
     const state = {commentsData: {data: [], isLoading: true, error: null}};
     const loadCommentsAction = {
-      type: ActionType.LOAD_COMMENTS,
+      type: loadComments,
       payload: {data: mockComments}
     };
 
-    expect(appData(state, loadCommentsAction))
+    expect(appDataReducer(state, loadCommentsAction))
       .toEqual({commentsData: {data: mockComments, isLoading: false, error: null}});
   });
 
   it(`Reducer should update error by unload comments`, () => {
     const state = {commentsData: {data: [], isLoading: true, error: null}};
     const loadCommentsAction = {
-      type: ActionType.LOAD_COMMENTS,
+      type: loadComments,
       payload: {error: mockError}
     };
 
-    expect(appData(state, loadCommentsAction))
+    expect(appDataReducer(state, loadCommentsAction))
       .toEqual({commentsData: {data: [], isLoading: false, error: mockError}});
   });
 
   it(`Reducer should reset loaded comments`, () => {
     const state = {commentsData: {data: mockComments, isLoading: false, error: null}};
     const resetLoadedCommentsAction = {
-      type: ActionType.RESET_LOADED_COMMENTS,
+      type: resetLoadedComments,
     };
 
-    expect(appData(state, resetLoadedCommentsAction))
+    expect(appDataReducer(state, resetLoadedCommentsAction))
       .toEqual({commentsData: initialState.commentsData});
   });
 
@@ -163,32 +175,32 @@ describe(`Reducer 'appData' should work correctly`, () => {
   it(`Reducer should update favoriteFilms by load favoriteFilms`, () => {
     const state = {favoriteFilmsData: {data: [], isLoading: true, error: null}};
     const loadFavoritefilmsActions = {
-      type: ActionType.LOAD_FAVORITE_FILMS,
+      type: loadFavoriteFilms,
       payload: {data: mockFilms}
     };
 
-    expect(appData(state, loadFavoritefilmsActions))
+    expect(appDataReducer(state, loadFavoritefilmsActions))
       .toEqual({favoriteFilmsData: {data: mockFilms, isLoading: false, error: null}});
   });
 
   it(`Reducer should update error by unload favoriteFilms`, () => {
     const state = {favoriteFilmsData: {data: [], isLoading: true, error: null}};
     const loadFavoritefilmsActions = {
-      type: ActionType.LOAD_FAVORITE_FILMS,
+      type: loadFavoriteFilms,
       payload: {error: mockError}
     };
 
-    expect(appData(state, loadFavoritefilmsActions))
+    expect(appDataReducer(state, loadFavoritefilmsActions))
       .toEqual({favoriteFilmsData: {data: [], isLoading: false, error: mockError}});
   });
 
   it(`Reducer should reset loaded favoriteFilms`, () => {
     const state = {favoriteFilmsData: {data: mockFilms, isLoading: false, error: null}};
     const resetLoadedFavoriteFilmsAction = {
-      type: ActionType.RESET_LOADED_FAVORITE_FILMS,
+      type: resetLoadedFavoriteFilms,
     };
 
-    expect(appData(state, resetLoadedFavoriteFilmsAction))
+    expect(appDataReducer(state, resetLoadedFavoriteFilmsAction))
       .toEqual({favoriteFilmsData: initialState.favoriteFilmsData});
   });
 });
@@ -212,7 +224,7 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_FILMS,
+          type: [ReducerName.DATA].loadFilms,
           payload: {data: fakeAdaptFilmsToClient([fakeResponse])},
         });
       });
@@ -231,7 +243,7 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_PROMO_FILM,
+          type: loadPromoFilm,
           payload: {data: fakeAdaptFilmToClient([fakeResponse])},
         });
       });
@@ -251,7 +263,7 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_FILM,
+          type: loadFilm,
           payload: {data: fakeAdaptFilmToClient([fakeResponse])},
         });
       });
@@ -271,7 +283,7 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_COMMENTS,
+          type: loadComments,
           payload: {data: [fakeResponse]},
         });
       });
@@ -293,7 +305,7 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_COMMENTS,
+          type: loadComments,
           payload: {data: [fakeResponse]},
         });
       });
@@ -312,7 +324,7 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_FAVORITE_FILMS,
+          type: loadFavoriteFilms,
           payload: {data: fakeAdaptFilmsToClient([fakeResponse])},
         });
       });

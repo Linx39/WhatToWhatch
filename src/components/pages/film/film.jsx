@@ -26,7 +26,8 @@ import {
 } from '../../../store/app-data/selectors';
 import {getActiveNavItem} from '../../../store/app-actions/selectors';
 import {getAuthorizationStatus} from '../../../store/user-data/selectors';
-import {changeActiveNavItem, resetOnDefaultFilmPage, resetLoadedFilm, loadFilm} from '../../../store/action';
+import {changeActiveNavItem, resetOnDefaultFilmPage} from '../../../store/app-actions/app-actions';
+import {resetLoadedFilm, loadFilm} from '../../../store/app-data/app-data';
 import {getFilmsLikeThis} from '../../../utils';
 import {FilmsCount, AdditionalClassName, ResponseStatus, InfoText, AuthorizationStatus} from '../../../const';
 

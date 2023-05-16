@@ -1,10 +1,17 @@
-import {initialState, appActions} from './app-actions';
-import {ActionType} from '../action';
+import {
+  initialState,
+  appActionsReducer,
+  changeGenre,
+  changeFilmsCount,
+  changeActiveNavItem,
+  resetOnDefaultMainPage,
+  resetOnDefaultFilmPage
+} from './app-actions';
 import {NavItem} from '../../const';
 
-describe(`Reducer 'appActions' work correctly`, () => {
+describe(`appActionsReducer work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
-    expect(appActions(undefined, {}))
+    expect(appActionsReducer(undefined, {}))
       .toEqual(initialState);
   });
 
@@ -12,11 +19,11 @@ describe(`Reducer 'appActions' work correctly`, () => {
     const state = {activeGenre: `drama`, count: 3, activeNavItem: NavItem.DETAILS};
 
     const changeActiveGenreAction = {
-      type: ActionType.CHANGE_GENRE,
+      type: changeGenre,
       payload: `comedy`,
     };
 
-    expect(appActions(state, changeActiveGenreAction))
+    expect(appActionsReducer(state, changeActiveGenreAction))
       .toEqual({activeGenre: `comedy`, count: 3, activeNavItem: NavItem.DETAILS});
   });
 
@@ -24,10 +31,10 @@ describe(`Reducer 'appActions' work correctly`, () => {
     const state = {activeGenre: `drama`, count: 3, activeNavItem: NavItem.DETAILS};
 
     const changeFilmsCountAction = {
-      type: ActionType.CHANGE_FILMS_COUNT,
+      type: changeFilmsCount,
     };
 
-    expect(appActions(state, changeFilmsCountAction))
+    expect(appActionsReducer(state, changeFilmsCountAction))
       .toEqual({activeGenre: `drama`, count: 11, activeNavItem: NavItem.DETAILS});
   });
 
@@ -35,11 +42,11 @@ describe(`Reducer 'appActions' work correctly`, () => {
     const state = {activeGenre: `drama`, count: 3, activeNavItem: NavItem.DETAILS};
 
     const changeActiveItemAction = {
-      type: ActionType.CHANGE_ACTIVE_NAV_ITEM,
+      type: changeActiveNavItem,
       payload: NavItem.REVIEWS,
     };
 
-    expect(appActions(state, changeActiveItemAction))
+    expect(appActionsReducer(state, changeActiveItemAction))
       .toEqual({activeGenre: `drama`, count: 3, activeNavItem: NavItem.REVIEWS});
   });
 
@@ -47,10 +54,10 @@ describe(`Reducer 'appActions' work correctly`, () => {
     const state = {activeGenre: `drama`, count: 4, activeNavItem: NavItem.REVIEWS};
 
     const resetAppActions = {
-      type: ActionType.RESET_ON_DEFAULT_MAIN_PAGE,
+      type: resetOnDefaultMainPage,
     };
 
-    expect(appActions(state, resetAppActions))
+    expect(appActionsReducer(state, resetAppActions))
       .toEqual({...initialState, activeNavItem: NavItem.REVIEWS});
   });
 
@@ -58,15 +65,10 @@ describe(`Reducer 'appActions' work correctly`, () => {
     const state = {activeGenre: `drama`, count: 4, activeNavItem: NavItem.REVIEWS};
 
     const resetAppActions = {
-      type: ActionType.RESET_ON_DEFAULT_FILM_PAGE,
+      type: resetOnDefaultFilmPage,
     };
 
-    expect(appActions(state, resetAppActions))
+    expect(appActionsReducer(state, resetAppActions))
       .toEqual({...initialState, activeGenre: `drama`, count: 4});
-  });
-
-  it(`Reducer without additional parameters should return initial state`, () => {
-    expect(appActions(undefined, {}))
-      .toEqual(initialState);
   });
 });

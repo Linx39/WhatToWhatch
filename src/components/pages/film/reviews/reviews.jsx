@@ -9,7 +9,7 @@ import {
   getIsCommentsLoading,
   getCommentsError,
 } from '../../../../store/app-data/selectors';
-import {resetLoadedComments} from '../../../../store/action';
+import {resetLoadedComments} from '../../../../store/app-data/app-data';
 import {filmProp} from '../../../../props-types';
 import {InfoText} from '../../../../const';
 

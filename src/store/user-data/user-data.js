@@ -1,20 +1,25 @@
-import {createReducer} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
-import {requireAuthorization, loadUserData} from '../action';
-import {AuthorizationStatus} from '../../const';
+import {ReducerName, AuthorizationStatus} from '../../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   user: {},
 };
 
-const userData = createReducer(initialState, (builder) => {
-  builder.addCase(requireAuthorization, (state, action) => {
-    state.authorizationStatus = action.payload;
-  });
-  builder.addCase(loadUserData, (state, action) => {
-    state.user = action.payload;
-  });
+export const userData = createSlice({
+  name: ReducerName.USER,
+  initialState,
+  reducers: {
+    requireAuthorization: (state, action) => {
+      state.authorizationStatus = action.payload;
+    },
+    loadUserData: (state, action) => {
+      state.user = action.payload;
+    },
+  }
 });
 
-export {initialState, userData};
+export const {requireAuthorization, loadUserData} = userData.actions;
+
+export const userDataReducer = userData.reducer;

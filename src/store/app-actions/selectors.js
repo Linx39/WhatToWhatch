@@ -1,4 +1,4 @@
-import {ReducerName} from '../root-reducer';
+import {ReducerName} from '../../const';
 
 export const getActiveGenre = (state) => state[ReducerName.APP_ACTIONS].activeGenre;
 

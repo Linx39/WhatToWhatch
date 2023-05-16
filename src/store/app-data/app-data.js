@@ -1,17 +1,6 @@
-import {createReducer} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
-import {
-  loadFilms,
-  loadPromoFilm,
-  loadFilm,
-  loadComments,
-  loadFavoriteFilms,
-  resetLoadedFilms,
-  resetLoadedPromoFilm,
-  resetLoadedFilm,
-  resetLoadedComments,
-  resetLoadedFavoriteFilms,
-} from '../action';
+import {ReducerName} from '../../const';
 
 const FILMS_DATA_DEFAULT = {
   data: [],
@@ -31,7 +20,9 @@ const COMMENTS_DATA_DEFAULT = {
   error: null,
 };
 
-const initialState = {
+const loadData = (dataDefault, payload) => ({...dataDefault, ...payload, isLoading: false});
+
+export const initialState = {
   filmsData: FILMS_DATA_DEFAULT,
   promoFilmData: FILM_DATA_DEFAULT,
   filmData: FILM_DATA_DEFAULT,
@@ -39,39 +30,54 @@ const initialState = {
   favoriteFilmsData: FILMS_DATA_DEFAULT,
 };
 
-const loadData = (dataDefault, payload) => ({...dataDefault, ...payload, isLoading: false});
-
-const appData = createReducer(initialState, (builder) => {
-  builder.addCase(loadFilms, (state, action) => {
-    state.filmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
-  });
-  builder.addCase(loadPromoFilm, (state, action) => {
-    state.promoFilmData = loadData(FILM_DATA_DEFAULT, action.payload);
-  });
-  builder.addCase(loadFilm, (state, action) => {
-    state.filmData = loadData(FILM_DATA_DEFAULT, action.payload);
-  });
-  builder.addCase(loadComments, (state, action) => {
-    state.commentsData = loadData(COMMENTS_DATA_DEFAULT, action.payload);
-  });
-  builder.addCase(loadFavoriteFilms, (state, action) => {
-    state.favoriteFilmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
-  });
-  builder.addCase(resetLoadedFilms, (state) => {
-    state.filmsData = FILMS_DATA_DEFAULT;
-  });
-  builder.addCase(resetLoadedPromoFilm, (state) => {
-    state.promoFilmData = FILM_DATA_DEFAULT;
-  });
-  builder.addCase(resetLoadedFilm, (state) => {
-    state.filmData = FILM_DATA_DEFAULT;
-  });
-  builder.addCase(resetLoadedComments, (state) => {
-    state.commentsData = COMMENTS_DATA_DEFAULT;
-  });
-  builder.addCase(resetLoadedFavoriteFilms, (state) => {
-    state.favoriteFilmsData = FILMS_DATA_DEFAULT;
-  });
+export const appData = createSlice({
+  name: ReducerName.DATA,
+  initialState,
+  reducers: {
+    loadFilms: (state, action) => {
+      state.filmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
+    },
+    loadPromoFilm: (state, action) => {
+      state.promoFilmData = loadData(FILM_DATA_DEFAULT, action.payload);
+    },
+    loadFilm: (state, action) => {
+      state.filmData = loadData(FILM_DATA_DEFAULT, action.payload);
+    },
+    loadComments: (state, action) => {
+      state.commentsData = loadData(COMMENTS_DATA_DEFAULT, action.payload);
+    },
+    loadFavoriteFilms: (state, action) => {
+      state.favoriteFilmsData = loadData(FILMS_DATA_DEFAULT, action.payload);
+    },
+    resetLoadedFilms: (state) => {
+      state.filmsData = FILMS_DATA_DEFAULT;
+    },
+    resetLoadedPromoFilm: (state) => {
+      state.promoFilmData = FILM_DATA_DEFAULT;
+    },
+    resetLoadedFilm: (state) => {
+      state.filmData = FILM_DATA_DEFAULT;
+    },
+    resetLoadedComments: (state) => {
+      state.commentsData = COMMENTS_DATA_DEFAULT;
+    },
+    resetLoadedFavoriteFilms: (state) => {
+      state.favoriteFilmsData = FILMS_DATA_DEFAULT;
+    },
+  }
 });
 
-export {initialState, appData};
+export const {
+  loadFilms,
+  loadPromoFilm,
+  loadFilm,
+  loadComments,
+  loadFavoriteFilms,
+  resetLoadedFilms,
+  resetLoadedPromoFilm,
+  resetLoadedFilm,
+  resetLoadedComments,
+  resetLoadedFavoriteFilms,
+} = appData.actions;
+
+export const appDataReducer = appData.reducer;

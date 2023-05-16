@@ -5,7 +5,7 @@ import {clsx} from 'clsx';
 
 import {getGenresList} from '../../../../store/app-data/selectors';
 import {getActiveGenre} from '../../../../store/app-actions/selectors';
-import {changeGenre, resetOnDefaultMainPage} from '../../../../store/action';
+import {changeGenre, resetOnDefaultMainPage} from '../../../../store/app-actions/app-actions';
 import {Genre} from '../../../../const';
 
 const GenresList = () => {

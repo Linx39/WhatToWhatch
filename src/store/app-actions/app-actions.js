@@ -1,31 +1,42 @@
-import {createReducer} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
-import {changeGenre, changeFilmsCount, changeActiveNavItem, resetOnDefaultMainPage, resetOnDefaultFilmPage} from '../action';
-import {Genre, FilmsCount, NavItem} from '../../const';
+import {ReducerName, Genre, FilmsCount, NavItem} from '../../const';
 
-const initialState = {
+export const initialState = {
   activeGenre: Genre.DEFAULT,
   count: FilmsCount.MAIN,
   activeNavItem: NavItem.OVERVIEW,
 };
 
-const appActions = createReducer(initialState, (builder) => {
-  builder.addCase(changeGenre, (state, action) => {
-    state.activeGenre = action.payload;
-  });
-  builder.addCase(changeFilmsCount, (state) => {
-    state.count += FilmsCount.MAIN;
-  });
-  builder.addCase(changeActiveNavItem, (state, action) => {
-    state.activeNavItem = action.payload;
-  });
-  builder.addCase(resetOnDefaultMainPage, (state) => {
-    state.activeGenre = initialState.activeGenre;
-    state.count = initialState.count;
-  });
-  builder.addCase(resetOnDefaultFilmPage, (state) => {
-    state.activeNavItem = initialState.activeNavItem;
-  });
+export const appActions = createSlice({
+  name: ReducerName.APP_ACTIONS,
+  initialState,
+  reducers: {
+    changeGenre: (state, action) => {
+      state.activeGenre = action.payload;
+    },
+    changeFilmsCount: (state) => {
+      state.count += FilmsCount.MAIN;
+    },
+    changeActiveNavItem: (state, action) => {
+      state.activeNavItem = action.payload;
+    },
+    resetOnDefaultMainPage: (state) => {
+      state.activeGenre = initialState.activeGenre;
+      state.count = initialState.count;
+    },
+    resetOnDefaultFilmPage: (state) => {
+      state.activeNavItem = initialState.activeNavItem;
+    },
+  }
 });
 
-export {initialState, appActions};
+export const {
+  changeGenre,
+  changeFilmsCount,
+  changeActiveNavItem,
+  resetOnDefaultMainPage,
+  resetOnDefaultFilmPage
+} = appActions.actions;
+
+export const appActionsReducer = appActions.reducer;
