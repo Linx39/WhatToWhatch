@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {ReviewSetting} from '../../../../const';
+import './rating-stars.css';
 
 const RatingStars = ({ratingValue, onChange, isSubmiting}) => {
   return (
     <div className="rating__stars">
-      {new Array(ReviewSetting.RATING.MAX)
+      {new Array(ReviewSetting.RATING.MAX + 1)
         .fill(null)
         .map((item, index) => {
-          const value = index + 1;
+          const value = index;
           const id = `star-${value}`;
 
           return (

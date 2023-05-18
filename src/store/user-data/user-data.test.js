@@ -1,8 +1,16 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../services/api';
-import {initialState, userData} from './user-data';
-import {ActionType} from '../action';
-import {checkAuth, login, logout} from '../api-actions';
+import {
+  initialState,
+  userDataReducer,
+  requireAuthorization,
+  loadUserData
+} from './user-data';
+import {
+  checkAuth,
+  login,
+  logout
+} from '../api-actions';
 import {ApiPath, AuthorizationStatus} from '../../const';
 import {adaptUserToClient} from '../adapter';
 import {mockUser} from '../../test-utils/test-data';
@@ -11,29 +19,29 @@ const api = createAPI(() => {});
 
 describe(`Reducer 'user' should work correctly`, () => {
   it(`Reducer without additional parameters should return initial state`, () => {
-    expect(userData(undefined, {}))
+    expect(userDataReducer(undefined, {}))
       .toEqual(initialState);
   });
 
   it(`Reducer should update authorizationStatus to 'auth'`, () => {
     const state = {authorizationStatus: AuthorizationStatus.NO_AUTH, user: {}};
     const requireAuthorizationAction = {
-      type: ActionType.REQUIRE_AUTHORIZATION,
+      type: requireAuthorization.type,
       payload: AuthorizationStatus.AUTH
     };
 
-    expect(userData(state, requireAuthorizationAction))
+    expect(userDataReducer(state, requireAuthorizationAction))
       .toEqual({authorizationStatus: AuthorizationStatus.AUTH, user: {}});
   });
 
   it(`Reducer should update user data`, () => {
     const state = {authorizationStatus: AuthorizationStatus.AUTH, user: {}};
     const loadUserDataAction = {
-      type: ActionType.LOAD_USER_DATA,
+      type: loadUserData.type,
       payload: mockUser
     };
 
-    expect(userData(state, loadUserDataAction))
+    expect(userDataReducer(state, loadUserDataAction))
       .toEqual({authorizationStatus: AuthorizationStatus.AUTH, user: mockUser});
   });
 });
@@ -55,11 +63,11 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.REQUIRE_AUTHORIZATION,
+          type: requireAuthorization.type,
           payload: AuthorizationStatus.AUTH,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.LOAD_USER_DATA,
+          type: loadUserData.type,
           payload: fakeAdaptUserToClient(mockUser),
         });
       });
@@ -79,11 +87,11 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.REQUIRE_AUTHORIZATION,
+          type: requireAuthorization.type,
           payload: AuthorizationStatus.AUTH,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.LOAD_USER_DATA,
+          type: loadUserData.type,
           payload: fakeAdaptUserToClient(mockUser),
         });
       });
@@ -102,11 +110,11 @@ describe(`Async operation work correctly`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.REQUIRE_AUTHORIZATION,
+          type: requireAuthorization.type,
           payload: AuthorizationStatus.NO_AUTH,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.LOAD_USER_DATA,
+          type: loadUserData.type,
           payload: {},
         });
       });

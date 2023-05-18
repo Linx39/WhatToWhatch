@@ -1,0 +1,3 @@
+.rating__label:first-of-type::after {
+  display: none;
+}

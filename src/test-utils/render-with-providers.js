@@ -5,11 +5,6 @@ import configureStore from 'redux-mock-store';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
-jest.mock(`react-redux`, () => ({
-  ...jest.requireActual(`react-redux`),
-  useDispatch: jest.fn(() => () => {})
-}));
-
 const mockStore = configureStore({});
 const history = createMemoryHistory();
 

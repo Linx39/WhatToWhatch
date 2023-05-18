@@ -1,3 +1,8 @@
 .logout__button {
-  margin-left: 70%;
+  margin-right: 20px;
+  margin-left: auto;
+}
+
+.logout__button + .user-block {
+  margin-left: initial;
 }

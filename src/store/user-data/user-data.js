@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {ReducerName, AuthorizationStatus} from '../../const';
 
-const initialState = {
+export const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   user: {},
 };

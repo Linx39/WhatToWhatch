@@ -69,7 +69,7 @@ export const ReviewSetting = {
     MAX: 400,
   },
   RATING: {
-    DEFAULT: 6,
+    DEFAULT: 0,
     MAX: 10,
   },
 };

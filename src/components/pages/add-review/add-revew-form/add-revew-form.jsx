@@ -9,7 +9,7 @@ import {ReviewSetting, AppRoute} from '../../../../const';
 
 const MessageText = {
   ERROR_SUBMITING: `Comment was not added, please try again`,
-  SUBMITING: `Submiting...`
+  SUBMITING: `Submiting...`,
 };
 
 const AddReviewForm = ({film}) => {
@@ -41,8 +41,9 @@ const AddReviewForm = ({film}) => {
   const {rating, comment} = userForm;
 
   const isCommentCorrect = comment.length >= ReviewSetting.TEXT_LENGTH.MIN && comment.length <= ReviewSetting.TEXT_LENGTH.MAX;
+  const isRatingCorrect = +rating > 0;
 
-  const isAddReviewButtonDisabled = !rating || !isCommentCorrect || isSubmiting;
+  const isAddReviewButtonDisabled = !isRatingCorrect || !isCommentCorrect || isSubmiting;
 
   return (
     <div className="add-review">
